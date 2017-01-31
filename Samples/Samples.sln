@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "General", "General", "{BFC9716E-3A29-4482-9385-7301436D8010}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault Application Framework", "Vault Application Framework", "{64819656-F9ED-411C-827B-9EB4EBECF6E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Extensibility Framework", "UI Extensibility Framework", "{E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "ChainWorkflows\src\ChainWorkflows\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{721000F5-1A08-4E41-A594-94D7BB6F852C} = {BFC9716E-3A29-4482-9385-7301436D8010}
+	EndGlobalSection
+EndGlobal
