@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-
-namespace MFaaP.MFilesAPI
+﻿namespace MFaaP.MFilesAPI
 {
 	/// <summary>
 	/// The details of the server to connect to.

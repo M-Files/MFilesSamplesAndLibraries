@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{721000F5-1A08-4E41-A594-94D7BB6F852C}</ProjectGuid>
+    <ProjectGuid>{B28D0C6A-C87B-461D-BD12-D627E9F653FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChainWorkflows</RootNamespace>
-    <AssemblyName>ChainWorkflows</AssemblyName>
+    <RootNamespace>MFaaP.MFWSClient</RootNamespace>
+    <AssemblyName>MFaaP.MFWSClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,12 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MFiles.VAF, Version=1.0.128.0, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\MFiles.VAF.1.0.128.0\lib\net45\MFiles.VAF.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -44,48 +40,24 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Configuration.cs" />
-    <Compile Include="src\VaultApplication.cs" />
+    <Compile Include="MFWSClient.Authentication.cs" />
+    <Compile Include="MFWSClient.CreatingObjects.cs" />
+    <Compile Include="MFWSClient.cs" />
+    <Compile Include="MFWSClient.ExtensionMethods.cs" />
+    <Compile Include="MFWSClient.Searching.cs" />
+    <Compile Include="MFWSClientBase.cs" />
+    <Compile Include="MFWSClientBase.HttpRequests.cs" />
+    <Compile Include="MFWSStructs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\vbscript\VBScript.txt">
-      <Link>VBScript.txt</Link>
-    </Content>
-    <Content Include="appdef.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MFVaultApplicationInstaller.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="MFilesAPI">
-      <Guid>{B9C079AA-92DD-4FB4-A0E0-AA3198955B45}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\readme.md">
-      <Link>readme.md</Link>
-    </None>
-    <None Include="..\vault\Vault Backup.mfb">
-      <Link>Vault Backup.mfb</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>REM start "Installing Vault Application" /D "$(TargetDir)" "MFVaultApplicationInstaller.exe" "Chain Workflows"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

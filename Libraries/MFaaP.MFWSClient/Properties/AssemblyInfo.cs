@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MFaaP.MFilesAPI")]
+[assembly: AssemblyTitle("MFaaP.MFWSClient")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MFaaP.MFilesAPI")]
+[assembly: AssemblyProduct("MFaaP.MFWSClient")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("82567936-e6eb-45e5-9faf-8eefcd92f7bb")]
+[assembly: Guid("b28d0c6a-c87b-461d-bd12-d627e9f653fc")]
 
 // Version information for an assembly consists of the following four values:
 //
