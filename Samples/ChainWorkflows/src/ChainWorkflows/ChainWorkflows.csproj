@@ -72,6 +72,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\readme.md">
+      <Link>readme.md</Link>
+    </None>
     <None Include="packages.config" />
     <None Include="Vault Backup.mfb" />
   </ItemGroup>
