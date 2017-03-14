@@ -52,13 +52,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\vbscript\VBScript.txt">
+      <Link>VBScript.txt</Link>
+    </Content>
     <Content Include="appdef.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MFVaultApplicationInstaller.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="VBScript.txt" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="MFilesAPI">
@@ -75,8 +77,10 @@
     <None Include="..\..\readme.md">
       <Link>readme.md</Link>
     </None>
+    <None Include="..\vault\Vault Backup.mfb">
+      <Link>Vault Backup.mfb</Link>
+    </None>
     <None Include="packages.config" />
-    <None Include="Vault Backup.mfb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
