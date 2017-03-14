@@ -2,6 +2,8 @@
 
 By default, the [SearchForObjectsByConditions](https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectSearchOperations~SearchForObjectsByConditions.html) method on [VaultObjectSearchOperations](https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectSearchOperations.html) will limit the number of items it returns to 500.  An extended [SearchForObjectsByConditionsEx](https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectSearchOperations~SearchForObjectsByConditionsEx.html) method allows the caller to both specify a larger maximum count and longer timeout, but may still return limited results in some situations.  This example introduces an approach that can bypass this limitation and iterate over all content that matches the search conditions.
 
+*No sample vault is included for this sample.*
+
 ## Firstly: the downsides
 
 Searching over this volume of content can cause significant load on the M-Files server.  Whilst this code will happily iterate many hundreds of thousands of items, doing so may not be advisable in production scenarios.
