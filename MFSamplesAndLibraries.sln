@@ -21,6 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentedSearch", "Samples\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Searching", "Searching", "{C181BED6-870A-4C78-A156-57F922A556EB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C5D5538B-AC20-42FE-B5E1-566161D884B4}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
