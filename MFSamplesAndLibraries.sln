@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "Samples\ChainWorkflows\src\ChainWorkflows\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{BE3E4CF5-2166-4626-A6F6-9048FF78E37B}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\Readme.md = Libraries\Readme.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFilesAPI", "Libraries\MFaaP.MFilesAPI\MFaaP.MFilesAPI.csproj", "{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}"
 EndProject

@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFilesAPI", "MFaaP.MFilesAPI\MFaaP.MFilesAPI.csproj", "{EC0753A5-E83B-41B6-9BFB-6D83874C689A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFilesAPI", "MFaaP.MFilesAPI\MFaaP.MFilesAPI.csproj", "{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C8B8C81-769D-42EB-8724-78A0AA83ECC7}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +16,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EC0753A5-E83B-41B6-9BFB-6D83874C689A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC0753A5-E83B-41B6-9BFB-6D83874C689A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC0753A5-E83B-41B6-9BFB-6D83874C689A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC0753A5-E83B-41B6-9BFB-6D83874C689A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
