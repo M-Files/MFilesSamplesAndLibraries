@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "General", "General", "{BFC9716E-3A29-4482-9385-7301436D8010}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M-Files API", "M-Files API", "{BFC9716E-3A29-4482-9385-7301436D8010}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault Application Framework", "Vault Application Framework", "{64819656-F9ED-411C-827B-9EB4EBECF6E6}"
 EndProject
@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Extensibility Framework"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "ChainWorkflows\src\ChainWorkflows\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{BE3E4CF5-2166-4626-A6F6-9048FF78E37B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Searching", "Searching", "{B37BA3B0-3E41-48DA-8997-F7ADE71A0B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFilesAPI", "MFaaP.MFilesAPI\MFaaP.MFilesAPI.csproj", "{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentedSearch", "SegmentedSearch\SegmentedSearch.csproj", "{5F9215B3-F0D3-4061-9064-B50C7F070AA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,16 +25,17 @@ Global
 		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F9215B3-F0D3-4061-9064-B50C7F070AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F9215B3-F0D3-4061-9064-B50C7F070AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F9215B3-F0D3-4061-9064-B50C7F070AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F9215B3-F0D3-4061-9064-B50C7F070AA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{721000F5-1A08-4E41-A594-94D7BB6F852C} = {64819656-F9ED-411C-827B-9EB4EBECF6E6}
-		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB} = {BE3E4CF5-2166-4626-A6F6-9048FF78E37B}
+		{B37BA3B0-3E41-48DA-8997-F7ADE71A0B48} = {BFC9716E-3A29-4482-9385-7301436D8010}
+		{5F9215B3-F0D3-4061-9064-B50C7F070AA1} = {B37BA3B0-3E41-48DA-8997-F7ADE71A0B48}
 	EndGlobalSection
 EndGlobal
