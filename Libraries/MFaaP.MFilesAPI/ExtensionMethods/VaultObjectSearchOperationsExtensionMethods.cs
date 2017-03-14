@@ -11,7 +11,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// The number of items to match in one segment.
 		/// </summary>
 		/// <remarks>Making it larger will reduce queries to M-Files, but higher chance of timeout.</remarks>
-		public const int DefaultNumberOfItemsInSegment = 5000;
+		public const int DefaultNumberOfItemsInSegment = 1000;
 
 		/// <summary>
 		/// The maximum index segment (must be greater than zero).
