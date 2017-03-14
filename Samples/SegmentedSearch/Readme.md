@@ -31,10 +31,187 @@ Our code will look something like this:
 * Add an additional condition, forcing it to search for items with a minimum ID greater than the current segment.
 * Execute the search, only returning a maximum of one item; we only need to know if there is at least one item, not all of the items.
 
-## The code
+## The C# code
 
 The code  (`Program.cs`) contains two implementations of the search code:
 
 1. The `UseLibrary` method uses the M-Files API Helper Library to execute the various searches.  This library wraps some complexities of connecting/disconnecting from the vault, and creation of the SearchCondition objects.  The purpose of this code is to show the specific approach as cleanly as possible.
 2. The `UseAPI` method uses the M-Files API directly.  This method shows the specific code required to use this approach directly against the API.  It contains more boiler-plate code but is useful both for learning, and for situations where the M-Files API Helper Library cannot be used.
 
+### UseLibrary
+
+This sample uses a number of helper methods from the M-Files API Helper Library.  These helper methods make connecting to the vault simpler, as well as removing the complexity of creating search conditions.
+
+```csharp
+// Declare variables for our vault connection.
+Vault vault;
+MFilesServerApplication application;
+
+// The default connection (localhost, tcp, current Windows user) will suffice.
+var connectionDetails = new ConnectionDetails();
+
+// Connect to the vault using the helper method.
+connectionDetails.ConnectToVaultAdministrative(
+	Guid.Parse("{ ... }"),
+	out vault, out application);
+
+// Load the object types from the vault.
+System.Console.WriteLine("Loading object types...");
+var objectTypes = vault
+	.ObjectTypeOperations
+	.GetObjectTypes()
+	.Cast<ObjType>()
+	.ToList();
+System.Console.WriteLine($"Iterating over {objectTypes.Count} object types...");
+
+// Iterate over the object types to count the objects.
+foreach (var objectType in objectTypes)
+{
+	// Create the basic search conditions collection.
+	var searchConditions = new SearchConditions();
+
+	// Add a condition for the object type we're interested in.
+	searchConditions.AddObjectTypeIdSearchCondition(objectType.ID);
+
+	// Count the items in this object type, including deleted ones.
+	// This will execute the search in segments (i.e. items 0-1000, then 1001-2000),
+	// but will "flatten" the results into a collection of ObjectVersion objects.
+	var countIncludingDeleted = vault.ObjectSearchOperations
+		.SearchForObjectsByConditionsSegmented_Flat(searchConditions)
+		.Count();
+
+	// Output the stats.
+	System.Console.WriteLine($"\t{objectType.NamePlural}:");
+	System.Console.WriteLine($"\t\tTotal: {countIncludingDeleted} (included deleted)");
+
+}
+
+System.Console.WriteLine($"Complete.");
+
+// Ensure we're disconnected.
+application.Disconnect(vault);
+```
+
+### UseAPI
+
+This sample uses the M-Files API directly and does not use any helper methods from the M-Files API Helper Library.  This code builds the search conditions individually and shows how the logic is implemented within the helper functions.  Note that this code is approximately four times longer than the code above.
+
+```csharp
+// Connect to the server (localhost, tcp, current Windows user).
+var application = new MFilesServerApplication();
+application.ConnectAdministrative();
+
+// Get a connection to the vault.
+var vault = application.LogInToVault("{ ... }");
+
+// Load the object types from the vault.
+System.Console.WriteLine("Loading object types...");
+var objectTypes = vault
+	.ObjectTypeOperations
+	.GetObjectTypes()
+	.Cast<ObjType>()
+	.ToList();
+System.Console.WriteLine($"Iterating over {objectTypes.Count} object types...");
+
+// Iterate over the object types to count the objects.
+foreach (var objectType in objectTypes)
+{
+	// Create the basic search conditions collection.
+	var searchConditions = new SearchConditions();
+
+	// Add a condition for the object type we're interested in.
+	{
+		// Create the search condition (for object type id).
+		SearchCondition condition = new SearchCondition
+		{
+			ConditionType = MFConditionType.MFConditionTypeEqual
+		};
+		condition.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeObjectTypeID, null);
+		condition.TypedValue.SetValue(MFDataType.MFDatatypeLookup, objectType.ID);
+
+		// Add the condition at the index provided.
+		searchConditions.Add(-1, condition);
+	}
+
+	// Create variables for the segment information.
+	const int itemsPerSegment = 1000; // Maximum number of items in each segment.
+	var segment = 0; // Start; this will increment as we go.
+	var moreItems = true; // Whether there are more items to load.
+	var countIncludingDeleted = 0; // The count of matching items.
+
+	// Whilst there are items in the results, we need to loop.
+	while (moreItems)
+	{
+		// Execute a search within the object id segment.
+		{
+			// Clone the search conditions (so we can add current-segment condition).
+			var internalSearchConditions = searchConditions.Clone();
+
+			// Add search condition:
+			//   Id within the range: (segment - itemsPerSegment) to ((segment + 1) * itemsPerSegment)
+			{
+				// Create the search condition.
+				SearchCondition condition = new SearchCondition
+				{
+					ConditionType = MFConditionType.MFConditionTypeEqual
+				};
+				condition.Expression.SetObjectIDSegmentExpression(itemsPerSegment);
+				condition.TypedValue.SetValue(MFDataType.MFDatatypeInteger, segment);
+
+				// Add the condition at the index provided.
+				internalSearchConditions.Add(-1, condition);
+			}
+
+			// Execute the search and increment the count.
+			countIncludingDeleted += vault.ObjectSearchOperations
+				.SearchForObjectsByConditionsEx(internalSearchConditions, MFSearchFlags.MFSearchFlagDisableRelevancyRanking,
+					SortResults: false, MaxResultCount: 0,
+					SearchTimeoutInSeconds: 0).Count;
+
+			// Move to the next segment.
+			segment++;
+
+		}
+
+		// Are there any more items?
+		{
+			// Clone the search conditions (so we can add object id condition).
+			var internalSearchConditions = searchConditions.Clone();
+
+			// Add search condition:
+			//   Id at least (segment * itemsPerSegment)
+			{
+				// Create the search condition.
+				SearchCondition condition = new SearchCondition
+				{
+					ConditionType = MFConditionType.MFConditionTypeGreaterThanOrEqual
+				};
+				condition.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeObjectID, null);
+				condition.TypedValue.SetValue(MFDataType.MFDatatypeInteger, segment * itemsPerSegment);
+
+				// Add the condition at the index provided.
+				internalSearchConditions.Add(-1, condition);
+			}
+
+			// If we get one item then there's more results.
+			moreItems = 1 == vault.ObjectSearchOperations.SearchForObjectsByConditionsEx(
+				internalSearchConditions, // Our search conditions.
+				MFSearchFlags.MFSearchFlagDisableRelevancyRanking,
+				SortResults: false, // Don't bother attempting to sort them.
+				MaxResultCount: 1, // We only need to know if there is at least one, nothing more.
+				SearchTimeoutInSeconds: 0).Count;
+		}
+	}
+
+	// Output the stats.
+	System.Console.WriteLine($"\t{objectType.NamePlural}:");
+	System.Console.WriteLine($"\t\tTotal: {countIncludingDeleted} (included deleted)");
+
+}
+
+System.Console.WriteLine($"Complete.");
+
+// Disconnect.
+vault.LogOutSilent();
+application.Disconnect();
+```
