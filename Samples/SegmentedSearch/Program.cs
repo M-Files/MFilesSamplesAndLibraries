@@ -16,8 +16,7 @@ namespace SegmentedSearch
 		/// The (default) guid of the sample vault.
 		/// </summary>
 		private static readonly Guid sampleVaultGuid
-			//= Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}");
-			= Guid.Parse("{21F4D5AB-7E1A-4B98-A8D9-188C4A0EDF1B}");
+			= Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}");
 
 		static void Main(string[] args)
 		{
