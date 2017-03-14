@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MFiles API", "MFiles API", "{BFC9716E-3A29-4482-9385-7301436D8010}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M-Files API", "M-Files API", "{BFC9716E-3A29-4482-9385-7301436D8010}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault Application Framework", "Vault Application Framework", "{64819656-F9ED-411C-827B-9EB4EBECF6E6}"
 EndProject
