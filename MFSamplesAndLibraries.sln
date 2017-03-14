@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault Application Framework
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Extensibility Framework", "UI Extensibility Framework", "{E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "Samples\ChainWorkflows\src\ChainWorkflows\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "Samples\ChainWorkflows\vaf\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{BE3E4CF5-2166-4626-A6F6-9048FF78E37B}"
 	ProjectSection(SolutionItems) = preProject
