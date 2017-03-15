@@ -42,17 +42,21 @@ namespace MFaaP.MFWSClient
 			switch (response.StatusCode)
 			{
 
-				// Handle forbidden exceptions.
+				// Handle "expected" exceptions.
+				case HttpStatusCode.InternalServerError:
+				case HttpStatusCode.BadRequest:
 				case HttpStatusCode.Forbidden:
-				{
-					// Parse exception information, if we can.
-					var error = jsonDeserializer.Deserialize<WebServiceError>(response);
+					{
+						// Parse exception information, if we can.
+						var error = jsonDeserializer.Deserialize<WebServiceError>(response);
 
-					// If we can, throw detailed data.
-					throw (null == error)
-						? new Exception(response.Content)
-						: (Exception) error;
-				}
+						// TODO: Stack doesn't seem to be deserialised properly.
+
+						// If we can, throw detailed data.
+						throw (null == error)
+							? new Exception(response.Content)
+							: (Exception)error;
+					}
 
 				// Anything else is unhandled at the moment.
 				default:
