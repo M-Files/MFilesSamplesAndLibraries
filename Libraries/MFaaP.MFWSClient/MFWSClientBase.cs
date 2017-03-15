@@ -33,6 +33,12 @@ namespace MFaaP.MFWSClient
 		public IList<Parameter> DefaultParameters => this.restClient.DefaultParameters;
 
 		/// <summary>
+		/// If true, exceptions returned (e.g. Forbidden) by the web service will be converted
+		/// to .NET exceptions and thrown.
+		/// </summary>
+		public bool ThrowWebServiceResponseExceptions { get; set; } = true;
+
+		/// <summary>
 		/// The cookie container used for requests.
 		/// </summary>
 		public CookieContainer CookieContainer
@@ -85,6 +91,8 @@ namespace MFaaP.MFWSClient
 				}
 			}
 #endif
+
+			// Notify subscribers.
 			BeforeExecuteRequest?.Invoke(this, e);
 		}
 
@@ -96,8 +104,13 @@ namespace MFaaP.MFWSClient
 		{
 #if DEBUG
 			System.Diagnostics.Debug.WriteLine($"{e.StatusCode} received from {e.ResponseUri}: {e.Content}");
-			AfterExecuteRequest?.Invoke(this, e);
 #endif
+
+			// Notify subscribers.
+			AfterExecuteRequest?.Invoke(this, e);
+
+			// If we had an invalid response, throw it.
+			this.EnsureValidResponse(e);
 		}
 	}
 }

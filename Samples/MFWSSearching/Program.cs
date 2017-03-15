@@ -21,7 +21,7 @@ namespace MFWSSearching
 		{
 			// Execute the search using the library.
 			System.Console.WriteLine($"Executing a search using the library.");
-			//UseLibrary();
+			UseLibrary();
 			System.Console.WriteLine("Complete.  Press enter to continue.");
 			System.Console.ReadLine();
 

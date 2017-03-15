@@ -33,6 +33,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
 
 // Requires System.Runtime.Serialization reference.
 
@@ -424,11 +427,14 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class WebServiceError
     {
+	    public WebServiceError()
+	    {
+	    }
 
-        /// <summary>
-        /// HTTP Status code
-        /// </summary>
-        public int Status { get; set; }
+	    /// <summary>
+		/// HTTP Status code
+		/// </summary>
+		public int Status { get; set; }
         
         /// <summary>
         /// The request URL which caused this error.
@@ -444,18 +450,41 @@ namespace MFaaP.MFWSClient
         /// Detailed information on the exception.
         /// </summary>
         public ExceptionInfo Exception { get; set; }
-        
+
+		/// <summary>
+		/// Converts a web service error into something that can be thrown in .NET-land.
+		/// </summary>
+		/// <param name="info"></param>
+		public static explicit operator Exception(WebServiceError info)
+		{
+			// Sanity.
+			if (null == info)
+				throw new ArgumentNullException(nameof(info));
+
+			// Convert.
+			return new HttpException(info.Status, info.ToString(),
+				info.Exception == null ? null : (System.Exception)info.Exception);
+		}
+
+	    /// <inheritdoc />
+	    public override string ToString()
+	    {
+		    return $"{this.Method} request to {this.URL} returned a status code of {this.Status}.";
+	    }
     }
 
-    
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public class ExceptionInfo
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public class ExceptionInfo
     {
+	    public ExceptionInfo()
+	    {
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Error message.
         /// </summary>
         public string Message { get; set; }
@@ -469,21 +498,57 @@ namespace MFaaP.MFWSClient
         /// M-Files Web Service server-side stack trace.
         /// </summary>
         public StackTraceElement[] Stack { get; set; }
-        
-    }
 
-    
+		/// <summary>
+		/// Converts information about an exception into something that can be thrown in .NET-land.
+		/// </summary>
+		/// <param name="info"></param>
+	    public static explicit operator System.Exception(ExceptionInfo info)
+		{
+			// Sanity.
+			if(null == info)
+				throw new ArgumentNullException(nameof(info));
 
-    /// <summary>
-    /// M-Files Web Service error stack trace element.
-    /// </summary>
-    public class StackTraceElement
+			// Convert.
+			return new ExceptionInfoException(info);
+		}
+
+	}
+
+	/// <summary>
+	/// Allows a <see cref="ExceptionInfo"/> object to be expressed as a <see cref="Exception"/>.
+	/// </summary>
+	internal class ExceptionInfoException
+		: System.Exception
+	{
+
+		private readonly ExceptionInfo exceptionInfo;
+
+		/// <inheritdoc />
+		public override string StackTrace => string.Join("\r\n", this.exceptionInfo.Stack?.Select(e => e.ToString()) ?? new string[0]);
+
+		public ExceptionInfoException(ExceptionInfo info)
+			: base(info.Message, info.InnerException == null ? null : new ExceptionInfoException(info.InnerException))
+		{
+			this.exceptionInfo = info;
+		}
+	}
+
+
+
+	/// <summary>
+	/// M-Files Web Service error stack trace element.
+	/// </summary>
+	public class StackTraceElement
     {
+	    public StackTraceElement()
+	    {
+	    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string FileName { get; set; }
+	    /// <summary>
+		/// 
+		/// </summary>
+		public string FileName { get; set; }
         
         /// <summary>
         /// 
@@ -499,7 +564,12 @@ namespace MFaaP.MFWSClient
         /// 
         /// </summary>
         public string MethodName { get; set; }
-        
+
+	    /// <inheritdoc />
+	    public override string ToString()
+	    {
+		    return $"{this.ClassName}.{this.MethodName} ({this.FileName}, line {this.LineNumber}";
+	    }
     }
 
     
