@@ -1,5 +1,4 @@
-﻿using System;
-using RestSharp;
+﻿using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
