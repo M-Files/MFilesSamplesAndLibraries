@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// A base class for the M-Files Web Service Client.
+	/// Used primarily to force the IRestClient from being directly used within the actual client.
+	/// </summary>
 	public abstract partial class MFWSClientBase
 	{
 		/// <summary>
@@ -67,7 +72,19 @@ namespace MFaaP.MFWSClient
 		/// <param name="e"></param>
 		protected virtual void OnBeforeExecuteRequest(IRestRequest e)
 		{
-			System.Diagnostics.Debug.WriteLine($"Executing {e.Method} request to {e.Resource} with body {e.Parameters}.");
+#if DEBUG
+			// Output the basic request data.
+			System.Diagnostics.Debug.WriteLine($"Executing {e.Method} request to {e.Resource}");
+
+			// If we have any parameters then output them.
+			if ((e.Parameters?.Count ?? 0) != 0)
+			{
+				foreach (var parameter in e.Parameters)
+				{
+					System.Diagnostics.Debug.WriteLine($"\t({parameter.Type}) {parameter.Name} = {parameter.Value} (type: {parameter.ContentType ?? "Unspecified"})");
+				}
+			}
+#endif
 			BeforeExecuteRequest?.Invoke(this, e);
 		}
 
@@ -77,8 +94,10 @@ namespace MFaaP.MFWSClient
 		/// <param name="e"></param>
 		protected virtual void OnAfterExecuteRequest(IRestResponse e)
 		{
+#if DEBUG
 			System.Diagnostics.Debug.WriteLine($"{e.StatusCode} received from {e.ResponseUri}: {e.Content}");
 			AfterExecuteRequest?.Invoke(this, e);
+#endif
 		}
 	}
 }

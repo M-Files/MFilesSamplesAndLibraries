@@ -1,4 +1,7 @@
-﻿using RestSharp;
+﻿using System;
+using System.Net;
+using System.Net.Http;
+using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
@@ -10,11 +13,17 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="searchTerm">The string to search for.</param>
 		/// <returns>An array of items that match the search term.</returns>
-		public ObjectVersion[] ExecuteSimpleSearch(string searchTerm)
+		public ObjectVersion[] QuickSearch(string searchTerm)
 		{
 
 			// Create the request.
-			var request = new RestRequest("/REST/objects?q=" + System.Net.WebUtility.UrlEncode(searchTerm));
+			var request = new RestRequest("/REST/objects");
+
+			// Add the search term.
+			if (false == string.IsNullOrWhiteSpace(searchTerm))
+			{
+				request.AddQueryParameter("q", searchTerm);
+			}
 
 			// Make the request and get the response.
 			var response = this.Get<Results<ObjectVersion>>(request);

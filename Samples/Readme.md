@@ -9,5 +9,7 @@ The following samples are available in this solution:
 
 ## Vault Application Framework
 
+Please note that the build actions have been disabled in these samples.  This has been done simply to stop them all being installed at build time.  To enable the build action, remove the "REM" command from the start of the build action.
+
 * `Chain Workflows` - An example to show how to move an object to a second workflow once it reaches the end of a first workflow.
 
