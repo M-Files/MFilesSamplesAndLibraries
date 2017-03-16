@@ -18,7 +18,7 @@ It currently provides the following functionality:
 * Object creation (`MFWSClient.CreatingObjects.cs`)
 * File upload (`MFWSClient.CreatingObjects.cs`)
 * Vault extension method execution (`MFWSClient.ExtensionMethods.cs`)
-* Basic searching (`MFWSClient.Searching.cs`)
+* Searching (`MFWSClient.Searching.cs`)
 
 ### Basic usage
 
@@ -57,9 +57,13 @@ var client = new MFWSClient("http://m-files.mycompany.com");
 client.AuthenticateUsingSingleSignOn(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"))
 ```
 
-### Basic searching
+### Searching
 
-Simple searching can be done using the `QuickSearch` method.  Note that the search will only return items which you have access to, so ensure that you are authenticated (if required) prior to executing the method.
+#### Quick search
+
+Simple searching can be done using the `QuickSearch` method.
+
+Note that the search will only return items which you have access to, so ensure that you are authenticated (if required) prior to executing the method.
 
 ```csharp
 // Connect to the online knowledgebase.
@@ -68,6 +72,33 @@ var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Execute a simple search for the word "mfws".
 var results = client.QuickSearch("mfws");
+
+// Iterate over the results and output them.
+System.Console.WriteLine($"There were {results.Length} results returned.");
+foreach (var objectVersion in results)
+{
+	System.Console.WriteLine($"\t{objectVersion.Title}");
+	System.Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+}
+```
+
+#### Advanced / complex search
+
+In addition to a simple quick search, the helper library allows the execution of more complex, or "advanced" searches using the `Search` method.  This method accepts a collection of `ISearchCondition` objects which can be used to further constrain any search.
+
+Note that the search will only return items which you have access to, so ensure that you are authenticated (if required) prior to executing the method.
+
+```csharp
+// Connect to the online knowledgebase.
+// Note that this doesn't require authentication.
+var client = new MFWSClient("http://kb.cloudvault.m-files.com");
+
+// Execute an advanced search for the word "mfws", restricted to object type 0 (documents), which have a Document Date (property 1002) greater than 2015-11-01.
+var results = client.Search(
+	new QuickSearchCondition("mfws"),
+	new ObjectTypeSearchCondition(0),
+	new DatePropertyValueSearchCondition(1002, new DateTime(2015, 11, 01), SearchConditionOperators.GreaterThan)
+);
 
 // Iterate over the results and output them.
 System.Console.WriteLine($"There were {results.Length} results returned.");
