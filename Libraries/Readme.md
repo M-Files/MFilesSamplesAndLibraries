@@ -6,7 +6,16 @@ The following helper libraries are provided as work-in-progress, and may not be 
 
 ## MFaaP.MFilesAPI (M-Files API Helper Library)
 
+This library provides helper and extension methods to more easily work with the M-Files API.
 
+It currently provides the following functionality:
+
+* Connection/Disconnection (`ExtensionMethods\MFilesServerApplication.cs`)
+* Searching (`ExtensionMethods\SearchConditionExtensionMethods.cs` and `ExtensionMethods\VaultObjectSearchOperationsExtensionMethods.cs`)
+  * Creation of "Not Deleted" search condition (`SearchConditions.AddNotDeletedSearchCondition`)
+  * Creation of "Object Type" search condition (`SearchConditions.AddObjectTypeIdSearchCondition`)
+  * Creation of "Display Id" search condition (`SearchConditions.AddDisplayIdSearchCondition`)
+  * Execution of a segmented search to enumerate all objects in a large vault (`VaultObjectSearchOperations.SearchForObjectsByConditionsSegmented` and `VaultObjectSearchOperations.SearchForObjectsByConditionsSegmented_Flat`).
 
 ## MFaaP.MFWSClient (C# M-Files Web Service Wrapper)
 

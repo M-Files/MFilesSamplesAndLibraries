@@ -8,3 +8,11 @@ Whilst the code aims to be as compatible as possible, please note that this is c
 
 * The latest public M-Files build (currently M-Files 2015.3 SR2)
 * Visual Studio 2015 Update 3
+
+## Libraries
+
+More information is available within the Readme file in the Libraries folder.
+
+## Samples
+
+More information is available within the Readme file in the Samples folder.
