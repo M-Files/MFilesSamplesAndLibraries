@@ -36,7 +36,7 @@ namespace MFaaP.MFWSClient
 			string[] externalLookupIds,
 			SearchConditionOperators searchConditionOperator = SearchConditionOperators.Equals,
 			bool invertOperator = false)
-			: base(propertyDefId, "e" + string.Join(",", externalLookupIds), searchConditionOperator, invertOperator)
+			: base(propertyDefId, "e" + string.Join(",e", externalLookupIds), searchConditionOperator, invertOperator)
 		{
 		}
 	}

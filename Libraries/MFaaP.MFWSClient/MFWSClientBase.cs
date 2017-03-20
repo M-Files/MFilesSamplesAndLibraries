@@ -49,16 +49,29 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>
+		/// <param name="restClient">The <see cref="IRestClient"/> to use for HTTP requests.</param>
+		protected MFWSClientBase(IRestClient restClient)
+		{
+			// Sanity.
+			if (null == restClient)
+				throw new ArgumentNullException(nameof(restClient));
+
+			// Set up the RestClient.
+			this.restClient = restClient;
+		}
+
+		/// <summary>
+		/// Creates an MFWSClient pointing at the MFWA site.
+		/// </summary>
 		/// <param name="baseUrl">The base url of the MFWA (web access) site; note that this should be of the form
 		/// "http://localhost", not of the form "http://localhost/REST".</param>
 		protected MFWSClientBase(string baseUrl)
-		{
-			// Set up the RestClient.
-			this.restClient = new RestClient(baseUrl)
+			: this(new RestClient(baseUrl)
 			{
 				FollowRedirects = true,
 				PreAuthenticate = true
-			};
+			})
+		{
 		}
 
 		/// <summary>
@@ -102,7 +115,10 @@ namespace MFaaP.MFWSClient
 		protected virtual void OnAfterExecuteRequest(IRestResponse e)
 		{
 #if DEBUG
-			System.Diagnostics.Debug.WriteLine($"{e.StatusCode} received from {e.ResponseUri}: {e.Content}");
+			if (null != e)
+			{
+				System.Diagnostics.Debug.WriteLine($"{e.StatusCode} received from {e.ResponseUri}: {e.Content}");
+			}
 #endif
 
 			// Notify subscribers.

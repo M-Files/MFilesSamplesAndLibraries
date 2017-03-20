@@ -71,9 +71,12 @@ namespace MFaaP.MFWSClient
 			// Save the response cookies in our persistent RestClient cookie container.
 			// Note: We should have at least one returned which is the ASP.NET session Id.
 			this.CookieContainer = new CookieContainer();
-			foreach (var cookie in response.Cookies)
+			if (null != response.Cookies)
 			{
-				this.CookieContainer.Add(new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain));
+				foreach (var cookie in response.Cookies)
+				{
+					this.CookieContainer.Add(new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain));
+				}
 			}
 		}
 
@@ -85,8 +88,8 @@ namespace MFaaP.MFWSClient
 		/// <param name="password">The password to use.</param>
 		public void AuthenticateUsingCredentials(Guid? vaultId, string username, string password)
 		{
-			// Use the other authentication method.
-			this.Authenticate(new Authentication()
+			// Use the other overload.
+			this.AuthenticateUsingCredentials(new Authentication()
 			{
 				Username = username,
 				Password = password,
@@ -98,7 +101,7 @@ namespace MFaaP.MFWSClient
 		/// Authenticates to the server using details passed in the authentication parameter.
 		/// </summary>
 		/// <param name="authentication">The authentication details to use.</param>
-		protected void Authenticate(Authentication authentication)
+		protected void AuthenticateUsingCredentials(Authentication authentication)
 		{
 			// Clear any current tokens.
 			this.ClearAuthenticationToken();

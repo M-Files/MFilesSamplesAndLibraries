@@ -10,6 +10,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FBF98AE8-BB12-48C3-9BA0-7C793754719A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFWSClient", "MFaaP.MFWSClient\MFaaP.MFWSClient.csproj", "{B28D0C6A-C87B-461D-BD12-D627E9F653FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFWSClient.Tests", "MFaaP.MFWSClient.Tests\MFaaP.MFWSClient.Tests.csproj", "{166EB0F7-92DC-4FE0-935F-55AFE17146D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +26,19 @@ Global
 		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B28D0C6A-C87B-461D-BD12-D627E9F653FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B28D0C6A-C87B-461D-BD12-D627E9F653FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B28D0C6A-C87B-461D-BD12-D627E9F653FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B28D0C6A-C87B-461D-BD12-D627E9F653FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{166EB0F7-92DC-4FE0-935F-55AFE17146D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{166EB0F7-92DC-4FE0-935F-55AFE17146D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{166EB0F7-92DC-4FE0-935F-55AFE17146D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{166EB0F7-92DC-4FE0-935F-55AFE17146D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{166EB0F7-92DC-4FE0-935F-55AFE17146D9} = {FBF98AE8-BB12-48C3-9BA0-7C793754719A}
 	EndGlobalSection
 EndGlobal

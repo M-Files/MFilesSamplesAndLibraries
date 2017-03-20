@@ -10,15 +10,15 @@ namespace MFaaP.MFWSClient
 		/// Creates a <see cref="LookupPropertyValueSearchCondition"/>, searching for the lookup value supplied.
 		/// </summary>
 		/// <param name="propertyDefId">The Id of the property def to search by.</param>
-		/// <param name="lookupId">The Id of the lookup value to search by.</param>
+		/// <param name="lookupValueId">The Id of the lookup value to search by.</param>
 		/// <param name="searchConditionOperator">The operator to use (defaults to Equals if not provided).</param>
 		/// <param name="invertOperator">Whether to invert the search operator (defaults to false if not provided).</param>
 		public LookupPropertyValueSearchCondition(
 			int propertyDefId,
-			int lookupId,
+			int lookupValueId,
 			SearchConditionOperators searchConditionOperator = SearchConditionOperators.Equals,
 			bool invertOperator = false)
-			: base(propertyDefId, lookupId.ToString(), searchConditionOperator, invertOperator)
+			: base(propertyDefId, lookupValueId.ToString(), searchConditionOperator, invertOperator)
 		{
 		}
 
@@ -28,15 +28,15 @@ namespace MFaaP.MFWSClient
 		/// loaded from an external system: http://www.m-files.com/user-guide/latest/eng/#Connection_to_external_database.html.
 		/// </summary>
 		/// <param name="propertyDefId">The Id of the property def to search by.</param>
-		/// <param name="externalLookupId">The Id of the lookup value IN THE EXTERNAL SYSTEM.</param>
+		/// <param name="externalLookupValueId">The Id of the lookup value IN THE EXTERNAL SYSTEM.</param>
 		/// <param name="searchConditionOperator">The operator to use (defaults to Equals if not provided).</param>
 		/// <param name="invertOperator">Whether to invert the search operator (defaults to false if not provided).</param>
 		public LookupPropertyValueSearchCondition(
 			int propertyDefId,
-			string externalLookupId,
+			string externalLookupValueId,
 			SearchConditionOperators searchConditionOperator = SearchConditionOperators.Equals,
 			bool invertOperator = false)
-			: base(propertyDefId, "e" + externalLookupId, searchConditionOperator, invertOperator)
+			: base(propertyDefId, "e" + externalLookupValueId, searchConditionOperator, invertOperator)
 		{
 		}
 	}

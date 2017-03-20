@@ -47,6 +47,8 @@ namespace MFaaP.MFWSClient
 				return null;
 			
 			// Create the request.
+			// TODO: Possibly split this into multiple requests.
+			// TODO: Can this be monitored?
 			var request = new RestRequest("/REST/files");
 			foreach (var file in files)
 			{

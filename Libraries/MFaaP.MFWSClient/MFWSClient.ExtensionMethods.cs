@@ -37,7 +37,7 @@ namespace MFaaP.MFWSClient
 		/// <typeparam name="TB">The type of the item to send.</typeparam>
 		/// <param name="extensionMethodName">The name of the extension method.</param>
 		/// <param name="input">The input (cannot be null) parameter.</param>
-		/// <returns>The response of the extension method, deserialised to an instance of <see cref="TA"/>.</returns>
+		/// <returns>The response of the extension method.</returns>
 		public string ExecuteExtensionMethod<TB>(string extensionMethodName, TB input = null)
 			where TB : class
 		{
