@@ -5,6 +5,7 @@ using MFilesAPI;
 
 namespace MFaaP.MFilesAPI.ExtensionMethods
 {
+	// ReSharper disable once InconsistentNaming
 	public static class IVaultObjectSearchOperationsExtensionMethods
 	{
 		/// <summary>

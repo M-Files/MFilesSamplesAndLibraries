@@ -45,6 +45,16 @@ namespace MFaaP.MFilesAPI
 			= CultureInfo.CurrentUICulture;
 
 		/// <summary>
+		/// Creates a <see cref="ConnectionDetails"/> pointing at the current server via TCP,
+		/// connecting using the current logged on Windows user.
+		/// </summary>
+		public ConnectionDetails()
+		{
+			this.TimeZoneInformation = new TimeZoneInformation();
+			this.TimeZoneInformation.LoadWithCurrentTimeZone();
+		}
+
+		/// <summary>
 		/// Connects to a vault on the server.
 		/// </summary>
 		/// <param name="vaultGuid">The Guid of the vault to connect to.</param>
