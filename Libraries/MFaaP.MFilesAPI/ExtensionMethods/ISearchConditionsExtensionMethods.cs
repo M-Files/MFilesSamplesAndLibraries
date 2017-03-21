@@ -4,16 +4,17 @@ using MFilesAPI;
 namespace MFaaP.MFilesAPI.ExtensionMethods
 {
 	/// <summary>
-	/// Provides extension methods for the <see cref="SearchConditions"/> class.
+	/// Provides extension methods for the <see cref="ISearchConditions"/> class.
 	/// </summary>
-	public static class SearchConditionsExtensionMethods
+	// ReSharper disable once InconsistentNaming
+	public static class ISearchConditionsExtensionMethods
 	{
 		/// <summary>
 		/// Search condition for searching not deleted objects.
 		/// </summary>
 		/// <param name="searchConditions">The search conditions to add the condition to.</param>
 		/// <param name="index">The index at which to add the search condition to the collection.</param>
-		public static void AddNotDeletedSearchCondition(this SearchConditions searchConditions, int index = -1)
+		public static void AddNotDeletedSearchCondition(this ISearchConditions searchConditions, int index = -1)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -37,7 +38,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="searchConditions">The search conditions to add the condition to.</param>
 		/// <param name="objTypeId">The Id of the object type to restrict the search by.</param>
 		/// <param name="index">The index at which to add the search condition to the collection.</param>
-		public static void AddObjectTypeIdSearchCondition(this SearchConditions searchConditions, int objTypeId, int index = -1)
+		public static void AddObjectTypeIdSearchCondition(this ISearchConditions searchConditions, int objTypeId, int index = -1)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -61,7 +62,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="searchConditions">The search conditions to add the condition to.</param>
 		/// <param name="objId">The minimum object Id.</param>
 		/// <param name="index">The index at which to add the search condition to the collection.</param>
-		public static void AddMinimumObjectIdSearchCondition(this SearchConditions searchConditions, int objId, int index = -1)
+		public static void AddMinimumObjectIdSearchCondition(this ISearchConditions searchConditions, int objId, int index = -1)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -90,7 +91,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// A <see cref="segment"/> of 0 and an <see cref="itemsPerSegment"/> of 1000 returns items with Ids between 0 and 999 (inclusive).
 		/// A <see cref="segment"/> of 1 and an <see cref="itemsPerSegment"/> of 1000 returns items with Ids between 1000 and 1999 (inclusive).
 		/// </remarks>
-		public static void AddObjectIdSegmentSearchCondition(this SearchConditions searchConditions, int segment, int itemsPerSegment, int index = -1)
+		public static void AddObjectIdSegmentSearchCondition(this ISearchConditions searchConditions, int segment, int itemsPerSegment, int index = -1)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -114,7 +115,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="searchConditions">The search conditions to add the condition to.</param>
 		/// <param name="displayId">The display id of the item to search for.</param>
 		/// <param name="index">The index at which to add the search condition to the collection.</param>
-		public static void AddDisplayIdSearchCondition(this SearchConditions searchConditions, string displayId, int index = -1)
+		public static void AddDisplayIdSearchCondition(this ISearchConditions searchConditions, string displayId, int index = -1)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -139,7 +140,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="query">The query to full-text-search for.</param>
 		/// <param name="fullTextSearchFlags">What type of full-text-search to execute.  Defaults to searching in both file data and metadata.</param>
 		/// <param name="index">The index at which to add the search condition to the collection.</param>
-		public static void AddFullTextSearchCondition(this SearchConditions searchConditions, string query,
+		public static void AddFullTextSearchCondition(this ISearchConditions searchConditions, string query,
 			MFFullTextSearchFlags fullTextSearchFlags = MFFullTextSearchFlags.MFFullTextSearchFlagsLookInFileData | MFFullTextSearchFlags.MFFullTextSearchFlagsLookInMetaData,
 			int index = -1)
 		{
