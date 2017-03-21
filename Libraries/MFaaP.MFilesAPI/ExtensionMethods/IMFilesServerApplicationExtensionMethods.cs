@@ -4,7 +4,7 @@ using MFilesAPI;
 
 namespace MFaaP.MFilesAPI.ExtensionMethods
 {
-	public static class MFilesServerApplicationExtensionMethods
+	public static class IMFilesServerApplicationExtensionMethods
 	{
 		/// <summary>
 		/// Connects to the server using the details in the supplied parameters.
@@ -12,7 +12,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="serverApplication">The server application to connect with.</param>
 		/// <param name="connectionDetails">The connection details to use</param>
 		/// <returns>The state of the server connection and authentication.</returns>
-		public static MFServerConnection Connect(this MFilesServerApplication serverApplication,
+		public static MFServerConnection Connect(this IMFilesServerApplication serverApplication,
 			ConnectionDetails connectionDetails)
 		{
 			// Sanity.
@@ -47,7 +47,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="serverApplication">The server to disconnect from.</param>
 		/// <param name="vault">The vault to log out from.</param>
 		/// <returns>true if logout and disconnect executed with no exceptions, false otherwise.</returns>
-		public static bool Disconnect(this MFilesServerApplication serverApplication, Vault vault = null)
+		public static bool Disconnect(this IMFilesServerApplication serverApplication, IVault vault = null)
 		{
 			try
 			{

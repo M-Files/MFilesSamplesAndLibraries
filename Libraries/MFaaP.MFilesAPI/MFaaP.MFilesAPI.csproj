@@ -43,9 +43,9 @@
     <Compile Include="AuthenticationDetails.cs" />
     <Compile Include="ConnectionDetails.cs" />
     <Compile Include="ConnectionType.cs" />
-    <Compile Include="ExtensionMethods\MFilesServerApplication.cs" />
+    <Compile Include="ExtensionMethods\IMFilesServerApplicationExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\ISearchConditionsExtensionMethods.cs" />
-    <Compile Include="ExtensionMethods\VaultObjectSearchOperationsExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\IVaultObjectSearchOperationsExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerDetails.cs" />
   </ItemGroup>

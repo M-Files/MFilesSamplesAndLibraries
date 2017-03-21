@@ -5,7 +5,7 @@ using MFilesAPI;
 
 namespace MFaaP.MFilesAPI.ExtensionMethods
 {
-	public static class VaultObjectSearchOperationsExtensionMethods
+	public static class IVaultObjectSearchOperationsExtensionMethods
 	{
 		/// <summary>
 		/// The number of items to match in one segment.
@@ -31,7 +31,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="maximumSegmentIndex"></param>
 		/// <returns></returns>
 		/// <remarks>Be aware that calling this method will return all matching items, which may cause significant load on the M-Files server.</remarks>
-		public static IEnumerable<ObjectVersion> SearchForObjectsByConditionsSegmented_Flat(this VaultObjectSearchOperations vaultObjectSearchOperations,
+		public static IEnumerable<ObjectVersion> SearchForObjectsByConditionsSegmented_Flat(this IVaultObjectSearchOperations vaultObjectSearchOperations,
 			SearchConditions searchConditions,
 			MFSearchFlags searchFlags = MFSearchFlags.MFSearchFlagDisableRelevancyRanking,
 			int startSegment = 0,
@@ -76,7 +76,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="maximumSegmentIndex"></param>
 		/// <returns></returns>
 		/// <remarks>Be aware that calling this method will return all matching items, which may cause significant load on the M-Files server.</remarks>
-		public static IEnumerable<IObjectSearchResults> SearchForObjectsByConditionsSegmented(this VaultObjectSearchOperations vaultObjectSearchOperations,
+		public static IEnumerable<IObjectSearchResults> SearchForObjectsByConditionsSegmented(this IVaultObjectSearchOperations vaultObjectSearchOperations,
 			SearchConditions searchConditions, 
 			MFSearchFlags searchFlags = MFSearchFlags.MFSearchFlagDisableRelevancyRanking, 
 			int startSegment = 0,
@@ -142,7 +142,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="segment">The zero-based index of the segment to return data for.</param>
 		/// <param name="itemsPerSegment">The number of items to include in each segment. See <see cref="DefaultNumberOfItemsInSegment"/>.</param>
 		/// <returns>true if there is at least one, false if there are none.</returns>
-		private static bool HasMoreResults(this VaultObjectSearchOperations vaultObjectSearchOperations,
+		private static bool HasMoreResults(this IVaultObjectSearchOperations vaultObjectSearchOperations,
 			SearchConditions searchConditions, 
 			int segment,
 			MFSearchFlags searchFlags = MFSearchFlags.MFSearchFlagDisableRelevancyRanking,
