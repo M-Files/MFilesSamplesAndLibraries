@@ -132,5 +132,34 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			searchConditions.Add(index, condition);
 		}
 
+		/// <summary>
+		/// Adds a search condition for a full-text search for a text query.
+		/// </summary>
+		/// <param name="searchConditions">The search conditions to add the condition to.</param>
+		/// <param name="query">The query to full-text-search for.</param>
+		/// <param name="fullTextSearchFlags">What type of full-text-search to execute.  Defaults to searching in both file data and metadata.</param>
+		/// <param name="index">The index at which to add the search condition to the collection.</param>
+		public static void AddFullTextSearchCondition(this SearchConditions searchConditions, string query,
+			MFFullTextSearchFlags fullTextSearchFlags = MFFullTextSearchFlags.MFFullTextSearchFlagsLookInFileData | MFFullTextSearchFlags.MFFullTextSearchFlagsLookInMetaData,
+			int index = -1)
+		{
+			// Sanity.
+			if (null == searchConditions)
+				throw new ArgumentNullException(nameof(searchConditions));
+
+			// Create the search condition.
+			SearchCondition condition = new SearchCondition
+			{
+				ConditionType = MFConditionType.MFConditionTypeContains,
+			};
+			condition.Expression.SetAnyFieldExpression(fullTextSearchFlags);
+			condition.TypedValue.SetValue(MFDataType.MFDatatypeText, query);
+
+			// Add the condition at the index provided.
+			searchConditions.Add(index, condition);
+		}
+
+
+
 	}
 }
