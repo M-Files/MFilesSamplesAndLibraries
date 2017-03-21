@@ -349,8 +349,6 @@ namespace MFaaP.MFilesAPI.Tests.ExtensionMethods
 
 		}
 
-		#endregion
-
 		/// <summary>
 		/// Creates a <see cref="ConnectionDetails"/> object
 		/// with a mock timezone (otherwise we cannot use <see cref="Mock{T}.Setup"/> to mock the connect calls).
@@ -377,6 +375,28 @@ namespace MFaaP.MFilesAPI.Tests.ExtensionMethods
 				TimeZoneInformation = timeZoneInformation.Object
 			};
 		}
+
+		#endregion
+
+		#region Disconnect
+
+		[TestMethod]
+		public void Disconnect_DoesNotThrow_NullServerApplication()
+		{
+
+			((IMFilesServerApplication)null).Disconnect(Mock.Of<Vault>());
+
+		}
+
+		[TestMethod]
+		public void Disconnect_DoesNotThrow_NullVault()
+		{
+
+			Mock.Of<IMFilesServerApplication>().Disconnect((Vault)null);
+
+		}
+
+		#endregion
 
 	}
 }

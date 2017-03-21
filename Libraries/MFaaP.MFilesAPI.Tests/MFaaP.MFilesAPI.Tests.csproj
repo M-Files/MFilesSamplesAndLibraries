@@ -59,6 +59,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ExtensionMethods\IMFilesServerApplicationExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\ISearchConditionsExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
