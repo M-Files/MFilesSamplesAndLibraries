@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using MFaaP.MFWSClient;
 using Newtonsoft.Json;
 
-namespace MFWSSearching
+namespace MFWSDownloading
 {
 	/// <summary>
-	/// A example of executing a simple search using the M-Files Web Service.
+	/// A example of downloading a file from the M-Files Web Service.
 	/// </summary>
 	class Program
 	{
@@ -17,16 +19,21 @@ namespace MFWSSearching
 		/// </summary>
 		private const string queryTerm = "mfws";
 
+		/// <summary>
+		/// The folder that the download will be placed in.
+		/// </summary>
+		private const string downloadFolder = @"c:\temp\mfws-downloads\";
+
 		static void Main(string[] args)
 		{
-			// Execute the search using the library.
-			System.Console.WriteLine($"Executing a search using the library.");
+			// Download the items using the library.
+			System.Console.WriteLine($"Downloading items using the library.");
 			UseLibrary();
 			System.Console.WriteLine("Complete.  Press enter to continue.");
 			System.Console.ReadLine();
 
-			// Execute the search without using the library.
-			System.Console.WriteLine($"Executing a search using the API directly.");
+			// Download the items without using the library.
+			System.Console.WriteLine($"Downloading items using the API directly.");
 			var task = UseAPIDirectly();
 			Task.WaitAll(task);
 			System.Console.WriteLine("Complete.  Press enter to continue.");
@@ -52,6 +59,29 @@ namespace MFWSSearching
 			{
 				System.Console.WriteLine($"\t{objectVersion.Title}");
 				System.Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+
+				// Create a folder for the files to go in.
+				var folderPath =
+					new System.IO.DirectoryInfo(System.IO.Path.Combine(Program.downloadFolder, objectVersion.ObjVer.ID.ToString()));
+				if (false == folderPath.Exists)
+					folderPath.Create();
+
+				// Download the files.
+				foreach (var file in objectVersion.Files)
+				{
+					// Generate a unique file name.
+					var fileName = System.IO.Path.Combine(folderPath.FullName, file.ID + "." + file.Extension);
+
+					// Download the file data.
+					client.DownloadFile(objectVersion.ObjVer.Type,
+						objectVersion.ObjVer.ID,
+						objectVersion.Files[0].ID,
+						fileName,
+						objectVersion.ObjVer.Version);
+
+					System.Console.WriteLine($"\t\t\tFile: {file.Name} output to {fileName}");
+				}
+
 			}
 
 
@@ -70,7 +100,10 @@ namespace MFWSSearching
 			var httpClient = new HttpClient();
 
 			// Start the request.
-			var responseBody = await httpClient.GetStringAsync(url);
+			var requestTask = await httpClient.GetStringAsync(url);
+
+			// Retrieve the body.
+			string responseBody = requestTask;
 
 			// Output the body.
 			// System.Console.WriteLine($"Raw content returned: {responseBody}.");
@@ -84,10 +117,39 @@ namespace MFWSSearching
 			{
 				System.Console.WriteLine($"\t{objectVersion.Title}");
 				System.Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+
+				// Create a folder for the files to go in.
+				var folderPath =
+					new System.IO.DirectoryInfo(System.IO.Path.Combine(Program.downloadFolder, objectVersion.ObjVer.ID.ToString()));
+				if (false == folderPath.Exists)
+					folderPath.Create();
+
+				// Download the files.
+				foreach (var file in objectVersion.Files)
+				{
+					// Generate a unique file name.
+					var fileName = System.IO.Path.Combine(folderPath.FullName, file.ID + "." + file.Extension);
+
+					// Download the file data.
+					var data = await
+						httpClient.GetByteArrayAsync(
+							$"http://kb.cloudvault.m-files.com/REST/objects/{objectVersion.ObjVer.Type}/{objectVersion.ObjVer.ID}/{objectVersion.ObjVer.Version}/files/{file.ID}/content");
+
+					// Open a stream to the file.
+					using (var stream = System.IO.File.OpenWrite(fileName))
+					{
+						// Save the content to disk.
+						stream.Write(data, 0, data.Length);
+					}
+
+					// Log.
+					System.Console.WriteLine($"\t\t\tFile: {file.Name} output to {fileName}");
+
+				}
 			}
 
 		}
-		
+
 		#region Classes for deserialisation (only used with the direct API calls)
 
 		/// <summary>
