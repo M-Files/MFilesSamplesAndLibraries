@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 using RestSharp;
 using RestSharp.Deserializers;
 
@@ -72,7 +73,7 @@ namespace MFaaP.MFWSClient
 		/// <typeparam name="T">The expected return type.</typeparam>
 		/// <param name="request">The request to execute.</param>
 		/// <returns>The response.</returns>
-		public IRestResponse<T> Get<T>(IRestRequest request)
+		public async Task<IRestResponse<T>> Get<T>(IRestRequest request)
 			where T : new()
 		{
 			// Sanity.
@@ -86,7 +87,7 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = this.restClient.Get<T>(request);
+			var response = await this.restClient.ExecuteTaskAsync<T>(request);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -100,7 +101,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="request">The request to execute.</param>
 		/// <returns>The response.</returns>
-		public IRestResponse Get(IRestRequest request)
+		public async Task<IRestResponse> Get(IRestRequest request)
 		{
 			// Sanity.
 			if (null == request)
@@ -113,7 +114,7 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = this.restClient.Get(request);
+			var response = await this.restClient.ExecuteTaskAsync(request);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -128,7 +129,7 @@ namespace MFaaP.MFWSClient
 		/// <typeparam name="T">The expected return type.</typeparam>
 		/// <param name="request">The request to execute.</param>
 		/// <returns>The response.</returns>
-		public IRestResponse<T> Post<T>(IRestRequest request)
+		public async Task<IRestResponse<T>> Post<T>(IRestRequest request)
 			where T : new()
 		{
 			// Sanity.
@@ -142,7 +143,7 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = this.restClient.Post<T>(request);
+			var response = await this.restClient.ExecuteTaskAsync<T>(request);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -156,7 +157,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="request">The request to execute.</param>
 		/// <returns>The response.</returns>
-		public IRestResponse Post(IRestRequest request)
+		public async Task<IRestResponse> Post(IRestRequest request)
 		{
 			// Sanity.
 			if (null == request)
@@ -169,7 +170,7 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = this.restClient.Post(request);
+			var response = await this.restClient.ExecuteTaskAsync(request);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);

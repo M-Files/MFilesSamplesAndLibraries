@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using RestSharp;
 
 namespace MFaaP.MFWSClient
@@ -52,7 +53,7 @@ namespace MFaaP.MFWSClient
 		/// Attempts SSO (Single Sign On) authentication with the remote web server.
 		/// </summary>
 		/// <param name="vaultId">The id of the vault to authenticate to.</param>
-		public void AuthenticateUsingSingleSignOn(Guid vaultId)
+		public async Task AuthenticateUsingSingleSignOn(Guid vaultId)
 		{
 			// Clear any current tokens.
 			this.ClearAuthenticationToken();
@@ -66,7 +67,7 @@ namespace MFaaP.MFWSClient
 			request.Credentials = CredentialCache.DefaultNetworkCredentials;
 
 			// Execute the request and store the response.
-			var response = this.Get(request);
+			IRestResponse response = await this.Get(request);
 
 			// Save the response cookies in our persistent RestClient cookie container.
 			// Note: We should have at least one returned which is the ASP.NET session Id.
@@ -86,10 +87,10 @@ namespace MFaaP.MFWSClient
 		/// <param name="vaultId">The Id of the vault to connect to.</param>
 		/// <param name="username">The username to use.</param>
 		/// <param name="password">The password to use.</param>
-		public void AuthenticateUsingCredentials(Guid? vaultId, string username, string password)
+		public Task AuthenticateUsingCredentials(Guid? vaultId, string username, string password)
 		{
 			// Use the other overload.
-			this.AuthenticateUsingCredentials(new Authentication()
+			return this.AuthenticateUsingCredentials(new Authentication()
 			{
 				Username = username,
 				Password = password,
@@ -101,7 +102,7 @@ namespace MFaaP.MFWSClient
 		/// Authenticates to the server using details passed in the authentication parameter.
 		/// </summary>
 		/// <param name="authentication">The authentication details to use.</param>
-		protected void AuthenticateUsingCredentials(Authentication authentication)
+		protected async Task AuthenticateUsingCredentials(Authentication authentication)
 		{
 			// Clear any current tokens.
 			this.ClearAuthenticationToken();
@@ -116,7 +117,7 @@ namespace MFaaP.MFWSClient
 				request.AddJsonBody(authentication);
 
 				// Execute the request and store the response.
-				var response = this.Post<PrimitiveType<string>>(request);
+				var response = await this.Post<PrimitiveType<string>>(request);
 
 				// Save the authentication token.
 				this.AuthenticationToken = response?.Data?.Value;
@@ -128,13 +129,13 @@ namespace MFaaP.MFWSClient
 		/// Gets the vaults from the server, using the current authentication token.
 		/// </summary>
 		/// <returns></returns>
-		public List<Vault> GetOnlineVaults()
+		public async Task<List<Vault>> GetOnlineVaults()
 		{
 			// Build the request to authenticate to the vault.
 			var request = new RestRequest("/REST/server/vaults?online=true");
 
 			// Execute the request and store the response.
-			var response = this.Get<List<Vault>>(request);
+			var response = await this.Get<List<Vault>>(request);
 
 			// Store the authentication token.
 			return response?.Data;

@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using System.Threading.Tasks;
+using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
@@ -12,7 +13,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="extensionMethodName">The name of the extension method.</param>
 		/// <param name="input">The input (cannot be null) parameter.</param>
 		/// <returns>The response of the extension method, deserialised to an instance of <see cref="TA"/>.</returns>
-		public TA ExecuteExtensionMethod<TA, TB>(string extensionMethodName, TB input = null)
+		public async Task<TA> ExecuteExtensionMethod<TA, TB>(string extensionMethodName, TB input = null)
 			where TA : new()
 			where TB : class
 		{
@@ -26,7 +27,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = this.Post<TA>(request);
+			var response = await this.Post<TA>(request);
 
 			// Return the data.
 			return response.Data;
@@ -38,7 +39,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="extensionMethodName">The name of the extension method.</param>
 		/// <param name="input">The input (cannot be null) parameter.</param>
 		/// <returns>The response of the extension method.</returns>
-		public string ExecuteExtensionMethod<TB>(string extensionMethodName, TB input = null)
+		public async Task<string> ExecuteExtensionMethod<TB>(string extensionMethodName, TB input = null)
 			where TB : class
 		{
 			// Create the request.
@@ -51,7 +52,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = this.Post(request);
+			var response = await this.Post(request);
 
 			// Return the data.
 			return response.Content;
@@ -63,7 +64,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="extensionMethodName">The name of the extension method.</param>
 		/// <param name="input">The input parameter.</param>
 		/// <returns>The response of the extension method as a string.</returns>
-		public string ExecuteExtensionMethod(string extensionMethodName, string input = null)
+		public async Task<string> ExecuteExtensionMethod(string extensionMethodName, string input = null)
 		{
 
 			// Create the request.
@@ -84,7 +85,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = this.Post(request);
+			var response = await this.Post(request);
 
 			// Return the data.
 			return response.Content;

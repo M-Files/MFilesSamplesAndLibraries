@@ -33,12 +33,12 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>()))
 				.Callback((IRestRequest r) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
-				.Returns(new Mock<IRestResponse>().Object);
+				.Returns(System.Threading.Tasks.Task.FromResult(new Mock<IRestResponse>().Object));
 
 			/* Act */
 
@@ -46,12 +46,13 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingSingleSignOn(guid);
+			var task = mfwsClient.AuthenticateUsingSingleSignOn(guid);
+			System.Threading.Tasks.Task.WaitAll(task);
 
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual($"/WebServiceSSO.aspx?popup=1&vault={guid.ToString("D")}", resourceAddress);
@@ -77,12 +78,12 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>()))
 				.Callback((IRestRequest r) => {
 					methodUsed = r.Method;
 				})
 				// Return a mock response.
-				.Returns(new Mock<IRestResponse>().Object);
+				.Returns(System.Threading.Tasks.Task.FromResult(new Mock<IRestResponse>().Object));
 
 			/* Act */
 
@@ -90,12 +91,13 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingSingleSignOn(guid);
+			var task = mfwsClient.AuthenticateUsingSingleSignOn(guid);
+			System.Threading.Tasks.Task.WaitAll(task);
 
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.GET, methodUsed);
@@ -122,7 +124,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>()))
 				// Return a mock response.
 				.Returns(() =>
 				{
@@ -137,7 +139,7 @@ namespace MFaaP.MFWSClient.Tests
 								Domain = "localhost"
 							}
 						});
-					return response.Object;
+					return System.Threading.Tasks.Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -146,12 +148,13 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingSingleSignOn(guid);
+			var task = mfwsClient.AuthenticateUsingSingleSignOn(guid);
+			System.Threading.Tasks.Task.WaitAll(task);
 
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Ensure cookie is in default cookie container.
 			var requestSessionCookie = mfwsClient
@@ -184,7 +187,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute<PrimitiveType<string>>(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>()))
 				.Callback((IRestRequest r) => {
 					resourceAddress = r.Resource;
 				})
@@ -202,7 +205,7 @@ namespace MFaaP.MFWSClient.Tests
 						});
 
 					//Return the mock object.
-					return response.Object;
+					return System.Threading.Tasks.Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -216,7 +219,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute<PrimitiveType<string>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/server/authenticationtokens", resourceAddress);
@@ -239,7 +242,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute<PrimitiveType<string>>(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>()))
 				.Callback((IRestRequest r) => {
 					methodUsed = r.Method;
 				})
@@ -257,7 +260,7 @@ namespace MFaaP.MFWSClient.Tests
 						});
 
 					//Return the mock object.
-					return response.Object;
+					return System.Threading.Tasks.Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -271,7 +274,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute<PrimitiveType<string>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.POST, methodUsed);
@@ -297,7 +300,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute<PrimitiveType<string>>(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>()))
 				.Callback((IRestRequest r) => {
 					requestBody = r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString();
 				})
@@ -315,7 +318,7 @@ namespace MFaaP.MFWSClient.Tests
 						});
 
 					//Return the mock object.
-					return response.Object;
+					return System.Threading.Tasks.Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -329,7 +332,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute<PrimitiveType<string>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Body must be correct.
 			Assert.AreEqual($"{{\"Username\":\"my username\",\"Password\":\"my password\",\"Domain\":null,\"WindowsUser\":false,\"ComputerName\":null,\"VaultGuid\":\"{vaultGuid.ToString("D")}\",\"Expiration\":null,\"ReadOnly\":false,\"URL\":null,\"Method\":null}}", requestBody);
@@ -349,7 +352,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute<PrimitiveType<string>>(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>()))
 				// Return a mock response.
 				.Returns(() =>
 				{
@@ -364,7 +367,7 @@ namespace MFaaP.MFWSClient.Tests
 						});
 
 					//Return the mock object.
-					return response.Object;
+					return System.Threading.Tasks.Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -378,7 +381,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute<PrimitiveType<string>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Authentication header must exist.
 			var authenticationHeader = mock.Object
@@ -409,7 +412,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute<List<Vault>>(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>()))
 				.Callback((IRestRequest r) => {
 					resourceAddress = r.Resource;
 				})
@@ -424,7 +427,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new List<Vault>());
 
 					//Return the mock object.
-					return response.Object;
+					return System.Threading.Tasks.Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -433,12 +436,13 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.GetOnlineVaults();
+			var task = mfwsClient.GetOnlineVaults();
+			System.Threading.Tasks.Task.WaitAll(task);
 
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute<List<Vault>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/server/vaults?online=true", resourceAddress);
@@ -461,7 +465,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.Execute<List<Vault>>(It.IsAny<IRestRequest>()))
+				.Setup(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>()))
 				.Callback((IRestRequest r) => {
 					methodUsed = r.Method;
 				})
@@ -476,7 +480,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new List<Vault>());
 
 					//Return the mock object.
-					return response.Object;
+					return System.Threading.Tasks.Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -485,12 +489,13 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.GetOnlineVaults();
+			var task = mfwsClient.GetOnlineVaults();
+			System.Threading.Tasks.Task.WaitAll(task);
 
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.Execute<List<Vault>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.GET, methodUsed);

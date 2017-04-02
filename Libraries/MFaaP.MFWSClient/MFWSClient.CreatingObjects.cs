@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using RestSharp;
 
 namespace MFaaP.MFWSClient
@@ -14,7 +15,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectTypeId">The type of the object.</param>
 		/// <param name="creationInfo">The creation information for the object.</param>
 		/// <returns></returns>
-		public ObjectVersion CreateObject(int objectTypeId, ObjectCreationInfo creationInfo)
+		public async Task<ObjectVersion> CreateObject(int objectTypeId, ObjectCreationInfo creationInfo)
 		{
 
 			// Sanity.
@@ -28,7 +29,7 @@ namespace MFaaP.MFWSClient
 			request.AddJsonBody(creationInfo);
 			
 			// Make the request and get the response.
-			var response = this.Post<ObjectVersion>(request);
+			var response = await this.Post<ObjectVersion>(request);
 
 			// Return the data.
 			return response.Data;
@@ -40,7 +41,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="files">The files to upload.</param>
 		/// <returns>Information on the upload.</returns>
-		public UploadInfo[] UploadFiles(params FileInfo[] files)
+		public async Task<UploadInfo[]> UploadFiles(params FileInfo[] files)
 		{
 			// Sanity.
 			if (null == files)
@@ -56,7 +57,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = this.Post<List<UploadInfo>>(request);
+			var response = await this.Post<List<UploadInfo>>(request);
 
 			// Ensure the uploadinfo is updated.
 			for (var i = 0; i < files.Length; i++)

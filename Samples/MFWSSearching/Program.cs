@@ -21,14 +21,13 @@ namespace MFWSSearching
 		{
 			// Execute the search using the library.
 			System.Console.WriteLine($"Executing a search using the library.");
-			UseLibrary();
+			Task.WaitAll(UseLibrary());
 			System.Console.WriteLine("Complete.  Press enter to continue.");
 			System.Console.ReadLine();
 
 			// Execute the search without using the library.
 			System.Console.WriteLine($"Executing a search using the API directly.");
-			var task = UseAPIDirectly();
-			Task.WaitAll(task);
+			Task.WaitAll(UseAPIDirectly());
 			System.Console.WriteLine("Complete.  Press enter to continue.");
 			System.Console.ReadLine();
 		}
@@ -36,7 +35,7 @@ namespace MFWSSearching
 		/// <summary>
 		/// Uses the helper library to execute a search.
 		/// </summary>
-		static void UseLibrary()
+		static async Task UseLibrary()
 		{
 
 			// Connect to the online knowledgebase.
@@ -44,7 +43,7 @@ namespace MFWSSearching
 			var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 			// Execute a quick search for the query term.
-			var results = client.QuickSearch(Program.queryTerm);
+			var results = await client.QuickSearch(Program.queryTerm);
 
 			// Iterate over the results and output them.
 			System.Console.WriteLine($"There were {results.Length} results returned.");

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using RestSharp;
 using RestSharp.Extensions.MonoHttp;
 
@@ -14,7 +15,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectTypeId">If provided, also restricts the results by the given object type.</param>
 		/// <returns>An array of items that match the search term.</returns>
 		/// <remarks>For more comprehensive search options, construct a series of <see cref="ISearchCondition"/> objects and use the <see cref="Search"/> method.</remarks>
-		public ObjectVersion[] QuickSearch(string searchTerm, int? objectTypeId = null)
+		public Task<ObjectVersion[]> QuickSearch(string searchTerm, int? objectTypeId = null)
 		{
 			// Create a collection of conditions.
 			var conditions = new List<ISearchCondition>
@@ -38,7 +39,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="searchConditions">The conditions to search for.</param>
 		/// <returns>An array of items that match the search conditions.</returns>
-		public ObjectVersion[] Search(params ISearchCondition[] searchConditions)
+		public async Task<ObjectVersion[]> Search(params ISearchCondition[] searchConditions)
 		{
 			// Sanity.
 			if(null == searchConditions)
@@ -79,7 +80,7 @@ namespace MFaaP.MFWSClient
 				request.Resource = request.Resource.Substring(0, request.Resource.Length - 1);
 
 			// Make the request and get the response.
-			var response = this.Get<Results<ObjectVersion>>(request);
+			var response = await this.Get<Results<ObjectVersion>>(request);
 
 			// Return the data.
 			return response.Data?.Items?.ToArray();
