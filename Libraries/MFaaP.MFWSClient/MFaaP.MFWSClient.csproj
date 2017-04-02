@@ -55,6 +55,8 @@
     <Compile Include="MFWSClientBase.HttpRequests.cs" />
     <Compile Include="MFWSStructs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestRequestEventArgs.cs" />
+    <Compile Include="RestResponseEventArgs.cs" />
     <Compile Include="Searching\ISearchCondition.cs" />
     <Compile Include="Searching\IncludeDeletedObjectsSearchCondition.cs" />
     <Compile Include="Searching\PropertyValues\DatePropertyValueSearchCondition.cs" />

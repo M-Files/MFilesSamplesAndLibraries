@@ -12,14 +12,27 @@ namespace MFaaP.MFWSClient
 	public abstract partial class MFWSClientBase
 	{
 		/// <summary>
+		/// Expected signature for the <see cref="MFWSClientBase.BeforeExecuteRequest"/> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The arguments.</param>
+		public delegate void BeforeExecuteRequestHandler(object sender, RestRequestEventArgs e);
+
+		/// <summary>
 		/// Occurs before a request is executed.
 		/// </summary>
-		public event EventHandler<IRestRequest> BeforeExecuteRequest;
+		public event BeforeExecuteRequestHandler BeforeExecuteRequest;
+		/// <summary>
+		/// Expected signature for the <see cref="MFWSClientBase.AfterExecuteRequest"/> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The arguments.</param>
+		public delegate void AfterExecuteRequestHandler(object sender, RestResponseEventArgs e);
 
 		/// <summary>
 		/// Occurs after a request is executed.
 		/// </summary>
-		public event EventHandler<IRestResponse> AfterExecuteRequest;
+		public event AfterExecuteRequestHandler AfterExecuteRequest;
 
 		/// <summary>
 		/// This is the RestClient which will do the actual requests.
@@ -105,7 +118,7 @@ namespace MFaaP.MFWSClient
 #endif
 
 			// Notify subscribers.
-			BeforeExecuteRequest?.Invoke(this, e);
+			BeforeExecuteRequest?.Invoke(this, new RestRequestEventArgs(e));
 		}
 
 		/// <summary>
@@ -122,7 +135,7 @@ namespace MFaaP.MFWSClient
 #endif
 
 			// Notify subscribers.
-			AfterExecuteRequest?.Invoke(this, e);
+			AfterExecuteRequest?.Invoke(this, new RestResponseEventArgs(e));
 
 			// If we had an invalid response, throw it.
 			this.EnsureValidResponse(e);

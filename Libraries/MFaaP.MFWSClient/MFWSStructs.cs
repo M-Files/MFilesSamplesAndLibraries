@@ -517,6 +517,7 @@ namespace MFaaP.MFWSClient
 	/// <summary>
 	/// Allows a <see cref="ExceptionInfo"/> object to be expressed as a <see cref="Exception"/>.
 	/// </summary>
+	[Serializable]
 	internal class ExceptionInfoException
 		: System.Exception
 	{

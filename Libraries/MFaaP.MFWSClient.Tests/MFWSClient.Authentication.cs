@@ -55,7 +55,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Resource must be correct.
-			Assert.AreEqual($"/WebServiceSSO.aspx?popup=1&vault={guid.ToString("D")}", resourceAddress);
+			Assert.AreEqual($"/WebServiceSSO.aspx?popup=1&vault={guid:D}", resourceAddress);
 		}
 
 		/// <summary>
