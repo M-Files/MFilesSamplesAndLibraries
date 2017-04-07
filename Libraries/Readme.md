@@ -28,5 +28,6 @@ It currently provides the following functionality:
 * File upload (`MFWSClient.CreatingObjects.cs`)
 * Vault extension method execution (`MFWSClient.ExtensionMethods.cs`)
 * Searching (`MFWSClient.Searching.cs`)
+* Retrieving view contents (`MFWSClient.Views.cs`)
 
 Further details are available within the Readme.md file in the project folder.

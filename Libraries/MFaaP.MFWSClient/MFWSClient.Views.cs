@@ -11,7 +11,8 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Gets the contents of the root ("home") view.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The contents of the view.</returns>
+		/// <remarks>Identical to calling <see cref="GetViewContents"/> with no parameters.</remarks>
 		public Task<FolderContentItems> GetRootViewContents()
 		{
 			// Get the root view contents.
