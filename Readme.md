@@ -9,6 +9,13 @@ Whilst the code aims to be as compatible as possible, please note that this is c
 * The latest public M-Files build (currently M-Files 2015.3 SR2)
 * Visual Studio 2015 Update 3
 
+# Solutions
+
+Two solutions are available within this repository: `MFSamplesAndLibraries` and `MFWSSamplesAndLibraries`.
+
+* `MFSamplesAndLibraries` is a solution containing all samples and libraries, and can be used to easily open and investigate the entire codebase.  This requires that you have the latest M-Files build installed on your development machine.
+* `MFWSSamplesAndLibraries` contains only the libraries and samples used to access the M-Files Web Service.  This solution does not require the M-Files client to be installed.
+
 ## Libraries
 
 More information is available within the Readme file in the Libraries folder.

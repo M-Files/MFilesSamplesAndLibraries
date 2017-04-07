@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RestSharp;
@@ -16,7 +16,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void QuickSearch_CorrectResource()
+		public async Task QuickSearch_CorrectResource()
 		{
 			/* Arrange */
 
@@ -43,7 +43,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -52,7 +52,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.QuickSearch("hello world");
+			await mfwsClient.QuickSearch("hello world");
 
 			/* Assert */
 
@@ -68,7 +68,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address when used with an object type.
 		/// </summary>
 		[TestMethod]
-		public void QuickSearch_CorrectResource_WithObjectType()
+		public async Task QuickSearch_CorrectResource_WithObjectType()
 		{
 			/* Arrange */
 
@@ -95,7 +95,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -104,7 +104,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.QuickSearch("hello world", 0);
+			await mfwsClient.QuickSearch("hello world", 0);
 
 			/* Assert */
 
@@ -120,7 +120,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public void QuickSearch_CorrectMethod()
+		public async Task QuickSearch_CorrectMethod()
 		{
 			/* Arrange */
 
@@ -147,7 +147,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -156,7 +156,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.QuickSearch("hello world");
+			await mfwsClient.QuickSearch("hello world");
 
 			/* Assert */
 
@@ -172,7 +172,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method when used with an object type.
 		/// </summary>
 		[TestMethod]
-		public void QuickSearch_CorrectMethod_WithObjectType()
+		public async Task QuickSearch_CorrectMethod_WithObjectType()
 		{
 			/* Arrange */
 
@@ -199,7 +199,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -208,7 +208,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.QuickSearch("hello world", 0);
+			await mfwsClient.QuickSearch("hello world", 0);
 
 			/* Assert */
 
@@ -228,7 +228,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public void Search_CorrectMethod()
+		public async Task Search_CorrectMethod()
 		{
 			/* Arrange */
 
@@ -255,7 +255,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -264,7 +264,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new QuickSearchCondition("hello world"));
+			await mfwsClient.Search(new QuickSearchCondition("hello world"));
 
 			/* Assert */
 
@@ -284,7 +284,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_QuickSearch_CorrectResource()
+		public async Task Search_QuickSearch_CorrectResource()
 		{
 			/* Arrange */
 
@@ -311,7 +311,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -320,7 +320,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new QuickSearchCondition("hello world"));
+			await mfwsClient.Search(new QuickSearchCondition("hello world"));
 
 			/* Assert */
 
@@ -340,7 +340,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_ObjectTypeSearchCondition_CorrectResource()
+		public async Task Search_ObjectTypeSearchCondition_CorrectResource()
 		{
 			/* Arrange */
 
@@ -367,7 +367,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -376,7 +376,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new ObjectTypeSearchCondition(123));
+			await mfwsClient.Search(new ObjectTypeSearchCondition(123));
 
 			/* Assert */
 
@@ -396,7 +396,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_IncludeDeletedObjectsSearchCondition_CorrectResource()
+		public async Task Search_IncludeDeletedObjectsSearchCondition_CorrectResource()
 		{
 			/* Arrange */
 
@@ -423,7 +423,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -432,7 +432,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new IncludeDeletedObjectsSearchCondition());
+			await mfwsClient.Search(new IncludeDeletedObjectsSearchCondition());
 
 			/* Assert */
 
@@ -452,7 +452,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_BooleanPropertyValueSearchCondition_CorrectResource_True()
+		public async Task Search_BooleanPropertyValueSearchCondition_CorrectResource_True()
 		{
 			/* Arrange */
 
@@ -479,7 +479,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -488,7 +488,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new BooleanPropertyValueSearchCondition(123, true));
+			await mfwsClient.Search(new BooleanPropertyValueSearchCondition(123, true));
 
 			/* Assert */
 
@@ -504,7 +504,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_BooleanPropertyValueSearchCondition_CorrectResource_False()
+		public async Task Search_BooleanPropertyValueSearchCondition_CorrectResource_False()
 		{
 			/* Arrange */
 
@@ -531,7 +531,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -540,7 +540,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new BooleanPropertyValueSearchCondition(123, false));
+			await mfwsClient.Search(new BooleanPropertyValueSearchCondition(123, false));
 
 			/* Assert */
 
@@ -560,7 +560,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_DatePropertyValueSearchCondition_CorrectResource_Equals()
+		public async Task Search_DatePropertyValueSearchCondition_CorrectResource_Equals()
 		{
 			/* Arrange */
 
@@ -587,7 +587,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -596,7 +596,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01)));
+			await mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01)));
 
 			/* Assert */
 
@@ -612,7 +612,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_DatePropertyValueSearchCondition_CorrectResource_LessThan()
+		public async Task Search_DatePropertyValueSearchCondition_CorrectResource_LessThan()
 		{
 			/* Arrange */
 
@@ -639,7 +639,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -648,7 +648,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01), SearchConditionOperators.LessThan));
+			await mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01), SearchConditionOperators.LessThan));
 
 			/* Assert */
 
@@ -664,7 +664,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_DatePropertyValueSearchCondition_CorrectResource_LessThanOrEqual()
+		public async Task Search_DatePropertyValueSearchCondition_CorrectResource_LessThanOrEqual()
 		{
 			/* Arrange */
 
@@ -691,7 +691,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -700,7 +700,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01), SearchConditionOperators.LessThanOrEqual));
+			await mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01), SearchConditionOperators.LessThanOrEqual));
 
 			/* Assert */
 
@@ -716,7 +716,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_DatePropertyValueSearchCondition_CorrectResource_GreaterThan()
+		public async Task Search_DatePropertyValueSearchCondition_CorrectResource_GreaterThan()
 		{
 			/* Arrange */
 
@@ -743,7 +743,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -752,7 +752,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01), SearchConditionOperators.GreaterThan));
+			await mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01), SearchConditionOperators.GreaterThan));
 
 			/* Assert */
 
@@ -768,7 +768,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_DatePropertyValueSearchCondition_CorrectResource_GreaterThanOrEqual()
+		public async Task Search_DatePropertyValueSearchCondition_CorrectResource_GreaterThanOrEqual()
 		{
 			/* Arrange */
 
@@ -795,7 +795,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -804,7 +804,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01), SearchConditionOperators.GreaterThanOrEqual));
+			await mfwsClient.Search(new DatePropertyValueSearchCondition(123, new DateTime(2017, 01, 01), SearchConditionOperators.GreaterThanOrEqual));
 
 			/* Assert */
 
@@ -824,7 +824,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_LookupPropertyValueSearchCondition_CorrectResource()
+		public async Task Search_LookupPropertyValueSearchCondition_CorrectResource()
 		{
 			/* Arrange */
 
@@ -851,7 +851,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -860,7 +860,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new LookupPropertyValueSearchCondition(123, 456));
+			await mfwsClient.Search(new LookupPropertyValueSearchCondition(123, 456));
 
 			/* Assert */
 
@@ -876,7 +876,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_LookupPropertyValueSearchCondition_CorrectResource_ExternalLookup()
+		public async Task Search_LookupPropertyValueSearchCondition_CorrectResource_ExternalLookup()
 		{
 			/* Arrange */
 
@@ -903,7 +903,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -912,7 +912,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new LookupPropertyValueSearchCondition(123, "456"));
+			await mfwsClient.Search(new LookupPropertyValueSearchCondition(123, "456"));
 
 			/* Assert */
 
@@ -932,7 +932,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_MultiSelectLookupPropertyValueSearchCondition_CorrectResource()
+		public async Task Search_MultiSelectLookupPropertyValueSearchCondition_CorrectResource()
 		{
 			/* Arrange */
 
@@ -959,7 +959,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -968,7 +968,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new MultiSelectLookupPropertyValueSearchCondition(123, new [] {  456, 789 }));
+			await mfwsClient.Search(new MultiSelectLookupPropertyValueSearchCondition(123, new [] {  456, 789 }));
 
 			/* Assert */
 
@@ -976,7 +976,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Resource must be correct.
-			Assert.AreEqual("/REST/objects?p123=456%2c789", resourceAddress);
+			Assert.AreEqual("/REST/objects?p123=456%2C789", resourceAddress);
 		}
 
 		/// <summary>
@@ -984,7 +984,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_MultiSelectLookupPropertyValueSearchCondition_CorrectResource_ExternalLookup()
+		public async Task Search_MultiSelectLookupPropertyValueSearchCondition_CorrectResource_ExternalLookup()
 		{
 			/* Arrange */
 
@@ -1011,7 +1011,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -1020,7 +1020,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new MultiSelectLookupPropertyValueSearchCondition(123, new [] {  "456", "789" }));
+			await mfwsClient.Search(new MultiSelectLookupPropertyValueSearchCondition(123, new [] {  "456", "789" }));
 
 			/* Assert */
 
@@ -1028,7 +1028,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Resource must be correct.
-			Assert.AreEqual("/REST/objects?p123=e456%2ce789", resourceAddress);
+			Assert.AreEqual("/REST/objects?p123=e456%2Ce789", resourceAddress);
 		}
 
 		#endregion
@@ -1040,7 +1040,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_TextPropertyValueSearchCondition_CorrectResource_Equals()
+		public async Task Search_TextPropertyValueSearchCondition_CorrectResource_Equals()
 		{
 			/* Arrange */
 
@@ -1067,7 +1067,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -1076,7 +1076,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new TextPropertyValueSearchCondition(123, "hello"));
+			await mfwsClient.Search(new TextPropertyValueSearchCondition(123, "hello"));
 
 			/* Assert */
 
@@ -1092,7 +1092,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_TextPropertyValueSearchCondition_CorrectResource_MatchesWildcard()
+		public async Task Search_TextPropertyValueSearchCondition_CorrectResource_MatchesWildcard()
 		{
 			/* Arrange */
 
@@ -1119,7 +1119,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -1128,7 +1128,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new TextPropertyValueSearchCondition(123, "hello*", SearchConditionOperators.MatchesWildcard));
+			await mfwsClient.Search(new TextPropertyValueSearchCondition(123, "hello*", SearchConditionOperators.MatchesWildcard));
 
 			/* Assert */
 
@@ -1144,7 +1144,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_TextPropertyValueSearchCondition_CorrectResource_Contains()
+		public async Task Search_TextPropertyValueSearchCondition_CorrectResource_Contains()
 		{
 			/* Arrange */
 
@@ -1171,7 +1171,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -1180,7 +1180,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new TextPropertyValueSearchCondition(123, "hello", SearchConditionOperators.Contains));
+			await mfwsClient.Search(new TextPropertyValueSearchCondition(123, "hello", SearchConditionOperators.Contains));
 
 			/* Assert */
 
@@ -1196,7 +1196,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void Search_TextPropertyValueSearchCondition_CorrectResource_StartsWith()
+		public async Task Search_TextPropertyValueSearchCondition_CorrectResource_StartsWith()
 		{
 			/* Arrange */
 
@@ -1223,7 +1223,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new Results<ObjectVersion>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -1232,7 +1232,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.Search(new TextPropertyValueSearchCondition(123, "hello", SearchConditionOperators.StartsWith));
+			await mfwsClient.Search(new TextPropertyValueSearchCondition(123, "hello", SearchConditionOperators.StartsWith));
 
 			/* Assert */
 

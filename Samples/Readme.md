@@ -12,6 +12,7 @@ The following samples are available in this solution:
 
 * `MFWSDownloading` - An example of downloading files from the M-Files Web Service.
 * `MFWSSearching` - An example of executing basic searches against the M-Files Web Service.
+* `MFWSViewNavigation` - An example of retrieving views and their contents from the M-Files Web Service.
 
 ## Vault Application Framework
 

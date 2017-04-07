@@ -100,12 +100,16 @@ namespace MFaaP.MFWSClient
     /// A &#39;typed value&#39; represents a value, such as text, number, date or lookup item.
     /// </summary>
     public class TypedValue
-    {
+	{
 
-        /// <summary>
-        /// Specifies the type of the value.
-        /// </summary>
-        public MFDataType DataType { get; set; }
+		public TypedValue()
+		{
+		}
+
+		/// <summary>
+		/// Specifies the type of the value.
+		/// </summary>
+		public MFDataType DataType { get; set; }
         
         /// <summary>
         /// Specifies whether the typed value contains a real value.
@@ -125,7 +129,7 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// Specifies the collection of \type{Lookup}s when the DataType is MultiSelectLookup.
         /// </summary>
-        public Lookup[] Lookups { get; set; }
+        public List<Lookup> Lookups { get; set; }
         
         /// <summary>
         /// Provides the value formatted for display.
@@ -356,8 +360,11 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class FolderContentItems
     {
+	    public FolderContentItems()
+	    {
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// The path to the current folder.
         /// </summary>
         public string Path { get; set; }
@@ -370,7 +377,7 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// The actual folder contents.
         /// </summary>
-        public FolderContentItem[] Items { get; set; }
+        public List<FolderContentItem> Items { get; set; }
         
     }
 
@@ -1124,12 +1131,16 @@ namespace MFaaP.MFWSClient
     /// Based on M-Files API.
     /// </summary>
     public class Lookup
-    {
+	{
 
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public bool Deleted { get; set; }
+		public Lookup()
+		{
+		}
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool Deleted { get; set; }
         
         /// <summary>
         /// Based on M-Files API.
@@ -1209,12 +1220,16 @@ namespace MFaaP.MFWSClient
     /// Based on M-Files API.
     /// </summary>
     public class FolderContentItem
-    {
+	{
 
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public MFFolderContentItemType FolderContentItemType { get; set; }
+		public FolderContentItem()
+		{
+		}
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public MFFolderContentItemType FolderContentItemType { get; set; }
         
         /// <summary>
         /// Based on M-Files API.
@@ -1244,12 +1259,16 @@ namespace MFaaP.MFWSClient
     /// Based on M-Files API.
     /// </summary>
     public class View
-    {
+	{
 
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public bool Common { get; set; }
+		public View()
+		{
+		}
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool Common { get; set; }
         
         /// <summary>
         /// Based on M-Files API.
@@ -1279,12 +1298,16 @@ namespace MFaaP.MFWSClient
     /// Based on M-Files API.
     /// </summary>
     public class ViewLocation
-    {
+	{
 
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public TypedValue OverlappedFolder { get; set; }
+		public ViewLocation()
+		{
+		}
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public TypedValue OverlappedFolder { get; set; }
         
         /// <summary>
         /// Based on M-Files API.

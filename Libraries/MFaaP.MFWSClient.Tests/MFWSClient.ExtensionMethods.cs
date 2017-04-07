@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RestSharp;
@@ -15,7 +16,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void ExecuteExtensionMethod_CorrectResource()
+		public async Task ExecuteExtensionMethod_CorrectResource()
 		{
 			/* Arrange */
 
@@ -42,7 +43,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns("returnValue");
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -51,8 +52,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.ExecuteExtensionMethod("HelloWorld");
-			System.Threading.Tasks.Task.WaitAll(task);
+			await mfwsClient.ExecuteExtensionMethod("HelloWorld");
 
 			/* Assert */
 
@@ -68,7 +68,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public void ExecuteExtensionMethod_CorrectMethod()
+		public async Task ExecuteExtensionMethod_CorrectMethod()
 		{
 			/* Arrange */
 
@@ -95,7 +95,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns("returnValue");
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -104,8 +104,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.ExecuteExtensionMethod("HelloWorld");
-			System.Threading.Tasks.Task.WaitAll(task);
+			await mfwsClient.ExecuteExtensionMethod("HelloWorld");
 
 			/* Assert */
 
@@ -121,7 +120,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void ExecuteExtensionMethod_CorrectRequestBody()
+		public async Task ExecuteExtensionMethod_CorrectRequestBody()
 		{
 			/* Arrange */
 
@@ -151,7 +150,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns("returnValue");
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -160,8 +159,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.ExecuteExtensionMethod("HelloWorld", inputValue);
-			System.Threading.Tasks.Task.WaitAll(task);
+			await mfwsClient.ExecuteExtensionMethod("HelloWorld", inputValue);
 
 			/* Assert */
 
@@ -177,7 +175,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void ExecuteExtensionMethod_CorrectOutput()
+		public async Task ExecuteExtensionMethod_CorrectOutput()
 		{
 			/* Arrange */
 
@@ -201,7 +199,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(outputValue);
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -210,9 +208,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.ExecuteExtensionMethod("HelloWorld", "this is my test input value");
-			System.Threading.Tasks.Task.WaitAll(task);
-			var output = task.Result;
+			var output = await mfwsClient.ExecuteExtensionMethod("HelloWorld", "this is my test input value");
 
 			/* Assert */
 
@@ -232,7 +228,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void ExecuteExtensionMethod_CorrectResource_InputSerialisation()
+		public async Task ExecuteExtensionMethod_CorrectResource_InputSerialisation()
 		{
 			/* Arrange */
 
@@ -259,7 +255,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns("returnValue");
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -268,12 +264,11 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.ExecuteExtensionMethod("HelloWorld", new
+			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
 			});
-			System.Threading.Tasks.Task.WaitAll(task);
 
 			/* Assert */
 
@@ -289,7 +284,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public void ExecuteExtensionMethod_CorrectMethod_InputSerialisation()
+		public async Task ExecuteExtensionMethod_CorrectMethod_InputSerialisation()
 		{
 			/* Arrange */
 
@@ -316,7 +311,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns("returnValue");
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -325,12 +320,11 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.ExecuteExtensionMethod("HelloWorld", new
+			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
 			});
-			System.Threading.Tasks.Task.WaitAll(task);
 
 			/* Assert */
 
@@ -346,7 +340,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void ExecuteExtensionMethod_CorrectRequestBody_InputSerialisation()
+		public async Task ExecuteExtensionMethod_CorrectRequestBody_InputSerialisation()
 		{
 			/* Arrange */
 
@@ -373,7 +367,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns("returnValue");
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -382,12 +376,11 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.ExecuteExtensionMethod("HelloWorld", new
+			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
 			});
-			System.Threading.Tasks.Task.WaitAll(task);
 
 			/* Assert */
 
@@ -403,7 +396,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void ExecuteExtensionMethod_CorrectOutput_InputSerialisation()
+		public async Task ExecuteExtensionMethod_CorrectOutput_InputSerialisation()
 		{
 			/* Arrange */
 
@@ -427,7 +420,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(outputValue);
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -436,13 +429,11 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.ExecuteExtensionMethod("HelloWorld", new
+			var output = await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
 			});
-			System.Threading.Tasks.Task.WaitAll(task);
-			var output = task.Result;
 
 			/* Assert */
 

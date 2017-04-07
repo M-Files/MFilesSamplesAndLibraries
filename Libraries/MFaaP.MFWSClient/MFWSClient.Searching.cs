@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using RestSharp;
-using RestSharp.Extensions.MonoHttp;
 
 namespace MFaaP.MFWSClient
 {
@@ -59,13 +59,13 @@ namespace MFaaP.MFWSClient
 				// Build up the search condition as detailed at http://www.m-files.com/mfws/syntax.html#sect:search-encoding
 
 				// Add on the expression.
-				request.Resource += HttpUtility.UrlEncode(searchCondition.Expression);
+				request.Resource += WebUtility.UrlEncode(searchCondition.Expression);
 
 				// Add the operator (parsed from the enumerated value).
 				request.Resource += GetSearchConditionOperator(searchCondition);
 
 				// Add the value.  Handle the null special-case.
-				request.Resource += null == searchCondition.EncodedValue ? "%00" : HttpUtility.UrlEncode(searchCondition.EncodedValue);
+				request.Resource += null == searchCondition.EncodedValue ? "%00" : WebUtility.UrlEncode(searchCondition.EncodedValue);
 
 				// We need to separate conditions with ampersands.
 				request.Resource += "&";

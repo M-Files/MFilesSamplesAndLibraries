@@ -65,6 +65,7 @@
     <Compile Include="MFWSClient.Authentication.cs" />
     <Compile Include="MFWSClient.cs" />
     <Compile Include="MFWSClient.ExtensionMethods.cs" />
+    <Compile Include="MFWSClient.Views.cs" />
     <Compile Include="MFWSClient.Searching.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

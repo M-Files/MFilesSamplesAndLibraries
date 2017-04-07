@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RestSharp;
@@ -18,7 +19,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void AuthenticateUsingSingleSignOn_CorrectResource()
+		public async Task AuthenticateUsingSingleSignOn_CorrectResource()
 		{
 			/* Arrange */
 
@@ -38,7 +39,7 @@ namespace MFaaP.MFWSClient.Tests
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
-				.Returns(System.Threading.Tasks.Task.FromResult(new Mock<IRestResponse>().Object));
+				.Returns(Task.FromResult(new Mock<IRestResponse>().Object));
 
 			/* Act */
 
@@ -46,8 +47,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.AuthenticateUsingSingleSignOn(guid);
-			System.Threading.Tasks.Task.WaitAll(task);
+			await mfwsClient.AuthenticateUsingSingleSignOn(guid);
 
 			/* Assert */
 
@@ -63,7 +63,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public void AuthenticateUsingSingleSignOn_CorrectMethod()
+		public async Task AuthenticateUsingSingleSignOn_CorrectMethod()
 		{
 			/* Arrange */
 
@@ -83,7 +83,7 @@ namespace MFaaP.MFWSClient.Tests
 					methodUsed = r.Method;
 				})
 				// Return a mock response.
-				.Returns(System.Threading.Tasks.Task.FromResult(new Mock<IRestResponse>().Object));
+				.Returns(Task.FromResult(new Mock<IRestResponse>().Object));
 
 			/* Act */
 
@@ -91,8 +91,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.AuthenticateUsingSingleSignOn(guid);
-			System.Threading.Tasks.Task.WaitAll(task);
+			await mfwsClient.AuthenticateUsingSingleSignOn(guid);
 
 			/* Assert */
 
@@ -108,7 +107,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public void AuthenticateUsingSingleSignOn_SessionIdSet()
+		public async Task AuthenticateUsingSingleSignOn_SessionIdSet()
 		{
 			/* Arrange */
 
@@ -139,7 +138,7 @@ namespace MFaaP.MFWSClient.Tests
 								Domain = "localhost"
 							}
 						});
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -148,8 +147,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.AuthenticateUsingSingleSignOn(guid);
-			System.Threading.Tasks.Task.WaitAll(task);
+			await mfwsClient.AuthenticateUsingSingleSignOn(guid);
 
 			/* Assert */
 
@@ -175,7 +173,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void AuthenticateUsingCredentials_CorrectResource()
+		public async Task AuthenticateUsingCredentials_CorrectResource()
 		{
 			/* Arrange */
 
@@ -205,7 +203,7 @@ namespace MFaaP.MFWSClient.Tests
 						});
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -214,7 +212,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
+			await mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
 
 			/* Assert */
 
@@ -230,7 +228,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public void AuthenticateUsingCredentials_CorrectMethod()
+		public async Task AuthenticateUsingCredentials_CorrectMethod()
 		{
 			/* Arrange */
 
@@ -260,7 +258,7 @@ namespace MFaaP.MFWSClient.Tests
 						});
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -269,7 +267,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
+			await mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
 
 			/* Assert */
 
@@ -285,7 +283,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct body.
 		/// </summary>
 		[TestMethod]
-		public void AuthenticateUsingCredentials_CorrectBody()
+		public async Task AuthenticateUsingCredentials_CorrectBody()
 		{
 			/* Arrange */
 
@@ -318,7 +316,7 @@ namespace MFaaP.MFWSClient.Tests
 						});
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -327,7 +325,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(vaultGuid, "my username", "my password");
+			await mfwsClient.AuthenticateUsingCredentials(vaultGuid, "my username", "my password");
 
 			/* Assert */
 
@@ -343,7 +341,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// sets the authentication header.
 		/// </summary>
 		[TestMethod]
-		public void AuthenticateUsingCredentials_AuthenticationHeaderSet()
+		public async Task AuthenticateUsingCredentials_AuthenticationHeaderSet()
 		{
 			/* Arrange */
 
@@ -367,7 +365,7 @@ namespace MFaaP.MFWSClient.Tests
 						});
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -376,7 +374,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
+			await mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
 
 			/* Assert */
 
@@ -400,7 +398,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public void GetOnlineVaults_CorrectResource()
+		public async Task GetOnlineVaults_CorrectResource()
 		{
 			/* Arrange */
 
@@ -427,7 +425,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new List<Vault>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -436,8 +434,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.GetOnlineVaults();
-			System.Threading.Tasks.Task.WaitAll(task);
+			await mfwsClient.GetOnlineVaults();
 
 			/* Assert */
 
@@ -453,7 +450,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public void GetOnlineVaults_CorrectMethod()
+		public async Task GetOnlineVaults_CorrectMethod()
 		{
 			/* Arrange */
 
@@ -480,7 +477,7 @@ namespace MFaaP.MFWSClient.Tests
 						.Returns(new List<Vault>());
 
 					//Return the mock object.
-					return System.Threading.Tasks.Task.FromResult(response.Object);
+					return Task.FromResult(response.Object);
 				});
 
 			/* Act */
@@ -489,8 +486,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			var task = mfwsClient.GetOnlineVaults();
-			System.Threading.Tasks.Task.WaitAll(task);
+			await mfwsClient.GetOnlineVaults();
 
 			/* Assert */
 
