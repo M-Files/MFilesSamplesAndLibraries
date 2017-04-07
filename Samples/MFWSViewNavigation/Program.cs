@@ -43,7 +43,10 @@ namespace MFWSViewNavigation
 			while (false == quit)
 			{
 
-				// Get the view contents (root if no parent)
+				// Get the view contents (root if no parent).
+				// We have to reverse this as, by default, Stack<T> will return data from
+				// the top of the stack downwards (newest -> oldest), whereas we want the bottom upwards
+				// (oldest -> newest).
 				var results = await client.GetViewContents(navigation.Reverse().ToArray());
 
 				// Output the number returned.
