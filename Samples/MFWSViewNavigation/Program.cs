@@ -65,65 +65,92 @@ namespace MFWSViewNavigation
 					System.Console.WriteLine($"\t{++count}: {item.FolderContentItemType}: {item.GetDisplayName()}");
 				}
 
-				// As the user to select a number to go to, or q to exit.
-				int selectedIndex = 0;
-				while (selectedIndex == 0)
+				// Ask them where to go next.
+				var nextNavItem = GetNextNavigationItem(results, out quit);
+
+				// If they didn't choose to quit then select the next navigation level.
+				if (false == quit)
 				{
-					// Prompt the user.
-					System.Console.WriteLine("Enter the number of the item to navigate to, or q to exit.");
-					var enteredText = System.Console.ReadLine();
 
-					// Did they ask to quit?
-					if ("q".Equals(enteredText, StringComparison.InvariantCultureIgnoreCase))
+					// Did they choose to go up a view?
+					if (null == nextNavItem)
 					{
-						// Quit!
-						quit = true;
-						break;
-					}
-
-					// Did they select a valid item?
-					if (Int32.TryParse(enteredText, out selectedIndex) && selectedIndex >= 0 && selectedIndex <= results.Items.Count)
-					{
-						// It was valid, but what did they select?
-
-						// 0 == go up a view.
-						if (selectedIndex == 0)
-						{
-							// Remove the top one from the navigation stack ("go back").
+						// Remove the top one from the navigation stack ("go back").
+						if(navigation.Count > 0)
 							navigation.Pop();
-
-							// Break (query for items at the new navigation stack);
-							break;
-						}
-						else
-						{
-							// Get the item selected.
-							var nextNavItem = results.Items[selectedIndex - 1];
-
-							// If it was an object version then we can't go in.
-							if (nextNavItem.FolderContentItemType == MFFolderContentItemType.ObjectVersion)
-							{
-								System.Console.WriteLine("You cannot navigate into an object.");
-								selectedIndex = 0;
-							}
-							else
-							{
-								// Add it to the navigation stack ("go in").
-								navigation.Push(nextNavItem);
-
-								// Break (query for items at the new navigation stack);
-								break;
-							}
-						}
 					}
 					else
 					{
-						// Not a valid item - ask again.
-						selectedIndex = 0;
+						// Add it to the navigation stack ("go in").
+						navigation.Push(nextNavItem);
 					}
+
 				}
+
 			}
 
+		}
+
+		/// <summary>
+		/// Prompts the user which view or property grouping to go int.
+		/// </summary>
+		/// <param name="itemsToChooseFrom">The items at this level.</param>
+		/// <param name="quit">If true, the user chose to quit rather than navigate.</param>
+		/// <returns>The selected item to navigate to, or null to go back a folder.</returns>
+		private static FolderContentItem GetNextNavigationItem(FolderContentItems itemsToChooseFrom, out bool quit)
+		{
+			int selectedIndex = -1;
+			quit = false;
+
+			// As the user to select a number to go to, or q to exit.
+			while (selectedIndex == -1)
+			{
+				// Prompt the user.
+				System.Console.WriteLine("Enter the number of the item to navigate to, or q to exit.");
+				var enteredText = System.Console.ReadLine();
+
+				// Did they ask to quit?
+				if ("q".Equals(enteredText, StringComparison.InvariantCultureIgnoreCase))
+				{
+					// Quit!
+					quit = true;
+					return null;
+				}
+
+				// Did they select a valid item?
+				if (Int32.TryParse(enteredText, out selectedIndex) && selectedIndex >= 0 && selectedIndex <= itemsToChooseFrom.Items.Count)
+				{
+					// It was valid, but what did they select?
+
+					// 0 == go up a view.
+					if (selectedIndex == 0)
+					{
+						return null;
+					}
+					else
+					{
+						// Get the item selected.
+						var nextNavItem = itemsToChooseFrom.Items[selectedIndex - 1];
+
+						// If it was an object version then we can't go in.
+						if (nextNavItem.FolderContentItemType == MFFolderContentItemType.ObjectVersion)
+						{
+							System.Console.WriteLine("You cannot navigate into an object.");
+							selectedIndex = -1;
+						}
+						else
+						{
+							// Otherwise navigate to the new level.
+							return nextNavItem;
+						}
+					}
+				}
+
+				// Not a valid item - ask again.
+				selectedIndex = -1;
+			}
+
+			return null;
 		}
 
 	}
