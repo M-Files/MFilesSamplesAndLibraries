@@ -76,7 +76,7 @@ namespace MFaaP.MFWSClient
 			{
 				foreach (var cookie in response.Cookies)
 				{
-					this.CookieContainer.Add(new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain));
+					this.CookieContainer.Add(this.BaseUrl, new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain));
 				}
 			}
 		}

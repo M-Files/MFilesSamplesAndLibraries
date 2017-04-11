@@ -59,6 +59,11 @@ namespace MFaaP.MFWSClient
 			set { this.restClient.CookieContainer = value; }
 		}
 
+        /// <summary>
+        /// The base rest service url.
+        /// </summary>
+	    public Uri BaseUrl => this.restClient.BaseUrl;
+
 		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>

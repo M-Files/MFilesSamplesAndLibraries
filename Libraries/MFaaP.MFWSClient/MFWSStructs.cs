@@ -34,7 +34,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if !WINDOWS_UWP
 using System.Web;
+#endif
 
 // Requires System.Runtime.Serialization reference.
 
@@ -467,13 +469,18 @@ namespace MFaaP.MFWSClient
 			if (null == info)
 				throw new ArgumentNullException(nameof(info));
 
-			// Convert.
-			return new HttpException(info.Status, info.ToString(),
+            // Convert.
+#if WINDOWS_UWP
+            return new Exception( info.ToString( ),
+                info.Exception == null ?  null : (System.Exception) info.Exception );
+#else
+            return new HttpException(info.Status, info.ToString(),
 				info.Exception == null ? null : (System.Exception)info.Exception);
-		}
+#endif
+        }
 
-	    /// <inheritdoc />
-	    public override string ToString()
+        /// <inheritdoc />
+        public override string ToString()
 	    {
 		    return $"{this.Method} request to {this.URL} returned a status code of {this.Status}.";
 	    }
@@ -521,11 +528,13 @@ namespace MFaaP.MFWSClient
 
 	}
 
-	/// <summary>
-	/// Allows a <see cref="ExceptionInfo"/> object to be expressed as a <see cref="Exception"/>.
-	/// </summary>
+    /// <summary>
+    /// Allows a <see cref="ExceptionInfo"/> object to be expressed as a <see cref="Exception"/>.
+    /// </summary>
+#if !WINDOWS_UWP
 	[Serializable]
-	internal class ExceptionInfoException
+#endif
+    internal class ExceptionInfoException
 		: System.Exception
 	{
 

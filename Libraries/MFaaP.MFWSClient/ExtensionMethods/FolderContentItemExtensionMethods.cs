@@ -162,7 +162,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 			// Same type; compare name.
 			var xName = x.GetDisplayName();
 			var yName = y.GetDisplayName();
-			return String.Compare(xName, yName, StringComparison.InvariantCultureIgnoreCase);
+			return String.Compare(xName, yName, StringComparison.OrdinalIgnoreCase);
 		}
 		
 		/// <summary>
