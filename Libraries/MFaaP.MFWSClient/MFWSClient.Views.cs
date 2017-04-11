@@ -26,7 +26,6 @@ namespace MFaaP.MFWSClient
 		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
 		/// then zero or more <see cref="FolderContentItem"/>s representing the appropriate property groups being shown.</param>
 		/// <returns>The contents of the view.</returns>
-		/// TODO: Should this abstract away overlapped folders?
 		public async Task<FolderContentItems> GetViewContents(params FolderContentItem[] items)
 		{
 			// Create the request.
