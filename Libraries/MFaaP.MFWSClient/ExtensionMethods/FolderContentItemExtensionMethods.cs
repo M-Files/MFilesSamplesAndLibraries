@@ -26,7 +26,9 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 				case MFFolderContentItemType.PropertyFolder:
 					return item.PropertyFolder.DisplayValue;
 				case MFFolderContentItemType.ViewFolder:
-					return item.View.Name;
+					return item.View.ViewLocation?.Overlapping == true
+						? item.View.ViewLocation.OverlappedFolder.DisplayValue
+						: item.View.Name;
 				case MFFolderContentItemType.TraditionalFolder:
 					return item.TraditionalFolder.DisplayValue;
 				default:
