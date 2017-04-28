@@ -49,8 +49,17 @@ namespace MFWSViewNavigation
 				// (oldest -> newest).
 				var results = await client.GetViewContents(navigation.Reverse().ToArray());
 
+				// Clear the screen.
+				System.Console.Clear();
+
+				// Get some indication of where we are.
+				var navigationString = String.Join(" > ", navigation.Reverse().Select(i => i.GetDisplayName()));
+
+				// Output it to screen.
+				System.Console.WriteLine(navigationString);
+
 				// Output the number returned.
-				System.Console.WriteLine($"There were {results.Items.Count} results returned.");
+				System.Console.WriteLine($"There are {results.Items.Count} items:");
 				var count = 0;
 
 				// If we can go up a view then give that option.
@@ -68,25 +77,22 @@ namespace MFWSViewNavigation
 				// Ask them where to go next.
 				var nextNavItem = GetNextNavigationItem(results, out quit);
 
-				// If they didn't choose to quit then select the next navigation level.
-				if (false == quit)
+				// If they chose to quit then exit out now.
+				if (quit)
+					continue;
+
+				// Did they choose to go up a view?
+				if (null == nextNavItem)
 				{
-
-					// Did they choose to go up a view?
-					if (null == nextNavItem)
-					{
-						// Remove the top one from the navigation stack ("go back").
-						if(navigation.Count > 0)
-							navigation.Pop();
-					}
-					else
-					{
-						// Add it to the navigation stack ("go in").
-						navigation.Push(nextNavItem);
-					}
-
+					// Remove the top one from the navigation stack ("go back").
+					if(navigation.Count > 0)
+						navigation.Pop();
 				}
-
+				else
+				{
+					// Add it to the navigation stack ("go in").
+					navigation.Push(nextNavItem);
+				}
 			}
 
 		}
