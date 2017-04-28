@@ -62,6 +62,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MFWSClient.Objects.cs" />
     <Compile Include="MFWSClient.Authentication.cs" />
     <Compile Include="MFWSClient.cs" />
     <Compile Include="MFWSClient.ExtensionMethods.cs" />

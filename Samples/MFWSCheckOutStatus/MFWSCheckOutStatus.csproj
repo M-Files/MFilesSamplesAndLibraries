@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B28D0C6A-C87B-461D-BD12-D627E9F653FC}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{5CDE9A3C-C7CF-45F9-BAC7-CACE11958DA4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MFaaP.MFWSClient</RootNamespace>
-    <AssemblyName>MFaaP.MFWSClient</AssemblyName>
+    <RootNamespace>MFWSCheckOutStatus</RootNamespace>
+    <AssemblyName>MFWSCheckOutStatus</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,13 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,37 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtensionMethods\FolderContentItemExtensionMethods.cs" />
-    <Compile Include="MFWSClient.Authentication.cs" />
-    <Compile Include="MFWSClient.Objects.cs" />
-    <Compile Include="MFWSClient.CreatingObjects.cs" />
-    <Compile Include="MFWSClient.cs" />
-    <Compile Include="MFWSClient.DownloadingFiles.cs" />
-    <Compile Include="MFWSClient.ExtensionMethods.cs" />
-    <Compile Include="MFWSClient.Searching.cs" />
-    <Compile Include="MFWSClient.Views.cs" />
-    <Compile Include="MFWSClientBase.cs" />
-    <Compile Include="MFWSClientBase.HttpRequests.cs" />
-    <Compile Include="MFWSStructs.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestRequestEventArgs.cs" />
-    <Compile Include="RestResponseEventArgs.cs" />
-    <Compile Include="Searching\ISearchCondition.cs" />
-    <Compile Include="Searching\IncludeDeletedObjectsSearchCondition.cs" />
-    <Compile Include="Searching\PropertyValues\DatePropertyValueSearchCondition.cs" />
-    <Compile Include="Searching\PropertyValues\MultiSelectLookupPropertyValueSearchCondition.cs" />
-    <Compile Include="Searching\PropertyValues\LookupPropertyValueSearchCondition.cs" />
-    <Compile Include="Searching\PropertyValues\BooleanPropertyValueSearchCondition.cs" />
-    <Compile Include="Searching\PropertyValues\TextPropertyValueSearchCondition.cs" />
-    <Compile Include="Searching\PropertyValues\PropertyValueSearchConditionBase.cs" />
-    <Compile Include="Searching\ObjectTypeSearchCondition.cs" />
-    <Compile Include="Searching\QuickSearchCondition.cs" />
-    <Compile Include="Searching\SearchConditionBase.cs" />
-    <Compile Include="Searching\SearchConditionOperators.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">
+      <Project>{B28D0C6A-C87B-461D-BD12-D627E9F653FC}</Project>
+      <Name>MFaaP.MFWSClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
