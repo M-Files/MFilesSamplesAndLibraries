@@ -180,6 +180,62 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
+		/// Executes the request using a "DELETE" HTTP method.
+		/// </summary>
+		/// <typeparam name="T">The expected return type.</typeparam>
+		/// <param name="request">The request to execute.</param>
+		/// <returns>The response.</returns>
+		public async Task<IRestResponse<T>> Delete<T>(IRestRequest request)
+			where T : new()
+		{
+			// Sanity.
+			if (null == request)
+				throw new ArgumentNullException(nameof(request));
+
+			// Ensure method is correct.
+			request.Method = Method.DELETE;
+
+			// Notify before we execute a request.
+			this.OnBeforeExecuteRequest(request);
+
+			// Execute the request.
+			var response = await this.restClient.ExecuteTaskAsync<T>(request);
+
+			// Notify after the request.
+			this.OnAfterExecuteRequest(response);
+
+			// Return.
+			return response;
+		}
+
+		/// <summary>
+		/// Executes the request using a "DELETE" HTTP method.
+		/// </summary>
+		/// <param name="request">The request to execute.</param>
+		/// <returns>The response.</returns>
+		public async Task<IRestResponse> Delete(IRestRequest request)
+		{
+			// Sanity.
+			if (null == request)
+				throw new ArgumentNullException(nameof(request));
+
+			// Ensure method is correct.
+			request.Method = Method.DELETE;
+
+			// Notify before we execute a request.
+			this.OnBeforeExecuteRequest(request);
+
+			// Execute the request.
+			var response = await this.restClient.ExecuteTaskAsync(request);
+
+			// Notify after the request.
+			this.OnAfterExecuteRequest(response);
+
+			// Return.
+			return response;
+		}
+
+		/// <summary>
 		/// Executes the request using a "PUT" HTTP method.
 		/// </summary>
 		/// <typeparam name="T">The expected return type.</typeparam>
