@@ -120,6 +120,8 @@ namespace MFaaP.MFWSClient.Tests
 			// Create our restsharp mock.
 			var mock = new Mock<IRestClient>();
 			mock.SetupAllProperties();
+			mock.SetupGet(c => c.BaseUrl)
+				.Returns(new Uri("http://example.org/"));
 
 			// When the execute method is called, log the resource requested.
 			mock
@@ -135,7 +137,7 @@ namespace MFaaP.MFWSClient.Tests
 								Name = "ASP.NET_SessionId",
 								Value = sessionId,
 								Path = "/",
-								Domain = "localhost"
+								Domain = "example.org"
 							}
 						});
 					return Task.FromResult(response.Object);
@@ -157,7 +159,7 @@ namespace MFaaP.MFWSClient.Tests
 			// Ensure cookie is in default cookie container.
 			var requestSessionCookie = mfwsClient
 				.CookieContainer
-				.GetCookies(new Uri("http://localhost"))
+				.GetCookies(new Uri("http://example.org"))
 				.Cast<Cookie>()
 				.FirstOrDefault(c => c.Name == "ASP.NET_SessionId");
 			Assert.IsNotNull(requestSessionCookie);
