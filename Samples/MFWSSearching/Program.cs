@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using MFaaP.MFWSClient;
@@ -44,13 +45,25 @@ namespace MFWSSearching
 
 			// Execute a quick search for the query term.
 			var results = await client.QuickSearch(Program.queryTerm);
+			Console.WriteLine($"There were {results.Length} results returned.");
+
+			// Get the object property values.
+			var properties = await client.GetObjectPropertyValues(results.Select(r => r.ObjVer).ToArray());
 
 			// Iterate over the results and output them.
-			Console.WriteLine($"There were {results.Length} results returned.");
-			foreach (var objectVersion in results)
+			for(var i=0; i<results.Length; i++)
 			{
+				// Output the object version details.
+				var objectVersion = results[i];
 				Console.WriteLine($"\t{objectVersion.Title}");
 				Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+
+				// Output the properties.
+				var objectProperties = properties[i];
+				foreach (var property in objectProperties)
+				{
+					Console.WriteLine($"\t\tProperty: {property.PropertyDef}, Value: {property.TypedValue.Value}");
+				}
 			}
 
 
@@ -76,17 +89,49 @@ namespace MFWSSearching
 
 			// Attempt to parse it.  For this we will use the Json.NET library, but you could use others.
 			var results = JsonConvert.DeserializeObject<Results<ObjectVersion>>(responseBody);
+			Console.WriteLine($"There were {results.Items.Count} results returned.");
+
+			// Get the object property values.
+			url = new Uri("http://kb.cloudvault.m-files.com/REST/objects/properties;"
+				        + Program.GetObjVersString(results.Items.Select(r => r.ObjVer)));
+			responseBody = await httpClient.GetStringAsync(url);
+			var properties = JsonConvert.DeserializeObject<PropertyValue[][]>(responseBody);
 
 			// Iterate over the results and output them.
-			Console.WriteLine($"There were {results.Items.Count} results returned.");
-			foreach (var objectVersion in results.Items)
+			for (var i = 0; i < results.Items.Count; i++)
 			{
+				// Output the object version details.
+				var objectVersion = results.Items[i];
 				Console.WriteLine($"\t{objectVersion.Title}");
 				Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+
+				// Output the properties.
+				var objectProperties = properties[i];
+				foreach (var property in objectProperties)
+				{
+					Console.WriteLine($"\t\tProperty: {property.PropertyDef}, Value: {property.TypedValue.Value}");
+				}
 			}
 
 		}
-		
+
+		/// <summary>
+		/// Converts a set of <see cref="ObjVer"/>s into a string that can be passed to 
+		/// http://www.m-files.com/mfws/resources/objects/properties.html.
+		/// </summary>
+		/// <param name="objVers">The object versions to convert.</param>
+		/// <returns></returns>
+		static string GetObjVersString(IEnumerable<ObjVer> objVers )
+		{
+			// Sanity.
+			if(null == objVers)
+				throw new ArgumentNullException(nameof(objVers));
+
+			// Need to be of the format:
+			// {type1}/{id1}/{version1};{type2}/{id2}/{version2}...
+			return String.Join(";", objVers.Select(ov => $"{ov.Type}/{ov.ID}/{ov.Version}"));
+		}
+
 		#region Classes for deserialisation (only used with the direct API calls)
 
 		/// <summary>

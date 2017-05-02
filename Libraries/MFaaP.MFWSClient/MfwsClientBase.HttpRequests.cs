@@ -47,6 +47,7 @@ namespace MFaaP.MFWSClient
 				case HttpStatusCode.InternalServerError:
 				case HttpStatusCode.BadRequest:
 				case HttpStatusCode.Forbidden:
+				case HttpStatusCode.MethodNotAllowed:
 					{
 						// Parse exception information, if we can.
 						var error = MFWSClientBase.jsonDeserializer.Deserialize<WebServiceError>(response);

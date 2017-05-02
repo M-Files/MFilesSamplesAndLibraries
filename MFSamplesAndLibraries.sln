@@ -52,7 +52,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSViewNavigation", "Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSCheckOutStatus", "Samples\MFWSCheckOutStatus\MFWSCheckOutStatus.csproj", "{5CDE9A3C-C7CF-45F9-BAC7-CACE11958DA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSValueListItems", "MFWSValueListItems\MFWSValueListItems.csproj", "{26071D62-5787-492A-9559-B4F7D863E5EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSValueListItems", "Samples\MFWSValueListItems\MFWSValueListItems.csproj", "{26071D62-5787-492A-9559-B4F7D863E5EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

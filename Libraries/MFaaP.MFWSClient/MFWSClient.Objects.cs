@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -235,6 +237,60 @@ namespace MFaaP.MFWSClient
 
 			// Return the data.
 			return response.Data?.Value;
+		}
+
+		#endregion
+
+		#region Get properties of objects
+
+		/// <summary>
+		/// Retrieves the properties of multiple objects.
+		/// </summary>
+		/// <param name="objVers">The objects to retrieve the properties of.</param>
+		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
+		public async Task<PropertyValue[][]> GetObjectPropertyValues(params ObjVer[] objVers)
+		{
+			// Sanity.
+			if(null == objVers)
+				return new PropertyValue[0][];
+			
+			// Create the request.
+			var request = new RestRequest("/REST/objects/properties");
+
+			// Add the content to the request.
+			foreach (var objVer in objVers)
+			{
+				request.Resource += $";{objVer.Type}/{objVer.ID}/{objVer.Version}";
+			}
+
+			// Make the request and get the response.
+			var response = await this.Get<List<List<PropertyValue>>>(request);
+
+			// Return the data.
+			return response.Data?.Select(a => a.ToArray()).ToArray();
+
+
+		}
+		
+		/// <summary>
+		/// Retrieves the properties of a single object.
+		/// </summary>
+		/// <param name="objVer">The object to retrieve the properties of.</param>
+		/// <returns>A collection of property values for the supplied object.</returns>
+		public async Task<PropertyValue[]> GetObjectPropertyValues(ObjVer objVer)
+		{
+
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Use the other overload to retrieve the content.
+			var response = await this.GetObjectPropertyValues(new[] { objVer });
+
+			// Sanity.
+			return null != response && response.Length > 0
+				? new PropertyValue[0] 
+				: response[0];
 		}
 
 		#endregion
