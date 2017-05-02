@@ -25,7 +25,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			{
 				ConditionType = MFConditionType.MFConditionTypeEqual
 			};
-			condition.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeDeleted, null);
+			condition.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeDeleted);
 			condition.TypedValue.SetValue(MFDataType.MFDatatypeBoolean, false);
 
 			// Add the condition at the index provided.
@@ -49,7 +49,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			{
 				ConditionType = MFConditionType.MFConditionTypeEqual
 			};
-			condition.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeObjectTypeID, null);
+			condition.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeObjectTypeID);
 			condition.TypedValue.SetValue(MFDataType.MFDatatypeLookup, objTypeId);
 
 			// Add the condition at the index provided.
@@ -73,7 +73,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			{
 				ConditionType = MFConditionType.MFConditionTypeGreaterThanOrEqual
 			};
-			condition.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeObjectID, null);
+			condition.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeObjectID);
 			condition.TypedValue.SetValue(MFDataType.MFDatatypeInteger, objId);
 
 			// Add the condition at the index provided.
@@ -141,6 +141,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="fullTextSearchFlags">What type of full-text-search to execute.  Defaults to searching in both file data and metadata.</param>
 		/// <param name="index">The index at which to add the search condition to the collection.</param>
 		public static void AddFullTextSearchCondition(this ISearchConditions searchConditions, string query,
+			// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
 			MFFullTextSearchFlags fullTextSearchFlags = MFFullTextSearchFlags.MFFullTextSearchFlagsLookInFileData | MFFullTextSearchFlags.MFFullTextSearchFlagsLookInMetaData,
 			int index = -1)
 		{

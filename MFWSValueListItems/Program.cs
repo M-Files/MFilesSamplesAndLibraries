@@ -9,13 +9,13 @@ namespace MFWSValueListItems
 		/// <summary>
 		///  The Id of the value list to retrieve.
 		/// </summary>
-		private static readonly int ValueListId = 165;
+		private static readonly int valueListId = 165;
 
 		static void Main(string[] args)
 		{
 			// Retrieve the value list items using the library.
 			System.Console.WriteLine($"Retrieving the value list items using the library.");
-			Task.WaitAll(UseLibrary());
+			Task.WaitAll(Program.UseLibrary());
 			System.Console.WriteLine("Complete.  Press enter to continue.");
 			System.Console.ReadLine();
 
@@ -31,7 +31,7 @@ namespace MFWSValueListItems
 			var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 			// Retrieve the value list items.
-			var results = await client.GetValueListItems(Program.ValueListId, "security");
+			var results = await client.GetValueListItems(Program.valueListId, "security");
 
 			// Iterate over the results and output them.
 			System.Console.WriteLine($"There were {results.Items.Count} results returned.");

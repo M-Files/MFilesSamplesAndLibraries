@@ -37,6 +37,7 @@ using System.Linq;
 #if !WINDOWS_UWP
 using System.Web;
 #endif
+// ReSharper disable EmptyConstructor
 
 // Requires System.Runtime.Serialization reference.
 
@@ -216,6 +217,7 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// 
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public string URL { get; set; }
         
         /// <summary>
@@ -241,6 +243,7 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// Vault GUID.
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public string GUID { get; set; }
         
         /// <summary>
@@ -447,6 +450,7 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// The request URL which caused this error.
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public string URL { get; set; }
         
         /// <summary>
@@ -472,10 +476,10 @@ namespace MFaaP.MFWSClient
             // Convert.
 #if WINDOWS_UWP
             return new Exception( info.ToString( ),
-                info.Exception == null ?  null : (System.Exception) info.Exception );
+                info.Exception == null ?  null : (Exception) info.Exception );
 #else
             return new HttpException(info.Status, info.ToString(),
-				info.Exception == null ? null : (System.Exception)info.Exception);
+				info.Exception == null ? null : (Exception)info.Exception);
 #endif
         }
 
@@ -516,7 +520,7 @@ namespace MFaaP.MFWSClient
 		/// Converts information about an exception into something that can be thrown in .NET-land.
 		/// </summary>
 		/// <param name="info"></param>
-	    public static explicit operator System.Exception(ExceptionInfo info)
+	    public static explicit operator Exception(ExceptionInfo info)
 		{
 			// Sanity.
 			if(null == info)
@@ -535,7 +539,7 @@ namespace MFaaP.MFWSClient
 	[Serializable]
 #endif
     internal class ExceptionInfoException
-		: System.Exception
+		: Exception
 	{
 
 		private readonly ExceptionInfo exceptionInfo;
@@ -857,6 +861,7 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public MFACLMode ACLMode { get; set; }
         
         /// <summary>
@@ -872,6 +877,7 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public bool CanManageCommonUISettings { get; set; }
         
         /// <summary>
@@ -1494,6 +1500,7 @@ namespace MFaaP.MFWSClient
 	/// <summary>
 	/// 
 	/// </summary>
+	// ReSharper disable once InconsistentNaming
 	public enum MFACLMode
 	{
 
@@ -1589,6 +1596,7 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// 
 		/// </summary>
+		// ReSharper disable once InconsistentNaming
 		FILETIME  = 12,
 		
 
@@ -1601,6 +1609,7 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// 
 		/// </summary>
+		// ReSharper disable once InconsistentNaming
 		ACL  = 14,
 		
 	}
@@ -1629,6 +1638,7 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// 
 		/// </summary>
+		// ReSharper disable once InconsistentNaming
 		CalculatedWithVBScript  = 2,
 		
 
@@ -1641,6 +1651,7 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// 
 		/// </summary>
+		// ReSharper disable once InconsistentNaming
 		WithVBScript  = 4,
 		
 	}

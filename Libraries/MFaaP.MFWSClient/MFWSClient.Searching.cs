@@ -62,7 +62,7 @@ namespace MFaaP.MFWSClient
 				request.Resource += WebUtility.UrlEncode(searchCondition.Expression);
 
 				// Add the operator (parsed from the enumerated value).
-				request.Resource += GetSearchConditionOperator(searchCondition);
+				request.Resource += this.GetSearchConditionOperator(searchCondition);
 
 				// Add the value.  Handle the null special-case.
 				request.Resource += null == searchCondition.EncodedValue ? "%00" : WebUtility.UrlEncode(searchCondition.EncodedValue);

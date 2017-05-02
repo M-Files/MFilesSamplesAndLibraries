@@ -30,12 +30,12 @@ namespace SearchByDisplayId
 
 			// One uses the helper library and is designed to read as clearly as possible.
 			// However, it does depend upon the helper library.
-			UseLibrary();
+			Program.UseLibrary();
 
 			// The second does not use the helper library and is designed to show the full
 			// process using the API.  It can be used in situations where the helper library
 			// cannot be used.
-			UseAPIDirectly();
+			Program.UseApiDirectly();
 
 		}
 
@@ -67,9 +67,9 @@ namespace SearchByDisplayId
 				MFSearchFlags.MFSearchFlagNone, SortResults: false);
 
 			// Output the number of items matching (should be one in each object type, at a maximum).
-			System.Console.WriteLine($"There were {results.Count} objects with the display Id of {Program.customerDisplayId}:");
+			Console.WriteLine($"There were {results.Count} objects with the display Id of {Program.customerDisplayId}:");
 
-			System.Console.WriteLine($"Complete.");
+			Console.WriteLine($"Complete.");
 
 			// Ensure we're disconnected.
 			application.Disconnect(vault);
@@ -78,7 +78,7 @@ namespace SearchByDisplayId
 		/// <summary>
 		/// Executes a search by display/external id using the API directly.
 		/// </summary>
-		static void UseAPIDirectly()
+		static void UseApiDirectly()
 		{
 
 			// Connect to the server (localhost, tcp, current Windows user).
@@ -107,9 +107,9 @@ namespace SearchByDisplayId
 				MFSearchFlags.MFSearchFlagNone, SortResults: false);
 
 			// Output the number of items matching (should be one in each object type, at a maximum).
-			System.Console.WriteLine($"There were {results.Count} objects with the display Id of {Program.customerDisplayId}:");
+			Console.WriteLine($"There were {results.Count} objects with the display Id of {Program.customerDisplayId}:");
 
-			System.Console.WriteLine($"Complete.");
+			Console.WriteLine($"Complete.");
 
 			// Disconnect.
 			vault.LogOutSilent();

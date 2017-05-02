@@ -15,16 +15,16 @@ namespace MFWSCheckOutStatus
 		{
 
 			// Execute the search using the library.
-			System.Console.WriteLine($"Retrieving the check out status using the library.");
-			Task.WaitAll(UseLibrary());
-			System.Console.WriteLine("Complete.  Press enter to continue.");
-			System.Console.ReadLine();
+			Console.WriteLine($"Retrieving the check out status using the library.");
+			Task.WaitAll(Program.UseLibrary());
+			Console.WriteLine("Complete.  Press enter to continue.");
+			Console.ReadLine();
 
 			// Execute the search without using the library.
-			System.Console.WriteLine($"Retrieving the check out status using the API directly.");
-			Task.WaitAll(UseAPIDirectly());
-			System.Console.WriteLine("Complete.  Press enter to continue.");
-			System.Console.ReadLine();
+			Console.WriteLine($"Retrieving the check out status using the API directly.");
+			Task.WaitAll(Program.UseApiDirectly());
+			Console.WriteLine("Complete.  Press enter to continue.");
+			Console.ReadLine();
 
 		}
 
@@ -43,7 +43,7 @@ namespace MFWSCheckOutStatus
 			if (0 == results.Length)
 			{
 				// Could not find the object.
-				System.Console.WriteLine($"\tDocument not found.");
+				Console.WriteLine($"\tDocument not found.");
 				return;
 			}
 
@@ -53,14 +53,14 @@ namespace MFWSCheckOutStatus
 			var checkoutStatus = await client.GetCheckoutStatus(results[0].ObjVer.Type, results[0].ObjVer.ID);
 
 			// Output it.
-			System.Console.WriteLine($"\tCheckout status is: {checkoutStatus}");
+			Console.WriteLine($"\tCheckout status is: {checkoutStatus}");
 
 		}
 
 		/// <summary>
 		/// Retrieves an object checkout status using the endpoint directly.
 		/// </summary>
-		static async Task UseAPIDirectly()
+		static async Task UseApiDirectly()
 		{
 			// Build the url to request (note to encode the query term).
 			var url =
@@ -80,7 +80,7 @@ namespace MFWSCheckOutStatus
 			if (0 == results.Items.Count)
 			{
 				// Could not find the object.
-				System.Console.WriteLine($"\tDocument not found.");
+				Console.WriteLine($"\tDocument not found.");
 				return;
 			}
 
@@ -94,7 +94,7 @@ namespace MFWSCheckOutStatus
 			// Attempt to parse it.
 			var checkoutStatus = JsonConvert.DeserializeObject<PrimitiveType<MFCheckOutStatus>>(responseBody);
 
-			System.Console.WriteLine($"\tCheckout status is: {checkoutStatus.Value}");
+			Console.WriteLine($"\tCheckout status is: {checkoutStatus.Value}");
 
 		}
 	}

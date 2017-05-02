@@ -36,8 +36,8 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			SearchConditions searchConditions,
 			MFSearchFlags searchFlags = MFSearchFlags.MFSearchFlagDisableRelevancyRanking,
 			int startSegment = 0,
-			int itemsPerSegment = DefaultNumberOfItemsInSegment,
-			int maximumSegmentIndex = MaximumSegmentIndex)
+			int itemsPerSegment = IVaultObjectSearchOperationsExtensionMethods.DefaultNumberOfItemsInSegment,
+			int maximumSegmentIndex = IVaultObjectSearchOperationsExtensionMethods.MaximumSegmentIndex)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -45,9 +45,9 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			if (null == vaultObjectSearchOperations)
 				throw new ArgumentNullException(nameof(vaultObjectSearchOperations));
 			if (startSegment < 0)
-				startSegment = DefaultNumberOfItemsInSegment;
+				startSegment = IVaultObjectSearchOperationsExtensionMethods.DefaultNumberOfItemsInSegment;
 			if (maximumSegmentIndex < 0)
-				maximumSegmentIndex = MaximumSegmentIndex;
+				maximumSegmentIndex = IVaultObjectSearchOperationsExtensionMethods.MaximumSegmentIndex;
 
 			// Iterate over each segment to return results.
 			foreach (
@@ -81,8 +81,8 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			SearchConditions searchConditions, 
 			MFSearchFlags searchFlags = MFSearchFlags.MFSearchFlagDisableRelevancyRanking, 
 			int startSegment = 0,
-			int itemsPerSegment = DefaultNumberOfItemsInSegment,
-			int maximumSegmentIndex = MaximumSegmentIndex)
+			int itemsPerSegment = IVaultObjectSearchOperationsExtensionMethods.DefaultNumberOfItemsInSegment,
+			int maximumSegmentIndex = IVaultObjectSearchOperationsExtensionMethods.MaximumSegmentIndex)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -90,11 +90,12 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			if (null == vaultObjectSearchOperations)
 				throw new ArgumentNullException(nameof(vaultObjectSearchOperations));
 			if (startSegment < 0)
-				startSegment = DefaultNumberOfItemsInSegment;
+				startSegment = IVaultObjectSearchOperationsExtensionMethods.DefaultNumberOfItemsInSegment;
 			if (maximumSegmentIndex < 0)
-				maximumSegmentIndex = MaximumSegmentIndex;
+				maximumSegmentIndex = IVaultObjectSearchOperationsExtensionMethods.MaximumSegmentIndex;
 
 			// No point having relevancy ranking as we're throwing it away.
+			// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
 			searchFlags = searchFlags | MFSearchFlags.MFSearchFlagDisableRelevancyRanking;
 
 			// A segment has a start index and a number of items in it.
@@ -147,7 +148,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			SearchConditions searchConditions, 
 			int segment,
 			MFSearchFlags searchFlags = MFSearchFlags.MFSearchFlagDisableRelevancyRanking,
-			int itemsPerSegment = DefaultNumberOfItemsInSegment)
+			int itemsPerSegment = IVaultObjectSearchOperationsExtensionMethods.DefaultNumberOfItemsInSegment)
 		{
 			// Sanity.
 			if (null == vaultObjectSearchOperations)
@@ -157,7 +158,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 			if (segment <= 0)
 				segment = 0;
 			if (itemsPerSegment <= 0)
-				itemsPerSegment = DefaultNumberOfItemsInSegment;
+				itemsPerSegment = IVaultObjectSearchOperationsExtensionMethods.DefaultNumberOfItemsInSegment;
 
 			// There are more results if there are any objects that meet the search criteria, with
 			// an Id greater than the current segment range.

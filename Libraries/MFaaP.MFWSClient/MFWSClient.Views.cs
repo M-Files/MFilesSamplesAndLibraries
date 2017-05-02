@@ -46,7 +46,7 @@ namespace MFaaP.MFWSClient
 		public async Task<List<ObjectVersion>> GetFavorites()
 		{
 			// Create the request.
-			var request = new RestRequest($"/REST/favorites");
+			var request = new RestRequest("/REST/favorites");
 
 			// Make the request and get the response.
 			var response = await this.Get<List<ObjectVersion>>(request);
@@ -66,7 +66,7 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(objId));
 
 			// Create the request.
-			var request = new RestRequest($"/REST/favorites");
+			var request = new RestRequest("/REST/favorites");
 			request.AddJsonBody(objId);
 
 			// Make the request and get the response.

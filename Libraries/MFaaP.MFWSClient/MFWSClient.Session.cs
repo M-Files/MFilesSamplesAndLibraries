@@ -13,7 +13,7 @@ namespace MFaaP.MFWSClient
 		public async Task<Vault> GetCurrentSessionVault()
 		{
 			// Build up the request.
-			var request = new RestRequest($"/REST/session/vault");
+			var request = new RestRequest("/REST/session/vault");
 
 			// Execute the request.
 			var response = await this.Get<Vault>(request);
@@ -29,7 +29,7 @@ namespace MFaaP.MFWSClient
 		public async Task<SessionInfo> GetCurrentSessionInfo()
 		{
 			// Build up the request.
-			var request = new RestRequest($"/REST/session");
+			var request = new RestRequest("/REST/session");
 
 			// Execute the request.
 			var response = await this.Get<SessionInfo>(request);

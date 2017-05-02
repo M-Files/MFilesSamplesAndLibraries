@@ -27,16 +27,16 @@ namespace MFWSDownloading
 		static void Main(string[] args)
 		{
 			// Download the items using the library.
-			System.Console.WriteLine($"Downloading items using the library.");
-			Task.WaitAll(UseLibrary());
-			System.Console.WriteLine("Complete.  Press enter to continue.");
-			System.Console.ReadLine();
+			Console.WriteLine($"Downloading items using the library.");
+			Task.WaitAll(Program.UseLibrary());
+			Console.WriteLine("Complete.  Press enter to continue.");
+			Console.ReadLine();
 
 			// Download the items without using the library.
-			System.Console.WriteLine($"Downloading items using the API directly.");
-			Task.WaitAll(UseAPIDirectly());
-			System.Console.WriteLine("Complete.  Press enter to continue.");
-			System.Console.ReadLine();
+			Console.WriteLine($"Downloading items using the API directly.");
+			Task.WaitAll(Program.UseApiDirectly());
+			Console.WriteLine("Complete.  Press enter to continue.");
+			Console.ReadLine();
 		}
 
 		/// <summary>
@@ -53,11 +53,11 @@ namespace MFWSDownloading
 			var results = await client.QuickSearch(Program.queryTerm);
 
 			// Iterate over the results and output them.
-			System.Console.WriteLine($"There were {results.Length} results returned.");
+			Console.WriteLine($"There were {results.Length} results returned.");
 			foreach (var objectVersion in results)
 			{
-				System.Console.WriteLine($"\t{objectVersion.Title}");
-				System.Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+				Console.WriteLine($"\t{objectVersion.Title}");
+				Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
 
 				// Create a folder for the files to go in.
 				var folderPath =
@@ -78,7 +78,7 @@ namespace MFWSDownloading
 						fileName,
 						objectVersion.ObjVer.Version);
 
-					System.Console.WriteLine($"\t\t\tFile: {file.Name} output to {fileName}");
+					Console.WriteLine($"\t\t\tFile: {file.Name} output to {fileName}");
 				}
 
 			}
@@ -88,7 +88,7 @@ namespace MFWSDownloading
 		/// <summary>
 		/// Executes a search using the endpoint directly.
 		/// </summary>
-		static async Task UseAPIDirectly()
+		static async Task UseApiDirectly()
 		{
 			// Build the url to request (note to encode the query term).
 			var url =
@@ -110,11 +110,11 @@ namespace MFWSDownloading
 			var results = JsonConvert.DeserializeObject<Results<ObjectVersion>>(responseBody);
 
 			// Iterate over the results and output them.
-			System.Console.WriteLine($"There were {results.Items.Count} results returned.");
+			Console.WriteLine($"There were {results.Items.Count} results returned.");
 			foreach (var objectVersion in results.Items)
 			{
-				System.Console.WriteLine($"\t{objectVersion.Title}");
-				System.Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+				Console.WriteLine($"\t{objectVersion.Title}");
+				Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
 
 				// Create a folder for the files to go in.
 				var folderPath =
@@ -141,7 +141,7 @@ namespace MFWSDownloading
 					}
 
 					// Log.
-					System.Console.WriteLine($"\t\t\tFile: {file.Name} output to {fileName}");
+					Console.WriteLine($"\t\t\tFile: {file.Name} output to {fileName}");
 
 				}
 			}

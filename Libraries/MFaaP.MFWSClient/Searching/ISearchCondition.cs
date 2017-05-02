@@ -26,7 +26,6 @@
 
 		/// <summary>
 		/// Gets the encoded value as a string for use in the search.
-		/// Should provide an encoded representation of <see cref="Value"/>.
 		/// </summary>
 		/// <remarks>See http://www.m-files.com/mfws/syntax.html#sect:search-encoding .</remarks>
 		string EncodedValue { get; }

@@ -258,6 +258,7 @@ namespace MFaaP.MFilesAPI.Tests.ExtensionMethods
 			Assert.AreEqual(MFConditionType.MFConditionTypeContains, condition.ConditionType);
 			Assert.AreEqual(MFExpressionType.MFExpressionTypeAnyField, condition.Expression.Type);
 			Assert.AreEqual(MFDataType.MFDatatypeText, condition.TypedValue.DataType);
+			// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
 			Assert.AreEqual(MFFullTextSearchFlags.MFFullTextSearchFlagsLookInFileData | MFFullTextSearchFlags.MFFullTextSearchFlagsLookInMetaData, condition.Expression.DataAnyFieldFTSFlags);
 			Assert.AreEqual("hello", condition.TypedValue.DisplayValue);
 		}

@@ -115,6 +115,7 @@ namespace MFaaP.MFWSClient
 			// If we have any parameters then output them.
 			if ((e.Parameters?.Count ?? 0) != 0)
 			{
+				// ReSharper disable once PossibleNullReferenceException
 				foreach (var parameter in e.Parameters)
 				{
 					System.Diagnostics.Debug.WriteLine($"\t({parameter.Type}) {parameter.Name} = {parameter.Value} (type: {parameter.ContentType ?? "Unspecified"})");
@@ -123,7 +124,7 @@ namespace MFaaP.MFWSClient
 #endif
 
 			// Notify subscribers.
-			BeforeExecuteRequest?.Invoke(this, new RestRequestEventArgs(e));
+			this.BeforeExecuteRequest?.Invoke(this, new RestRequestEventArgs(e));
 		}
 
 		/// <summary>
@@ -140,7 +141,7 @@ namespace MFaaP.MFWSClient
 #endif
 
 			// Notify subscribers.
-			AfterExecuteRequest?.Invoke(this, new RestResponseEventArgs(e));
+			this.AfterExecuteRequest?.Invoke(this, new RestResponseEventArgs(e));
 
 			// If we had an invalid response, throw it.
 			this.EnsureValidResponse(e);

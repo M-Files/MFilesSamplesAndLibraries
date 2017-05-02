@@ -33,28 +33,28 @@ namespace ChainWorkflows
 		/// <remarks>This is initially set to <see cref="WorkflowOneAlias"/>, and is resolved at runtime to the correct Id.</remarks>
 
 		[MFWorkflow(Required = true)]
-		public MFIdentifier WorkflowOne = WorkflowOneAlias;
+		public MFIdentifier WorkflowOne = Configuration.WorkflowOneAlias;
 
 		/// <summary>
 		/// A reference to the second workflow.
 		/// </summary>
 		/// <remarks>This is initially set to <see cref="WorkflowTwoAlias"/>, and is resolved at runtime to the correct Id.</remarks>
 		[MFWorkflow(Required = true)]
-		public MFIdentifier WorkflowTwo = WorkflowTwoAlias;
+		public MFIdentifier WorkflowTwo = Configuration.WorkflowTwoAlias;
 
 		/// <summary>
 		/// A reference to the final state on the first workflow.
 		/// </summary>
 		/// <remarks>This is initially set to <see cref="WorkflowOneStateFinalAlias"/>, and is resolved at runtime to the correct Id.</remarks>
 		[MFState(Required = true)]
-		public MFIdentifier WorkflowOneStateFinal = WorkflowOneStateFinalAlias;
+		public MFIdentifier WorkflowOneStateFinal = Configuration.WorkflowOneStateFinalAlias;
 
 		/// <summary>
 		/// A reference to the initial state on the second workflow.
 		/// </summary>
 		/// <remarks>This is initially set to <see cref="WorkflowTwoStateInitialAlias"/>, and is resolved at runtime to the correct Id.</remarks>
 		[MFState(Required = true)]
-		public MFIdentifier WorkflowTwoStateInitial= WorkflowTwoStateInitialAlias;
+		public MFIdentifier WorkflowTwoStateInitial= Configuration.WorkflowTwoStateInitialAlias;
 
 	}
 }

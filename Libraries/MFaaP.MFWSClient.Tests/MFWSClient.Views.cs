@@ -233,7 +233,7 @@ namespace MFaaP.MFWSClient.Tests
 		#region RemoveFromFavorites
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.RemoveFromFavorites"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.RemoveFromFavorites(MFaaP.MFWSClient.ObjID)"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]

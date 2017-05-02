@@ -49,7 +49,7 @@ namespace MFaaP.MFWSClient
 				case HttpStatusCode.Forbidden:
 					{
 						// Parse exception information, if we can.
-						var error = jsonDeserializer.Deserialize<WebServiceError>(response);
+						var error = MFWSClientBase.jsonDeserializer.Deserialize<WebServiceError>(response);
 
 						// TODO: Stack doesn't seem to be deserialised properly.
 

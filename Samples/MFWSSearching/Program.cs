@@ -20,16 +20,16 @@ namespace MFWSSearching
 		static void Main(string[] args)
 		{
 			// Execute the search using the library.
-			System.Console.WriteLine($"Executing a search using the library.");
-			Task.WaitAll(UseLibrary());
-			System.Console.WriteLine("Complete.  Press enter to continue.");
-			System.Console.ReadLine();
+			Console.WriteLine($"Executing a search using the library.");
+			Task.WaitAll(Program.UseLibrary());
+			Console.WriteLine("Complete.  Press enter to continue.");
+			Console.ReadLine();
 
 			// Execute the search without using the library.
-			System.Console.WriteLine($"Executing a search using the API directly.");
-			Task.WaitAll(UseAPIDirectly());
-			System.Console.WriteLine("Complete.  Press enter to continue.");
-			System.Console.ReadLine();
+			Console.WriteLine($"Executing a search using the API directly.");
+			Task.WaitAll(Program.UseApiDirectly());
+			Console.WriteLine("Complete.  Press enter to continue.");
+			Console.ReadLine();
 		}
 
 		/// <summary>
@@ -46,11 +46,11 @@ namespace MFWSSearching
 			var results = await client.QuickSearch(Program.queryTerm);
 
 			// Iterate over the results and output them.
-			System.Console.WriteLine($"There were {results.Length} results returned.");
+			Console.WriteLine($"There were {results.Length} results returned.");
 			foreach (var objectVersion in results)
 			{
-				System.Console.WriteLine($"\t{objectVersion.Title}");
-				System.Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+				Console.WriteLine($"\t{objectVersion.Title}");
+				Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
 			}
 
 
@@ -59,7 +59,7 @@ namespace MFWSSearching
 		/// <summary>
 		/// Executes a search using the endpoint directly.
 		/// </summary>
-		static async Task UseAPIDirectly()
+		static async Task UseApiDirectly()
 		{
 			// Build the url to request (note to encode the query term).
 			var url =
@@ -78,11 +78,11 @@ namespace MFWSSearching
 			var results = JsonConvert.DeserializeObject<Results<ObjectVersion>>(responseBody);
 
 			// Iterate over the results and output them.
-			System.Console.WriteLine($"There were {results.Items.Count} results returned.");
+			Console.WriteLine($"There were {results.Items.Count} results returned.");
 			foreach (var objectVersion in results.Items)
 			{
-				System.Console.WriteLine($"\t{objectVersion.Title}");
-				System.Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
+				Console.WriteLine($"\t{objectVersion.Title}");
+				Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
 			}
 
 		}

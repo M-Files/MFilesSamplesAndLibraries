@@ -52,7 +52,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 				return string.Empty;
 
 			// Return the paths, separated by "/".
-			return String.Join("/", items.Select(GetPath).Where(p => false == string.IsNullOrWhiteSpace(p))) + "/";
+			return String.Join("/", items.Select(FolderContentItemExtensionMethods.GetPath).Where(p => false == string.IsNullOrWhiteSpace(p))) + "/";
 
 		}
 
@@ -157,7 +157,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 				return -1;
 
 			// Compare types.
-			var typeCompare = Compare(x.FolderContentItemType, y.FolderContentItemType);
+			var typeCompare = FolderContentItemExtensionMethods.Compare(x.FolderContentItemType, y.FolderContentItemType);
 			if (typeCompare != 0)
 				return typeCompare;
 

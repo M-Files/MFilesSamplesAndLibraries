@@ -63,7 +63,6 @@ namespace MFaaP.MFilesAPI
 		/// <remarks>Exceptions during connection will be thrown.</remarks>
 		public void ConnectToVault(Guid vaultGuid, out Vault vault, out MFilesServerApplication serverApplication)
 		{
-			serverApplication = null;
 			vault = null;
 			serverApplication = new MFilesServerApplication();
 
@@ -110,7 +109,6 @@ namespace MFaaP.MFilesAPI
 			out Vault vault,
 			out MFilesServerApplication serverApplication)
 		{
-			serverApplication = null;
 			vault = null;
 
 			// Attempt to connect to the vault using the extension method.

@@ -25,12 +25,12 @@ namespace SegmentedSearch
 
 			// One uses the helper library and is designed to read as clearly as possible.
 			// However, it does depend upon the helper library.
-			UseLibrary();
+			Program.UseLibrary();
 
 			// The second does not use the helper library and is designed to show the full
 			// process using the API.  It can be used in situations where the helper library
 			// cannot be used.
-			UseAPIDirectly();
+			Program.UseApiDirectly();
 
 		}
 
@@ -52,13 +52,13 @@ namespace SegmentedSearch
 				out vault, out application);
 
 			// Load the object types from the vault.
-			System.Console.WriteLine("Loading object types...");
+			Console.WriteLine("Loading object types...");
 			var objectTypes = vault
 				.ObjectTypeOperations
 				.GetObjectTypes()
 				.Cast<ObjType>()
 				.ToList();
-			System.Console.WriteLine($"Iterating over {objectTypes.Count} object types...");
+			Console.WriteLine($"Iterating over {objectTypes.Count} object types...");
 
 			// Iterate over the object types to count the objects.
 			foreach (var objectType in objectTypes)
@@ -77,12 +77,12 @@ namespace SegmentedSearch
 					.Count();
 
 				// Output the stats.
-				System.Console.WriteLine($"\t{objectType.NamePlural}:");
-				System.Console.WriteLine($"\t\tTotal: {countIncludingDeleted} (included deleted)");
+				Console.WriteLine($"\t{objectType.NamePlural}:");
+				Console.WriteLine($"\t\tTotal: {countIncludingDeleted} (included deleted)");
 
 			}
 
-			System.Console.WriteLine($"Complete.");
+			Console.WriteLine($"Complete.");
 
 			// Ensure we're disconnected.
 			application.Disconnect(vault);
@@ -91,7 +91,7 @@ namespace SegmentedSearch
 		/// <summary>
 		/// Executes a segmented search using the API directly.
 		/// </summary>
-		static void UseAPIDirectly()
+		static void UseApiDirectly()
 		{
 
 			// Connect to the server (localhost, tcp, current Windows user).
@@ -102,13 +102,13 @@ namespace SegmentedSearch
 			var vault = application.LogInToVault(Program.sampleVaultGuid.ToString("B"));
 
 			// Load the object types from the vault.
-			System.Console.WriteLine("Loading object types...");
+			Console.WriteLine("Loading object types...");
 			var objectTypes = vault
 				.ObjectTypeOperations
 				.GetObjectTypes()
 				.Cast<ObjType>()
 				.ToList();
-			System.Console.WriteLine($"Iterating over {objectTypes.Count} object types...");
+			Console.WriteLine($"Iterating over {objectTypes.Count} object types...");
 
 			// Iterate over the object types to count the objects.
 			foreach (var objectType in objectTypes)
@@ -201,12 +201,12 @@ namespace SegmentedSearch
 				}
 
 				// Output the stats.
-				System.Console.WriteLine($"\t{objectType.NamePlural}:");
-				System.Console.WriteLine($"\t\tTotal: {countIncludingDeleted} (included deleted)");
+				Console.WriteLine($"\t{objectType.NamePlural}:");
+				Console.WriteLine($"\t\tTotal: {countIncludingDeleted} (included deleted)");
 
 			}
 
-			System.Console.WriteLine($"Complete.");
+			Console.WriteLine($"Complete.");
 
 			// Disconnect.
 			vault.LogOutSilent();

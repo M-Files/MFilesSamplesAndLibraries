@@ -16,10 +16,10 @@ namespace MFWSViewNavigation
 		static void Main(string[] args)
 		{
 			// Execute the search using the library.
-			System.Console.WriteLine($"Navigating views using the library.");
-			 Task.WaitAll(UseLibrary());
-			System.Console.WriteLine("Complete.  Press enter to continue.");
-			System.Console.ReadLine();
+			Console.WriteLine($"Navigating views using the library.");
+			 Task.WaitAll(Program.UseLibrary());
+			Console.WriteLine("Complete.  Press enter to continue.");
+			Console.ReadLine();
 		}
 
 		/// <summary>
@@ -50,32 +50,32 @@ namespace MFWSViewNavigation
 				var results = await client.GetViewContents(navigation.Reverse().ToArray());
 
 				// Clear the screen.
-				System.Console.Clear();
+				Console.Clear();
 
 				// Get some indication of where we are.
 				var navigationString = String.Join(" > ", navigation.Reverse().Select(i => i.GetDisplayName()));
 
 				// Output it to screen.
-				System.Console.WriteLine(navigationString);
+				Console.WriteLine(navigationString);
 
 				// Output the number returned.
-				System.Console.WriteLine($"There are {results.Items.Count} items:");
+				Console.WriteLine($"There are {results.Items.Count} items:");
 				var count = 0;
 
 				// If we can go up a view then give that option.
 				if (navigation.Count > 0)
 				{
-					System.Console.WriteLine("\t0: .. (up a view)");
+					Console.WriteLine("\t0: .. (up a view)");
 				}
 
 				// Iterate over the results and output them.
 				foreach (var item in results.Items)
 				{
-					System.Console.WriteLine($"\t{++count}: {item.FolderContentItemType}: {item.GetDisplayName()}");
+					Console.WriteLine($"\t{++count}: {item.FolderContentItemType}: {item.GetDisplayName()}");
 				}
 
 				// Ask them where to go next.
-				var nextNavItem = GetNextNavigationItem(results, out quit);
+				var nextNavItem = Program.GetNextNavigationItem(results, out quit);
 
 				// If they chose to quit then exit out now.
 				if (quit)
@@ -112,8 +112,8 @@ namespace MFWSViewNavigation
 			while (selectedIndex == -1)
 			{
 				// Prompt the user.
-				System.Console.WriteLine("Enter the number of the item to navigate to, or q to exit.");
-				var enteredText = System.Console.ReadLine();
+				Console.WriteLine("Enter the number of the item to navigate to, or q to exit.");
+				var enteredText = Console.ReadLine();
 
 				// Did they ask to quit?
 				if ("q".Equals(enteredText, StringComparison.InvariantCultureIgnoreCase))
@@ -141,7 +141,7 @@ namespace MFWSViewNavigation
 						// If it was an object version then we can't go in.
 						if (nextNavItem.FolderContentItemType == MFFolderContentItemType.ObjectVersion)
 						{
-							System.Console.WriteLine("You cannot navigate into an object.");
+							Console.WriteLine("You cannot navigate into an object.");
 							selectedIndex = -1;
 						}
 						else

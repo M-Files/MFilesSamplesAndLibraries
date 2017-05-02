@@ -11,7 +11,7 @@ namespace MFaaP.MFWSClient.Tests
 		#region GetCheckoutStatus
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetCheckoutStatus"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetCheckoutStatus(int,int,System.Nullable{int})"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -66,7 +66,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetCheckoutStatus"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetCheckoutStatus(int,int,System.Nullable{int})"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
@@ -125,7 +125,7 @@ namespace MFaaP.MFWSClient.Tests
 		#region SetCheckoutStatus
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.SetCheckoutStatus"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int})"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -177,7 +177,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.SetCheckoutStatus"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int})"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -229,7 +229,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.SetCheckoutStatus"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int})"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
@@ -281,7 +281,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.SetCheckoutStatus"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int})"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
