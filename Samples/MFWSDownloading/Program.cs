@@ -82,8 +82,7 @@ namespace MFWSDownloading
 				}
 
 			}
-
-
+			
 		}
 
 		/// <summary>

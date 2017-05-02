@@ -57,6 +57,7 @@
     <Compile Include="MFWSClient.DownloadingFiles.cs" />
     <Compile Include="MFWSClient.ExtensionMethods.cs" />
     <Compile Include="MFWSClient.Searching.cs" />
+    <Compile Include="MFWSClient.ValueListItems.cs" />
     <Compile Include="MFWSClient.Views.cs" />
     <Compile Include="MFWSClientBase.cs" />
     <Compile Include="MFWSClientBase.HttpRequests.cs" />

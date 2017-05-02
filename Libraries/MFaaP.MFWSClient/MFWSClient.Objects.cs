@@ -100,11 +100,23 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentException("The object id cannot be less than or equal to zero");
 
 			// Use the other overload.
-			return this.GetCheckoutStatus(new ObjID()
+			if (null == version)
 			{
-				ID = objectId,
-				Type = objectTypeId
-			});
+				return this.GetCheckoutStatus(new ObjID()
+				{
+					ID = objectId,
+					Type = objectTypeId
+				});
+			}
+			else
+			{
+				return this.GetCheckoutStatus(new ObjVer()
+				{
+					ID = objectId,
+					Type = objectTypeId,
+					Version = version.Value
+				});
+			}
 		}
 
 		/// <summary>
