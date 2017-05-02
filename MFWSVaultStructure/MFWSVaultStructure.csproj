@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{26071D62-5787-492A-9559-B4F7D863E5EB}</ProjectGuid>
+    <ProjectGuid>{A5EFF65F-5D70-4A7B-9869-9A08FD85E132}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MFWSValueListItems</RootNamespace>
-    <AssemblyName>MFWSValueListItems</AssemblyName>
+    <RootNamespace>MFWSVaultStructure</RootNamespace>
+    <AssemblyName>MFWSVaultStructure</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -54,7 +54,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">
+    <ProjectReference Include="..\Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">
       <Project>{B28D0C6A-C87B-461D-BD12-D627E9F653FC}</Project>
       <Name>MFaaP.MFWSClient</Name>
     </ProjectReference>

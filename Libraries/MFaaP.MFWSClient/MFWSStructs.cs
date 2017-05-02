@@ -976,23 +976,41 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
-        public int[] ReadOnlyPropertiesDuringInsert { get; set; }
+        public List<int> ReadOnlyPropertiesDuringInsert { get; set; }
         
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
-        public int[] ReadOnlyPropertiesDuringUpdate { get; set; }
+        public List<int> ReadOnlyPropertiesDuringUpdate { get; set; }
         
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public bool RealObjectType { get; set; }
-        
+
+		/// <summary>
+		/// An overview of effective permissions.
+		/// </summary>
+	    public Permission Permission { get; set; }
+
+	    public bool Hierarchial { get; set; }
+
     }
 
-    
+	public class Permission
+	{
+		public Permission()
+		{
+		}
 
-    /// <summary>
+		public bool CanRead { get; set; }
+		public bool CanEdit { get; set; }
+		public bool CanAttachObjects { get; set; }
+	}
+
+
+
+	/// <summary>
     /// Based on M-Files API.
     /// </summary>
     public class PropertyDef

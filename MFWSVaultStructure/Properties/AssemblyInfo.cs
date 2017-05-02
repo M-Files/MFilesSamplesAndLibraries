@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MFWSValueListItems")]
+[assembly: AssemblyTitle("MFWSVaultStructure")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MFWSValueListItems")]
+[assembly: AssemblyProduct("MFWSVaultStructure")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("26071d62-5787-492a-9559-b4f7d863e5eb")]
+[assembly: Guid("a5eff65f-5d70-4a7b-9869-9a08fd85e132")]
 
 // Version information for an assembly consists of the following four values:
 //
