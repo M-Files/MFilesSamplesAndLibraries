@@ -98,11 +98,8 @@ namespace MFWSDownloading
 			var httpClient = new HttpClient();
 
 			// Start the request.
-			var requestTask = await httpClient.GetStringAsync(url);
-
-			// Retrieve the body.
-			string responseBody = requestTask;
-
+			string responseBody = await httpClient.GetStringAsync(url);
+			
 			// Output the body.
 			// System.Console.WriteLine($"Raw content returned: {responseBody}.");
 
