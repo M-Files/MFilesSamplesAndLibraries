@@ -47,7 +47,7 @@ namespace MFWSSearching
 			var results = await client.QuickSearch(Program.queryTerm);
 			Console.WriteLine($"There were {results.Length} results returned.");
 
-			// Get the object property values.
+			// Get the object property values (not necessary, but shows how to retrieve multiple sets of properties in one call).
 			var properties = await client.GetObjectPropertyValues(results.Select(r => r.ObjVer).ToArray());
 
 			// Iterate over the results and output them.
@@ -91,7 +91,7 @@ namespace MFWSSearching
 			var results = JsonConvert.DeserializeObject<Results<ObjectVersion>>(responseBody);
 			Console.WriteLine($"There were {results.Items.Count} results returned.");
 
-			// Get the object property values.
+			// Get the object property values (not necessary, but shows how to retrieve multiple sets of properties in one call).
 			url = new Uri("http://kb.cloudvault.m-files.com/REST/objects/properties;"
 				        + Program.GetObjVersString(results.Items.Select(r => r.ObjVer)));
 			responseBody = await httpClient.GetStringAsync(url);
@@ -120,7 +120,7 @@ namespace MFWSSearching
 		/// http://www.m-files.com/mfws/resources/objects/properties.html.
 		/// </summary>
 		/// <param name="objVers">The object versions to convert.</param>
-		/// <returns></returns>
+		/// <returns>The formatted string.</returns>
 		static string GetObjVersString(IEnumerable<ObjVer> objVers )
 		{
 			// Sanity.
