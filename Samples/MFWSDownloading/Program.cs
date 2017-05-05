@@ -50,7 +50,7 @@ namespace MFWSDownloading
 			var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 			// Execute a quick search for the query term.
-			var results = await client.QuickSearch(Program.queryTerm);
+			var results = await client.ObjectSearchOperations.SearchForObjectsByString(Program.queryTerm);
 
 			// Iterate over the results and output them.
 			Console.WriteLine($"There were {results.Length} results returned.");

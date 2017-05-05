@@ -63,6 +63,7 @@ namespace MFaaP.MFWSClient
         /// The base rest service url.
         /// </summary>
 	    public Uri BaseUrl => this.restClient.BaseUrl;
+		public MFWSVaultObjectSearchOperations ObjectSearchOperations { get; }
 
 		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
@@ -76,6 +77,9 @@ namespace MFaaP.MFWSClient
 
 			// Set up the RestClient.
 			this.restClient = restClient;
+
+			// Set up our sub-objects.
+			this.ObjectSearchOperations = new MFWSVaultObjectSearchOperations(this);
 		}
 
 		/// <summary>

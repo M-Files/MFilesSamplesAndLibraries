@@ -55,7 +55,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetCheckoutStatus(0, 1, 2);
@@ -110,7 +110,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetCheckoutStatus(0, 1, 2);
@@ -166,7 +166,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.SetCheckoutStatus(0, 1, MFCheckOutStatus.CheckedOutToMe, 2);
@@ -218,7 +218,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.SetCheckoutStatus(0, 1, MFCheckOutStatus.CheckedOutToMe);
@@ -270,7 +270,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.SetCheckoutStatus(0, 1, MFCheckOutStatus.CheckedOutToMe, 2);
@@ -322,7 +322,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.SetCheckoutStatus(0, 1, MFCheckOutStatus.CheckedOutToMe);
@@ -384,7 +384,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetObjectPropertyValues(new ObjVer()
@@ -447,7 +447,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetObjectPropertyValues(new ObjVer()
@@ -507,7 +507,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetHistory(0, 1);
@@ -559,7 +559,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetHistory(0, 1);

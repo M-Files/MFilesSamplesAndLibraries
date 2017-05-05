@@ -49,7 +49,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetValueListItems(1);
@@ -101,7 +101,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetValueListItems(1, "hello");
@@ -153,7 +153,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetValueListItems(1);

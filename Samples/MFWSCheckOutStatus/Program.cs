@@ -39,7 +39,7 @@ namespace MFWSCheckOutStatus
 			var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 			// Search for automatic filling of properties document.
-			var results = await client.QuickSearch("automatic filling of properties");
+			var results = await client.ObjectSearchOperations.SearchForObjectsByString("automatic filling of properties");
 			if (0 == results.Length)
 			{
 				// Could not find the object.

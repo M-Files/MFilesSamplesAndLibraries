@@ -45,7 +45,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AuthenticateUsingSingleSignOn(guid);
@@ -89,7 +89,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AuthenticateUsingSingleSignOn(guid);
@@ -147,7 +147,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AuthenticateUsingSingleSignOn(guid);
@@ -212,7 +212,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
@@ -267,7 +267,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
@@ -325,7 +325,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AuthenticateUsingCredentials(vaultGuid, "my username", "my password");
@@ -374,7 +374,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
@@ -434,7 +434,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetOnlineVaults();
@@ -486,7 +486,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetOnlineVaults();

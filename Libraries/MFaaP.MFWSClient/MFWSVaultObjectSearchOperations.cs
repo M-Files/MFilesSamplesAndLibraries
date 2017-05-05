@@ -7,8 +7,25 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
-	public partial class MFWSClient
+	public class MFWSVaultObjectSearchOperations
 	{
+		/// <summary>
+		/// The <see cref="MFWSClientBase"/> that this object uses to interact with the server.
+		/// </summary>
+		private MFWSClientBase MFWSClient { get; }
+
+		/// <summary>
+		/// Creates a new <see cref="MFWSVaultObjectSearchOperations"/> object.
+		/// </summary>
+		/// <param name="client">The client to interact with the server.</param>
+		internal MFWSVaultObjectSearchOperations(MFWSClientBase client)
+		{
+			// Sanity.
+			if(null == client)
+				throw new ArgumentNullException(nameof(client));
+			this.MFWSClient = client;
+		}
+
 		/// <summary>
 		/// Searches the vault for a simple text string.
 		/// </summary>
@@ -16,8 +33,8 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectTypeId">If provided, also restricts the results by the given object type.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An array of items that match the search term.</returns>
-		/// <remarks>For more comprehensive search options, construct a series of <see cref="ISearchCondition"/> objects and use the <see cref="Search"/> method.</remarks>
-		public Task<ObjectVersion[]> QuickSearch(string searchTerm, int? objectTypeId = null, CancellationToken token = default(CancellationToken))
+		/// <remarks>For more comprehensive search options, construct a series of <see cref="ISearchCondition"/> objects and use the <see cref="SearchForObjectsByString"/> method.</remarks>
+		public Task<ObjectVersion[]> SearchForObjectsByString(string searchTerm, int? objectTypeId = null, CancellationToken token = default(CancellationToken))
 		{
 			// Create a collection of conditions.
 			var conditions = new List<ISearchCondition>
@@ -33,7 +50,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Search.
-			return this.Search(token, conditions.ToArray());
+			return this.SearchForObjectsByConditions(token, conditions.ToArray());
 		}
 
 		/// <summary>
@@ -41,9 +58,9 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="searchConditions">The conditions to search for.</param>
 		/// <returns>An array of items that match the search conditions.</returns>
-		public Task<ObjectVersion[]> Search(params ISearchCondition[] searchConditions)
+		public Task<ObjectVersion[]> SearchForObjectsByConditions(params ISearchCondition[] searchConditions)
 		{
-			return this.Search(CancellationToken.None, searchConditions);
+			return this.SearchForObjectsByConditions(CancellationToken.None, searchConditions);
 		}
 
 		/// <summary>
@@ -52,7 +69,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="searchConditions">The conditions to search for.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An array of items that match the search conditions.</returns>
-		public async Task<ObjectVersion[]> Search(CancellationToken token, params ISearchCondition[] searchConditions)
+		public async Task<ObjectVersion[]> SearchForObjectsByConditions(CancellationToken token, params ISearchCondition[] searchConditions)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -93,7 +110,7 @@ namespace MFaaP.MFWSClient
 				request.Resource = request.Resource.Substring(0, request.Resource.Length - 1);
 
 			// Make the request and get the response.
-			var response = await this.Get<Results<ObjectVersion>>(request, token);
+			var response = await this.MFWSClient.Get<Results<ObjectVersion>>(request, token);
 
 			// Return the data.
 			return response.Data?.Items?.ToArray();
@@ -107,7 +124,7 @@ namespace MFaaP.MFWSClient
 		protected virtual string GetSearchConditionOperator(ISearchCondition searchCondition)
 		{
 			// Sanity.
-			if(null == searchCondition)
+			if (null == searchCondition)
 				throw new ArgumentNullException(nameof(searchCondition));
 
 			// Set the default value.  If we are to invert, add a "!", otherwise blank string.
@@ -150,7 +167,5 @@ namespace MFaaP.MFWSClient
 			return returnValue;
 
 		}
-
 	}
-	
 }

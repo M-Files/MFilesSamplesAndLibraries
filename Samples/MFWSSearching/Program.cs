@@ -44,7 +44,7 @@ namespace MFWSSearching
 			var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 			// Execute a quick search for the query term.
-			var results = await client.QuickSearch(Program.queryTerm);
+			var results = await client.ObjectSearchOperations.SearchForObjectsByString(Program.queryTerm);
 			Console.WriteLine($"There were {results.Length} results returned.");
 
 			// Get the object property values (not necessary, but shows how to retrieve multiple sets of properties in one call).

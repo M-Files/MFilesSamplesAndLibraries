@@ -55,7 +55,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetRootViewContents();
@@ -107,7 +107,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetRootViewContents();
@@ -163,7 +163,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetFavorites();
@@ -215,7 +215,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetFavorites();
@@ -271,7 +271,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.RemoveFromFavorites(1, 2);
@@ -323,7 +323,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.RemoveFromFavorites(1, 2);
@@ -379,7 +379,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AddToFavorites(1, 2);
@@ -431,7 +431,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AddToFavorites(1, 2);
@@ -483,7 +483,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.AddToFavorites(1, 2);
@@ -541,7 +541,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetViewContents();
@@ -593,7 +593,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetViewContents(new FolderContentItem()
@@ -653,7 +653,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetViewContents(new FolderContentItem()
@@ -724,7 +724,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetViewContents(new FolderContentItem()
@@ -806,7 +806,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.GetViewContents(new FolderContentItem()

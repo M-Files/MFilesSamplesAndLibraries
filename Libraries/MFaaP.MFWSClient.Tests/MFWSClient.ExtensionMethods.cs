@@ -50,7 +50,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.ExecuteExtensionMethod("HelloWorld");
@@ -102,7 +102,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.ExecuteExtensionMethod("HelloWorld");
@@ -157,7 +157,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.ExecuteExtensionMethod("HelloWorld", inputValue);
@@ -206,7 +206,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			var output = await mfwsClient.ExecuteExtensionMethod("HelloWorld", "this is my test input value");
@@ -262,7 +262,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
@@ -318,7 +318,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
@@ -374,7 +374,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
@@ -427,7 +427,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Act */
 
 			// Create our MFWSClient.
-			var mfwsClient = this.GetMFWSClient(mock);
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
 			var output = await mfwsClient.ExecuteExtensionMethod("HelloWorld", new

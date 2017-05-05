@@ -13,7 +13,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <param name="restClientMoq">The mocked rest client.</param>
 		/// <returns></returns>
-		public MFaaP.MFWSClient.MFWSClient GetMFWSClient(Moq.Mock<IRestClient> restClientMoq)
+		public static MFaaP.MFWSClient.MFWSClient GetMFWSClient(Moq.Mock<IRestClient> restClientMoq)
 		{
 			// Sanity.
 			if(null == restClientMoq)
