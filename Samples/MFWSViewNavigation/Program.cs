@@ -90,8 +90,32 @@ namespace MFWSViewNavigation
 				}
 				else
 				{
-					// Add it to the navigation stack ("go in").
-					navigation.Push(nextNavItem);
+					// If they chose to go "into" an object then return the history.
+					if (nextNavItem.FolderContentItemType == MFFolderContentItemType.ObjectVersion)
+					{
+						// Get the history.
+						var versions = await client.GetHistory(new ObjID()
+						{
+							Type = nextNavItem.ObjectVersion.ObjVer.Type,
+							ID = nextNavItem.ObjectVersion.ObjVer.ID
+						});
+
+						// Output them.
+						Console.WriteLine($"There are {versions.Count} versions:");
+						foreach (var version in versions)
+						{
+							Console.WriteLine($"{version.ObjVer.Version} (Created: {version.LastModifiedUtc})");
+						}
+
+						// Allow the user to go out.
+						Console.WriteLine("Press any key to go back to the previous listing.");
+						Console.ReadKey();
+					}
+					else
+					{
+						// Add it to the navigation stack ("go in").
+						navigation.Push(nextNavItem);
+					}
 				}
 			}
 
@@ -138,17 +162,8 @@ namespace MFWSViewNavigation
 						// Get the item selected.
 						var nextNavItem = itemsToChooseFrom.Items[selectedIndex - 1];
 
-						// If it was an object version then we can't go in.
-						if (nextNavItem.FolderContentItemType == MFFolderContentItemType.ObjectVersion)
-						{
-							Console.WriteLine("You cannot navigate into an object.");
-							selectedIndex = -1;
-						}
-						else
-						{
-							// Otherwise navigate to the new level.
-							return nextNavItem;
-						}
+						// Navigate to the new level.
+						return nextNavItem;
 					}
 				}
 

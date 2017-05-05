@@ -34,8 +34,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -63,7 +63,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/views/items", resourceAddress);
@@ -86,8 +86,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					methodUsed = r.Method;
 				})
 				// Return a mock response.
@@ -115,7 +115,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.GET, methodUsed);
@@ -142,8 +142,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -171,7 +171,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/favorites", resourceAddress);
@@ -194,8 +194,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					methodUsed = r.Method;
 				})
 				// Return a mock response.
@@ -223,7 +223,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.GET, methodUsed);
@@ -504,7 +504,7 @@ namespace MFaaP.MFWSClient.Tests
 		#region GetViewContents
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents(MFaaP.MFWSClient.FolderContentItem[])"/>
 		/// requests the correct resource address (no path).
 		/// </summary>
 		[TestMethod]
@@ -520,8 +520,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -549,14 +549,14 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/views/items", resourceAddress);
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents(MFaaP.MFWSClient.FolderContentItem[])"/>
 		/// requests the correct resource address (no path).
 		/// </summary>
 		[TestMethod]
@@ -572,8 +572,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -609,14 +609,14 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/views/v15/items", resourceAddress);
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents(MFaaP.MFWSClient.FolderContentItem[])"/>
 		/// requests the correct resource address (no path).
 		/// </summary>
 		[TestMethod]
@@ -632,8 +632,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -680,14 +680,14 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/views/v216/L4/items", resourceAddress);
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents(MFaaP.MFWSClient.FolderContentItem[])"/>
 		/// requests the correct resource address (no path).
 		/// </summary>
 		[TestMethod]
@@ -703,8 +703,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -762,14 +762,14 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/views/v216/L4/L19/items", resourceAddress);
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetViewContents(MFaaP.MFWSClient.FolderContentItem[])"/>
 		/// uses the correct Http method (no path).
 		/// </summary>
 		[TestMethod]
@@ -785,8 +785,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					methodUsed = r.Method;
 				})
 				// Return a mock response.
@@ -822,7 +822,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.GET, methodUsed);

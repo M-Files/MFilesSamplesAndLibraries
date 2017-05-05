@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RestSharp;
@@ -27,8 +28,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -56,7 +57,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/valuelists/1/items", resourceAddress);
@@ -79,8 +80,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -108,7 +109,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/valuelists/1/items?filter=hello", resourceAddress);
@@ -131,8 +132,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					methodUsed = r.Method;
 				})
 				// Return a mock response.
@@ -160,7 +161,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.GET, methodUsed);

@@ -319,6 +319,52 @@ namespace MFaaP.MFWSClient
 
 		#endregion
 
+		#region History
+
+		/// <summary>
+		/// Retrieves the properties of multiple objects.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A collection of <see cref="ObjectVersion"/>s representing the object history.</returns>
+		/// <remarks>Note that not all versions may be shown: http://www.m-files.com/mfws/resources/objects/type/objectid/history.html</remarks>
+		public Task<List<ObjectVersion>> GetHistory(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
+		{
+			return this.GetHistory(new ObjID()
+			{
+				Type = objectTypeId,
+				ID = objectId
+			}, token);
+
+		}
+
+		/// <summary>
+		/// Retrieves the properties of multiple objects.
+		/// </summary>
+		/// <param name="objID">The object to retrieve the history from.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A collection of <see cref="ObjectVersion"/>s representing the object history.</returns>
+		/// <remarks>Note that not all versions may be shown: http://www.m-files.com/mfws/resources/objects/type/objectid/history.html</remarks>
+		public async Task<List<ObjectVersion>> GetHistory(ObjID objID, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objID)
+				throw new ArgumentNullException(nameof(ObjID));
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/{objID.Type}/{objID.ID}/history");
+
+			// Make the request and get the response.
+			var response = await this.Get<List<ObjectVersion>>(request, token);
+
+			// Return the data.
+			return response.Data;
+
+		}
+
+		#endregion
+
 	}
 	
 }

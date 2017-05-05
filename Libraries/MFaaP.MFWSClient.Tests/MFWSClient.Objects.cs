@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace MFaaP.MFWSClient.Tests
 		#region GetCheckoutStatus
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetCheckoutStatus(int,int,System.Nullable{int})"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetCheckoutStatus(int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -30,8 +31,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -62,14 +63,14 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual($"/REST/objects/0/1/2/checkedout", resourceAddress);
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetCheckoutStatus(int,int,System.Nullable{int})"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetCheckoutStatus(int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
@@ -85,8 +86,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					methodUsed = r.Method;
 				})
 				// Return a mock response.
@@ -117,7 +118,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.GET, methodUsed);
@@ -356,8 +357,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					resourceAddress = r.Resource;
 				})
 				// Return a mock response.
@@ -395,7 +396,7 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/objects/properties;1/2/0", resourceAddress);
@@ -406,6 +407,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
+		[SuppressMessage("ReSharper", "MethodSupportsCancellation")]
 		public async Task GetObjectPropertyValues_CorrectMethod()
 		{
 			/* Arrange */
@@ -418,8 +420,8 @@ namespace MFaaP.MFWSClient.Tests
 
 			// When the execute method is called, log the resource requested.
 			mock
-				.Setup(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>()))
-				.Callback((IRestRequest r) => {
+				.Setup(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
 					methodUsed = r.Method;
 				})
 				// Return a mock response.
@@ -457,7 +459,115 @@ namespace MFaaP.MFWSClient.Tests
 			/* Assert */
 
 			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
+			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.GET, methodUsed);
+		}
+
+		#endregion
+
+		#region GetHistory
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetHistory(int,int,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public async Task GetHistory_CorrectResource()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<List<ObjectVersion>>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new List<ObjectVersion>());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = this.GetMFWSClient(mock);
+
+			// Execute.
+			await mfwsClient.GetHistory(0, 1);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual($"/REST/objects/0/1/history", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetHistory(int,int,System.Threading.CancellationToken)"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetHistory_CorrectMethod()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<List<ObjectVersion>>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new List<ObjectVersion>());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = this.GetMFWSClient(mock);
+
+			// Execute.
+			await mfwsClient.GetHistory(0, 1);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<List<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
 			Assert.AreEqual(Method.GET, methodUsed);
