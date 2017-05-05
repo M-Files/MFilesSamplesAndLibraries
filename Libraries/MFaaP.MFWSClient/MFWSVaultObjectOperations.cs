@@ -1,14 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
-	public partial class MFWSClient
+	/// <summary>
+	/// Methods to create and modify objects.
+	/// </summary>
+	public class MFWSVaultObjectOperations
 	{
+		/// <summary>
+		/// The <see cref="MFWSClientBase"/> that this object uses to interact with the server.
+		/// </summary>
+		protected MFWSClientBase MFWSClient { get; private set; }
+
+		/// <summary>
+		/// Creates a new <see cref="MFWSVaultObjectOperations"/> object.
+		/// </summary>
+		/// <param name="client">The client to interact with the server.</param>
+		internal MFWSVaultObjectOperations(MFWSClientBase client)
+		{
+			// Sanity.
+			if (null == client)
+				throw new ArgumentNullException(nameof(client));
+			this.MFWSClient = client;
+		}
 
 		#region Checking in and out
 
@@ -60,7 +78,7 @@ namespace MFaaP.MFWSClient
 			request.AddJsonBody(status);
 
 			// Make the request and get the response.
-			var response = await this.Put<ObjectVersion>(request, token);
+			var response = await this.MFWSClient.Put<ObjectVersion>(request, token);
 
 			// Return the data.
 			return response.Data;
@@ -85,7 +103,7 @@ namespace MFaaP.MFWSClient
 			request.AddJsonBody(status);
 
 			// Make the request and get the response.
-			var response = await this.Put<ObjectVersion>(request, token);
+			var response = await this.MFWSClient.Put<ObjectVersion>(request, token);
 
 			// Return the data.
 			return response.Data;
@@ -146,7 +164,7 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/{version?.ToString() ?? "latest"}/checkedout");
 
 			// Make the request and get the response.
-			var response = await this.Get<PrimitiveType<MFCheckOutStatus>>(request, token);
+			var response = await this.MFWSClient.Get<PrimitiveType<MFCheckOutStatus>>(request, token);
 
 			// Return the data.
 			return response.Data?.Value;
@@ -169,7 +187,7 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objVer.Type}/{objVer.ID}/{objVer.Version}/checkedout");
 
 			// Make the request and get the response.
-			var response = await this.Get<PrimitiveType<MFCheckOutStatus>>(request, token);
+			var response = await this.MFWSClient.Get<PrimitiveType<MFCheckOutStatus>>(request, token);
 
 			// Return the data.
 			return response.Data?.Value;
@@ -246,75 +264,10 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/deleted");
 
 			// Make the request and get the response.
-			var response = await this.Get<PrimitiveType<bool>>(request, token);
+			var response = await this.MFWSClient.Get<PrimitiveType<bool>>(request, token);
 
 			// Return the data.
 			return response.Data?.Value;
-		}
-
-		#endregion
-
-		#region Get properties of objects
-
-		/// <summary>
-		/// Retrieves the properties of multiple objects.
-		/// </summary>
-		/// <param name="objVers">The objects to retrieve the properties of.</param>
-		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
-		public Task<PropertyValue[][]> GetObjectPropertyValues(params ObjVer[] objVers)
-		{
-			return this.GetObjectPropertyValues(CancellationToken.None, objVers);
-		}
-
-		/// <summary>
-		/// Retrieves the properties of multiple objects.
-		/// </summary>
-		/// <param name="objVers">The objects to retrieve the properties of.</param>
-		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
-		public async Task<PropertyValue[][]> GetObjectPropertyValues(CancellationToken token, params ObjVer[] objVers)
-		{
-			// Sanity.
-			if (null == objVers)
-				return new PropertyValue[0][];
-
-			// Create the request.
-			var request = new RestRequest("/REST/objects/properties");
-
-			// Add the content to the request.
-			foreach (var objVer in objVers)
-			{
-				request.Resource += $";{objVer.Type}/{objVer.ID}/{objVer.Version}";
-			}
-
-			// Make the request and get the response.
-			var response = await this.Get<List<List<PropertyValue>>>(request, token);
-
-			// Return the data.
-			return response.Data?.Select(a => a.ToArray()).ToArray();
-
-		}
-
-		/// <summary>
-		/// Retrieves the properties of a single object.
-		/// </summary>
-		/// <param name="objVer">The object to retrieve the properties of.</param>
-		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A collection of property values for the supplied object.</returns>
-		public async Task<PropertyValue[]> GetObjectPropertyValues(ObjVer objVer, CancellationToken token = default(CancellationToken))
-		{
-
-			// Sanity.
-			if (null == objVer)
-				throw new ArgumentNullException(nameof(objVer));
-
-			// Use the other overload to retrieve the content.
-			var response = await this.GetObjectPropertyValues(token, new[] { objVer });
-
-			// Sanity.
-			return null != response && response.Length > 0
-				? new PropertyValue[0] 
-				: response[0];
 		}
 
 		#endregion
@@ -356,7 +309,7 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objID.Type}/{objID.ID}/history");
 
 			// Make the request and get the response.
-			var response = await this.Get<List<ObjectVersion>>(request, token);
+			var response = await this.MFWSClient.Get<List<ObjectVersion>>(request, token);
 
 			// Return the data.
 			return response.Data;

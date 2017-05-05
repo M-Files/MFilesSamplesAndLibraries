@@ -50,7 +50,7 @@ namespace MFWSCheckOutStatus
 			// Whilst the checkout status is available in the ObjectVersion directly,
 			// let's retrieve it to show the standard call.
 			// Get the checkout status.
-			var checkoutStatus = await client.GetCheckoutStatus(results[0].ObjVer.Type, results[0].ObjVer.ID);
+			var checkoutStatus = await client.ObjectOperations.GetCheckoutStatus(results[0].ObjVer.Type, results[0].ObjVer.ID);
 
 			// Output it.
 			Console.WriteLine($"\tCheckout status is: {checkoutStatus}");

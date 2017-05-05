@@ -52,7 +52,8 @@
     <Compile Include="MFWSClient.Authentication.cs" />
     <Compile Include="MFWSClient.ObjectTypesAndValueLists.cs" />
     <Compile Include="MFWSClient.Session.cs" />
-    <Compile Include="MFWSClient.Objects.cs" />
+    <Compile Include="MFWSVaultObjectPropertyOperations.cs" />
+    <Compile Include="MFWSVaultObjectOperations.cs" />
     <Compile Include="MFWSClient.CreatingObjects.cs" />
     <Compile Include="MFWSClient.cs" />
     <Compile Include="MFWSClient.DownloadingFiles.cs" />

@@ -94,7 +94,7 @@ namespace MFWSViewNavigation
 					if (nextNavItem.FolderContentItemType == MFFolderContentItemType.ObjectVersion)
 					{
 						// Get the history.
-						var versions = await client.GetHistory(new ObjID()
+						var versions = await client.ObjectOperations.GetHistory(new ObjID()
 						{
 							Type = nextNavItem.ObjectVersion.ObjVer.Type,
 							ID = nextNavItem.ObjectVersion.ObjVer.ID

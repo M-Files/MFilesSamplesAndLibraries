@@ -12,7 +12,7 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// The <see cref="MFWSClientBase"/> that this object uses to interact with the server.
 		/// </summary>
-		private MFWSClientBase MFWSClient { get; }
+		protected MFWSClientBase MFWSClient { get; private set; }
 
 		/// <summary>
 		/// Creates a new <see cref="MFWSVaultObjectSearchOperations"/> object.

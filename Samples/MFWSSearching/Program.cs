@@ -48,7 +48,7 @@ namespace MFWSSearching
 			Console.WriteLine($"There were {results.Length} results returned.");
 
 			// Get the object property values (not necessary, but shows how to retrieve multiple sets of properties in one call).
-			var properties = await client.GetObjectPropertyValues(results.Select(r => r.ObjVer).ToArray());
+			var properties = await client.ObjectPropertyOperations.GetPropertiesOfMultipleObjects(results.Select(r => r.ObjVer).ToArray());
 
 			// Iterate over the results and output them.
 			for(var i=0; i<results.Length; i++)
