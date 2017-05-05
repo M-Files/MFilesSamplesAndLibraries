@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -53,11 +54,12 @@ namespace MFaaP.MFWSClient
 		/// Attempts SSO (Single Sign On) authentication with the remote web server.
 		/// </summary>
 		/// <param name="vaultId">The id of the vault to authenticate to.</param>
-		public async Task AuthenticateUsingSingleSignOn(Guid vaultId)
+		/// <param name="token">A cancellation token for the request.</param>
+		public async Task AuthenticateUsingSingleSignOn(Guid vaultId, CancellationToken token = default(CancellationToken))
 		{
 			// Clear any current tokens.
 			this.ClearAuthenticationToken();
-			
+
 			// Make a request to the WebServiceSSO.aspx file (which will give our token).
 			// Note: "popup=1" in the QueryString just indicates that we don't care about redirecting on success/failure.
 			// Note: The vault Id in the QueryString indicates which vault to authenticate to.  This is optional if there is only one vault.
@@ -67,7 +69,7 @@ namespace MFaaP.MFWSClient
 			request.Credentials = CredentialCache.DefaultNetworkCredentials;
 
 			// Execute the request and store the response.
-			IRestResponse response = await this.Get(request);
+			IRestResponse response = await this.Get(request, token);
 
 			// Save the response cookies in our persistent RestClient cookie container.
 			// Note: We should have at least one returned which is the ASP.NET session Id.
@@ -87,7 +89,8 @@ namespace MFaaP.MFWSClient
 		/// <param name="vaultId">The Id of the vault to connect to.</param>
 		/// <param name="username">The username to use.</param>
 		/// <param name="password">The password to use.</param>
-		public Task AuthenticateUsingCredentials(Guid? vaultId, string username, string password)
+		/// <param name="token">A cancellation token for the request.</param>
+		public Task AuthenticateUsingCredentials(Guid? vaultId, string username, string password, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
 			return this.AuthenticateUsingCredentials(new Authentication()
@@ -95,14 +98,15 @@ namespace MFaaP.MFWSClient
 				Username = username,
 				Password = password,
 				VaultGuid = vaultId
-			});
+			}, token);
 		}
 
 		/// <summary>
 		/// Authenticates to the server using details passed in the authentication parameter.
 		/// </summary>
 		/// <param name="authentication">The authentication details to use.</param>
-		protected async Task AuthenticateUsingCredentials(Authentication authentication)
+		/// <param name="token">A cancellation token for the request.</param>
+		protected async Task AuthenticateUsingCredentials(Authentication authentication, CancellationToken token = default(CancellationToken))
 		{
 			// Clear any current tokens.
 			this.ClearAuthenticationToken();
@@ -117,7 +121,7 @@ namespace MFaaP.MFWSClient
 				request.AddJsonBody(authentication);
 
 				// Execute the request and store the response.
-				var response = await this.Post<PrimitiveType<string>>(request);
+				var response = await this.Post<PrimitiveType<string>>(request, token);
 
 				// Save the authentication token.
 				this.AuthenticationToken = response?.Data?.Value;
@@ -128,14 +132,15 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Gets the vaults from the server, using the current authentication token.
 		/// </summary>
-		/// <returns></returns>
-		public async Task<List<Vault>> GetOnlineVaults()
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A list of online vaults.</returns>
+		public async Task<List<Vault>> GetOnlineVaults(CancellationToken token = default(CancellationToken))
 		{
 			// Build the request to authenticate to the vault.
 			var request = new RestRequest("/REST/server/vaults?online=true");
 
 			// Execute the request and store the response.
-			var response = await this.Get<List<Vault>>(request);
+			var response = await this.Get<List<Vault>>(request, token);
 
 			// Store the authentication token.
 			return response?.Data;

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -11,9 +12,10 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="valueListId">The Id of the value list to return the items from.</param>
 		/// <param name="nameFilter">If has a value, is used to filter the items by name.</param>
+		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The contents of the value list.</returns>
 		/// <remarks>Note that this may be limited.</remarks>
-		public async Task<Results<ValueListItem>> GetValueListItems(int valueListId, string nameFilter = null)
+		public async Task<Results<ValueListItem>> GetValueListItems(int valueListId, string nameFilter = null, CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
 			var request = new RestRequest($"/REST/valuelists/{valueListId}/items");
@@ -25,7 +27,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.Get<Results<ValueListItem>>(request);
+			var response = await this.Get<Results<ValueListItem>>(request, token);
 
 			// Return the data.
 			return response.Data;

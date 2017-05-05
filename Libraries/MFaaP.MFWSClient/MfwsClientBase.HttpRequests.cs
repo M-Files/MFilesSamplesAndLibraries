@@ -74,21 +74,9 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <typeparam name="T">The expected return type.</typeparam>
 		/// <param name="request">The request to execute.</param>
-		/// <returns>The response.</returns>
-		public Task<IRestResponse<T>> Get<T>(IRestRequest request)
-			where T : new()
-		{
-			return this.Get<T>(request, CancellationToken.None);
-		}
-
-		/// <summary>
-		/// Executes the request using a "GET" HTTP method.
-		/// </summary>
-		/// <typeparam name="T">The expected return type.</typeparam>
-		/// <param name="request">The request to execute.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response.</returns>
-		public async Task<IRestResponse<T>> Get<T>(IRestRequest request, CancellationToken token)
+		public async Task<IRestResponse<T>> Get<T>(IRestRequest request, CancellationToken token = default(CancellationToken))
 			where T : new()
 		{
 			// Sanity.
@@ -102,7 +90,7 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync<T>(request);
+			var response = await this.restClient.ExecuteTaskAsync<T>(request, token);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -115,19 +103,9 @@ namespace MFaaP.MFWSClient
 		/// Executes the request using a "GET" HTTP method.
 		/// </summary>
 		/// <param name="request">The request to execute.</param>
-		/// <returns>The response.</returns>
-		public Task<IRestResponse> Get(IRestRequest request)
-		{
-			return this.Get(request, CancellationToken.None);
-		}
-
-		/// <summary>
-		/// Executes the request using a "GET" HTTP method.
-		/// </summary>
-		/// <param name="request">The request to execute.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response.</returns>
-		public async Task<IRestResponse> Get(IRestRequest request, CancellationToken token)
+		public async Task<IRestResponse> Get(IRestRequest request, CancellationToken token = default(CancellationToken))
 		{
 			// Sanity.
 			if (null == request)
@@ -153,19 +131,9 @@ namespace MFaaP.MFWSClient
 		/// Executes the request using a "POST" HTTP method.
 		/// </summary>
 		/// <param name="request">The request to execute.</param>
-		/// <returns>The response.</returns>
-		public Task<IRestResponse> Post(IRestRequest request)
-		{
-			return this.Post(request, CancellationToken.None);
-		}
-
-		/// <summary>
-		/// Executes the request using a "POST" HTTP method.
-		/// </summary>
-		/// <param name="request">The request to execute.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response.</returns>
-		public async Task<IRestResponse> Post(IRestRequest request, CancellationToken token)
+		public async Task<IRestResponse> Post(IRestRequest request, CancellationToken token = default(CancellationToken))
 		{
 			// Sanity.
 			if (null == request)
@@ -191,22 +159,10 @@ namespace MFaaP.MFWSClient
 		/// Executes the request using a "POST" HTTP method.
 		/// </summary>
 		/// <typeparam name="T">The expected return type.</typeparam>
-		/// <param name="request">The request to execute.</param>
-		/// <returns>The response.</returns>
-		public Task<IRestResponse<T>> Post<T>(IRestRequest request)
-			where T : new()
-		{
-			return this.Post<T>(request, CancellationToken.None);
-		}
-
-		/// <summary>
-		/// Executes the request using a "POST" HTTP method.
-		/// </summary>
-		/// <typeparam name="T">The expected return type.</typeparam>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <param name="request">The request to execute.</param>
 		/// <returns>The response.</returns>
-		public async Task<IRestResponse<T>> Post<T>(IRestRequest request, CancellationToken token)
+		public async Task<IRestResponse<T>> Post<T>(IRestRequest request, CancellationToken token = default(CancellationToken))
 			where T : new()
 		{
 			// Sanity.
@@ -233,19 +189,9 @@ namespace MFaaP.MFWSClient
 		/// Executes the request using a "DELETE" HTTP method.
 		/// </summary>
 		/// <param name="request">The request to execute.</param>
-		/// <returns>The response.</returns>
-		public Task<IRestResponse> Delete(IRestRequest request)
-		{
-			return this.Delete(request, CancellationToken.None);
-		}
-
-		/// <summary>
-		/// Executes the request using a "DELETE" HTTP method.
-		/// </summary>
-		/// <param name="request">The request to execute.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response.</returns>
-		public async Task<IRestResponse> Delete(IRestRequest request, CancellationToken token)
+		public async Task<IRestResponse> Delete(IRestRequest request, CancellationToken token = default(CancellationToken))
 		{
 			// Sanity.
 			if (null == request)
@@ -271,22 +217,10 @@ namespace MFaaP.MFWSClient
 		/// Executes the request using a "DELETE" HTTP method.
 		/// </summary>
 		/// <typeparam name="T">The expected return type.</typeparam>
-		/// <param name="request">The request to execute.</param>
-		/// <returns>The response.</returns>
-		public Task<IRestResponse<T>> Delete<T>(IRestRequest request)
-			where T : new()
-		{
-			return this.Delete<T>(request, CancellationToken.None);
-		}
-
-		/// <summary>
-		/// Executes the request using a "DELETE" HTTP method.
-		/// </summary>
-		/// <typeparam name="T">The expected return type.</typeparam>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <param name="request">The request to execute.</param>
 		/// <returns>The response.</returns>
-		public async Task<IRestResponse<T>> Delete<T>(IRestRequest request, CancellationToken token)
+		public async Task<IRestResponse<T>> Delete<T>(IRestRequest request, CancellationToken token = default(CancellationToken))
 			where T : new()
 		{
 			// Sanity.
@@ -313,19 +247,9 @@ namespace MFaaP.MFWSClient
 		/// Executes the request using a "PUT" HTTP method.
 		/// </summary>
 		/// <param name="request">The request to execute.</param>
-		/// <returns>The response.</returns>
-		public Task<IRestResponse> Put(IRestRequest request)
-		{
-			return this.Put(request, CancellationToken.None);
-		}
-
-		/// <summary>
-		/// Executes the request using a "PUT" HTTP method.
-		/// </summary>
-		/// <param name="request">The request to execute.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response.</returns>
-		public async Task<IRestResponse> Put(IRestRequest request, CancellationToken token)
+		public async Task<IRestResponse> Put(IRestRequest request, CancellationToken token = default(CancellationToken))
 		{
 			// Sanity.
 			if (null == request)
@@ -352,21 +276,9 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <typeparam name="T">The expected return type.</typeparam>
 		/// <param name="request">The request to execute.</param>
-		/// <returns>The response.</returns>
-		public Task<IRestResponse<T>> Put<T>(IRestRequest request)
-			where T : new()
-		{
-			return this.Put<T>(request, CancellationToken.None);
-		}
-
-		/// <summary>
-		/// Executes the request using a "PUT" HTTP method.
-		/// </summary>
-		/// <typeparam name="T">The expected return type.</typeparam>
-		/// <param name="request">The request to execute.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response.</returns>
-		public async Task<IRestResponse<T>> Put<T>(IRestRequest request, CancellationToken token)
+		public async Task<IRestResponse<T>> Put<T>(IRestRequest request, CancellationToken token = default(CancellationToken))
 			where T : new()
 		{
 			// Sanity.

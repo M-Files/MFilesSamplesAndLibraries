@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -13,9 +14,10 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="searchTerm">The string to search for.</param>
 		/// <param name="objectTypeId">If provided, also restricts the results by the given object type.</param>
+		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An array of items that match the search term.</returns>
 		/// <remarks>For more comprehensive search options, construct a series of <see cref="ISearchCondition"/> objects and use the <see cref="Search"/> method.</remarks>
-		public Task<ObjectVersion[]> QuickSearch(string searchTerm, int? objectTypeId = null)
+		public Task<ObjectVersion[]> QuickSearch(string searchTerm, int? objectTypeId = null, CancellationToken token = default(CancellationToken))
 		{
 			// Create a collection of conditions.
 			var conditions = new List<ISearchCondition>
@@ -31,7 +33,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Search.
-			return this.Search(conditions.ToArray());
+			return this.Search(token, conditions.ToArray());
 		}
 
 		/// <summary>
@@ -39,10 +41,21 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="searchConditions">The conditions to search for.</param>
 		/// <returns>An array of items that match the search conditions.</returns>
-		public async Task<ObjectVersion[]> Search(params ISearchCondition[] searchConditions)
+		public Task<ObjectVersion[]> Search(params ISearchCondition[] searchConditions)
+		{
+			return this.Search(CancellationToken.None, searchConditions);
+		}
+
+		/// <summary>
+		/// Searches the vault.
+		/// </summary>
+		/// <param name="searchConditions">The conditions to search for.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An array of items that match the search conditions.</returns>
+		public async Task<ObjectVersion[]> Search(CancellationToken token, params ISearchCondition[] searchConditions)
 		{
 			// Sanity.
-			if(null == searchConditions)
+			if (null == searchConditions)
 				throw new ArgumentNullException(nameof(searchConditions));
 
 			// Create the request.
@@ -80,7 +93,7 @@ namespace MFaaP.MFWSClient
 				request.Resource = request.Resource.Substring(0, request.Resource.Length - 1);
 
 			// Make the request and get the response.
-			var response = await this.Get<Results<ObjectVersion>>(request);
+			var response = await this.Get<Results<ObjectVersion>>(request, token);
 
 			// Return the data.
 			return response.Data?.Items?.ToArray();
