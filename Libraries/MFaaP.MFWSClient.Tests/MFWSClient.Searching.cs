@@ -860,7 +860,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.Search(new LookupPropertyValueSearchCondition(123, 456));
+			await mfwsClient.Search(new LookupPropertyValueSearchCondition(123, lookupIds: 456));
 
 			/* Assert */
 
@@ -912,7 +912,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.Search(new LookupPropertyValueSearchCondition(123, "456"));
+			await mfwsClient.Search(new LookupPropertyValueSearchCondition(123, externalLookupIds: "456"));
 
 			/* Assert */
 
@@ -968,7 +968,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.Search(new MultiSelectLookupPropertyValueSearchCondition(123, new [] {  456, 789 }));
+			await mfwsClient.Search(new MultiSelectLookupPropertyValueSearchCondition(123, lookupIds: new [] {  456, 789 }));
 
 			/* Assert */
 
@@ -1020,7 +1020,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.Search(new MultiSelectLookupPropertyValueSearchCondition(123, new [] {  "456", "789" }));
+			await mfwsClient.Search(new MultiSelectLookupPropertyValueSearchCondition(123, externalLookupIds: new[] {  "456", "789" }));
 
 			/* Assert */
 

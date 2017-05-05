@@ -9,14 +9,14 @@ namespace MFaaP.MFWSClient.Tests
 	public partial class MFWSClient
 	{
 
-		#region GetRealObjectTypes
+		#region GetObjectTypes
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetRealObjectTypes"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetObjectTypes"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public async Task GetRealObjectTypes_CorrectResource()
+		public async Task GetObjectTypes_CorrectResource()
 		{
 			/* Arrange */
 
@@ -52,7 +52,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.GetRealObjectTypes();
+			await mfwsClient.GetObjectTypes();
 
 			/* Assert */
 
@@ -60,15 +60,15 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<List<ObjType>>(It.IsAny<IRestRequest>()), Times.Exactly(1));
 
 			// Resource must be correct.
-			Assert.AreEqual("/REST/structure/objecttypes?type=real", resourceAddress);
+			Assert.AreEqual("/REST/structure/objecttypes", resourceAddress);
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetRealObjectTypes"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetObjectTypes"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public async Task GetRealObjectTypes_CorrectMethod()
+		public async Task GetObjectTypes_CorrectMethod()
 		{
 			/* Arrange */
 
@@ -104,7 +104,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = this.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.GetRealObjectTypes();
+			await mfwsClient.GetObjectTypes();
 
 			/* Assert */
 
