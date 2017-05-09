@@ -11,22 +11,15 @@ namespace MFaaP.MFWSClient
 	/// Methods to modify object properties.
 	/// </summary>
 	public class MFWSVaultObjectPropertyOperations
+		: MFWSVaultOperationsBase
 	{
-		/// <summary>
-		/// The <see cref="MFWSClientBase"/> that this object uses to interact with the server.
-		/// </summary>
-		protected MFWSClientBase MFWSClient { get; private set; }
-
 		/// <summary>
 		/// Creates a new <see cref="MFWSVaultObjectPropertyOperations"/> object.
 		/// </summary>
 		/// <param name="client">The client to interact with the server.</param>
 		internal MFWSVaultObjectPropertyOperations(MFWSClientBase client)
+			: base(client)
 		{
-			// Sanity.
-			if (null == client)
-				throw new ArgumentNullException(nameof(client));
-			this.MFWSClient = client;
 		}
 
 		#region Get properties of objects

@@ -57,13 +57,14 @@
     <Compile Include="MFWSClient.CreatingObjects.cs" />
     <Compile Include="MFWSClient.cs" />
     <Compile Include="MFWSClient.DownloadingFiles.cs" />
-    <Compile Include="MFWSClient.ExtensionMethods.cs" />
+    <Compile Include="MFWSVaultExtensionMethodOperations.cs" />
     <Compile Include="MFWSClient.ValueListItems.cs" />
     <Compile Include="MFWSClient.Views.cs" />
     <Compile Include="MFWSClientBase.cs" />
     <Compile Include="MFWSClientBase.HttpRequests.cs" />
     <Compile Include="MFWSStructs.cs" />
     <Compile Include="MFWSVaultObjectSearchOperations.cs" />
+    <Compile Include="MFWSVaultOperationsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestRequestEventArgs.cs" />
     <Compile Include="RestResponseEventArgs.cs" />

@@ -7,13 +7,14 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient.Tests
 {
-	public partial class MFWSClient
+	[TestClass]
+	public class MFWSVaultExtensionMethodOperations
 	{
 
 		#region Extension Method (no serialisation/deserialisation)
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.ExecuteExtensionMethod"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod{TB}"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -53,7 +54,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExecuteExtensionMethod("HelloWorld");
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld");
 
 			/* Assert */
 
@@ -65,7 +66,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.QuickSearch"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod{TB}"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
@@ -105,7 +106,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExecuteExtensionMethod("HelloWorld");
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld");
 
 			/* Assert */
 
@@ -117,7 +118,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.ExecuteExtensionMethod"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -160,7 +161,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExecuteExtensionMethod("HelloWorld", inputValue);
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", inputValue);
 
 			/* Assert */
 
@@ -172,7 +173,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.ExecuteExtensionMethod"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -209,7 +210,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			var output = await mfwsClient.ExecuteExtensionMethod("HelloWorld", "this is my test input value");
+			var output = await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", "this is my test input value");
 
 			/* Assert */
 
@@ -225,7 +226,7 @@ namespace MFaaP.MFWSClient.Tests
 		#region Extension Method (serialisation of input, no deserialisation of output)
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.ExecuteExtensionMethod"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -265,7 +266,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
@@ -281,7 +282,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.QuickSearch"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
@@ -321,7 +322,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
@@ -337,7 +338,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.ExecuteExtensionMethod"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -377,7 +378,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
@@ -393,7 +394,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.ExecuteExtensionMethod"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -430,7 +431,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			var output = await mfwsClient.ExecuteExtensionMethod("HelloWorld", new
+			var output = await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7

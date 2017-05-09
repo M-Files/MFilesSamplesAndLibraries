@@ -1,11 +1,25 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
-	public partial class MFWSClient
+	public class MFWSVaultExtensionMethodOperations
+		: MFWSVaultOperationsBase
 	{
+
+		/// <summary>
+		/// Creates a new <see cref="MFWSVaultObjectOperations"/> object.
+		/// </summary>
+		/// <param name="client">The client to interact with the server.</param>
+		internal MFWSVaultExtensionMethodOperations(MFWSClientBase client)
+			: base(client)
+		{
+		}
+
+		#region Execute extension methods
+
 		/// <summary>
 		/// Executes an extension method on the server-side.
 		/// </summary>
@@ -15,7 +29,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="input">The input (cannot be null) parameter.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response of the extension method, deserialised to an instance of <see cref="TA"/>.</returns>
-		public async Task<TA> ExecuteExtensionMethod<TA, TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
+		public async Task<TA> ExecuteVaultExtensionMethod<TA, TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
 			where TA : new()
 			where TB : class
 		{
@@ -29,7 +43,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.Post<TA>(request, token);
+			var response = await this.MFWSClient.Post<TA>(request, token);
 
 			// Return the data.
 			return response.Data;
@@ -42,7 +56,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="input">The input (cannot be null) parameter.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response of the extension method.</returns>
-		public async Task<string> ExecuteExtensionMethod<TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
+		public async Task<string> ExecuteVaultExtensionMethod<TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
 			where TB : class
 		{
 			// Create the request.
@@ -55,7 +69,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.Post(request, token);
+			var response = await this.MFWSClient.Post(request, token);
 
 			// Return the data.
 			return response.Content;
@@ -68,7 +82,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="input">The input parameter.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response of the extension method as a string.</returns>
-		public async Task<string> ExecuteExtensionMethod(string extensionMethodName, string input = null, CancellationToken token = default(CancellationToken))
+		public async Task<string> ExecuteVaultExtensionMethod(string extensionMethodName, string input = null, CancellationToken token = default(CancellationToken))
 		{
 
 			// Create the request.
@@ -78,7 +92,7 @@ namespace MFaaP.MFWSClient
 			if (null != input)
 			{
 				// We need to copy the default parameters if we are adding new ones (??).
-				request.Parameters.AddRange(this.DefaultParameters);
+				request.Parameters.AddRange(this.MFWSClient.DefaultParameters);
 
 				// Add the message body.
 				request.Parameters.Add(new Parameter()
@@ -89,11 +103,13 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.Post(request, token);
+			var response = await this.MFWSClient.Post(request, token);
 
 			// Return the data.
 			return response.Content;
 		}
+
+		#endregion
 
 	}
 	

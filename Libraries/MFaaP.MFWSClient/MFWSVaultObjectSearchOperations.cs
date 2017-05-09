@@ -8,22 +8,15 @@ using RestSharp;
 namespace MFaaP.MFWSClient
 {
 	public class MFWSVaultObjectSearchOperations
+		: MFWSVaultOperationsBase
 	{
-		/// <summary>
-		/// The <see cref="MFWSClientBase"/> that this object uses to interact with the server.
-		/// </summary>
-		protected MFWSClientBase MFWSClient { get; private set; }
-
 		/// <summary>
 		/// Creates a new <see cref="MFWSVaultObjectSearchOperations"/> object.
 		/// </summary>
 		/// <param name="client">The client to interact with the server.</param>
 		internal MFWSVaultObjectSearchOperations(MFWSClientBase client)
+			: base(client)
 		{
-			// Sanity.
-			if(null == client)
-				throw new ArgumentNullException(nameof(client));
-			this.MFWSClient = client;
 		}
 
 		/// <summary>
