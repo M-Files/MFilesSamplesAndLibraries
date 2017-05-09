@@ -55,7 +55,6 @@
     <Compile Include="MFWSClient.Session.cs" />
     <Compile Include="MFWSVaultObjectPropertyOperations.cs" />
     <Compile Include="MFWSVaultObjectOperations.cs" />
-    <Compile Include="MFWSClient.CreatingObjects.cs" />
     <Compile Include="MFWSClient.cs" />
     <Compile Include="MFWSVaultObjectFileOperations.cs" />
     <Compile Include="MFWSVaultExtensionMethodOperations.cs" />

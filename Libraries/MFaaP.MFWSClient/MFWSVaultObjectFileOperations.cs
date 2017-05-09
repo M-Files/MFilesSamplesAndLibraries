@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
@@ -13,6 +15,8 @@ namespace MFaaP.MFWSClient
 			: base(client)
 		{
 		}
+
+		#region Downloading files
 
 		/// <summary>
 		/// Initiates the download of a specific file.
@@ -110,5 +114,61 @@ namespace MFaaP.MFWSClient
 				await this.DownloadFile(objectType, objectId, fileId, stream, objectVersion, token);
 			}
 		}
+
+		#endregion
+
+		#region Uploading files
+
+		/// <summary>
+		/// Uploads files to the temporary location.
+		/// </summary>
+		/// <param name="files">The files to upload.</param>
+		/// <returns>Information on the upload.</returns>
+		public Task<UploadInfo[]> UploadFiles(params FileInfo[] files)
+		{
+			return this.UploadFiles(CancellationToken.None, files);
+		}
+
+		/// <summary>
+		/// Uploads files to the temporary location.
+		/// </summary>
+		/// <param name="files">The files to upload.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>Information on the upload.</returns>
+		public async Task<UploadInfo[]> UploadFiles(CancellationToken token, params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == files)
+				return null;
+
+			// Create the request.
+			// TODO: Possibly split this into multiple requests.
+			// TODO: Can this be monitored?
+			var request = new RestRequest("/REST/files");
+			foreach (var file in files)
+			{
+				request.AddFile(file.Name, file.FullName);
+			}
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Post<List<UploadInfo>>(request, token);
+
+			// Ensure the uploadinfo is updated.
+			for (var i = 0; i < response.Data?.Count; i++)
+			{
+				var uploadInfo = response.Data[i];
+				var file = files[i];
+				uploadInfo.Title = file.Name;
+				uploadInfo.Extension = file.Extension.Substring(1); // Remove the dot.
+				uploadInfo.Size = file.Length;
+			}
+
+			// Return the data.
+			return response.Data?.ToArray();
+
+		}
+
+		#endregion
+
 	}
 }

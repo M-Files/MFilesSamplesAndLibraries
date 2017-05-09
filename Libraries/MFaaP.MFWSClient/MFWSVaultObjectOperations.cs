@@ -21,6 +21,37 @@ namespace MFaaP.MFWSClient
 		{
 		}
 
+		#region Creating new objects
+		
+		/// <summary>
+		/// Creates an object.
+		/// </summary>
+		/// <param name="objectTypeId">The type of the object.</param>
+		/// <param name="creationInfo">The creation information for the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>Information on the created object.</returns>
+		public async Task<ObjectVersion> CreateNewObject(int objectTypeId, ObjectCreationInfo creationInfo, CancellationToken token = default(CancellationToken))
+		{
+
+			// Sanity.
+			if (null == creationInfo)
+				throw new ArgumentNullException();
+			if (objectTypeId < 0)
+				throw new ArgumentException("The object type id cannot be less than zero");
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/{objectTypeId}");
+			request.AddJsonBody(creationInfo);
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Post<ObjectVersion>(request, token);
+
+			// Return the data.
+			return response.Data;
+
+		}
+		#endregion
+
 		#region Checking in and out
 
 		/// <summary>
