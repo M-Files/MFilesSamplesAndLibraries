@@ -73,7 +73,7 @@
     <Compile Include="MFWSVaultExtensionMethodOperations.cs" />
     <Compile Include="MFWSClient.ObjectTypesAndValueLists.cs" />
     <Compile Include="MFWSClient.ValueListItems.cs" />
-    <Compile Include="MFWSClient.Views.cs" />
+    <Compile Include="MFWSVaultViewOperations.cs" />
     <Compile Include="MFWSVaultObjectSearchOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

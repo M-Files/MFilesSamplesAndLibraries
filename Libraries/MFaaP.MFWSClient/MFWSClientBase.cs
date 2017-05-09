@@ -85,6 +85,11 @@ namespace MFaaP.MFWSClient
 		public MFWSVaultExtensionMethodOperations ExtensionMethodOperations { get; }
 
 		/// <summary>
+		/// Gets the view operations interface.
+		/// </summary>
+		public MFWSVaultViewOperations ViewOperations { get; }
+
+		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>
 		/// <param name="restClient">The <see cref="IRestClient"/> to use for HTTP requests.</param>
@@ -102,6 +107,7 @@ namespace MFaaP.MFWSClient
 			this.ObjectOperations = new MFWSVaultObjectOperations(this);
 			this.ObjectPropertyOperations = new MFWSVaultObjectPropertyOperations(this);
 			this.ExtensionMethodOperations = new MFWSVaultExtensionMethodOperations(this);
+			this.ViewOperations = new MFWSVaultViewOperations(this);
 		}
 
 		/// <summary>

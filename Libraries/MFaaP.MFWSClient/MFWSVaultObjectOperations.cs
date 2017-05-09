@@ -311,6 +311,87 @@ namespace MFaaP.MFWSClient
 
 		#endregion
 
+		#region Favourites
+
+		/// <summary>
+		/// Adds the supplied item to the favorites.
+		/// </summary>
+		/// <param name="objId">The <see cref="ObjID"/> of the item to add to the favourites.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The item that was added.</returns>
+		public async Task<ExtendedObjectVersion> AddToFavorites(ObjID objId, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Create the request.
+			var request = new RestRequest("/REST/favorites");
+			request.AddJsonBody(objId);
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Post<ExtendedObjectVersion>(request, token);
+
+			// Return the data.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Adds the supplied item to the favorites.
+		/// </summary>
+		/// <param name="objectTypeId">The id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The item that was added.</returns>
+		public Task<ExtendedObjectVersion> AddToFavorites(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
+		{
+			return this.AddToFavorites(new ObjID()
+			{
+				ID = objectId,
+				Type = objectTypeId
+			}, token);
+		}
+
+		/// <summary>
+		/// Removes the supplied item to the favorites.
+		/// </summary>
+		/// <param name="objId">The <see cref="ObjID"/> of the item to remove from the favourites.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The item that was removed.</returns>
+		public async Task<ExtendedObjectVersion> RemoveFromFavorites(ObjID objId, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Create the request.
+			var request = new RestRequest($"/REST/favorites/{objId.Type}/{objId.ID}");
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Delete<ExtendedObjectVersion>(request, token);
+
+			// Return the data.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Removes the supplied item to the favorites.
+		/// </summary>
+		/// <param name="objectTypeId">The id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The item that was removed.</returns>
+		public Task<ExtendedObjectVersion> RemoveFromFavorites(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
+		{
+			return this.RemoveFromFavorites(new ObjID()
+			{
+				ID = objectId,
+				Type = objectTypeId
+			}, token);
+		}
+
+		#endregion
+
 	}
 	
 }

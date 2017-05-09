@@ -47,7 +47,7 @@ namespace MFWSViewNavigation
 				// We have to reverse this as, by default, Stack<T> will return data from
 				// the top of the stack downwards (newest -> oldest), whereas we want the bottom upwards
 				// (oldest -> newest).
-				var results = await client.GetViewContents(navigation.Reverse().ToArray());
+				var results = await client.ViewOperations.GetFolderContents(navigation.Reverse().ToArray());
 
 				// Clear the screen.
 				Console.Clear();

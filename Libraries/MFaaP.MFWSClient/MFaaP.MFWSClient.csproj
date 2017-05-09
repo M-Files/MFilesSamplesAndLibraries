@@ -59,7 +59,7 @@
     <Compile Include="MFWSClient.DownloadingFiles.cs" />
     <Compile Include="MFWSVaultExtensionMethodOperations.cs" />
     <Compile Include="MFWSClient.ValueListItems.cs" />
-    <Compile Include="MFWSClient.Views.cs" />
+    <Compile Include="MFWSVaultViewOperations.cs" />
     <Compile Include="MFWSClientBase.cs" />
     <Compile Include="MFWSClientBase.HttpRequests.cs" />
     <Compile Include="MFWSStructs.cs" />
