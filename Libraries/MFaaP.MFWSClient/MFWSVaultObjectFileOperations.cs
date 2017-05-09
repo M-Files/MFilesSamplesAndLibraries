@@ -5,8 +5,15 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
-	public partial class MFWSClient
+	public class MFWSVaultObjectFileOperations
+		: MFWSVaultOperationsBase
 	{
+		/// <inheritdoc />
+		internal MFWSVaultObjectFileOperations(MFWSClientBase client)
+			: base(client)
+		{
+		}
+
 		/// <summary>
 		/// Initiates the download of a specific file.
 		/// </summary>
@@ -25,7 +32,7 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objectType}/{objectId}/{versionString}/files/{fileId}/content");
 
 			// Execute the request.
-			var response = await this.Get(request, token);
+			var response = await this.MFWSClient.Get(request, token);
 
 			// Return the content.
 			return response?.RawBytes;
@@ -53,7 +60,7 @@ namespace MFaaP.MFWSClient
 			request.ResponseWriter = (responseStream) => responseStream.CopyTo(outputStream);
 
 			// Execute the request.
-			await this.Get(request, token);
+			await this.MFWSClient.Get(request, token);
 		}
 
 		/// <summary>

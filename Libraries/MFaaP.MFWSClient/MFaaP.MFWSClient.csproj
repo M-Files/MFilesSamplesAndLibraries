@@ -57,7 +57,7 @@
     <Compile Include="MFWSVaultObjectOperations.cs" />
     <Compile Include="MFWSClient.CreatingObjects.cs" />
     <Compile Include="MFWSClient.cs" />
-    <Compile Include="MFWSClient.DownloadingFiles.cs" />
+    <Compile Include="MFWSVaultObjectFileOperations.cs" />
     <Compile Include="MFWSVaultExtensionMethodOperations.cs" />
     <Compile Include="MFWSVaultValueListItemOperations.cs" />
     <Compile Include="MFWSVaultViewOperations.cs" />

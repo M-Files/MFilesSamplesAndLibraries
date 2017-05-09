@@ -66,6 +66,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MFWSVaultObjectFileOperations.cs" />
     <Compile Include="MFWSVaultValueListOperations.cs" />
     <Compile Include="MFWSVaultObjectTypeOperations.cs" />
     <Compile Include="MFWSVaultObjectPropertyOperations.cs" />

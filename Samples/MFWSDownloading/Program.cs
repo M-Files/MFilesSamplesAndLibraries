@@ -72,7 +72,7 @@ namespace MFWSDownloading
 					var fileName = System.IO.Path.Combine(folderPath.FullName, file.ID + "." + file.Extension);
 
 					// Download the file data.
-					await client.DownloadFile(objectVersion.ObjVer.Type,
+					await client.ObjectFileOperations.DownloadFile(objectVersion.ObjVer.Type,
 						objectVersion.ObjVer.ID,
 						objectVersion.Files[0].ID,
 						fileName,
