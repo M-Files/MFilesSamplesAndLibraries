@@ -5,8 +5,15 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
-	public partial class MFWSClient
+	public class MFWSValueListItemOperations
+		: MFWSVaultOperationsBase
 	{
+		/// <inheritdoc />
+		public MFWSValueListItemOperations(MFWSClientBase client)
+			: base(client)
+		{
+		}
+
 		/// <summary>
 		/// Gets the contents of the value list with Id <see cref="valueListId"/>.
 		/// </summary>
@@ -27,7 +34,7 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.Get<Results<ValueListItem>>(request, token);
+			var response = await this.MFWSClient.Get<Results<ValueListItem>>(request, token);
 
 			// Return the data.
 			return response.Data;

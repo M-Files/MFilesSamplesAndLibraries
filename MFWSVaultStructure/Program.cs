@@ -50,7 +50,7 @@ namespace MFWSVaultStructure
 				System.Console.WriteLine("\t\tID: {item.ID}");
 
 				// Retrieve the items.
-				var valueListItems = await client.GetValueListItems(item.ID);
+				var valueListItems = await client.ValueListItemOperations.GetValueListItems(item.ID);
 				System.Console.WriteLine($"\t\tItems ({valueListItems.Items.Count}):");
 
 				// Output the items.

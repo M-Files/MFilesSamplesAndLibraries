@@ -6,13 +6,14 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient.Tests
 {
-	public partial class MFWSClient
+	[TestClass]
+	public class MFWSValueListItemOperations
 	{
 
 		#region GetValueListItems
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetValueListItems"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSValueListItemOperations.GetValueListItems"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -52,7 +53,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.GetValueListItems(1);
+			await mfwsClient.ValueListItemOperations.GetValueListItems(1);
 
 			/* Assert */
 
@@ -64,7 +65,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetValueListItems"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSValueListItemOperations.GetValueListItems"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -104,7 +105,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.GetValueListItems(1, "hello");
+			await mfwsClient.ValueListItemOperations.GetValueListItems(1, "hello");
 
 			/* Assert */
 
@@ -116,7 +117,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetValueListItems"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSValueListItemOperations.GetValueListItems"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
@@ -156,7 +157,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.GetValueListItems(1);
+			await mfwsClient.ValueListItemOperations.GetValueListItems(1);
 
 			/* Assert */
 
