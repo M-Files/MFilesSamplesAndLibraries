@@ -5,11 +5,11 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
-	public class MFWSValueListItemOperations
+	public class MFWSVaultValueListItemOperations
 		: MFWSVaultOperationsBase
 	{
 		/// <inheritdoc />
-		public MFWSValueListItemOperations(MFWSClientBase client)
+		public MFWSVaultValueListItemOperations(MFWSClientBase client)
 			: base(client)
 		{
 		}

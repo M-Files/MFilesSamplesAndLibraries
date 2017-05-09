@@ -66,13 +66,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MFWSVaultValueListOperations.cs" />
+    <Compile Include="MFWSVaultObjectTypeOperations.cs" />
     <Compile Include="MFWSVaultObjectPropertyOperations.cs" />
     <Compile Include="MFWSVaultObjectOperations.cs" />
     <Compile Include="MFWSClient.Authentication.cs" />
     <Compile Include="MFWSClient.cs" />
     <Compile Include="MFWSVaultExtensionMethodOperations.cs" />
-    <Compile Include="MFWSClient.ObjectTypesAndValueLists.cs" />
-    <Compile Include="MFWSValueListItemOperations.cs" />
+    <Compile Include="MFWSVaultValueListItemOperations.cs" />
     <Compile Include="MFWSVaultViewOperations.cs" />
     <Compile Include="MFWSVaultObjectSearchOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

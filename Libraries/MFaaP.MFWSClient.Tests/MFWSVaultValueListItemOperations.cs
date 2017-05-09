@@ -7,13 +7,13 @@ using RestSharp;
 namespace MFaaP.MFWSClient.Tests
 {
 	[TestClass]
-	public class MFWSValueListItemOperations
+	public class MFWSVaultValueListItemOperations
 	{
 
 		#region GetValueListItems
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSValueListItemOperations.GetValueListItems"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -65,7 +65,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSValueListItemOperations.GetValueListItems"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
@@ -117,7 +117,7 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSValueListItemOperations.GetValueListItems"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]

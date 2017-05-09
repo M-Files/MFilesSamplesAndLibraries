@@ -28,7 +28,7 @@ namespace MFWSVaultStructure
 			var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 			// Get the object types.
-			var objectTypes = await client.GetObjectTypes();
+			var objectTypes = await client.ObjectTypeOperations.GetObjectTypes();
 			Console.WriteLine($"There are {objectTypes.Count} object types in the vault:");
 			foreach (var item in objectTypes)
 			{
@@ -41,7 +41,7 @@ namespace MFWSVaultStructure
 			}
 
 			// Get the value lists.
-			var valueLists = await client.GetValueLists();
+			var valueLists = await client.ValueListOperations.GetValueLists();
 			Console.WriteLine($"There are {valueLists.Count} value lists in the vault:");
 			foreach (var item in valueLists)
 			{

@@ -50,7 +50,8 @@
   <ItemGroup>
     <Compile Include="ExtensionMethods\FolderContentItemExtensionMethods.cs" />
     <Compile Include="MFWSClient.Authentication.cs" />
-    <Compile Include="MFWSClient.ObjectTypesAndValueLists.cs" />
+    <Compile Include="MFWSVaultValueListOperations.cs" />
+    <Compile Include="MFWSVaultObjectTypeOperations.cs" />
     <Compile Include="MFWSClient.Session.cs" />
     <Compile Include="MFWSVaultObjectPropertyOperations.cs" />
     <Compile Include="MFWSVaultObjectOperations.cs" />
@@ -58,7 +59,7 @@
     <Compile Include="MFWSClient.cs" />
     <Compile Include="MFWSClient.DownloadingFiles.cs" />
     <Compile Include="MFWSVaultExtensionMethodOperations.cs" />
-    <Compile Include="MFWSValueListItemOperations.cs" />
+    <Compile Include="MFWSVaultValueListItemOperations.cs" />
     <Compile Include="MFWSVaultViewOperations.cs" />
     <Compile Include="MFWSClientBase.cs" />
     <Compile Include="MFWSClientBase.HttpRequests.cs" />

@@ -92,7 +92,17 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Gets the view operations interface.
 		/// </summary>
-		public MFWSValueListItemOperations ValueListItemOperations { get; }
+		public MFWSVaultValueListItemOperations ValueListItemOperations { get; }
+
+		/// <summary>
+		/// Gets the object type operations interface.
+		/// </summary>
+		public MFWSVaultObjectTypeOperations ObjectTypeOperations { get; }
+
+		/// <summary>
+		/// Gets the value list operations interface.
+		/// </summary>
+		public MFWSVaultValueListOperations ValueListOperations { get; }
 
 		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
@@ -113,7 +123,9 @@ namespace MFaaP.MFWSClient
 			this.ObjectPropertyOperations = new MFWSVaultObjectPropertyOperations(this);
 			this.ExtensionMethodOperations = new MFWSVaultExtensionMethodOperations(this);
 			this.ViewOperations = new MFWSVaultViewOperations(this);
-			this.ValueListItemOperations = new MFWSValueListItemOperations(this);
+			this.ValueListItemOperations = new MFWSVaultValueListItemOperations(this);
+			this.ObjectTypeOperations = new MFWSVaultObjectTypeOperations(this);
+			this.ValueListOperations = new MFWSVaultValueListOperations(this);
 		}
 
 		/// <summary>
