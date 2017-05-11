@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{721000F5-1A08-4E41-A594-94D7BB6F852C}</ProjectGuid>
+    <ProjectGuid>{0B26392D-BE9A-4D4D-8052-D5A7E7793B96}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChainWorkflows</RootNamespace>
-    <AssemblyName>ChainWorkflows</AssemblyName>
+    <RootNamespace>EventTracing</RootNamespace>
+    <AssemblyName>EventTracing</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -47,14 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Configuration.cs" />
+    <Compile Include="src\VaultApplication.VaultEvents.cs" />
+    <Compile Include="src\VaultApplication.Lifecycle.cs" />
     <Compile Include="src\VaultApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\vbscript\VBScript.txt">
-      <Link>VBScript.txt</Link>
-    </Content>
     <Content Include="appdef.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -74,14 +72,14 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\vault\Vault Backup.mfb">
-      <Link>Vault Backup.mfb</Link>
+    <None Include="..\vault\Event Tracing.mfb">
+      <Link>Event Tracing.mfb</Link>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>REM start "Installing Vault Application" /D "$(TargetDir)" "MFVaultApplicationInstaller.exe" "Chain Workflows"</PostBuildEvent>
+    <PostBuildEvent>REM start "Installing Vault Application" /D "$(TargetDir)" "MFVaultApplicationInstaller.exe" "Event Tracing"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

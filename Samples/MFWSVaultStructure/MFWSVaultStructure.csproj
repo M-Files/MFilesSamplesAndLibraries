@@ -54,7 +54,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">
+    <ProjectReference Include="..\..\Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">
       <Project>{B28D0C6A-C87B-461D-BD12-D627E9F653FC}</Project>
       <Name>MFaaP.MFWSClient</Name>
     </ProjectReference>

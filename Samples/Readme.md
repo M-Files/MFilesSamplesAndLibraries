@@ -18,5 +18,6 @@ The following samples are available in this solution:
 
 Please note that the build actions have been disabled in these samples.  This has been done simply to stop them all being installed at build time.  To enable the build action, remove the "REM" command from the start of the build action.
 
+* `Event Tracing` - An example to automatically log various vault events and VAF lifecycle events to the event log.  Useful to understand which events are executed in various scenarios.
 * `Chain Workflows` - An example to show how to move an object to a second workflow once it reaches the end of a first workflow.
 
