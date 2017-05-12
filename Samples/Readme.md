@@ -10,8 +10,10 @@ The following samples are available in this solution:
 
 ## M-Files Web Service
 
+* `MFWSCheckOutStatus` - An example of retrieving the checkout status of a specific object.
 * `MFWSDownloading` - An example of downloading files from the M-Files Web Service.
 * `MFWSSearching` - An example of executing basic searches against the M-Files Web Service.
+* `MFWSVaultStructure` - An example of retrieving vault structure from the M-Files Web Service.
 * `MFWSViewNavigation` - An example of retrieving views and their contents from the M-Files Web Service.
 
 ## Vault Application Framework
