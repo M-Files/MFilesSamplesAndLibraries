@@ -74,6 +74,7 @@
     <Compile Include="Searching\PropertyValues\MultiSelectLookupPropertyValueSearchCondition.cs" />
     <Compile Include="Searching\PropertyValues\LookupPropertyValueSearchCondition.cs" />
     <Compile Include="Searching\PropertyValues\BooleanPropertyValueSearchCondition.cs" />
+    <Compile Include="Searching\PropertyValues\NumericPropertyValueSearchCondition.cs" />
     <Compile Include="Searching\PropertyValues\TextPropertyValueSearchCondition.cs" />
     <Compile Include="Searching\PropertyValues\PropertyValueSearchConditionBase.cs" />
     <Compile Include="Searching\ObjectTypeSearchCondition.cs" />

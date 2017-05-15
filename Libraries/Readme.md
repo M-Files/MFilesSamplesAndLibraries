@@ -10,12 +10,14 @@ This library provides helper and extension methods to more easily work with the 
 
 It currently provides the following functionality:
 
-* Connection/Disconnection (`ExtensionMethods\MFilesServerApplication.cs`)
-* Searching (`ExtensionMethods\SearchConditionExtensionMethods.cs` and `ExtensionMethods\VaultObjectSearchOperationsExtensionMethods.cs`)
-  * Creation of "Not Deleted" search condition (`SearchConditions.AddNotDeletedSearchCondition`)
-  * Creation of "Object Type" search condition (`SearchConditions.AddObjectTypeIdSearchCondition`)
-  * Creation of "Display Id" search condition (`SearchConditions.AddDisplayIdSearchCondition`)
-  * Execution of a segmented search to enumerate all objects in a large vault (`VaultObjectSearchOperations.SearchForObjectsByConditionsSegmented` and `VaultObjectSearchOperations.SearchForObjectsByConditionsSegmented_Flat`).
+* Connection/Disconnection
+* Searching
+  * Creation of "Not Deleted" search condition
+  * Creation of "Object Type" search condition
+  * Creation of "Display Id" search condition
+  * Execution of a segmented search to enumerate all objects in a large vault
+
+Further details are available within the [project folder](MFaaP.MFilesAPI).
 
 ## MFaaP.MFWSClient (C# M-Files Web Service Wrapper)
 
@@ -23,11 +25,11 @@ This library aims to provide an easy-to-use C# wrapper for the [M-Files Web Serv
 
 It currently provides the following functionality:
 
-* Authentication, both using credentials and using Windows Single Sign On (`MFWSClient.Authentication.cs`)
-* Object creation (`MFWSClient.CreatingObjects.cs`)
-* File upload (`MFWSClient.CreatingObjects.cs`)
-* Vault extension method execution (`MFWSClient.ExtensionMethods.cs`)
-* Searching (`MFWSClient.Searching.cs`)
-* Retrieving view contents (`MFWSClient.Views.cs`)
+* Authentication, both using credentials and using Windows Single Sign On
+* Object creation
+* File upload
+* Vault extension method execution
+* Searching
+* Retrieving view contents
 
-Further details are available within the Readme.md file in the project folder.
+Further details are available within the [project folder](MFaaP.MFWSClient).

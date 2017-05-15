@@ -8,11 +8,11 @@ This library aims to provide an easy-to-use C# wrapper for the [M-Files Web Serv
 
 It currently provides the following functionality:
 
-* Authentication, both using credentials and using Windows Single Sign On (`MFWSClient.Authentication.cs`)
-* Object creation (`MFWSClient.CreatingObjects.cs`)
-* File upload (`MFWSClient.CreatingObjects.cs`)
-* Vault extension method execution (`MFWSClient.ExtensionMethods.cs`)
-* Searching (`MFWSClient.Searching.cs`)
+* Authentication, both using credentials and using Windows Single Sign On
+* Object creation
+* File upload
+* Vault extension method execution
+* Searching
 
 ## Basic usage
 
@@ -55,7 +55,7 @@ client.AuthenticateUsingSingleSignOn(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C16
 
 ### Quick search
 
-Simple searching can be done using the `QuickSearch` method.
+Simple searching can be done using the `SearchForObjectsByString` method.
 
 Note that the search will only return items which you have access to, so ensure that you are authenticated (if required) prior to executing the method.
 
@@ -65,7 +65,7 @@ Note that the search will only return items which you have access to, so ensure 
 var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Execute a simple search for the word "mfws".
-var results = client.QuickSearch("mfws");
+var results = await client.ObjectSearchOperations.SearchForObjectsByString("mfws");
 
 // Iterate over the results and output them.
 System.Console.WriteLine($"There were {results.Length} results returned.");
@@ -88,7 +88,7 @@ Note that the search will only return items which you have access to, so ensure 
 var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Execute an advanced search for the word "mfws", restricted to object type 0 (documents), which have a Document Date (property 1002) greater than 2015-11-01.
-var results = client.Search(
+var results = await client.ObjectSearchOperations.SearchForObjectsByConditions(
 	new QuickSearchCondition("mfws"),
 	new ObjectTypeSearchCondition(0),
 	new DatePropertyValueSearchCondition(1002, new DateTime(2015, 11, 01), SearchConditionOperators.GreaterThan)
@@ -101,4 +101,106 @@ foreach (var objectVersion in results)
 	System.Console.WriteLine($"\t{objectVersion.Title}");
 	System.Console.WriteLine($"\t\tType: {objectVersion.ObjVer.Type}, ID: {objectVersion.ObjVer.ID}");
 }
+```
+
+
+
+#### Restricting by text properties
+
+For example, to restrict the search results by the value of a property with ID `1002`:
+
+*Note that the library will handle ensuring items are correctly encoded.**
+
+```csharp
+// Create our search condition.
+var condition = new TextPropertyValueSearchCondition(1002, "ESTT");
+```
+
+If we wished to restrict by a text property with ID where the field contains `ESTT`, we would alter the operator:
+
+```csharp
+// Create our search condition.
+var condition = new TextPropertyValueSearchCondition(1002, "ESTT", SearchConditionOperators.Contains);
+```
+
+If we wished to restrict by a text property with ID where the field matches a [wildcard search for `ESTT*`](http://www.m-files.com/user-guide/latest/eng/#Quick_search.html), we would alter the operator:
+
+```csharp
+// Create our search condition.
+var condition = new TextPropertyValueSearchCondition(1002, "ESTT", SearchConditionOperators.MatchesWildcard);
+```
+
+#### Restricting by a boolean property
+
+To restrict the search results by the value of a boolean property with ID `1050`:
+
+```csharp
+// Create our search condition.
+var condition = new BooleanPropertyValueSearchCondition(1050, true);
+```
+
+Alternatively, we could search for only objects where the property is false:
+
+```csharp
+// Create our search condition.
+var condition = new BooleanPropertyValueSearchCondition(1050, false);
+```
+
+#### Restricting by a numeric property (integer or real)
+
+To restrict the search results by the value of a numeric property with ID `1100`:
+
+```csharp
+// Create our search condition.
+var condition = new NumericPropertyValueSearchCondition(1100, 123);
+```
+
+Alternatively, we could make use of a [different operator](#operators) to instead search for objects where the value is greater than 1000:
+
+```csharp
+// Create our search condition.
+var condition = new NumericPropertyValueSearchCondition(1100, 1000, SearchConditionOperators.GreaterThan);
+```
+
+#### Restricting by a date/time or timestamp property
+
+To restrict the search results by the value of a date property with ID `1200`:
+
+```csharp
+// Create our search condition.
+var condition = new DatePropertyValueSearchCondition(1200, new DateTime(2017, 6, 1));
+```
+
+Alternatively, we could make use of a [different operator](#operators) to instead search for objects where the date is newer than 1st June 2017:
+
+```csharp
+// Create our search condition.
+var condition = new DatePropertyValueSearchCondition(1200, new DateTime(2017, 6, 1), SearchConditionOperators.GreaterThan);
+```
+
+#### Restricting by a lookup (single-select) property
+
+To restrict the search results by the value of a single-select lookup property with ID `1500` that reference an object or value list item with ID 12345:
+
+```csharp
+// Create our search condition.
+var condition = new LookupPropertyValueSearchCondition(1500, 12345);
+```
+
+#### Restricting by a multi-select lookup property
+
+To restrict the search results by the value of a single-select lookup property with ID `1500` that reference an object or value list item with ID 12345:
+
+*If there is only one value then this is the same as a single-select-lookup.*
+
+```csharp
+// Create our search condition.
+var condition = new MultiSelectLookupPropertyValueSearchCondition(1500, 12345);
+```
+
+To restrict objects to only objects which reference objects or value list items with *either* IDs 1, 2, 3, or 4:
+
+```csharp
+// Create our search condition.
+var condition = new MultiSelectLookupPropertyValueSearchCondition(1500, new [] { 1, 2, 3, 4 });
 ```

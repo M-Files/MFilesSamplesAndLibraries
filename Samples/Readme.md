@@ -6,7 +6,7 @@ The following samples are available in this solution:
 
 * Searching
   * `Segmented Search` - An example of how to bypass the default search limitations of [SearchForObjectsByConditions](https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectSearchOperations~SearchForObjectsByConditions.html) or [SearchForObjectsByConditionsEx](https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectSearchOperations~SearchForObjectsByConditionsEx.html) by instead searching for "segments" of objects from the vault.
-  * `Search by Display Id` - an example of how to search using the "display id" ("external id") when using [External Object Data Types](http://www.m-files.com/user-guide/latest/eng/#Connection_to_external_database.html).
+  * `Search by Display Id` - an example of how to search using the "display id" ("external id") when using [External Object Type Data Sources](http://www.m-files.com/user-guide/latest/eng/#Connection_to_external_database.html).
 
 ## M-Files Web Service
 
