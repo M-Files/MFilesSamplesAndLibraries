@@ -246,13 +246,13 @@ var url =
 
 #### Using the REST API wrapper
 
-*The search conditions created below would be passed into MFWSVaultSearchOperations.SearchForObjectsByConditions.**
+*The search conditions created below would be passed into MFWSVaultSearchOperations.SearchForObjectsByConditions.*
 
 ##### Restricting by text properties
 
 For example, to restrict the search results by the value of a property with ID `1002`:
 
-*Note that the library will handle ensuring items are correctly encoded.**
+*Note that the library will handle ensuring items are correctly encoded.*
 
 ```csharp
 // Create our search condition.
