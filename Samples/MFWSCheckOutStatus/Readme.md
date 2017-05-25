@@ -43,7 +43,7 @@ var objId = new ObjID()
 };
 
 // Retrieve the checkout status.
-var checkoutStatus = await client.ObjectOperations.GetCheckoutStatus(objId);
+var checkoutStatus = client.ObjectOperations.GetCheckoutStatus(objId);
 ```
 
 

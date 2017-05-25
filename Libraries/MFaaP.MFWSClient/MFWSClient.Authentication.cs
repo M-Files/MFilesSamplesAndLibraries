@@ -55,7 +55,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="vaultId">The id of the vault to authenticate to.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		public async Task AuthenticateUsingSingleSignOn(Guid vaultId, CancellationToken token = default(CancellationToken))
+		public async Task AuthenticateUsingSingleSignOnAsync(Guid vaultId, CancellationToken token = default(CancellationToken))
 		{
 			// Clear any current tokens.
 			this.ClearAuthenticationToken();
@@ -84,16 +84,28 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
+		/// Attempts SSO (Single Sign On) authentication with the remote web server.
+		/// </summary>
+		/// <param name="vaultId">The id of the vault to authenticate to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		public void AuthenticateUsingSingleSignOn(Guid vaultId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.AuthenticateUsingSingleSignOnAsync(vaultId, token);
+			Task.WaitAll(new Task[] { task }, token);
+		}
+
+		/// <summary>
 		/// Authenticates to the server using the details provided.
 		/// </summary>
 		/// <param name="vaultId">The Id of the vault to connect to.</param>
 		/// <param name="username">The username to use.</param>
 		/// <param name="password">The password to use.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		public Task AuthenticateUsingCredentials(Guid? vaultId, string username, string password, CancellationToken token = default(CancellationToken))
+		public Task AuthenticateUsingCredentialsAsync(Guid? vaultId, string username, string password, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
-			return this.AuthenticateUsingCredentials(new Authentication()
+			return this.AuthenticateUsingCredentialsAsync(new Authentication()
 			{
 				Username = username,
 				Password = password,
@@ -102,11 +114,25 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
+		/// Authenticates to the server using the details provided.
+		/// </summary>
+		/// <param name="vaultId">The Id of the vault to connect to.</param>
+		/// <param name="username">The username to use.</param>
+		/// <param name="password">The password to use.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		public void AuthenticateUsingCredentials(Guid? vaultId, string username, string password, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.AuthenticateUsingCredentialsAsync(vaultId, username, password, token);
+			Task.WaitAll(new Task[] { task }, token);
+		}
+
+		/// <summary>
 		/// Authenticates to the server using details passed in the authentication parameter.
 		/// </summary>
 		/// <param name="authentication">The authentication details to use.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		protected async Task AuthenticateUsingCredentials(Authentication authentication, CancellationToken token = default(CancellationToken))
+		protected async Task AuthenticateUsingCredentialsAsync(Authentication authentication, CancellationToken token = default(CancellationToken))
 		{
 			// Clear any current tokens.
 			this.ClearAuthenticationToken();
@@ -130,11 +156,23 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
+		/// Authenticates to the server using details passed in the authentication parameter.
+		/// </summary>
+		/// <param name="authentication">The authentication details to use.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		protected void AuthenticateUsingCredentials(Authentication authentication, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.AuthenticateUsingCredentialsAsync(authentication, token);
+			Task.WaitAll(new Task[] { task }, token);
+		}
+
+		/// <summary>
 		/// Gets the vaults from the server, using the current authentication token.
 		/// </summary>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>A list of online vaults.</returns>
-		public async Task<List<Vault>> GetOnlineVaults(CancellationToken token = default(CancellationToken))
+		public async Task<List<Vault>> GetOnlineVaultsAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Build the request to authenticate to the vault.
 			var request = new RestRequest("/REST/server/vaults?online=true");
@@ -144,6 +182,19 @@ namespace MFaaP.MFWSClient
 
 			// Store the authentication token.
 			return response?.Data;
+		}
+
+		/// <summary>
+		/// Gets the vaults from the server, using the current authentication token.
+		/// </summary>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A list of online vaults.</returns>
+		public List<Vault> GetOnlineVaults(CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.GetOnlineVaultsAsync(token);
+			Task.WaitAll(new Task[] { task }, token);
+			return task.Result;
 		}
 
 	}

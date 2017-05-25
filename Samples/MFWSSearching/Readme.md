@@ -44,7 +44,7 @@ Console.WriteLine($"There were {results.Items.Count} results returned.");
 var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Execute a quick search for the query term.
-var results = await client.ObjectSearchOperations.SearchForObjectsByString("mfws");
+var results = client.ObjectSearchOperations.SearchForObjectsByString("mfws");
 Console.WriteLine($"There were {results.Length} results returned.");
 ```
 
@@ -65,7 +65,7 @@ var url =
 var httpClient = new HttpClient();
 
 // Start the request.
-var responseBody = await httpClient.GetStringAsync(url);
+var responseBody = httpClient.GetStringAsync(url);
 
 // Attempt to parse it.  For this we will use the Json.NET library, but you could use others.
 var results = JsonConvert.DeserializeObject<Results<ObjectVersion>>(responseBody);
@@ -84,7 +84,7 @@ This example restricts the search to only return documents (built-in object type
 var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Execute a quick search for the query term and object type search condition.
-var results = await client.ObjectSearchOperations.SearchForObjectsByConditions(
+var results = client.ObjectSearchOperations.SearchForObjectsByConditions(
 	new ObjectTypeSearchCondition(0) );
 Console.WriteLine($"There were {results.Length} results returned.");
 ```
@@ -121,7 +121,7 @@ By default, all deleted items are *excluded* from the returned objects when usin
 var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Execute a quick search for the query term and object type search condition.
-var results = await client.ObjectSearchOperations.SearchForObjectsByConditions(
+var results = client.ObjectSearchOperations.SearchForObjectsByConditions(
 	new IncludeDeletedObjectsSearchCondition() );
 Console.WriteLine($"There were {results.Length} results returned.");
 ```

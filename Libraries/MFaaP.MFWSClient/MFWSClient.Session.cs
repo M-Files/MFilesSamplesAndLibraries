@@ -11,8 +11,8 @@ namespace MFaaP.MFWSClient
 		/// Retrieves information about the vault for the current session, if available.
 		/// </summary>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>The vault returned by the request.</returns>
-		public async Task<Vault> GetCurrentSessionVault(CancellationToken token = default(CancellationToken))
+		/// <returns>An awaitable task.</returns>
+		public async Task<Vault> GetCurrentSessionVaultAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Build up the request.
 			var request = new RestRequest("/REST/session/vault");
@@ -25,11 +25,24 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Retrieves information about the current session, if available.
+		/// Retrieves information about the vault for the current session, if available.
 		/// </summary>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The vault returned by the request.</returns>
-		public async Task<SessionInfo> GetCurrentSessionInfo(CancellationToken token = default(CancellationToken))
+		public Vault GetCurrentSessionVault(CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.GetCurrentSessionVaultAsync(token);
+			Task.WaitAll(new Task[] { task }, token);
+			return task.Result;
+		}
+
+		/// <summary>
+		/// Retrieves information about the current session, if available.
+		/// </summary>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An awaitable task.</returns>
+		public async Task<SessionInfo> GetCurrentSessionInfoAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Build up the request.
 			var request = new RestRequest("/REST/session");
@@ -39,6 +52,19 @@ namespace MFaaP.MFWSClient
 
 			// Return the content.
 			return response?.Data;
+		}
+
+		/// <summary>
+		/// Retrieves information about the current session, if available.
+		/// </summary>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The vault returned by the request.</returns>
+		public SessionInfo GetCurrentSessionInfo(CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.GetCurrentSessionInfoAsync(token);
+			Task.WaitAll(new Task[] { task }, token);
+			return task.Result;
 		}
 	}
 }

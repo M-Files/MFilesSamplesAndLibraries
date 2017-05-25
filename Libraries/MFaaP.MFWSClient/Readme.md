@@ -23,6 +23,8 @@ This functionality is exposed by the `MFWSClient` object, which takes the URL of
 var client = new MFWSClient("http://m-files.mycompany.com");
 ```
 
+The API provides both "Async" and blocking versions of most methods.  To use .NET Tasks and the async/await pattern, simply use the *Async version of the method (e.g. `AuthenticateUsingCredentialsAsync` instead of `AuthenticateUsingCredentials`).
+
 ## Authentication
 
 Currently two methods of authentication are supported: authentication using credentials, and Windows Single Sign On.
@@ -65,7 +67,7 @@ Note that the search will only return items which you have access to, so ensure 
 var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Execute a simple search for the word "mfws".
-var results = await client.ObjectSearchOperations.SearchForObjectsByString("mfws");
+var results = client.ObjectSearchOperations.SearchForObjectsByString("mfws");
 
 // Iterate over the results and output them.
 System.Console.WriteLine($"There were {results.Length} results returned.");
@@ -88,7 +90,7 @@ Note that the search will only return items which you have access to, so ensure 
 var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Execute an advanced search for the word "mfws", restricted to object type 0 (documents), which have a Document Date (property 1002) greater than 2015-11-01.
-var results = await client.ObjectSearchOperations.SearchForObjectsByConditions(
+var results = client.ObjectSearchOperations.SearchForObjectsByConditions(
 	new QuickSearchCondition("mfws"),
 	new ObjectTypeSearchCondition(0),
 	new DatePropertyValueSearchCondition(1002, new DateTime(2015, 11, 01), SearchConditionOperators.GreaterThan)

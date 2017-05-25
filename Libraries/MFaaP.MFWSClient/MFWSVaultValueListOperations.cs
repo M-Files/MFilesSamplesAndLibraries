@@ -20,7 +20,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>All value lists in the vault.</returns>
 		/// <remarks>This may be filtered by the user's permissions.</remarks>
-		public async Task<List<ObjType>> GetValueLists(CancellationToken token = default(CancellationToken))
+		public async Task<List<ObjType>> GetValueListsAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
 			var request = new RestRequest($"/REST/valuelists");
@@ -30,6 +30,23 @@ namespace MFaaP.MFWSClient
 
 			// Return the data.
 			return response.Data;
+		}
+
+		/// <summary>
+		/// Gets a list of all value lists in the vault.
+		/// </summary>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>All value lists in the vault.</returns>
+		/// <remarks>This may be filtered by the user's permissions.</remarks>
+		public List<ObjType> GetValueLists(CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.GetValueListsAsync(token);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
 		}
 	}
 }

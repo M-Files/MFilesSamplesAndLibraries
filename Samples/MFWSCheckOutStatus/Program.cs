@@ -39,7 +39,7 @@ namespace MFWSCheckOutStatus
 			var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 			// Search for automatic filling of properties document.
-			var results = await client.ObjectSearchOperations.SearchForObjectsByString("automatic filling of properties");
+			var results = await client.ObjectSearchOperations.SearchForObjectsByStringAsync("automatic filling of properties");
 			if (0 == results.Length)
 			{
 				// Could not find the object.
@@ -50,7 +50,7 @@ namespace MFWSCheckOutStatus
 			// Whilst the checkout status is available in the ObjectVersion directly,
 			// let's retrieve it to show the standard call.
 			// Get the checkout status.
-			var checkoutStatus = await client.ObjectOperations.GetCheckoutStatus(results[0].ObjVer.Type, results[0].ObjVer.ID);
+			var checkoutStatus = await client.ObjectOperations.GetCheckoutStatusAsync(results[0].ObjVer.Type, results[0].ObjVer.ID);
 
 			// Output it.
 			Console.WriteLine($"\tCheckout status is: {checkoutStatus}");

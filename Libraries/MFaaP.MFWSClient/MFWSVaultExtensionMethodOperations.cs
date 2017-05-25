@@ -29,7 +29,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="input">The input (cannot be null) parameter.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response of the extension method, deserialised to an instance of <see cref="TA"/>.</returns>
-		public async Task<TA> ExecuteVaultExtensionMethod<TA, TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
+		public async Task<TA> ExecuteVaultExtensionMethodAsync<TA, TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
 			where TA : new()
 			where TB : class
 		{
@@ -48,6 +48,28 @@ namespace MFaaP.MFWSClient
 			// Return the data.
 			return response.Data;
 		}
+
+		/// <summary>
+		/// Executes an extension method on the server-side.
+		/// </summary>
+		/// <typeparam name="TA">The expected response type.</typeparam>
+		/// <typeparam name="TB">The type of the item to send.</typeparam>
+		/// <param name="extensionMethodName">The name of the extension method.</param>
+		/// <param name="input">The input (cannot be null) parameter.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The response of the extension method, deserialised to an instance of <see cref="TA"/>.</returns>
+		public TA ExecuteVaultExtensionMethod<TA, TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
+			where TA : new()
+			where TB : class
+		{
+
+			// Execute the async method.
+			var task = this.ExecuteVaultExtensionMethodAsync<TA, TB>(extensionMethodName, input, token);
+			Task.WaitAll(new Task[] { task }, token);
+			return task.Result;
+
+		}
+
 		/// <summary>
 		/// Executes an extension method on the server-side.
 		/// </summary>
@@ -56,7 +78,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="input">The input (cannot be null) parameter.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response of the extension method.</returns>
-		public async Task<string> ExecuteVaultExtensionMethod<TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
+		public async Task<string> ExecuteVaultExtensionMethodAsync<TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
 			where TB : class
 		{
 			// Create the request.
@@ -78,11 +100,28 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Executes an extension method on the server-side.
 		/// </summary>
+		/// <typeparam name="TB">The type of the item to send.</typeparam>
+		/// <param name="extensionMethodName">The name of the extension method.</param>
+		/// <param name="input">The input (cannot be null) parameter.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The response of the extension method.</returns>
+		public string ExecuteVaultExtensionMethod<TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
+			where TB : class
+		{
+			// Execute the async method.
+			var task = this.ExecuteVaultExtensionMethodAsync<TB>(extensionMethodName, input, token);
+			Task.WaitAll(new Task[] { task }, token);
+			return task.Result;
+		}
+
+		/// <summary>
+		/// Executes an extension method on the server-side.
+		/// </summary>
 		/// <param name="extensionMethodName">The name of the extension method.</param>
 		/// <param name="input">The input parameter.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The response of the extension method as a string.</returns>
-		public async Task<string> ExecuteVaultExtensionMethod(string extensionMethodName, string input = null, CancellationToken token = default(CancellationToken))
+		public async Task<string> ExecuteVaultExtensionMethodAsync(string extensionMethodName, string input = null, CancellationToken token = default(CancellationToken))
 		{
 
 			// Create the request.
@@ -107,6 +146,21 @@ namespace MFaaP.MFWSClient
 
 			// Return the data.
 			return response.Content;
+		}
+
+		/// <summary>
+		/// Executes an extension method on the server-side.
+		/// </summary>
+		/// <param name="extensionMethodName">The name of the extension method.</param>
+		/// <param name="input">The input parameter.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The response of the extension method as a string.</returns>
+		public string ExecuteVaultExtensionMethod(string extensionMethodName, string input = null, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.ExecuteVaultExtensionMethodAsync(extensionMethodName, input, token);
+			Task.WaitAll(new Task[] { task }, token);
+			return task.Result;
 		}
 
 		#endregion

@@ -21,11 +21,28 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <returns>The contents of the view.</returns>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <remarks>Identical to calling <see cref="GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/> with no parameters.</remarks>
-		public Task<FolderContentItems> GetRootFolderContents(CancellationToken token = default(CancellationToken))
+		/// <remarks>Identical to calling <see cref="GetRootFolderContentsAsync(MFaaP.MFWSClient.FolderContentItem[])"/> with no parameters.</remarks>
+		public Task<FolderContentItems> GetRootFolderContentsAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Get the root view contents.
-			return this.GetFolderContents(token);
+			return this.GetFolderContentsAsync(token);
+		}
+
+		/// <summary>
+		/// Gets the contents of the root ("home") view.
+		/// </summary>
+		/// <returns>The contents of the view.</returns>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <remarks>Identical to calling <see cref="GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/> with no parameters.</remarks>
+		public FolderContentItems GetRootFolderContents(CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.GetRootFolderContentsAsync(token);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
 		}
 
 		/// <summary>
@@ -35,9 +52,27 @@ namespace MFaaP.MFWSClient
 		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
 		/// then zero or more <see cref="FolderContentItem"/>s representing the appropriate property groups being shown.</param>
 		/// <returns>The contents of the view.</returns>
-		public Task<FolderContentItems> GetFolderContents(params FolderContentItem[] items)
+		public Task<FolderContentItems> GetFolderContentsAsync(params FolderContentItem[] items)
 		{
-			return this.GetFolderContents(CancellationToken.None, items);
+			return this.GetFolderContentsAsync(CancellationToken.None, items);
+		}
+
+		/// <summary>
+		/// Gets the contents of the view specified by the <see cref="items"/>.
+		/// </summary>
+		/// <param name="items">A collection representing the view depth.
+		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
+		/// then zero or more <see cref="FolderContentItem"/>s representing the appropriate property groups being shown.</param>
+		/// <returns>The contents of the view.</returns>
+		public FolderContentItems GetFolderContents(params FolderContentItem[] items)
+		{
+			// Execute the async method.
+			var task = this.GetFolderContentsAsync(items);
+			Task.WaitAll(new Task[]
+			{
+				task
+			});
+			return task.Result;
 		}
 
 		/// <summary>
@@ -48,7 +83,7 @@ namespace MFaaP.MFWSClient
 		/// then zero or more <see cref="FolderContentItem"/>s representing the appropriate property groups being shown.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The contents of the view.</returns>
-		public async Task<FolderContentItems> GetFolderContents(CancellationToken token, params FolderContentItem[] items)
+		public async Task<FolderContentItems> GetFolderContentsAsync(CancellationToken token, params FolderContentItem[] items)
 		{
 			// Create the request.
 			var request = new RestRequest($"/REST/views/{items.GetPath()}items");
@@ -61,12 +96,31 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the favourited items.
+		/// Gets the contents of the view specified by the <see cref="items"/>.
+		/// </summary>
+		/// <param name="items">A collection representing the view depth.
+		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
+		/// then zero or more <see cref="FolderContentItem"/>s representing the appropriate property groups being shown.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The contents of the view.</returns>
+		public FolderContentItems GetFolderContents(CancellationToken token, params FolderContentItem[] items)
+		{
+			// Execute the async method.
+			var task = this.GetFolderContentsAsync(token, items);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
+		}
+
+		/// <summary>
+		/// Gets the contents of a built-in view.
 		/// </summary>
 		/// <param name="builtInView">An enumeration of the built-in view to retrieve.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The favorited items.</returns>
-		public async Task<List<FolderContentItems>> GetFolderContents(MFBuiltInView builtInView, CancellationToken token = default(CancellationToken))
+		public async Task<List<FolderContentItems>> GetFolderContentsAsync(MFBuiltInView builtInView, CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
 			var request = new RestRequest($"/REST/views/v{(int)builtInView}/items");
@@ -76,6 +130,23 @@ namespace MFaaP.MFWSClient
 
 			// Return the data.
 			return response.Data;
+		}
+
+		/// <summary>
+		/// Gets the contents of a built-in view.
+		/// </summary>
+		/// <param name="builtInView">An enumeration of the built-in view to retrieve.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The favorited items.</returns>
+		public List<FolderContentItems> GetFolderContents(MFBuiltInView builtInView, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.GetFolderContentsAsync(builtInView, token);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
 		}
 
 		/// <summary>

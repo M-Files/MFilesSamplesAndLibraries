@@ -12,7 +12,7 @@ The REST API wrapper exposes various methods which mimic the [M-Files API](https
 var client = new MFWSClient("http://kb.cloudvault.m-files.com");
 
 // Get the object types.
-var objectTypes = await client.ObjectTypeOperations.GetObjectTypes();
+var objectTypes = client.ObjectTypeOperations.GetObjectTypes();
 Console.WriteLine($"There are {objectTypes.Count} object types in the vault:");
 foreach (var item in objectTypes)
 {
@@ -22,7 +22,7 @@ foreach (var item in objectTypes)
 }
 
 // Get the value lists.
-var valueLists = await client.ValueListOperations.GetValueLists();
+var valueLists = client.ValueListOperations.GetValueLists();
 Console.WriteLine($"There are {valueLists.Count} value lists in the vault:");
 foreach (var item in valueLists)
 {
@@ -31,7 +31,7 @@ foreach (var item in valueLists)
 	System.Console.WriteLine("\t\tID: {item.ID}");
 
 	// Retrieve the items.
-	var valueListItems = await client.ValueListItemOperations.GetValueListItems(item.ID);
+	var valueListItems = client.ValueListItemOperations.GetValueListItems(item.ID);
 	System.Console.WriteLine($"\t\tItems ({valueListItems.Items.Count}):");
 
 	// Output the items.

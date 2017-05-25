@@ -29,9 +29,25 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="objVers">The objects to retrieve the properties of.</param>
 		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
-		public Task<PropertyValue[][]> GetPropertiesOfMultipleObjects(params ObjVer[] objVers)
+		public Task<PropertyValue[][]> GetPropertiesOfMultipleObjectsAsync(params ObjVer[] objVers)
 		{
-			return this.GetPropertiesOfMultipleObjects(CancellationToken.None, objVers);
+			return this.GetPropertiesOfMultipleObjectsAsync(CancellationToken.None, objVers);
+		}
+
+		/// <summary>
+		/// Retrieves the properties of multiple objects.
+		/// </summary>
+		/// <param name="objVers">The objects to retrieve the properties of.</param>
+		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
+		public PropertyValue[][] GetPropertiesOfMultipleObjects(params ObjVer[] objVers)
+		{
+			// Execute the async method.
+			var task = this.GetPropertiesOfMultipleObjectsAsync(objVers);
+			Task.WaitAll(new Task[]
+			{
+				task
+			});
+			return task.Result;
 		}
 
 		/// <summary>
@@ -40,7 +56,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objVers">The objects to retrieve the properties of.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
-		public async Task<PropertyValue[][]> GetPropertiesOfMultipleObjects(CancellationToken token, params ObjVer[] objVers)
+		public async Task<PropertyValue[][]> GetPropertiesOfMultipleObjectsAsync(CancellationToken token, params ObjVer[] objVers)
 		{
 			// Sanity.
 			if (null == objVers)
@@ -64,12 +80,30 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
+		/// Retrieves the properties of multiple objects.
+		/// </summary>
+		/// <param name="objVers">The objects to retrieve the properties of.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
+		public PropertyValue[][] GetPropertiesOfMultipleObjects(CancellationToken token, params ObjVer[] objVers)
+		{
+			// Execute the async method.
+			var task = this.GetPropertiesOfMultipleObjectsAsync(token, objVers);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
+
+		}
+
+		/// <summary>
 		/// Retrieves the properties of a single object.
 		/// </summary>
 		/// <param name="objVer">The object to retrieve the properties of.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>A collection of property values for the supplied object.</returns>
-		public async Task<PropertyValue[]> GetProperties(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		public async Task<PropertyValue[]> GetPropertiesAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
 		{
 
 			// Sanity.
@@ -77,12 +111,29 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(objVer));
 
 			// Use the other overload to retrieve the content.
-			var response = await this.GetPropertiesOfMultipleObjects(token, new[] { objVer });
+			var response = await this.GetPropertiesOfMultipleObjectsAsync(token, new[] { objVer });
 
 			// Sanity.
 			return null != response && response.Length > 0
-				? new PropertyValue[0] 
+				? new PropertyValue[0]
 				: response[0];
+		}
+
+		/// <summary>
+		/// Retrieves the properties of a single object.
+		/// </summary>
+		/// <param name="objVer">The object to retrieve the properties of.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A collection of property values for the supplied object.</returns>
+		public PropertyValue[] GetProperties(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.GetPropertiesAsync(objVer, token);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
 		}
 
 		#endregion

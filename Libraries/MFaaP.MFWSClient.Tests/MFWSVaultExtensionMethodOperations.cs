@@ -18,7 +18,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public async Task ExecuteExtensionMethod_CorrectResource()
+		public async Task ExecuteExtensionMethodAsync_CorrectResource()
 		{
 			/* Arrange */
 
@@ -54,7 +54,59 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld");
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethodAsync("HelloWorld");
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual("/REST/vault/extensionmethod/HelloWorld", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod{TB}"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void ExecuteExtensionMethod_CorrectResource()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Content)
+						.Returns("returnValue");
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld");
 
 			/* Assert */
 
@@ -70,7 +122,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public async Task ExecuteExtensionMethod_CorrectMethod()
+		public async Task ExecuteExtensionMethodAsync_CorrectMethod()
 		{
 			/* Arrange */
 
@@ -106,7 +158,59 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld");
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethodAsync("HelloWorld");
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.POST, methodUsed);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod{TB}"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public void ExecuteExtensionMethod_CorrectMethod()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Content)
+						.Returns("returnValue");
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld");
 
 			/* Assert */
 
@@ -122,7 +226,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public async Task ExecuteExtensionMethod_CorrectRequestBody()
+		public async Task ExecuteExtensionMethodAsync_CorrectRequestBody()
 		{
 			/* Arrange */
 
@@ -161,7 +265,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", inputValue);
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethodAsync("HelloWorld", inputValue);
 
 			/* Assert */
 
@@ -177,7 +281,62 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public async Task ExecuteExtensionMethod_CorrectOutput()
+		public void ExecuteExtensionMethod_CorrectRequestBody()
+		{
+			/* Arrange */
+
+			// The input value.
+			var inputValue = "this is my test input value";
+
+			// The actual request body.
+			var requestBody = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					requestBody = r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString();
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Content)
+						.Returns("returnValue");
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", inputValue);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Request body must be correct.
+			Assert.AreEqual(inputValue, requestBody);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public async Task ExecuteExtensionMethodAsync_CorrectOutput()
 		{
 			/* Arrange */
 
@@ -210,7 +369,56 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			var output = await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", "this is my test input value");
+			var output = await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethodAsync("HelloWorld", "this is my test input value");
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Request body must be correct.
+			Assert.AreEqual(outputValue, output);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void ExecuteExtensionMethod_CorrectOutput()
+		{
+			/* Arrange */
+
+			// The input value.
+			var outputValue = "Return value";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Content)
+						.Returns(outputValue);
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			var output = mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", "this is my test input value");
 
 			/* Assert */
 
@@ -230,7 +438,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public async Task ExecuteExtensionMethod_CorrectResource_InputSerialisation()
+		public async Task ExecuteExtensionMethodAsync_CorrectResource_InputSerialisation()
 		{
 			/* Arrange */
 
@@ -266,7 +474,63 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethodAsync("HelloWorld", new
+			{
+				a = "b",
+				x = 7
+			});
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual("/REST/vault/extensionmethod/HelloWorld", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void ExecuteExtensionMethod_CorrectResource_InputSerialisation()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Content)
+						.Returns("returnValue");
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
@@ -286,7 +550,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// uses the correct Http method.
 		/// </summary>
 		[TestMethod]
-		public async Task ExecuteExtensionMethod_CorrectMethod_InputSerialisation()
+		public async Task ExecuteExtensionMethodAsync_CorrectMethod_InputSerialisation()
 		{
 			/* Arrange */
 
@@ -322,7 +586,63 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethodAsync("HelloWorld", new
+			{
+				a = "b",
+				x = 7
+			});
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.POST, methodUsed);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public void ExecuteExtensionMethod_CorrectMethod_InputSerialisation()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Content)
+						.Returns("returnValue");
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7
@@ -342,7 +662,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public async Task ExecuteExtensionMethod_CorrectRequestBody_InputSerialisation()
+		public async Task ExecuteExtensionMethodAsync_CorrectRequestBody_InputSerialisation()
 		{
 			/* Arrange */
 
@@ -378,7 +698,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
+			await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethodAsync("HelloWorld", new
 			{
 				a = "b",
 				x = 7
@@ -398,7 +718,63 @@ namespace MFaaP.MFWSClient.Tests
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
-		public async Task ExecuteExtensionMethod_CorrectOutput_InputSerialisation()
+		public void ExecuteExtensionMethod_CorrectRequestBody_InputSerialisation()
+		{
+			/* Arrange */
+
+			// The actual request body.
+			var requestBody = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					requestBody = r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString();
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Content)
+						.Returns("returnValue");
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
+			{
+				a = "b",
+				x = 7
+			});
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Request body must be correct.
+			Assert.AreEqual("{\"a\":\"b\",\"x\":7}", requestBody);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public async Task ExecuteExtensionMethodAsync_CorrectOutput_InputSerialisation()
 		{
 			/* Arrange */
 
@@ -431,7 +807,60 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			var output = await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
+			var output = await mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethodAsync("HelloWorld", new
+			{
+				a = "b",
+				x = 7
+			});
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Request body must be correct.
+			Assert.AreEqual(outputValue, output);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultExtensionMethodOperations.ExecuteVaultExtensionMethod"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void ExecuteExtensionMethod_CorrectOutput_InputSerialisation()
+		{
+			/* Arrange */
+
+			// The input value.
+			var outputValue = "Return value";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Content)
+						.Returns(outputValue);
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			var output = mfwsClient.ExtensionMethodOperations.ExecuteVaultExtensionMethod("HelloWorld", new
 			{
 				a = "b",
 				x = 7

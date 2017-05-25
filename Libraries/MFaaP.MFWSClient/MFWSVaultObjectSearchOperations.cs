@@ -27,7 +27,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An array of items that match the search term.</returns>
 		/// <remarks>For more comprehensive search options, construct a series of <see cref="ISearchCondition"/> objects and use the <see cref="SearchForObjectsByString"/> method.</remarks>
-		public Task<ObjectVersion[]> SearchForObjectsByString(string searchTerm, int? objectTypeId = null, CancellationToken token = default(CancellationToken))
+		public Task<ObjectVersion[]> SearchForObjectsByStringAsync(string searchTerm, int? objectTypeId = null, CancellationToken token = default(CancellationToken))
 		{
 			// Create a collection of conditions.
 			var conditions = new List<ISearchCondition>
@@ -43,7 +43,26 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Search.
-			return this.SearchForObjectsByConditions(token, conditions.ToArray());
+			return this.SearchForObjectsByConditionsAsync(token, conditions.ToArray());
+		}
+
+		/// <summary>
+		/// Searches the vault for a simple text string.
+		/// </summary>
+		/// <param name="searchTerm">The string to search for.</param>
+		/// <param name="objectTypeId">If provided, also restricts the results by the given object type.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An array of items that match the search term.</returns>
+		/// <remarks>For more comprehensive search options, construct a series of <see cref="ISearchCondition"/> objects and use the <see cref="SearchForObjectsByString"/> method.</remarks>
+		public ObjectVersion[] SearchForObjectsByString(string searchTerm, int? objectTypeId = null, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.SearchForObjectsByStringAsync(searchTerm, objectTypeId, token);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
 		}
 
 		/// <summary>
@@ -51,9 +70,25 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="searchConditions">The conditions to search for.</param>
 		/// <returns>An array of items that match the search conditions.</returns>
-		public Task<ObjectVersion[]> SearchForObjectsByConditions(params ISearchCondition[] searchConditions)
+		public Task<ObjectVersion[]> SearchForObjectsByConditionsAsync(params ISearchCondition[] searchConditions)
 		{
-			return this.SearchForObjectsByConditions(CancellationToken.None, searchConditions);
+			return this.SearchForObjectsByConditionsAsync(CancellationToken.None, searchConditions);
+		}
+
+		/// <summary>
+		/// Searches the vault.
+		/// </summary>
+		/// <param name="searchConditions">The conditions to search for.</param>
+		/// <returns>An array of items that match the search conditions.</returns>
+		public ObjectVersion[] SearchForObjectsByConditions(params ISearchCondition[] searchConditions)
+		{
+			// Execute the async method.
+			var task = this.SearchForObjectsByConditionsAsync(searchConditions);
+			Task.WaitAll(new Task[]
+			{
+				task
+			});
+			return task.Result;
 		}
 
 		/// <summary>
@@ -62,7 +97,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="searchConditions">The conditions to search for.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An array of items that match the search conditions.</returns>
-		public async Task<ObjectVersion[]> SearchForObjectsByConditions(CancellationToken token, params ISearchCondition[] searchConditions)
+		public async Task<ObjectVersion[]> SearchForObjectsByConditionsAsync(CancellationToken token, params ISearchCondition[] searchConditions)
 		{
 			// Sanity.
 			if (null == searchConditions)
@@ -107,6 +142,23 @@ namespace MFaaP.MFWSClient
 
 			// Return the data.
 			return response.Data?.Items?.ToArray();
+		}
+
+		/// <summary>
+		/// Searches the vault.
+		/// </summary>
+		/// <param name="searchConditions">The conditions to search for.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An array of items that match the search conditions.</returns>
+		public ObjectVersion[] SearchForObjectsByConditions(CancellationToken token, params ISearchCondition[] searchConditions)
+		{
+			// Execute the async method.
+			var task = this.SearchForObjectsByConditionsAsync(token, searchConditions);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
 		}
 
 		/// <summary>

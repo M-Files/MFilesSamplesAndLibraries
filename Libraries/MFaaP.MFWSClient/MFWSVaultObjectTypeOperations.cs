@@ -21,7 +21,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>All object types in the vault.</returns>
 		/// <remarks>This may be filtered by the user's permissions.</remarks>
-		public async Task<List<ObjType>> GetObjectTypes(CancellationToken token = default(CancellationToken))
+		public async Task<List<ObjType>> GetObjectTypesAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
 			var request = new RestRequest($"/REST/structure/objecttypes");
@@ -31,6 +31,23 @@ namespace MFaaP.MFWSClient
 
 			// Return the data.
 			return response.Data;
+		}
+
+		/// <summary>
+		/// Gets a list of all "real" object types in the vault.
+		/// </summary>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>All object types in the vault.</returns>
+		/// <remarks>This may be filtered by the user's permissions.</remarks>
+		public List<ObjType> GetObjectTypes(CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			var task = this.GetObjectTypesAsync(token);
+			Task.WaitAll(new Task[]
+			{
+				task
+			}, token);
+			return task.Result;
 		}
 	}
 }
