@@ -34,7 +34,8 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<Results<ValueListItem>>(request, token);
+			var response = await this.MFWSClient.Get<Results<ValueListItem>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -51,12 +52,10 @@ namespace MFaaP.MFWSClient
 		public Results<ValueListItem> GetValueListItems(int valueListId, string nameFilter = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetValueListItemsAsync(valueListId, nameFilter, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetValueListItemsAsync(valueListId, nameFilter, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 	}
 }

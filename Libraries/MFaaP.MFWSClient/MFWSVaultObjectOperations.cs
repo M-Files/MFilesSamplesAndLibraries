@@ -44,7 +44,8 @@ namespace MFaaP.MFWSClient
 			request.AddJsonBody(creationInfo);
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Post<ObjectVersion>(request, token);
+			var response = await this.MFWSClient.Post<ObjectVersion>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -61,12 +62,10 @@ namespace MFaaP.MFWSClient
 		public ObjectVersion CreateNewObject(int objectTypeId, ObjectCreationInfo creationInfo, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.CreateNewObjectAsync(objectTypeId, creationInfo, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.CreateNewObjectAsync(objectTypeId, creationInfo, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		#endregion
@@ -113,12 +112,10 @@ namespace MFaaP.MFWSClient
 			CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.SetCheckoutStatusAsync(objectTypeId, objectId, status, version, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.SetCheckoutStatusAsync(objectTypeId, objectId, status, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -142,7 +139,8 @@ namespace MFaaP.MFWSClient
 			request.AddJsonBody(status);
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Put<ObjectVersion>(request, token);
+			var response = await this.MFWSClient.Put<ObjectVersion>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -160,12 +158,10 @@ namespace MFaaP.MFWSClient
 			CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.SetCheckoutStatusAsync(objId, status, version, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.SetCheckoutStatusAsync(objId, status, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -187,7 +183,8 @@ namespace MFaaP.MFWSClient
 			request.AddJsonBody(status);
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Put<ObjectVersion>(request, token);
+			var response = await this.MFWSClient.Put<ObjectVersion>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -203,12 +200,10 @@ namespace MFaaP.MFWSClient
 		public ObjectVersion SetCheckoutStatus(ObjVer objVer, MFCheckOutStatus status, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.SetCheckoutStatusAsync(objVer, status, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.SetCheckoutStatusAsync(objVer, status, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -259,12 +254,10 @@ namespace MFaaP.MFWSClient
 		public MFCheckOutStatus? GetCheckoutStatus(int objectTypeId, int objectId, int? version = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetCheckoutStatusAsync(objectTypeId, objectId, version, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetCheckoutStatusAsync(objectTypeId, objectId, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -285,7 +278,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/{version?.ToString() ?? "latest"}/checkedout");
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<PrimitiveType<MFCheckOutStatus>>(request, token);
+			var response = await this.MFWSClient.Get<PrimitiveType<MFCheckOutStatus>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data?.Value;
@@ -301,12 +295,10 @@ namespace MFaaP.MFWSClient
 		public MFCheckOutStatus? GetCheckoutStatus(ObjID objId, int? version = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetCheckoutStatusAsync(objId, version, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetCheckoutStatusAsync(objId, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -326,7 +318,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objVer.Type}/{objVer.ID}/{objVer.Version}/checkedout");
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<PrimitiveType<MFCheckOutStatus>>(request, token);
+			var response = await this.MFWSClient.Get<PrimitiveType<MFCheckOutStatus>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data?.Value;
@@ -341,12 +334,10 @@ namespace MFaaP.MFWSClient
 		public MFCheckOutStatus? GetCheckoutStatus(ObjVer objVer, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetCheckoutStatusAsync(objVer, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetCheckoutStatusAsync(objVer, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -373,12 +364,10 @@ namespace MFaaP.MFWSClient
 		public ObjectVersion CheckOut(int objectTypeId, int objectId, int? version = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.CheckOutAsync(objectTypeId, objectId, version, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.CheckOutAsync(objectTypeId, objectId, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -405,12 +394,10 @@ namespace MFaaP.MFWSClient
 		public ObjectVersion CheckIn(int objectTypeId, int objectId, int? version = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.CheckInAsync(objectTypeId, objectId, version, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.CheckInAsync(objectTypeId, objectId, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		#endregion
@@ -451,12 +438,10 @@ namespace MFaaP.MFWSClient
 		public bool? GetDeletedStatus(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetDeletedStatusAsync(objectTypeId, objectId, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetDeletedStatusAsync(objectTypeId, objectId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -476,7 +461,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/deleted");
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<PrimitiveType<bool>>(request, token);
+			var response = await this.MFWSClient.Get<PrimitiveType<bool>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data?.Value;
@@ -491,12 +477,10 @@ namespace MFaaP.MFWSClient
 		public bool? GetDeletedStatus(ObjID objId, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetDeletedStatusAsync(objId, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetDeletedStatusAsync(objId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		#endregion
@@ -532,12 +516,10 @@ namespace MFaaP.MFWSClient
 		public List<ObjectVersion> GetHistory(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetHistoryAsync(objectTypeId, objectId, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetHistoryAsync(objectTypeId, objectId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -557,7 +539,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objID.Type}/{objID.ID}/history");
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<List<ObjectVersion>>(request, token);
+			var response = await this.MFWSClient.Get<List<ObjectVersion>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -574,12 +557,10 @@ namespace MFaaP.MFWSClient
 		public List<ObjectVersion> GetHistory(ObjID objID, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetHistoryAsync(objID, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetHistoryAsync(objID, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 
 		}
 
@@ -604,7 +585,8 @@ namespace MFaaP.MFWSClient
 			request.AddJsonBody(objId);
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Post<ExtendedObjectVersion>(request, token);
+			var response = await this.MFWSClient.Post<ExtendedObjectVersion>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -619,12 +601,10 @@ namespace MFaaP.MFWSClient
 		public ExtendedObjectVersion AddToFavorites(ObjID objId, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.AddToFavoritesAsync(objId, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.AddToFavoritesAsync(objId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -653,12 +633,10 @@ namespace MFaaP.MFWSClient
 		public ExtendedObjectVersion AddToFavorites(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.AddToFavoritesAsync(objectTypeId, objectId, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.AddToFavoritesAsync(objectTypeId, objectId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -677,7 +655,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/favorites/{objId.Type}/{objId.ID}");
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Delete<ExtendedObjectVersion>(request, token);
+			var response = await this.MFWSClient.Delete<ExtendedObjectVersion>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -692,12 +671,10 @@ namespace MFaaP.MFWSClient
 		public ExtendedObjectVersion RemoveFromFavorites(ObjID objId, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.RemoveFromFavoritesAsync(objId, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.RemoveFromFavoritesAsync(objId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -726,12 +703,10 @@ namespace MFaaP.MFWSClient
 		public ExtendedObjectVersion RemoveFromFavorites(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.RemoveFromFavoritesAsync(objectTypeId, objectId, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.RemoveFromFavoritesAsync(objectTypeId, objectId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		#endregion

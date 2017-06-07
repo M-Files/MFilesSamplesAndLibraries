@@ -42,12 +42,10 @@ namespace MFaaP.MFWSClient
 		public PropertyValue[][] GetPropertiesOfMultipleObjects(params ObjVer[] objVers)
 		{
 			// Execute the async method.
-			var task = this.GetPropertiesOfMultipleObjectsAsync(objVers);
-			Task.WaitAll(new Task[]
-			{
-				task
-			});
-			return task.Result;
+			return this.GetPropertiesOfMultipleObjectsAsync(objVers)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -72,7 +70,8 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<List<List<PropertyValue>>>(request, token);
+			var response = await this.MFWSClient.Get<List<List<PropertyValue>>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data?.Select(a => a.ToArray()).ToArray();
@@ -88,12 +87,10 @@ namespace MFaaP.MFWSClient
 		public PropertyValue[][] GetPropertiesOfMultipleObjects(CancellationToken token, params ObjVer[] objVers)
 		{
 			// Execute the async method.
-			var task = this.GetPropertiesOfMultipleObjectsAsync(token, objVers);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetPropertiesOfMultipleObjectsAsync(token, objVers)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 
 		}
 
@@ -111,7 +108,8 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(objVer));
 
 			// Use the other overload to retrieve the content.
-			var response = await this.GetPropertiesOfMultipleObjectsAsync(token, new[] { objVer });
+			var response = await this.GetPropertiesOfMultipleObjectsAsync(token, new[] { objVer })
+				.ConfigureAwait(false);
 
 			// Sanity.
 			return null != response && response.Length > 0
@@ -128,12 +126,10 @@ namespace MFaaP.MFWSClient
 		public PropertyValue[] GetProperties(ObjVer objVer, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetPropertiesAsync(objVer, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetPropertiesAsync(objVer, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		#endregion

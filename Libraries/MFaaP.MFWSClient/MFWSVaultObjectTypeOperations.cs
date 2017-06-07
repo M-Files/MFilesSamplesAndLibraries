@@ -27,7 +27,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/structure/objecttypes");
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<List<ObjType>>(request, token);
+			var response = await this.MFWSClient.Get<List<ObjType>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -42,12 +43,10 @@ namespace MFaaP.MFWSClient
 		public List<ObjType> GetObjectTypes(CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetObjectTypesAsync(token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetObjectTypesAsync(token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 	}
 }

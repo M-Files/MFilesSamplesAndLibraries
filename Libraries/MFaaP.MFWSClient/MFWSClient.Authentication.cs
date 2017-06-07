@@ -69,7 +69,8 @@ namespace MFaaP.MFWSClient
 			request.Credentials = CredentialCache.DefaultNetworkCredentials;
 
 			// Execute the request and store the response.
-			IRestResponse response = await this.Get(request, token);
+			IRestResponse response = await this.Get(request, token)
+				.ConfigureAwait(false);
 
 			// Save the response cookies in our persistent RestClient cookie container.
 			// Note: We should have at least one returned which is the ASP.NET session Id.
@@ -91,8 +92,10 @@ namespace MFaaP.MFWSClient
 		public void AuthenticateUsingSingleSignOn(Guid vaultId, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.AuthenticateUsingSingleSignOnAsync(vaultId, token);
-			Task.WaitAll(new Task[] { task }, token);
+			this.AuthenticateUsingSingleSignOnAsync(vaultId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -123,8 +126,10 @@ namespace MFaaP.MFWSClient
 		public void AuthenticateUsingCredentials(Guid? vaultId, string username, string password, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.AuthenticateUsingCredentialsAsync(vaultId, username, password, token);
-			Task.WaitAll(new Task[] { task }, token);
+			this.AuthenticateUsingCredentialsAsync(vaultId, username, password, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -147,7 +152,8 @@ namespace MFaaP.MFWSClient
 				request.AddJsonBody(authentication);
 
 				// Execute the request and store the response.
-				var response = await this.Post<PrimitiveType<string>>(request, token);
+				var response = await this.Post<PrimitiveType<string>>(request, token)
+					.ConfigureAwait(false);
 
 				// Save the authentication token.
 				this.AuthenticationToken = response?.Data?.Value;
@@ -163,8 +169,10 @@ namespace MFaaP.MFWSClient
 		protected void AuthenticateUsingCredentials(Authentication authentication, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.AuthenticateUsingCredentialsAsync(authentication, token);
-			Task.WaitAll(new Task[] { task }, token);
+			this.AuthenticateUsingCredentialsAsync(authentication, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -178,7 +186,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest("/REST/server/vaults?online=true");
 
 			// Execute the request and store the response.
-			var response = await this.Get<List<Vault>>(request, token);
+			var response = await this.Get<List<Vault>>(request, token)
+				.ConfigureAwait(false);
 
 			// Store the authentication token.
 			return response?.Data;
@@ -192,9 +201,10 @@ namespace MFaaP.MFWSClient
 		public List<Vault> GetOnlineVaults(CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetOnlineVaultsAsync(token);
-			Task.WaitAll(new Task[] { task }, token);
-			return task.Result;
+			return this.GetOnlineVaultsAsync(token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 	}

@@ -90,7 +90,8 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync<T>(request, token);
+			var response = await this.restClient.ExecuteTaskAsync<T>(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -118,7 +119,8 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync(request, token);
+			var response = await this.restClient.ExecuteTaskAsync(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -146,7 +148,8 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync(request, token);
+			var response = await this.restClient.ExecuteTaskAsync(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -176,7 +179,8 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync<T>(request, token);
+			var response = await this.restClient.ExecuteTaskAsync<T>(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -204,7 +208,8 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync(request, token);
+			var response = await this.restClient.ExecuteTaskAsync(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -234,7 +239,8 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync<T>(request, token);
+			var response = await this.restClient.ExecuteTaskAsync<T>(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -262,7 +268,8 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync(request, token);
+			var response = await this.restClient.ExecuteTaskAsync(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);
@@ -292,7 +299,8 @@ namespace MFaaP.MFWSClient
 			this.OnBeforeExecuteRequest(request);
 
 			// Execute the request.
-			var response = await this.restClient.ExecuteTaskAsync<T>(request, token);
+			var response = await this.restClient.ExecuteTaskAsync<T>(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);

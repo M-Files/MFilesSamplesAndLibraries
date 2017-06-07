@@ -37,12 +37,10 @@ namespace MFaaP.MFWSClient
 		public FolderContentItems GetRootFolderContents(CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetRootFolderContentsAsync(token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetRootFolderContentsAsync(token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -67,12 +65,10 @@ namespace MFaaP.MFWSClient
 		public FolderContentItems GetFolderContents(params FolderContentItem[] items)
 		{
 			// Execute the async method.
-			var task = this.GetFolderContentsAsync(items);
-			Task.WaitAll(new Task[]
-			{
-				task
-			});
-			return task.Result;
+			return this.GetFolderContentsAsync(items)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -89,7 +85,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/views/{items.GetPath()}items");
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<FolderContentItems>(request, token);
+			var response = await this.MFWSClient.Get<FolderContentItems>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -106,12 +103,10 @@ namespace MFaaP.MFWSClient
 		public FolderContentItems GetFolderContents(CancellationToken token, params FolderContentItem[] items)
 		{
 			// Execute the async method.
-			var task = this.GetFolderContentsAsync(token, items);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetFolderContentsAsync(token, items)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -126,7 +121,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/views/v{(int)builtInView}/items");
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<List<FolderContentItems>>(request, token);
+			var response = await this.MFWSClient.Get<List<FolderContentItems>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -141,12 +137,10 @@ namespace MFaaP.MFWSClient
 		public List<FolderContentItems> GetFolderContents(MFBuiltInView builtInView, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetFolderContentsAsync(builtInView, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.GetFolderContentsAsync(builtInView, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>

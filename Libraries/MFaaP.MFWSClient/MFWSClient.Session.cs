@@ -18,7 +18,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest("/REST/session/vault");
 
 			// Execute the request.
-			var response = await this.Get<Vault>(request, token);
+			var response = await this.Get<Vault>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the content.
 			return response?.Data;
@@ -32,9 +33,10 @@ namespace MFaaP.MFWSClient
 		public Vault GetCurrentSessionVault(CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetCurrentSessionVaultAsync(token);
-			Task.WaitAll(new Task[] { task }, token);
-			return task.Result;
+			return this.GetCurrentSessionVaultAsync(token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -48,7 +50,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest("/REST/session");
 
 			// Execute the request.
-			var response = await this.Get<SessionInfo>(request, token);
+			var response = await this.Get<SessionInfo>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the content.
 			return response?.Data;
@@ -62,9 +65,10 @@ namespace MFaaP.MFWSClient
 		public SessionInfo GetCurrentSessionInfo(CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.GetCurrentSessionInfoAsync(token);
-			Task.WaitAll(new Task[] { task }, token);
-			return task.Result;
+			return this.GetCurrentSessionInfoAsync(token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 	}
 }

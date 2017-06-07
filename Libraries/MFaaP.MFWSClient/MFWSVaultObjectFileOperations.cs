@@ -36,7 +36,8 @@ namespace MFaaP.MFWSClient
 			var request = new RestRequest($"/REST/objects/{objectType}/{objectId}/{versionString}/files/{fileId}/content");
 
 			// Execute the request.
-			var response = await this.MFWSClient.Get(request, token);
+			var response = await this.MFWSClient.Get(request, token)
+				.ConfigureAwait(false);
 
 			// Return the content.
 			return response?.RawBytes;
@@ -54,12 +55,10 @@ namespace MFaaP.MFWSClient
 		public byte[] DownloadFile(int objectType, int objectId, int fileId, int? objectVersion = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.DownloadFileAsync(objectType, objectId, fileId, objectVersion, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.DownloadFileAsync(objectType, objectId, fileId, objectVersion, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -84,7 +83,8 @@ namespace MFaaP.MFWSClient
 			request.ResponseWriter = (responseStream) => responseStream.CopyTo(outputStream);
 
 			// Execute the request.
-			await this.MFWSClient.Get(request, token);
+			await this.MFWSClient.Get(request, token)
+				.ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -100,11 +100,10 @@ namespace MFaaP.MFWSClient
 		public void DownloadFile(int objectType, int objectId, int fileId, System.IO.Stream outputStream, int? objectVersion = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.DownloadFileAsync(objectType, objectId, fileId, outputStream, objectVersion, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
+			this.DownloadFileAsync(objectType, objectId, fileId, outputStream, objectVersion, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -139,11 +138,10 @@ namespace MFaaP.MFWSClient
 		public void DownloadFile(int objectType, int objectId, int fileId, string outputFileName, int? objectVersion = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.DownloadFileAsync(objectType, objectId, fileId, outputFileName, objectVersion, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
+			this.DownloadFileAsync(objectType, objectId, fileId, outputFileName, objectVersion, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -171,7 +169,8 @@ namespace MFaaP.MFWSClient
 			using (var stream = outputFileInfo.Create())
 			{
 				// Download the file to disk.
-				await this.DownloadFileAsync(objectType, objectId, fileId, stream, objectVersion, token);
+				await this.DownloadFileAsync(objectType, objectId, fileId, stream, objectVersion, token)
+					.ConfigureAwait(false);
 			}
 		}
 
@@ -189,11 +188,10 @@ namespace MFaaP.MFWSClient
 			CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.DownloadFileAsync(objectType, objectId, fileId, outputFileInfo, objectVersion, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
+			this.DownloadFileAsync(objectType, objectId, fileId, outputFileInfo, objectVersion, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		#endregion
@@ -218,12 +216,10 @@ namespace MFaaP.MFWSClient
 		public UploadInfo[] UploadFiles(params FileInfo[] files)
 		{
 			// Execute the async method.
-			var task = this.UploadFilesAsync(files);
-			Task.WaitAll(new Task[]
-			{
-				task
-			});
-			return task.Result;
+			return this.UploadFilesAsync(files)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -248,7 +244,8 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Post<List<UploadInfo>>(request, token);
+			var response = await this.MFWSClient.Post<List<UploadInfo>>(request, token)
+				.ConfigureAwait(false);
 
 			// Ensure the uploadinfo is updated.
 			for (var i = 0; i < response.Data?.Count; i++)
@@ -274,12 +271,10 @@ namespace MFaaP.MFWSClient
 		public UploadInfo[] UploadFiles(CancellationToken token, params FileInfo[] files)
 		{
 			// Execute the async method.
-			var task = this.UploadFilesAsync(token, files);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.UploadFilesAsync(token, files)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 
 		}
 

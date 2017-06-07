@@ -57,12 +57,10 @@ namespace MFaaP.MFWSClient
 		public ObjectVersion[] SearchForObjectsByString(string searchTerm, int? objectTypeId = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.SearchForObjectsByStringAsync(searchTerm, objectTypeId, token);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.SearchForObjectsByStringAsync(searchTerm, objectTypeId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -83,12 +81,10 @@ namespace MFaaP.MFWSClient
 		public ObjectVersion[] SearchForObjectsByConditions(params ISearchCondition[] searchConditions)
 		{
 			// Execute the async method.
-			var task = this.SearchForObjectsByConditionsAsync(searchConditions);
-			Task.WaitAll(new Task[]
-			{
-				task
-			});
-			return task.Result;
+			return this.SearchForObjectsByConditionsAsync(searchConditions)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -138,7 +134,8 @@ namespace MFaaP.MFWSClient
 				request.Resource = request.Resource.Substring(0, request.Resource.Length - 1);
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<Results<ObjectVersion>>(request, token);
+			var response = await this.MFWSClient.Get<Results<ObjectVersion>>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data?.Items?.ToArray();
@@ -153,12 +150,10 @@ namespace MFaaP.MFWSClient
 		public ObjectVersion[] SearchForObjectsByConditions(CancellationToken token, params ISearchCondition[] searchConditions)
 		{
 			// Execute the async method.
-			var task = this.SearchForObjectsByConditionsAsync(token, searchConditions);
-			Task.WaitAll(new Task[]
-			{
-				task
-			}, token);
-			return task.Result;
+			return this.SearchForObjectsByConditionsAsync(token, searchConditions)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>

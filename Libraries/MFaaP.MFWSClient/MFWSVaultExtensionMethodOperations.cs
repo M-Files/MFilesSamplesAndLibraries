@@ -43,7 +43,8 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Post<TA>(request, token);
+			var response = await this.MFWSClient.Post<TA>(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Data;
@@ -64,9 +65,10 @@ namespace MFaaP.MFWSClient
 		{
 
 			// Execute the async method.
-			var task = this.ExecuteVaultExtensionMethodAsync<TA, TB>(extensionMethodName, input, token);
-			Task.WaitAll(new Task[] { task }, token);
-			return task.Result;
+			return this.ExecuteVaultExtensionMethodAsync<TA, TB>(extensionMethodName, input, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 
 		}
 
@@ -91,7 +93,8 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Post(request, token);
+			var response = await this.MFWSClient.Post(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Content;
@@ -109,9 +112,10 @@ namespace MFaaP.MFWSClient
 			where TB : class
 		{
 			// Execute the async method.
-			var task = this.ExecuteVaultExtensionMethodAsync<TB>(extensionMethodName, input, token);
-			Task.WaitAll(new Task[] { task }, token);
-			return task.Result;
+			return this.ExecuteVaultExtensionMethodAsync<TB>(extensionMethodName, input, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		/// <summary>
@@ -142,7 +146,8 @@ namespace MFaaP.MFWSClient
 			}
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Post(request, token);
+			var response = await this.MFWSClient.Post(request, token)
+				.ConfigureAwait(false);
 
 			// Return the data.
 			return response.Content;
@@ -158,9 +163,10 @@ namespace MFaaP.MFWSClient
 		public string ExecuteVaultExtensionMethod(string extensionMethodName, string input = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			var task = this.ExecuteVaultExtensionMethodAsync(extensionMethodName, input, token);
-			Task.WaitAll(new Task[] { task }, token);
-			return task.Result;
+			return this.ExecuteVaultExtensionMethodAsync(extensionMethodName, input, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
 
 		#endregion
