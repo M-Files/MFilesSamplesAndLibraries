@@ -754,7 +754,12 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public bool VisibleAfterOperation { get; set; }
-        
+
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public string ObjectGUID { get; set; }
+
     }
 
     
