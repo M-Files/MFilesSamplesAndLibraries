@@ -136,7 +136,7 @@ namespace MFaaP.MFWSClient
 
 			// Create the request.
 			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/{version?.ToString() ?? "latest"}/checkedout");
-			request.AddJsonBody(status);
+			request.AddJsonBody(new PrimitiveType<MFCheckOutStatus>() { Value = status });
 
 			// Make the request and get the response.
 			var response = await this.MFWSClient.Put<ObjectVersion>(request, token)

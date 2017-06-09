@@ -158,11 +158,14 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class ExtendedObjectVersion
     {
+	    public ExtendedObjectVersion()
+	    {
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Object properties
         /// </summary>
-        public PropertyValue[] Properties { get; set; }
+        public List<PropertyValue> Properties { get; set; }
         
     }
 
@@ -836,12 +839,15 @@ namespace MFaaP.MFWSClient
     /// Based on M-Files API.
     /// </summary>
     public class PropertyValue
-    {
+	{
+		public PropertyValue()
+		{
+		}
 
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public int PropertyDef { get; set; }
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public int PropertyDef { get; set; }
         
         /// <summary>
         /// Based on M-Files API.
