@@ -661,6 +661,64 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
+		/// uses the correct body.
+		/// </summary>
+		[TestMethod]
+		public void AuthenticateUsingCredentials_CorrectBody_WithExpiration()
+		{
+			/* Arrange */
+
+			// The vault guid.
+			var vaultGuid = Guid.NewGuid();
+
+			// The request body.
+			var requestBody = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					requestBody = r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString();
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<PrimitiveType<string>>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new PrimitiveType<string>()
+						{
+							Value = "hello world"
+						});
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.AuthenticateUsingCredentials(vaultGuid, "my username", "my password", new DateTime(2017, 01, 01));
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Body must be correct.
+			Assert.AreEqual($"{{\"Username\":\"my username\",\"Password\":\"my password\",\"Domain\":null,\"WindowsUser\":false,\"ComputerName\":null,\"VaultGuid\":\"{vaultGuid.ToString("D")}\",\"Expiration\":\"2017-01-01T00:00:00Z\",\"ReadOnly\":false,\"URL\":null,\"Method\":null}}", requestBody);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
 		/// sets the authentication header.
 		/// </summary>
 		[TestMethod]

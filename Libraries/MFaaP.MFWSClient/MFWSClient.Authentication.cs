@@ -104,15 +104,17 @@ namespace MFaaP.MFWSClient
 		/// <param name="vaultId">The Id of the vault to connect to.</param>
 		/// <param name="username">The username to use.</param>
 		/// <param name="password">The password to use.</param>
+		/// <param name="expiration">The date and time that the token should expire.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		public Task AuthenticateUsingCredentialsAsync(Guid? vaultId, string username, string password, CancellationToken token = default(CancellationToken))
+		public Task AuthenticateUsingCredentialsAsync(Guid? vaultId, string username, string password, DateTime? expiration = null, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
 			return this.AuthenticateUsingCredentialsAsync(new Authentication()
 			{
 				Username = username,
 				Password = password,
-				VaultGuid = vaultId
+				VaultGuid = vaultId,
+				Expiration = expiration
 			}, token);
 		}
 
@@ -126,10 +128,41 @@ namespace MFaaP.MFWSClient
 		public void AuthenticateUsingCredentials(Guid? vaultId, string username, string password, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			this.AuthenticateUsingCredentialsAsync(vaultId, username, password, token)
+			this.AuthenticateUsingCredentialsAsync(vaultId, username, password, null, token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();
+		}
+
+		/// <summary>
+		/// Authenticates to the server using the details provided.
+		/// </summary>
+		/// <param name="vaultId">The Id of the vault to connect to.</param>
+		/// <param name="username">The username to use.</param>
+		/// <param name="password">The password to use.</param>
+		/// <param name="expiration">The date and time that the token should expire.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		public void AuthenticateUsingCredentials(Guid? vaultId, string username, string password, DateTime expiration, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			this.AuthenticateUsingCredentialsAsync(vaultId, username, password, expiration, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Authenticates to the server using the details provided.
+		/// </summary>
+		/// <param name="vaultId">The Id of the vault to connect to.</param>
+		/// <param name="username">The username to use.</param>
+		/// <param name="password">The password to use.</param>
+		/// <param name="expiration">The duration of time (from now) in which the token should expire.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		public void AuthenticateUsingCredentials(Guid? vaultId, string username, string password, TimeSpan expiration, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			this.AuthenticateUsingCredentials(vaultId, username, password, DateTime.Now.Add(expiration), token);
 		}
 
 		/// <summary>
@@ -137,7 +170,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="authentication">The authentication details to use.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		protected async Task AuthenticateUsingCredentialsAsync(Authentication authentication, CancellationToken token = default(CancellationToken))
+		public async Task AuthenticateUsingCredentialsAsync(Authentication authentication, CancellationToken token = default(CancellationToken))
 		{
 			// Clear any current tokens.
 			this.ClearAuthenticationToken();
