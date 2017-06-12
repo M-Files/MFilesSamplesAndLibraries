@@ -207,18 +207,9 @@ namespace MFaaP.MFWSClient
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
-			// HACK: Moq returns null from ExecuteTaskAsync, so deal with it.
-			// Only happens in non-generic ExecuteTaskAsync method; ExecuteTaskAsync<T> works fine.
-			IRestResponse response = null;
-			var task = this.restClient.ExecuteTaskAsync(request, token);
-			if (null != task)
-			{
-				response = await task.ConfigureAwait(false);
-			}
-			else
-			{
-				response = new RestResponse();
-			}
+			// Execute the request.
+			var response = await this.restClient.ExecuteTaskAsync(request, token)
+				.ConfigureAwait(false);
 
 			// Notify after the request.
 			this.OnAfterExecuteRequest(response);

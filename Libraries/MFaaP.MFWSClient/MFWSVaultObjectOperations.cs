@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
@@ -401,13 +402,13 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Sets an object checkout status.
+		/// Performs "undo checkout" for the specified object version.
 		/// </summary>
 		/// <param name="objVer">The Id, type and version of the object.</param>
 		/// <param name="force">If true, will undo checkout even if this object isn't checked out to this user on this machine (subject to user rights).</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A representation of the checked-in object version/</returns>
-		protected async Task UndoCheckoutAsync(ObjVer objVer, bool force, CancellationToken token = default(CancellationToken))
+		/// <returns>The new ObjectVersion information if it is still visible to the user.</returns>
+		protected async Task<ObjectVersion> UndoCheckoutAsync(ObjVer objVer, bool force, CancellationToken token = default(CancellationToken))
 		{
 
 			// Sanity.
@@ -419,17 +420,20 @@ namespace MFaaP.MFWSClient
 			request.Method = Method.DELETE;
 
 			// Make the request and get the response.
-			await this.MFWSClient.Delete(request, token)
+			var response = await this.MFWSClient.Delete<ObjectVersion>(request, token)
 				.ConfigureAwait(false);
+
+			// Return the data.
+			return response.Data;
 		}
 
 		/// <summary>
-		/// Sets an object checkout status.
+		/// Performs "undo checkout" for the specified object version.
 		/// </summary>
 		/// <param name="objVer">The Id, type and version of the object.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A representation of the checked-in object version/</returns>
-		public Task UndoCheckoutAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		/// <returns>The new ObjectVersion information if it is still visible to the user.</returns>
+		public Task<ObjectVersion> UndoCheckoutAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
 			return this.UndoCheckoutAsync(objVer, force: false, token: token);
@@ -442,8 +446,8 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="version">The version.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>Nothing.</returns>
-		public Task UndoCheckoutAsync(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
+		/// <returns>The new ObjectVersion information if it is still visible to the user.</returns>
+		public Task<ObjectVersion> UndoCheckoutAsync(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
 			return this.UndoCheckoutAsync(new ObjVer()
@@ -461,24 +465,52 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="version">The version.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A representation of the checked-in object version/</returns>
-		public void UndoCheckout(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
+		/// <returns>The new ObjectVersion information if it is still visible to the user.</returns>
+		public ObjectVersion UndoCheckout(
+			int objectTypeId,
+			int objectId,
+			int version,
+			CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			this.UndoCheckoutAsync(objectTypeId, objectId, version, token)
+			return this.UndoCheckoutAsync(new ObjVer()
+				{
+					ID = objectId,
+					Type = objectTypeId,
+					Version = version
+				}, token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();
 		}
 
 		/// <summary>
-		/// Sets an object checkout status.
+		/// Performs "undo checkout" for the specified object version.
+		/// </summary>
+		/// <param name="objVer">The Id, type and version of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The new ObjectVersion information if it is still visible to the user.</returns>
+		public ObjectVersion UndoCheckout(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Execute the async method.
+			return this.UndoCheckoutAsync(objVer.Type, objVer.ID, objVer.Version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Performs "undo checkout" for the specified object version.
 		/// Will undo checkout even if this object isn't checked out to this user on this machine (subject to user rights).
 		/// </summary>
 		/// <param name="objVer">The Id, type and version of the object.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A representation of the checked-in object version/</returns>
-		public Task ForceUndoCheckoutAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		/// <returns>The new ObjectVersion information if it is still visible to the user.</returns>
+		public Task<ObjectVersion> ForceUndoCheckoutAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
 			return this.UndoCheckoutAsync(objVer, force: true, token: token);
@@ -492,8 +524,8 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="version">The version.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>Nothing.</returns>
-		public Task ForceUndoCheckoutAsync(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
+		/// <returns>The new ObjectVersion information if it is still visible to the user.</returns>
+		public Task<ObjectVersion> ForceUndoCheckoutAsync(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
 			return this.ForceUndoCheckoutAsync(new ObjVer()
@@ -512,11 +544,11 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="version">The version.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A representation of the checked-in object version/</returns>
-		public void ForceUndoCheckout(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
+		/// <returns>The new ObjectVersion information if it is still visible to the user.</returns>
+		public ObjectVersion ForceUndoCheckout(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			this.ForceUndoCheckoutAsync(objectTypeId, objectId, version, token)
+			return this.ForceUndoCheckoutAsync(objectTypeId, objectId, version, token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();
@@ -600,6 +632,85 @@ namespace MFaaP.MFWSClient
 		{
 			// Execute the async method.
 			return this.GetDeletedStatusAsync(objId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		#endregion
+
+		#region Destroying objects.
+
+		/// <summary>
+		/// Destroys all versions of an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="version">The version of the object. Must be -1.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <param name="destroyAllVersions">Whether to destroy all versions.  Must be true.</param>
+		/// <returns>True if 204 was received from the server.</returns>
+		/// <remarks>Unlike the COM API method (https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectOperations~DestroyObject.html),
+		/// the REST API only supports destroying all versions.</remarks>
+		public async Task<bool> DestroyObjectAsync(ObjID objId, bool destroyAllVersions, int version, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+			if (false == destroyAllVersions)
+				throw new ArgumentException($"{nameof(destroyAllVersions)} must be true.", nameof(destroyAllVersions));
+			if (-1 != version)
+				throw new ArgumentException($"{nameof(version)} must be -1.", nameof(version));
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/latest?allVersions=true");
+			request.Method = Method.DELETE;
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Delete(request, token)
+				.ConfigureAwait(false);
+
+			// If success, returns 204.
+			return response.StatusCode == HttpStatusCode.NoContent;
+		}
+
+		/// <summary>
+		/// Destroys all versions of an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="version">The version of the object. Must be -1.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <param name="destroyAllVersions">Whether to destroy all versions.  Must be true.</param>
+		/// <returns>True if 204 was received from the server.</returns>
+		/// <remarks>Unlike the COM API method (https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectOperations~DestroyObject.html),
+		/// the REST API only supports destroying all versions.</remarks>
+		public bool DestroyObject(ObjID objId, bool destroyAllVersions, int version, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.DestroyObjectAsync(objId, destroyAllVersions, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Destroys all versions of an object.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="version">The version of the object. Must be -1.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <param name="destroyAllVersions">Whether to destroy all versions.  Must be true.</param>
+		/// <returns>True if 204 was received from the server.</returns>
+		/// <remarks>Unlike the COM API method (https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectOperations~DestroyObject.html),
+		/// the REST API only supports destroying all versions.</remarks>
+		public bool DestroyObject(int objectTypeId, int objectId, bool destroyAllVersions, int version, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.DestroyObjectAsync(new ObjID()
+				{
+					ID = objectId,
+					Type = objectTypeId,
+				}, destroyAllVersions, version, token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();
