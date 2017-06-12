@@ -867,6 +867,112 @@ namespace MFaaP.MFWSClient.Tests
 			Assert.AreEqual(Method.PUT, methodUsed);
 		}
 
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// uses the correct request body.
+		/// </summary>
+		[TestMethod]
+		public void SetCheckoutStatus_CorrectRequestBody_CheckedIn()
+		{
+			/* Arrange */
+
+			// The request body.
+			PrimitiveType<MFCheckOutStatus> body = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the body requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					body = JsonConvert.DeserializeObject<PrimitiveType<MFCheckOutStatus>>(r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString() ?? "");
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ObjectVersion>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ObjectVersion());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectOperations.SetCheckoutStatus(1, 2, MFCheckOutStatus.CheckedIn);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Body must be correct.
+			Assert.IsNotNull(body);
+			Assert.AreEqual(MFCheckOutStatus.CheckedIn, body.Value);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// uses the correct request body.
+		/// </summary>
+		[TestMethod]
+		public void SetCheckoutStatus_CorrectRequestBody_CheckedOutToMe()
+		{
+			/* Arrange */
+
+			// The request body.
+			PrimitiveType<MFCheckOutStatus> body = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the body requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					body = JsonConvert.DeserializeObject<PrimitiveType<MFCheckOutStatus>>(r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString() ?? "");
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ObjectVersion>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ObjectVersion());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectOperations.SetCheckoutStatus(1, 2, MFCheckOutStatus.CheckedOutToMe);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Body must be correct.
+			Assert.IsNotNull(body);
+			Assert.AreEqual(MFCheckOutStatus.CheckedOutToMe, body.Value);
+		}
+
 		#endregion
 
 		#region GetHistory
