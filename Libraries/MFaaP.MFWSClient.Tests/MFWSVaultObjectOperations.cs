@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MFaaP.MFWSClient.Tests.ExtensionMethods;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -886,7 +887,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock
 				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				.Callback((IRestRequest r, CancellationToken t) => {
-					body = JsonConvert.DeserializeObject<PrimitiveType<MFCheckOutStatus>>(r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString() ?? "");
+					body = r.DeserializeBody<PrimitiveType<MFCheckOutStatus>>();
 				})
 				// Return a mock response.
 				.Returns(() =>
@@ -939,7 +940,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock
 				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				.Callback((IRestRequest r, CancellationToken t) => {
-					body = JsonConvert.DeserializeObject<PrimitiveType<MFCheckOutStatus>>(r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString() ?? "");
+					body = r.DeserializeBody<PrimitiveType<MFCheckOutStatus>>();
 				})
 				// Return a mock response.
 				.Returns(() =>
@@ -1628,7 +1629,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock
 				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				.Callback((IRestRequest r, CancellationToken t) => {
-					objId = JsonConvert.DeserializeObject<ObjID>(r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString() ?? "");
+					objId = r.DeserializeBody<ObjID>();
 				})
 				// Return a mock response.
 				.Returns(() =>
@@ -1682,7 +1683,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock
 				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				.Callback((IRestRequest r, CancellationToken t) => {
-					objId = JsonConvert.DeserializeObject<ObjID>(r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString() ?? "");
+					objId = r.DeserializeBody<ObjID>();
 				})
 				// Return a mock response.
 				.Returns(() =>
