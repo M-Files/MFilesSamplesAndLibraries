@@ -400,6 +400,128 @@ namespace MFaaP.MFWSClient
 				.GetResult();
 		}
 
+		/// <summary>
+		/// Sets an object checkout status.
+		/// </summary>
+		/// <param name="objVer">The Id, type and version of the object.</param>
+		/// <param name="force">If true, will undo checkout even if this object isn't checked out to this user on this machine (subject to user rights).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		protected async Task UndoCheckoutAsync(ObjVer objVer, bool force, CancellationToken token = default(CancellationToken))
+		{
+
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/{objVer.Type}/{objVer.ID}/{objVer.Version}?force={force.ToString().ToLower()}");
+			request.Method = Method.DELETE;
+
+			// Make the request and get the response.
+			await this.MFWSClient.Delete(request, token)
+				.ConfigureAwait(false);
+		}
+
+		/// <summary>
+		/// Sets an object checkout status.
+		/// </summary>
+		/// <param name="objVer">The Id, type and version of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public Task UndoCheckoutAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.UndoCheckoutAsync(objVer, force: false, token: token);
+		}
+
+		/// <summary>
+		/// Performs "undo checkout" for the specified object version.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="version">The version.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>Nothing.</returns>
+		public Task UndoCheckoutAsync(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.UndoCheckoutAsync(new ObjVer()
+			{
+				ID = objectId,
+				Type = objectTypeId,
+				Version = version
+			}, token: token);
+		}
+
+		/// <summary>
+		/// Performs "undo checkout" for the specified object version.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="version">The version.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public void UndoCheckout(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			this.UndoCheckoutAsync(objectTypeId, objectId, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Sets an object checkout status.
+		/// Will undo checkout even if this object isn't checked out to this user on this machine (subject to user rights).
+		/// </summary>
+		/// <param name="objVer">The Id, type and version of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public Task ForceUndoCheckoutAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.UndoCheckoutAsync(objVer, force: true, token: token);
+		}
+
+		/// <summary>
+		/// Performs "undo checkout" for the specified object version.
+		/// Will undo checkout even if this object isn't checked out to this user on this machine (subject to user rights).
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="version">The version.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>Nothing.</returns>
+		public Task ForceUndoCheckoutAsync(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.ForceUndoCheckoutAsync(new ObjVer()
+			{
+				ID = objectId,
+				Type = objectTypeId,
+				Version = version
+			}, token: token);
+		}
+
+		/// <summary>
+		/// Performs "undo checkout" for the specified object version.
+		/// Will undo checkout even if this object isn't checked out to this user on this machine (subject to user rights).
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="version">The version.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public void ForceUndoCheckout(int objectTypeId, int objectId, int version, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			this.ForceUndoCheckoutAsync(objectTypeId, objectId, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
 		#endregion
 
 		#region Deleted status
