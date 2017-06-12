@@ -639,6 +639,138 @@ namespace MFaaP.MFWSClient
 
 		#endregion
 
+		#region Undeleting objects
+
+		/// <summary>
+		/// Undeletes an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is still visible to the user.</returns>
+		public async Task<ObjectVersion> UndeleteObjectAsync(ObjID objId, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/deleted");
+			request.Method = Method.PUT;
+
+			// Add the body.
+			request.AddJsonBody(new PrimitiveType<bool>() { Value = false });
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Put<ObjectVersion>(request, token)
+				.ConfigureAwait(false);
+
+			// If success, returns 204.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Undeletes an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is still visible to the user.</returns>
+		public ObjectVersion UndeleteObject(ObjID objId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.UndeleteObjectAsync(objId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Undeletes an object.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is still visible to the user.</returns>
+		public ObjectVersion UndeleteObject(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.UndeleteObjectAsync(new ObjID()
+			{
+				ID = objectId,
+				Type = objectTypeId,
+			}, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		#endregion
+
+		#region Deleting objects
+
+		/// <summary>
+		/// Deletes an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is still visible to the user.</returns>
+		public async Task<ObjectVersion> DeleteObjectAsync(ObjID objId, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/deleted");
+			request.Method = Method.PUT;
+			
+			// Add the body.
+			request.AddJsonBody(new PrimitiveType<bool>() { Value = true });
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Put<ObjectVersion>(request, token)
+				.ConfigureAwait(false);
+
+			// If success, returns 204.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Deletes an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is still visible to the user.</returns>
+		public ObjectVersion DeleteObject(ObjID objId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.DeleteObjectAsync(objId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Deletes an object.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is still visible to the user.</returns>
+		public ObjectVersion DeleteObject(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.DeleteObjectAsync(new ObjID()
+				{
+					ID = objectId,
+					Type = objectTypeId,
+				}, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		#endregion
+
 		#region Destroying objects.
 
 		/// <summary>
@@ -666,7 +798,7 @@ namespace MFaaP.MFWSClient
 			request.Method = Method.DELETE;
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Delete(request, token)
+			var response = await this.MFWSClient.Delete<ObjectVersion>(request, token)
 				.ConfigureAwait(false);
 
 			// If success, returns 204.

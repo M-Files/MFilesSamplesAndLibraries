@@ -662,10 +662,332 @@ namespace MFaaP.MFWSClient.Tests
 
 		#endregion
 
+		#region Delete object
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.UndeleteObject(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void UndeleteObject_CorrectResource()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ObjectVersion>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ObjectVersion());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectOperations.UndeleteObject(0, 1);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual($"/REST/objects/0/1/deleted", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.UndeleteObject(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public void UndeleteObject_CorrectMethod()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ObjectVersion>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ObjectVersion());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectOperations.UndeleteObject(0, 1);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.PUT, methodUsed);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.UndeleteObject(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// uses the correct request body.
+		/// </summary>
+		[TestMethod]
+		public void UndeleteObject_CorrectRequestBody()
+		{
+			/* Arrange */
+
+			// The request body.
+			PrimitiveType<bool> body = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the body requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					body = r.DeserializeBody<PrimitiveType<bool>>();
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ObjectVersion>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ObjectVersion());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectOperations.UndeleteObject(0, 1);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Body must be correct.
+			Assert.IsNotNull(body);
+			Assert.AreEqual(false, body.Value);
+		}
+
+		#endregion
+
+		#region Delete object
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.DeleteObject(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void DeleteObject_CorrectResource()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ObjectVersion>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ObjectVersion());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectOperations.DeleteObject(0, 1);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual($"/REST/objects/0/1/deleted", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.DeleteObject(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public void DeleteObject_CorrectMethod()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ObjectVersion>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ObjectVersion());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectOperations.DeleteObject(0, 1);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.PUT, methodUsed);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.DeleteObject(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// uses the correct request body.
+		/// </summary>
+		[TestMethod]
+		public void DeleteObject_CorrectRequestBody()
+		{
+			/* Arrange */
+
+			// The request body.
+			PrimitiveType<bool> body = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the body requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					body = r.DeserializeBody<PrimitiveType<bool>>();
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ObjectVersion>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ObjectVersion());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectOperations.DeleteObject(0, 1);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Body must be correct.
+			Assert.IsNotNull(body);
+			Assert.AreEqual(true, body.Value);
+		}
+
+		#endregion
+
 		#region Destroy object
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.DestroyObject(MFaaP.MFWSClient.ObjID,bool,int,System.Threading.CancellationToken)stroyObject"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.DestroyObject(MFaaP.MFWSClient.ObjID,bool,int,System.Threading.CancellationToken)"/>
 		/// requests the correct resource address.
 		/// </summary>
 		[TestMethod]
