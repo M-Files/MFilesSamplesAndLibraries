@@ -257,5 +257,5 @@ var client = new MFWSClient("http://m-files.mycompany.com");
 client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
 
 // Execute an extension method with the name "MyExtensionMethod", passing it the input string of "MyInputValue".
-var output = client.ExtensionMethodOperations.ExecuteVaultExtensionMethod("CraigsExtensionMethod", "MyInputValue");
+var output = client.ExtensionMethodOperations.ExecuteVaultExtensionMethod("MyExtensionMethod", "MyInputValue");
 ```
