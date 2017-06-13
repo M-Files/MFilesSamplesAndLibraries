@@ -86,7 +86,7 @@ If using Windows Single Sign On, the application will use the current Windows id
 var client = new MFWSClient("http://m-files.mycompany.com");
 
 // Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
-client.AuthenticateUsingSingleSignOn( Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}") )
+client.AuthenticateUsingSingleSignOn( Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}") );
 ```
 
 ## Searching
