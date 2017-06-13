@@ -29,8 +29,6 @@ The API provides both "Async" and blocking versions of most methods.  To use .NE
 
 Currently two methods of authentication are supported: authentication using credentials, and Windows Single Sign On.
 
-Note that the M-Files Web Service will provide authentication tokens even if the credentials are incorrect.  This is by design.
-
 ## Authenticating using credentials
 
 ```csharp
@@ -38,8 +36,46 @@ Note that the M-Files Web Service will provide authentication tokens even if the
 var client = new MFWSClient("http://m-files.mycompany.com");
 
 // Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
-client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+client.AuthenticateUsingCredentials(
+    Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"),
+    "MyUsername",
+    "MyPassword" );
 ```
+
+Note that the M-Files Web Service will provide authentication tokens even if the credentials are incorrect.  This is by design.
+
+### Automatically expiring an authentication token
+
+If no expiry information is provided, an authentication token will be valid indefinitely.  To set a specific expiry datetime, pass the datetime on the authentication call:
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+// Set the expiry as 10am UTC on 1st January 2017.
+client.AuthenticateUsingCredentials(
+    Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"),
+    "MyUsername",
+    "MyPassword",
+    new DateTime(2017, 01, 01, 10, 00, 00, DateTimeKind.Utc) );
+```
+
+Alternatively, to expire after a specified time from the initial authentication, provide a TimeSpan when authenticating:
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+// Set the expiry as 1 hour from initial authentication.
+client.AuthenticateUsingCredentials(
+    Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"),
+    "MyUsername",
+    "MyPassword",
+    TimeSpan.FromHours(1) );
+```
+
 
 ## Authenticating using Windows Single Sign On
 
@@ -50,7 +86,7 @@ If using Windows Single Sign On, the application will use the current Windows id
 var client = new MFWSClient("http://m-files.mycompany.com");
 
 // Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
-client.AuthenticateUsingSingleSignOn(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"))
+client.AuthenticateUsingSingleSignOn( Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}") )
 ```
 
 ## Searching
@@ -205,4 +241,21 @@ To restrict objects to only objects which reference objects or value list items 
 ```csharp
 // Create our search condition.
 var condition = new MultiSelectLookupPropertyValueSearchCondition(1500, new [] { 1, 2, 3, 4 });
+```
+
+## Executing Vault Extension Methods
+
+[Vault Extension Methods](http://developer.m-files.com/Built-In/VBScript/Vault-Extension-Methods/) are named sections of code, loaded into the M-Files vault, that can be executed using the M-Files API(s).  Vault Extension Methods can be executed using the [M-Files REST API](http://developer.m-files.com/APIs/REST-API/Vault-Extension-Methods/) by executing a correctly-formatted HTTP request.
+
+The wrapper API exposes extension methods in a similar manner as the [COM API](https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultExtensionMethodOperations~ExecuteVaultExtensionMethod.html):
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+
+// Execute an extension method with the name "MyExtensionMethod", passing it the input string of "MyInputValue".
+var output = client.ExtensionMethodOperations.ExecuteVaultExtensionMethod("CraigsExtensionMethod", "MyInputValue");
 ```
