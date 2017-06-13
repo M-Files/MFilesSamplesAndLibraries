@@ -372,6 +372,68 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
+		/// Checks out an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object to check out.</param>
+		/// <param name="version">The version (or null for latest).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public ObjectVersion CheckOut(ObjID objId, int? version = null, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Execute the async method.
+			return this.CheckOutAsync(objId.Type, objId.ID, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Checks out an object.
+		/// </summary>
+		/// <param name="objVer">The Id and version of the object to check out.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public Task<ObjectVersion> CheckOutAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		{
+			return this.SetCheckoutStatusAsync(objVer, MFCheckOutStatus.CheckedOutToMe, token);
+		}
+
+		/// <summary>
+		/// Checks out an object.
+		/// </summary>
+		/// <param name="objVer">The Id and version of the object to check out.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public ObjectVersion CheckOut(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Execute the async method.
+			return this.CheckOutAsync(objVer.Type, objVer.ID, objVer.Version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Checks out an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object to check out.</param>
+		/// <param name="version">The version (or null for latest).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public Task<ObjectVersion> CheckOutAsync(ObjID objId, int? version = null, CancellationToken token = default(CancellationToken))
+		{
+			return this.SetCheckoutStatusAsync(objId, MFCheckOutStatus.CheckedOutToMe, version, token);
+		}
+
+		/// <summary>
 		/// Checks in an object.
 		/// </summary>
 		/// <param name="objectTypeId">The Id of the object type.</param>
@@ -396,6 +458,76 @@ namespace MFaaP.MFWSClient
 		{
 			// Execute the async method.
 			return this.CheckInAsync(objectTypeId, objectId, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Checks in an object.
+		/// </summary>
+		/// <param name="objVer">The Id and version of the object to check out.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public Task<ObjectVersion> CheckInAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			return this.SetCheckoutStatusAsync(objVer.Type, objVer.ID, MFCheckOutStatus.CheckedIn, objVer.Version, token);
+		}
+
+		/// <summary>
+		/// Checks in an object.
+		/// </summary>
+		/// <param name="objVer">The Id and version of the object to check out.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public ObjectVersion CheckIn(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Execute the async method.
+			return this.CheckInAsync(objVer.Type, objVer.ID, objVer.Version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Checks in an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object to check in.</param>
+		/// <param name="version">The version (or null for latest).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public Task<ObjectVersion> CheckInAsync(ObjID objId, int? version = null, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			return this.SetCheckoutStatusAsync(objId.Type, objId.ID, MFCheckOutStatus.CheckedIn, version, token);
+		}
+
+		/// <summary>
+		/// Checks in an object.
+		/// </summary>
+		/// <param name="objId">The Id of the object to check in.</param>
+		/// <param name="version">The version (or null for latest).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A representation of the checked-in object version/</returns>
+		public ObjectVersion CheckIn(ObjID objId, int? version = null, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Execute the async method.
+			return this.CheckInAsync(objId.Type, objId.ID, version, token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();

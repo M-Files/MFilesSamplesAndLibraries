@@ -259,3 +259,154 @@ client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166
 // Execute an extension method with the name "MyExtensionMethod", passing it the input string of "MyInputValue".
 var output = client.ExtensionMethodOperations.ExecuteVaultExtensionMethod("MyExtensionMethod", "MyInputValue");
 ```
+
+## Creating objects
+
+## Checking an object in and out.
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+
+// Check out the document (type ID 0) with ID 567.
+var objID = new MFaaP.MFWSClient.ObjID()
+{
+	Type = 0,
+	ID = 567
+};
+var obj = client.ObjectOperations.CheckOut(objID);
+
+// Make a change to the object.
+client.ObjectPropertyOperations.SetProperty(obj.ObjVer, new PropertyValue()
+{
+	PropertyDef = 1088, // The property ID 1088.
+	TypedValue = new MFaaP.MFWSClient.TypedValue()
+	{
+		DataType = MFDataType.Text,
+		Value = "hello world"
+	}
+});
+
+// Check the object back in.
+client.ObjectOperations.CheckIn(obj.ObjVer);
+```
+
+### Undoing a checkout
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+
+// Check out the document (type ID 0) with ID 567.
+var objID = new MFaaP.MFWSClient.ObjID()
+{
+	Type = 0,
+	ID = 567
+};
+var obj = client.ObjectOperations.CheckOut(objID);
+
+// Undo the checkout.
+client.ObjectOperations.UndoCheckout(obj.ObjVer);
+```
+
+## Modifying object properties
+
+### Updating properties
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+
+// Check out the document (type ID 0) with ID 567.
+var objID = new MFaaP.MFWSClient.ObjID()
+{
+	Type = 0,
+	ID = 567
+};
+var obj = client.ObjectOperations.CheckOut(objID);
+
+// Update a property on the object.
+client.ObjectPropertyOperations.SetProperty(obj.ObjVer, new PropertyValue()
+{
+	PropertyDef = 1088, // The property ID 1088.
+	TypedValue = new MFaaP.MFWSClient.TypedValue()
+	{
+		DataType = MFDataType.Text,
+		Value = "hello world"
+	}
+});
+
+// Check the object back in.
+client.ObjectOperations.CheckIn(obj.ObjVer);
+```
+
+### Removing properties
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+
+// Check out the document (type ID 0) with ID 567.
+var objID = new MFaaP.MFWSClient.ObjID()
+{
+	Type = 0,
+	ID = 567
+};
+var obj = client.ObjectOperations.CheckOut(objID);
+
+// Remove the property from the object.
+client.ObjectPropertyOperations.RemoveProperty(obj.ObjVer, 1088);
+
+// Check the object back in.
+client.ObjectOperations.CheckIn(obj.ObjVer);
+```
+
+## Deleting and undeleting an object
+
+### Deleting
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+
+// Delete the document (type ID 0) with ID 567.
+var objID = new MFaaP.MFWSClient.ObjID()
+{
+	Type = 0,
+	ID = 567
+};
+client.ObjectOperations.DeleteObject(objID);
+```
+
+### Undeleting
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+
+// Delete the document (type ID 0) with ID 567.
+var objID = new MFaaP.MFWSClient.ObjID()
+{
+	Type = 0,
+	ID = 567
+};
+client.ObjectOperations.UndeleteObject(objID);
+```
