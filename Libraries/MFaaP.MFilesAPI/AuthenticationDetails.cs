@@ -5,32 +5,32 @@ namespace MFaaP.MFilesAPI
 	/// <summary>
 	/// Details used to authenticate with the server.
 	/// </summary>
-	public sealed class AuthenticationDetails
+	public class AuthenticationDetails
 	{
 		/// <summary>
 		/// The authentication type to use.
 		/// </summary>
-		public MFAuthType AuthenticationType { get; private set; }
+		public MFAuthType AuthenticationType { get; set; }
 
 		/// <summary>
 		/// The username, if required, to use for authentication.
 		/// </summary>
-		public string Username { get; private set; }
+		public string Username { get; set; }
 
 		/// <summary>
 		/// The password, if required, to use for authentication.
 		/// </summary>
-		public string Password { get; private set; }
+		public string Password { get; set; }
 
 		/// <summary>
 		/// The domain, if required, to use for authentication.
 		/// </summary>
-		public string Domain { get; private set; }
+		public string Domain { get; set; }
 
 		/// <summary>
 		/// The service principal name (SPN), if required, to use for authentication.
 		/// </summary>
-		public string ServicePrincipalName { get; private set; }
+		public string ServicePrincipalName { get; set; }
 
 		/// <summary>
 		/// Set to true to allow authentication plugins to be used for authentication.

@@ -3,22 +3,22 @@
 	/// <summary>
 	/// The details of the server to connect to.
 	/// </summary>
-	public sealed class ServerDetails
+	public class ServerDetails
 	{
 		/// <summary>
 		/// The connection type to use to connect to the server.
 		/// </summary>
-		public ConnectionType ConnectionType { get; private set; }
+		public ConnectionType ConnectionType { get; set; }
 
 		/// <summary>
 		/// The network address (typically IP address or DNS name) to connect to.
 		/// </summary>
-		public string NetworkAddress { get; private set; }
+		public string NetworkAddress { get; set; }
 
 		/// <summary>
 		/// The end point (typically port number) to connect to.
 		/// </summary>
-		public string EndPoint { get; private set; }
+		public string EndPoint { get; set; }
 
 		/// <summary>
 		/// Specifies whether to encrypt data between the M-Files client service and the M-Files Server service,
