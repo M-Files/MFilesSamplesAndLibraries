@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using MFilesAPI;
 using MFaaP.MFilesAPI.ExtensionMethods;
 
@@ -145,6 +147,76 @@ namespace MFaaP.MFilesAPI
 				return false;
 			}
 
+		}
+
+		/// <summary>
+		/// Retrieves the vaults from the server.
+		/// </summary>
+		/// <remarks>Exceptions during connection will be thrown.</remarks>
+		public IEnumerable<VaultOnServer> GetVaults()
+		{
+			// Attempt to connect to the vault using the extension method.
+			var serverApplication = new MFilesServerApplication();
+			if (serverApplication.Connect(this) == MFServerConnection.MFServerConnectionAuthenticated)
+			{
+				foreach (var vault in serverApplication.GetVaults().Cast<VaultOnServer>())
+					yield return vault;
+			}
+		}
+
+		/// <summary>
+		/// Retrieves the vaults from the server.
+		/// </summary>
+		/// <param name="vaults">The vaults on the server.</param>
+		/// <returns>true if the connection happened without exceptions, false otherwise.</returns>
+		public bool TryGetVaults(out IEnumerable<VaultOnServer> vaults)
+		{
+			try
+			{
+				vaults = this.GetVaults().ToArray();
+				return true;
+			}
+			catch
+			{
+				// HACK: Exception handling.
+				vaults = new VaultOnServer[0];
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Retrieves the vaults from the server.
+		/// </summary>
+		/// <remarks>Exceptions during connection will be thrown.</remarks>
+		public IEnumerable<VaultOnServer> GetOnlineVaults()
+		{
+			// Attempt to connect to the vault using the extension method.
+			var serverApplication = new MFilesServerApplication();
+			if (serverApplication.Connect(this) == MFServerConnection.MFServerConnectionAuthenticated)
+			{
+				foreach (var vault in serverApplication.GetOnlineVaults().Cast<VaultOnServer>())
+					yield return vault;
+			}
+		}
+
+		/// <summary>
+		/// Retrieves the vaults from the server.
+		/// </summary>
+		/// <param name="vaults">The vaults on the server.</param>
+		/// <returns>true if the connection happened without exceptions, false otherwise.</returns>
+		public bool TryGetOnlineVaults(out IEnumerable<VaultOnServer> vaults)
+		{
+			try
+			{
+				vaults = this.GetOnlineVaults().ToArray();
+				return true;
+			}
+			catch
+			{
+				// HACK: Exception handling.
+				vaults = new VaultOnServer[0];
+				return false;
+			}
 		}
 	}
 
