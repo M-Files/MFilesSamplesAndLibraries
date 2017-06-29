@@ -232,7 +232,9 @@ namespace MFaaP.MFWSClient
 		{
 			// Sanity.
 			if (null == files)
-				return null;
+				throw new ArgumentNullException(nameof(files));
+			if(files.Length == 0)
+				return new UploadInfo[0];
 
 			// Create the request.
 			// TODO: Possibly split this into multiple requests.
@@ -293,6 +295,10 @@ namespace MFaaP.MFWSClient
 		/// <returns>The updated object version.</returns>
 		public async Task<ExtendedObjectVersion> AddFilesAsync(int objectType, int objectId, int? objectVersion = null, CancellationToken token = default(CancellationToken), params FileInfo[] files)
 		{
+			// Sanity.
+			if (null == files)
+				throw new ArgumentNullException(nameof(files));
+
 			// Firstly, upload the temporary files.
 			var uploadInfo = await this.UploadFilesAsync(token, files);
 
