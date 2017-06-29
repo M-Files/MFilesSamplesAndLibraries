@@ -24,7 +24,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectType">The Id of the object type.</param>
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="fileId">The Id of the file.</param>
-		/// <param name="objectVersion">The verison of the object, or null for the latest.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The raw response from the HTTP request.</returns>
 		public async Task<byte[]> DownloadFileAsync(int objectType, int objectId, int fileId, int? objectVersion = null, CancellationToken token = default(CancellationToken))
@@ -49,7 +49,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectType">The Id of the object type.</param>
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="fileId">The Id of the file.</param>
-		/// <param name="objectVersion">The verison of the object, or null for the latest.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The raw response from the HTTP request.</returns>
 		public byte[] DownloadFile(int objectType, int objectId, int fileId, int? objectVersion = null, CancellationToken token = default(CancellationToken))
@@ -68,7 +68,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="fileId">The Id of the file.</param>
 		/// <param name="outputStream">The output stream for the response to be written to.</param>
-		/// <param name="objectVersion">The verison of the object, or null for the latest.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The raw response from the HTTP request.</returns>
 		public async Task DownloadFileAsync(int objectType, int objectId, int fileId, System.IO.Stream outputStream, int? objectVersion = null, CancellationToken token = default(CancellationToken))
@@ -94,7 +94,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="fileId">The Id of the file.</param>
 		/// <param name="outputStream">The output stream for the response to be written to.</param>
-		/// <param name="objectVersion">The verison of the object, or null for the latest.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The raw response from the HTTP request.</returns>
 		public void DownloadFile(int objectType, int objectId, int fileId, System.IO.Stream outputStream, int? objectVersion = null, CancellationToken token = default(CancellationToken))
@@ -113,7 +113,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="fileId">The Id of the file.</param>
 		/// <param name="outputFileName">The full path to the file to output to.</param>
-		/// <param name="objectVersion">The verison of the object, or null for the latest.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the download process.</returns>
 		public Task DownloadFileAsync(int objectType, int objectId, int fileId, string outputFileName, int? objectVersion = null, CancellationToken token = default(CancellationToken))
@@ -132,7 +132,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="fileId">The Id of the file.</param>
 		/// <param name="outputFileName">The full path to the file to output to.</param>
-		/// <param name="objectVersion">The verison of the object, or null for the latest.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the download process.</returns>
 		public void DownloadFile(int objectType, int objectId, int fileId, string outputFileName, int? objectVersion = null, CancellationToken token = default(CancellationToken))
@@ -151,7 +151,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="fileId">The Id of the file.</param>
 		/// <param name="outputFileInfo">The file to output the content to (will be overwritten if exists).</param>
-		/// <param name="objectVersion">The verison of the object, or null for the latest.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the download process.</returns>
 		public async Task DownloadFileAsync(int objectType, int objectId, int fileId, System.IO.FileInfo outputFileInfo, int? objectVersion = null,
@@ -181,7 +181,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="fileId">The Id of the file.</param>
 		/// <param name="outputFileInfo">The file to output the content to (will be overwritten if exists).</param>
-		/// <param name="objectVersion">The verison of the object, or null for the latest.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the download process.</returns>
 		public void DownloadFile(int objectType, int objectId, int fileId, System.IO.FileInfo outputFileInfo, int? objectVersion = null,
@@ -276,6 +276,232 @@ namespace MFaaP.MFWSClient
 				.GetAwaiter()
 				.GetResult();
 
+		}
+
+		#endregion
+
+		#region Adding files to existing objects
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The updated object version.</returns>
+		public async Task<ExtendedObjectVersion> AddFilesAsync(int objectType, int objectId, int? objectVersion = null, CancellationToken token = default(CancellationToken), params FileInfo[] files)
+		{
+			// Firstly, upload the temporary files.
+			var uploadInfo = await this.UploadFilesAsync(token, files);
+
+			// HACK: This endpoint needs the title to NOT have the extension in the title.
+			foreach (var item in uploadInfo)
+			{
+				// Sanity.
+				if (string.IsNullOrWhiteSpace(item.Title) || string.IsNullOrWhiteSpace(item.Extension))
+					continue;
+
+				// If the title ends with the extension then remove it.
+				if (true == item.Title?.EndsWith("." + item.Extension))
+				{
+					// Note the +1 is because we want to remove the dot as well.
+					item.Title = item.Title.Substring(0, item.Title.Length - (item.Extension.Length + 1));
+				}
+			}
+
+			// Create the version string to be used for the uri segment.
+			var versionString = objectVersion?.ToString() ?? "latest";
+
+			// Build up the request.
+			var request = new RestRequest($"/REST/objects/{objectType}/{objectId}/{versionString}/files/upload");
+			request.AddJsonBody(uploadInfo);
+
+			// Execute the request.
+			var response = await this.MFWSClient.Post<ExtendedObjectVersion>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the content.
+			return response?.Data;
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The updated object version.</returns>
+		public ExtendedObjectVersion AddFiles(int objectType, int objectId, int? objectVersion = null, CancellationToken token = default(CancellationToken), params FileInfo[] files)
+		{
+			// Execute the async method.
+			return this.AddFilesAsync(objectType, objectId, objectVersion, token, files)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <returns>The updated object version.</returns>
+		public Task<ExtendedObjectVersion> AddFilesAsync(int objectType, int objectId, int? objectVersion = null, params FileInfo[] files)
+		{
+			// Execute the other overload.
+			return this.AddFilesAsync(objectType, objectId, objectVersion, default(CancellationToken), files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <returns>The updated object version.</returns>
+		public ExtendedObjectVersion AddFiles(int objectType, int objectId, int? objectVersion = null, params FileInfo[] files)
+		{
+			// Execute the other overload.
+			return this.AddFiles(objectType, objectId, objectVersion, default(CancellationToken), files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objId">The object to add the file to.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public Task<ExtendedObjectVersion> AddFilesAsync(ObjID objId, params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Execute the other overload.
+			return this.AddFilesAsync(objId.Type, objId.ID, objectVersion: null, token: default(CancellationToken), files: files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objId">The object to add the file to.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public ExtendedObjectVersion AddFiles(ObjID objId, params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Execute the other overload.
+			return this.AddFiles(objId.Type, objId.ID, objectVersion: null, token: default(CancellationToken), files: files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objId">The object to add the file to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public Task<ExtendedObjectVersion> AddFilesAsync(ObjID objId, CancellationToken token = default(CancellationToken), params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Execute the other overload.
+			return this.AddFilesAsync(objId.Type, objId.ID, objectVersion: null, token: token, files: files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objId">The object to add the file to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public ExtendedObjectVersion AddFiles(ObjID objId, CancellationToken token = default(CancellationToken), params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Execute the other overload.
+			return this.AddFiles(objId.Type, objId.ID, objectVersion: null, token: token, files: files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objVer">The object to add the file to.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public Task<ExtendedObjectVersion> AddFilesAsync(ObjVer objVer, params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Execute the other overload.
+			return this.AddFilesAsync(objVer.Type, objVer.ID, objVer.Version, default(CancellationToken), files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objVer">The object to add the file to.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public ExtendedObjectVersion AddFiles(ObjVer objVer, params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Execute the other overload.
+			return this.AddFiles(objVer.Type, objVer.ID, objVer.Version, default(CancellationToken), files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objVer">The object to add the file to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public Task<ExtendedObjectVersion> AddFilesAsync(ObjVer objVer, CancellationToken token = default(CancellationToken), params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Execute the other overload.
+			return this.AddFilesAsync(objVer.Type, objVer.ID, objVer.Version, token, files);
+		}
+
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objVer">The object to add the file to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public ExtendedObjectVersion AddFiles(ObjVer objVer, CancellationToken token = default(CancellationToken), params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Execute the other overload.
+			return this.AddFiles(objVer.Type, objVer.ID, objVer.Version, token, files);
 		}
 
 		#endregion

@@ -157,6 +157,7 @@ namespace MFaaP.MFWSClient
     /// An object version with extended properties. Inherits from ObjectVersion.
     /// </summary>
     public class ExtendedObjectVersion
+		: ObjectVersion
     {
 	    public ExtendedObjectVersion()
 	    {
@@ -166,12 +167,39 @@ namespace MFaaP.MFWSClient
         /// Object properties
         /// </summary>
         public List<PropertyValue> Properties { get; set; }
-        
-    }
 
-    
+		/// <summary>
+		/// The object properties to display.
+		/// </summary>
+		public List<PropertyValue> PropertiesForDisplay { get; set; }
 
-    /// <summary>
+		/// <summary>
+		/// Files that were added.
+		/// </summary>
+		public List<FileVer> AddedFiles { get; set; }
+
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	public class FileVer
+	{
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public int ID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public int Version { get; set; }
+	}
+
+
+
+	/// <summary>
     /// Authentication details.
     /// </summary>
     public class Authentication
@@ -765,9 +793,8 @@ namespace MFaaP.MFWSClient
 
     }
 
-    
 
-    /// <summary>
+	/// <summary>
     /// Based on M-Files API.
     /// </summary>
     public class ObjectFile
