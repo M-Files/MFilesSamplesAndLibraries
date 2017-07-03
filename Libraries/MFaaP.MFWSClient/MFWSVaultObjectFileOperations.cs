@@ -302,7 +302,7 @@ namespace MFaaP.MFWSClient
 			// Firstly, upload the temporary files.
 			var uploadInfo = await this.UploadFilesAsync(token, files);
 
-			// HACK: This endpoint needs the title to NOT have the extension in the title.
+			// Remove the extension from the item title if it exists.
 			foreach (var item in uploadInfo)
 			{
 				// Sanity.

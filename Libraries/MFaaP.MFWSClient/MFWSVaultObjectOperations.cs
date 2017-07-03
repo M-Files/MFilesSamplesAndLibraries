@@ -39,6 +39,22 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException();
 			if (objectTypeId < 0)
 				throw new ArgumentException("The object type id cannot be less than zero");
+			creationInfo.Files = creationInfo.Files ?? new UploadInfo[0];
+
+			// Remove the extension from the item title if it exists.
+			foreach (var item in creationInfo.Files)
+			{
+				// Sanity.
+				if (string.IsNullOrWhiteSpace(item.Title) || string.IsNullOrWhiteSpace(item.Extension))
+					continue;
+
+				// If the title ends with the extension then remove it.
+				if (true == item.Title?.EndsWith("." + item.Extension))
+				{
+					// Note the +1 is because we want to remove the dot as well.
+					item.Title = item.Title.Substring(0, item.Title.Length - (item.Extension.Length + 1));
+				}
+			}
 
 			// Create the request.
 			var request = new RestRequest($"/REST/objects/{objectTypeId}");
