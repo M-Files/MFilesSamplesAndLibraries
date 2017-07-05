@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MFaaP.MFWSClient;
 
@@ -44,6 +45,19 @@ namespace MFWSVaultStructure
 					// Output basic content.
 					System.Console.WriteLine($"\t\t\t{c.Name}");
 					System.Console.WriteLine($"\t\t\t\tID: {c.ID}");
+
+					// Are there any templates?
+					var classTemplates = (await client.ClassOperations.GetObjectClassAsync(c.ID, true)).Templates;
+					if (null != classTemplates && 0 != classTemplates.Count)
+					{
+						System.Console.WriteLine($"\t\t\t\tTemplates:");
+						foreach (var template in classTemplates)
+						{
+							// Output basic content.
+							System.Console.WriteLine($"\t\t\t\t\t{template.Title}");
+							System.Console.WriteLine($"\t\t\t\t\t\tID: {template.ObjVer.ID}");
+						}
+					}
 
 				}
 

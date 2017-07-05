@@ -435,5 +435,429 @@ namespace MFaaP.MFWSClient.Tests
 
 		#endregion
 
+		#region GetObjectClass
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClassAsync"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public async Task GetObjectClassAsync_CorrectResource()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ExtendedObjectClass>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ExtendedObjectClass());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			await mfwsClient.ClassOperations.GetObjectClassAsync(classId: 0);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual("/REST/structure/classes/0", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClass"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void GetObjectClass_CorrectResource()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ExtendedObjectClass>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ExtendedObjectClass());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ClassOperations.GetObjectClass(classId: 0);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual("/REST/structure/classes/0", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClass"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetObjectClassAsync_CorrectMethod()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ExtendedObjectClass>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ExtendedObjectClass());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			await mfwsClient.ClassOperations.GetObjectClassAsync(classId: 0);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.GET, methodUsed);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClass"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public void GetObjectClass_CorrectMethod()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ExtendedObjectClass>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ExtendedObjectClass());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ClassOperations.GetObjectClass(classId: 0);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.GET, methodUsed);
+		}
+
+		#endregion
+
+		#region GetObjectClass (with templates)
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClassAsync"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public async Task GetObjectClassAsync_CorrectResource_WithTemplates()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ExtendedObjectClass>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ExtendedObjectClass());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			await mfwsClient.ClassOperations.GetObjectClassAsync(classId: 0, includeTemplates: true);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual("/REST/structure/classes/0?include=templates", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClass"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void GetObjectClass_CorrectResource_WithTemplates()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ExtendedObjectClass>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ExtendedObjectClass());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ClassOperations.GetObjectClass(classId: 0, includeTemplates: true);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual("/REST/structure/classes/0?include=templates", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClass"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetObjectClassAsync_CorrectMethod_WithTemplates()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ExtendedObjectClass>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ExtendedObjectClass());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			await mfwsClient.ClassOperations.GetObjectClassAsync(classId: 0, includeTemplates: true);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.GET, methodUsed);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClass"/>
+		/// uses the correct Http method.
+		/// </summary>
+		[TestMethod]
+		public void GetObjectClass_CorrectMethod_WithTemplates()
+		{
+			/* Arrange */
+
+			// The method.
+			Method? methodUsed = null;
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					methodUsed = r.Method;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<ExtendedObjectClass>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new ExtendedObjectClass());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ClassOperations.GetObjectClass(classId: 0, includeTemplates: true);
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectClass>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Method must be correct.
+			Assert.AreEqual(Method.GET, methodUsed);
+		}
+
+		#endregion
+
 	}
 }

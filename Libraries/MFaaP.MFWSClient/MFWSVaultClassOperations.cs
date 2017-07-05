@@ -21,6 +21,50 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
+		/// Gets a specific object class from the server, optionally including details on templates for that class.
+		/// </summary>
+		/// <param name="classId">The Id of the class to load.</param>
+		/// <param name="includeTemplates">If true, information on the templates will be returned.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The class in the vault.</returns>
+		/// <remarks>This may be filtered by the user's permissions.</remarks>
+		public async Task<ExtendedObjectClass> GetObjectClassAsync(int classId, bool includeTemplates = false, CancellationToken token = default(CancellationToken))
+		{
+			// Create the request.
+			var request = new RestRequest($"/REST/structure/classes/{classId}");
+
+			// Templates?
+			if (includeTemplates)
+			{
+				request.Resource += "?include=templates";
+			}
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Get<ExtendedObjectClass>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the data.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Gets a specific object class from the server, optionally including details on templates for that class.
+		/// </summary>
+		/// <param name="classId">The Id of the class to load.</param>
+		/// <param name="includeTemplates">If true, information on the templates will be returned.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The class in the vault.</returns>
+		/// <remarks>This may be filtered by the user's permissions.</remarks>
+		public ExtendedObjectClass GetObjectClass(int classId, bool includeTemplates = false, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.GetObjectClassAsync(classId, includeTemplates, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
 		/// Gets a list of all classes in the vault.
 		/// </summary>
 		/// <param name="token">A cancellation token for the request.</param>
