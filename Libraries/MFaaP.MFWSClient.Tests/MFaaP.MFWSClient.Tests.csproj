@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="ExtensionMethods\IRestRequestExtensionMethods.cs" />
     <Compile Include="MFWSVaultObjectFileOperations.cs" />
+    <Compile Include="MFWSVaultClassOperations.cs" />
     <Compile Include="MFWSVaultValueListOperations.cs" />
     <Compile Include="MFWSVaultObjectTypeOperations.cs" />
     <Compile Include="MFWSVaultObjectPropertyOperations.cs" />

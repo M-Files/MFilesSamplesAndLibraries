@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ExtensionMethods\FolderContentItemExtensionMethods.cs" />
     <Compile Include="MFWSClient.Authentication.cs" />
+    <Compile Include="MFWSVaultClassOperations.cs" />
     <Compile Include="MFWSVaultValueListOperations.cs" />
     <Compile Include="MFWSVaultObjectTypeOperations.cs" />
     <Compile Include="MFWSClient.Session.cs" />

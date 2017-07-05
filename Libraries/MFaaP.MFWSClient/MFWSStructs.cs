@@ -350,17 +350,21 @@ namespace MFaaP.MFWSClient
     /// An object class with extended properties. Inherits from ObjectClass.
     /// </summary>
     public class ExtendedObjectClass
-    {
+		: ObjectClass
+	{
+		public ExtendedObjectClass()
+		{
+		}
 
-        /// <summary>
-        /// Property definitions associated with this class.
-        /// </summary>
-        public AssociatedPropertyDef[] AssociatedPropertyDefs { get; set; }
+		/// <summary>
+		/// Property definitions associated with this class.
+		/// </summary>
+		public List<AssociatedPropertyDef> AssociatedPropertyDefs { get; set; }
         
         /// <summary>
         /// Templates available for use with this class.
         /// </summary>
-        public ObjectVersion[] Templates { get; set; }
+        public List<ObjectVersion> Templates { get; set; }
         
     }
 
@@ -1272,8 +1276,11 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class AssociatedPropertyDef
     {
+	    public AssociatedPropertyDef()
+	    {
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int PropertyDef { get; set; }
@@ -1394,8 +1401,11 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class ObjectClass
     {
+	    public ObjectClass()
+	    {
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int ID { get; set; }
@@ -1414,7 +1424,11 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public int Workflow { get; set; }
-        
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+	    public int ObjType { get; set; }
     }
 
     

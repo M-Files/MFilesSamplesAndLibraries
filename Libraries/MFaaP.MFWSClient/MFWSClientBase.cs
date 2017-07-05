@@ -110,6 +110,11 @@ namespace MFaaP.MFWSClient
 		public MFWSVaultObjectFileOperations ObjectFileOperations { get; }
 
 		/// <summary>
+		/// Gets the class operations interface.
+		/// </summary>
+		public MFWSVaultClassOperations ClassOperations { get; }
+
+		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>
 		/// <param name="restClient">The <see cref="IRestClient"/> to use for HTTP requests.</param>
@@ -132,6 +137,7 @@ namespace MFaaP.MFWSClient
 			this.ObjectTypeOperations = new MFWSVaultObjectTypeOperations(this);
 			this.ValueListOperations = new MFWSVaultValueListOperations(this);
 			this.ObjectFileOperations = new MFWSVaultObjectFileOperations(this);
+			this.ClassOperations = new MFWSVaultClassOperations(this);
 		}
 
 		/// <summary>
