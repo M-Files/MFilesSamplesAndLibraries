@@ -54,6 +54,42 @@ namespace MFaaP.MFWSClient
 				.GetResult();
 		}
 
+		/// <summary>
+		/// Gets a list of all classes in the vault for a given object type.
+		/// </summary>
+		/// <param name="objectTypeId">The type of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>All classes in the vault for the supplied object type.</returns>
+		/// <remarks>This may be filtered by the user's permissions.</remarks>
+		public async Task<List<ExtendedObjectClass>> GetObjectClassesAsync(int objectTypeId, CancellationToken token = default(CancellationToken))
+		{
+			// Create the request.
+			var request = new RestRequest($"/REST/structure/classes?objtype={objectTypeId}");
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Get<List<ExtendedObjectClass>>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the data.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Gets a list of all classes in the vault for a given object type.
+		/// </summary>
+		/// <param name="objectTypeId">The type of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>All classes in the vault for the supplied object type.</returns>
+		/// <remarks>This may be filtered by the user's permissions.</remarks>
+		public List<ExtendedObjectClass> GetObjectClasses(int objectTypeId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.GetObjectClassesAsync(objectTypeId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
 	}
 	
 }

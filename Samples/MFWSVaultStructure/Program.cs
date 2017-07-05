@@ -36,16 +36,16 @@ namespace MFWSVaultStructure
 				System.Console.WriteLine($"\t{item.Name} ({item.NamePlural})");
 				System.Console.WriteLine($"\t\tID: {item.ID}");
 
-			}
+				// Get the classes.
+				var classes = await client.ClassOperations.GetObjectClassesAsync(item.ID);
+				Console.WriteLine($"\t\tThere are {classes.Count} classes in the vault:");
+				foreach (var c in classes)
+				{
+					// Output basic content.
+					System.Console.WriteLine($"\t\t\t{c.Name}");
+					System.Console.WriteLine($"\t\t\t\tID: {c.ID}");
 
-			// Get the classes.
-			var classes = await client.ClassOperations.GetAllObjectClassesAsync();
-			Console.WriteLine($"There are {classes.Count} classes in the vault:");
-			foreach (var item in classes)
-			{
-				// Output basic content.
-				System.Console.WriteLine($"\t{item.Name}");
-				System.Console.WriteLine($"\t\tID: {item.ID}");
+				}
 
 			}
 
