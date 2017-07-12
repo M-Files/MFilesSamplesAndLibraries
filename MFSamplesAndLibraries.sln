@@ -56,6 +56,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSVaultStructure", "Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTracing", "Samples\EventTracing\vaf\EventTracing.csproj", "{0B26392D-BE9A-4D4D-8052-D5A7E7793B96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateApplicationPreApprovalKey.App", "Samples\GenerateApplicationPreApprovalKey\GenerateApplicationPreApprovalKey.App.csproj", "{0E6C81B1-C87A-45F4-8501-05BFF0A70327}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,10 @@ Global
 		{0B26392D-BE9A-4D4D-8052-D5A7E7793B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B26392D-BE9A-4D4D-8052-D5A7E7793B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B26392D-BE9A-4D4D-8052-D5A7E7793B96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E6C81B1-C87A-45F4-8501-05BFF0A70327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E6C81B1-C87A-45F4-8501-05BFF0A70327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E6C81B1-C87A-45F4-8501-05BFF0A70327}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E6C81B1-C87A-45F4-8501-05BFF0A70327}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,5 +144,6 @@ Global
 		{5CDE9A3C-C7CF-45F9-BAC7-CACE11958DA4} = {8248BD69-34EF-433D-B7D7-BE8722E0CAA5}
 		{A5EFF65F-5D70-4A7B-9869-9A08FD85E132} = {8248BD69-34EF-433D-B7D7-BE8722E0CAA5}
 		{0B26392D-BE9A-4D4D-8052-D5A7E7793B96} = {64819656-F9ED-411C-827B-9EB4EBECF6E6}
+		{0E6C81B1-C87A-45F4-8501-05BFF0A70327} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,183 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:app="clr-namespace:GenerateApplicationPreApprovalKey.App"
+        xmlns:mfaap="clr-namespace:MFaaP.MFilesAPI;assembly=MFaaP.MFilesAPI"
+        xmlns:viewModels="clr-namespace:GenerateApplicationPreApprovalKey.App.ViewModels"
+        xmlns:helpers="clr-namespace:GenerateApplicationPreApprovalKey.App.Helpers"
+        xmlns:mFilesApi="clr-namespace:MFilesAPI;assembly=Interop.MFilesAPI"
+        xmlns:ValueConverters="clr-namespace:GenerateApplicationPreApprovalKey.App.ValueConverters"
+        x:Class="GenerateApplicationPreApprovalKey.App.MainWindow"
+        mc:Ignorable="d"
+        x:Name="Window"
+        Title="Generate Pre-Approval Key" Height="470" Width="525">
+    <Window.Resources>
+        <ValueConverters:IsNullValueConverter x:Key="IsNullValueConverter"/>
+        <ValueConverters:MFAuthTypeToStringValueConverter x:Key="MFAuthTypeToStringValueConverter"/>
+    </Window.Resources>
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TabControl SelectedIndex="{Binding CurrentTabIndex}">
+            <TabItem Header="Connection">
+                <ScrollViewer>
+                    <StackPanel>
+                        <GroupBox Header="Server Details" Margin="8 4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                Grid.Column="0" Grid.Row="0" Content="Connection Type:"/>
+                                <ComboBox
+                                VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="0" 
+                                DisplayMemberPath="DisplayName"
+                                ItemsSource="{app:EnumToItemsSource {x:Type mfaap:ConnectionType}}"
+                                SelectedValue="{Binding ConnectionDetails.ServerDetails.ConnectionType, Mode=TwoWay}"
+                                SelectedValuePath="Value" />
+                                <Label
+                                Grid.Column="0" Grid.Row="1" Content="Server Address:"/>
+                                <TextBox
+                                VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="1"
+                                Text="{Binding ConnectionDetails.ServerDetails.NetworkAddress, Mode=TwoWay}" />
+                                <Label
+                                Grid.Column="0" Grid.Row="2" Content="EndPoint/Port:"/>
+                                <TextBox
+                                VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="2"
+                                Text="{Binding ConnectionDetails.ServerDetails.EndPoint, Mode=TwoWay}" />
+                                <Label
+                                Grid.Column="0" Grid.Row="3" Content="Encrypted Connection:"/>
+                                <CheckBox
+                                VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="3"
+                                IsChecked="{Binding ConnectionDetails.ServerDetails.EncryptedConnection, Mode=TwoWay}" />
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Authentication Details" Margin="8 4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                Grid.Column="0" Grid.Row="0" Content="Authentication Type:"/>
+                                <ComboBox
+                                VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="0"
+                                SelectedValuePath="Content"
+                                SelectedValue="{Binding ConnectionDetails.AuthenticationDetails.AuthenticationType, Converter={StaticResource MFAuthTypeToStringValueConverter}, Mode=TwoWay}">
+                                    <ComboBoxItem Content="MFAuthTypeLoggedOnWindowsUser"/>
+                                    <ComboBoxItem Content="MFAuthTypeSpecificMFilesUser"/>
+                                    <ComboBoxItem Content="MFAuthTypeSpecificWindowsUser"/>
+                                    <ComboBoxItem Content="MFAuthTypeUnknown"/>
+                                </ComboBox>
+                                <Label
+                                Grid.Column="0" Grid.Row="1" Content="Username:"/>
+                                <TextBox
+                                VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="1"
+                                Text="{Binding ConnectionDetails.AuthenticationDetails.Username, Mode=TwoWay}" />
+                                <Label
+                                Grid.Column="0" Grid.Row="2" Content="Password:"/>
+                                <PasswordBox
+                                VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="2"
+                                helpers:PasswordBoxAssistant.BindPassword="True"
+                                helpers:PasswordBoxAssistant.BoundPassword="{Binding ConnectionDetails.AuthenticationDetails.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label
+                                Grid.Column="0" Grid.Row="3" Content="Domain:"/>
+                                <TextBox
+                                VerticalAlignment="Center"
+                                Grid.Column="1" Grid.Row="3"
+                                Text="{Binding ConnectionDetails.AuthenticationDetails.Domain, Mode=TwoWay}" />
+                            </Grid>
+                        </GroupBox>
+                        <Button Command="{Binding RetrieveVaultsCommand}" HorizontalAlignment="Right" Margin="8 4" Padding="4" Content="Retrieve vaults"/>
+                        <GroupBox Header="Vault">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Grid.Column="0" Grid.Row="0">Vault:</Label>
+                            <ComboBox 
+                                Grid.Column="1" Grid.Row="0"
+                                IsEnabled="{Binding HasVaults}"
+                                VerticalAlignment="Center"
+                                DisplayMemberPath="Name"
+                                SelectedValuePath="GUID"
+                                SelectedValue="{Binding VaultGuid, Mode=TwoWay}"
+                                ItemsSource="{Binding AllVaults, Mode=TwoWay}" />
+                                <Button
+                                Grid.Column="1" Grid.Row="1"
+                                HorizontalAlignment="Right" Margin="8 4" Padding="4" Content="Select"
+                                IsEnabled="{Binding VaultGuid, Converter={StaticResource IsNullValueConverter}, ConverterParameter=true}" Command="{Binding LoadApplicationsCommand}"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Applications" IsEnabled="{Binding SelectedVault, Converter={StaticResource IsNullValueConverter}, ConverterParameter=true}">
+                <ListView
+                    SelectionMode="Single"
+                        ItemsSource="{Binding CustomApplications}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Focusable" Value="false"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Export" Margin="8 4" Padding="4"
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.GenerateRegistryFileCommand}"
+                                                CommandParameter="{Binding .}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Name" Width="100"
+                                        DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Publisher" Width="200"
+                                        DisplayMemberBinding="{Binding Publisher}" />
+                            <GridViewColumn Header="Version" Width="60"
+                                        DisplayMemberBinding="{Binding Version}" />
+                            <GridViewColumn Header="Checksum" Width="150"
+                                        DisplayMemberBinding="{Binding ChecksumHash}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
