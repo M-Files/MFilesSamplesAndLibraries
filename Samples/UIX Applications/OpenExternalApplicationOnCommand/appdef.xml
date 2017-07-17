@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef.xsd">
+	<guid>1B9552B5-C1C5-44b9-905F-D4ABAC5E7BE3</guid>	
+	<name>Open external application on command</name>
+	<version>1.0</version>
+	<description>A demonstration UIX for running an external application on a command click.</description>
+	<publisher>M-Files Corporation</publisher>
+	<copyright>(c) M-Files Corporation 2017</copyright>
+	<required-mfiles-version>11.3.0000.0</required-mfiles-version>
+	<modules>
+		<module environment="shellui">
+			<file>main.js</file>
+		</module>
+	</modules>
+</application>

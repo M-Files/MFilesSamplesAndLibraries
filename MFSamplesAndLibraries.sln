@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault Application Framework", "Vault Application Framework", "{64819656-F9ED-411C-827B-9EB4EBECF6E6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Extensibility Framework", "UI Extensibility Framework", "{E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\Readme.md = Samples\UIX Applications\Readme.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "Samples\ChainWorkflows\vaf\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
 EndProject
@@ -57,6 +60,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTracing", "Samples\EventTracing\vaf\EventTracing.csproj", "{0B26392D-BE9A-4D4D-8052-D5A7E7793B96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateApplicationPreApprovalKey.App", "Samples\GenerateApplicationPreApprovalKey\GenerateApplicationPreApprovalKey.App.csproj", "{0E6C81B1-C87A-45F4-8501-05BFF0A70327}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenExternalApplicationOnCommand", "OpenExternalApplicationOnCommand", "{68F9501D-C0A8-4980-AA59-752C89969806}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\OpenExternalApplicationOnCommand\appdef.xml = Samples\UIX Applications\OpenExternalApplicationOnCommand\appdef.xml
+		Samples\UIX Applications\OpenExternalApplicationOnCommand\main.js = Samples\UIX Applications\OpenExternalApplicationOnCommand\main.js
+		Samples\UIX Applications\OpenExternalApplicationOnCommand\Readme.md = Samples\UIX Applications\OpenExternalApplicationOnCommand\Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,5 +155,6 @@ Global
 		{A5EFF65F-5D70-4A7B-9869-9A08FD85E132} = {8248BD69-34EF-433D-B7D7-BE8722E0CAA5}
 		{0B26392D-BE9A-4D4D-8052-D5A7E7793B96} = {64819656-F9ED-411C-827B-9EB4EBECF6E6}
 		{0E6C81B1-C87A-45F4-8501-05BFF0A70327} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{68F9501D-C0A8-4980-AA59-752C89969806} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 	EndGlobalSection
 EndGlobal
