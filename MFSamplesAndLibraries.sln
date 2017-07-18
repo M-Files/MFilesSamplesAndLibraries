@@ -68,6 +68,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenExternalApplicationOnCo
 		Samples\UIX Applications\OpenExternalApplicationOnCommand\Readme.md = Samples\UIX Applications\OpenExternalApplicationOnCommand\Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{6B42E110-C86E-43CD-907A-4CC9D3C8DED2}"
+	ProjectSection(SolutionItems) = preProject
+		Libraries\Postman\localhost.postman_environment.json = Libraries\Postman\localhost.postman_environment.json
+		Libraries\Postman\M-Files.postman_collection.json = Libraries\Postman\M-Files.postman_collection.json
+		Libraries\Postman\readme.md = Libraries\Postman\readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -156,5 +163,6 @@ Global
 		{0B26392D-BE9A-4D4D-8052-D5A7E7793B96} = {64819656-F9ED-411C-827B-9EB4EBECF6E6}
 		{0E6C81B1-C87A-45F4-8501-05BFF0A70327} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 		{68F9501D-C0A8-4980-AA59-752C89969806} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{6B42E110-C86E-43CD-907A-4CC9D3C8DED2} = {BE3E4CF5-2166-4626-A6F6-9048FF78E37B}
 	EndGlobalSection
 EndGlobal
