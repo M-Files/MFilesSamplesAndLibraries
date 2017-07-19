@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>State Action Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds a VAF handler for a state action.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFStateAction</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>WorkflowStateAlias</ID>
+          <ToolTip>Replace with the workflow state alias.</ToolTip>
+          <Default>MyWorkflowStateAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>MethodName</ID>
+          <ToolTip>The name of the method in C#.</ToolTip>
+          <Default>MyWorkflowStateHandler</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+/// <summary>
+/// Executed when an object is moved into a workflow state
+/// with alias "$WorkflowStateAlias$".
+/// </summary>
+/// <param name="env">The vault/object environment.</param>
+[StateAction("$WorkflowStateAlias$")]
+public void $MethodName$(StateEnvironment env)
+{
+	throw new System.NotImplementedException();
+}
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>State Pre-Condition Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds a VAF handler for a state pre-condition.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFStatePreCondition</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>WorkflowStateAlias</ID>
+          <ToolTip>Replace with the workflow state alias.</ToolTip>
+          <Default>MyWorkflowStateAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>MethodName</ID>
+          <ToolTip>The name of the method in C#.</ToolTip>
+          <Default>MyWorkflowPreConditionHandler</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+/// <summary>
+/// Executed to test whether an object can move into the
+/// workflow state with alias "$WorkflowStateAlias$".
+/// </summary>
+/// <param name="env">The vault/object environment.</param>
+/// <param name="message">The message, shown to the user if object cannot move into the state (method returns false).</param>
+/// <returns>True if the object can move into the state, false otherwise.</returns>
+[StatePreConditions("$WorkflowStateAlias$")]
+public bool $MethodName$(StateEnvironment env, out string message)
+{
+	throw new System.NotImplementedException();
+}
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>State Post-Condition Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds a VAF handler for a state post-condition.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFStatePostCondition</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>WorkflowStateAlias</ID>
+          <ToolTip>Replace with the workflow state alias.</ToolTip>
+          <Default>MyWorkflowStateAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>MethodName</ID>
+          <ToolTip>The name of the method in C#.</ToolTip>
+          <Default>MyWorkflowStatePostConditionHandler</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+/// <summary>
+/// Executed to test whether an object can move out of the
+/// workflow state with alias "$WorkflowStateAlias$".
+/// </summary>
+/// <param name="env">The vault/object environment.</param>
+/// <param name="message">The message, shown to the user if object cannot move out of the state (method returns false).</param>
+/// <returns>True if the object can move out of the state, false otherwise.</returns>
+[StatePostConditions("$WorkflowStateAlias$")]
+public bool $MethodName$(StateEnvironment env, out string message)
+{
+	throw new System.NotImplementedException();
+}
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Automatic State Transition Trigger Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds a VAF handler for an automatic state transition trigger.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFAutomaticStateTransitionTrigger</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>WorkflowStateAlias</ID>
+          <ToolTip>Replace with the workflow state alias.</ToolTip>
+          <Default>MyWorkflowStateAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>MethodName</ID>
+          <ToolTip>The name of the method in C#.</ToolTip>
+          <Default>MyWorkflowStateAutomaticStateTransitionTrigger</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+/// <summary>
+/// Executed to test whether an object can move from its current 
+/// workflow state along a transition with alias "$WorkflowStateAlias$".
+/// </summary>
+/// <param name="env">The vault/object environment.</param>
+/// <param name="nextState">The Id of the state to move the object into if the object can move (method returns true).</param>
+/// <returns>True if the object can move along the transition, false otherwise.</returns>
+/// <remarks>The default next state Id is available in <see cref="MFiles.VAF.Common.StateEnvironment.InitialNextStateID"/>, but this can be
+/// altered to any valid transition by setting <see cref="nextState"/> to a different state Id.</remarks>
+[AutomaticStateTransitionTrigger("$WorkflowStateAlias$")]
+public bool $MethodName$(StateEnvironment env, out int nextState)
+{
+	throw new System.NotImplementedException();
+}
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

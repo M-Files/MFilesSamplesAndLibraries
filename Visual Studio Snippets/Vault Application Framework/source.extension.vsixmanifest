@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="VAFSnippets.MFiles.ac0b5b41-86d9-4471-af68-aab0d3041d77" Version="1.0" Language="en-US" Publisher="Craig Hawker" />
+    <DisplayName>VAFSnippets</DisplayName>
+    <Description xml:space="preserve">Creates Visual Studio code snippets to create M-Files Vault Application Framework applications.</Description>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="File" Path="VAFSnippets.pkgdef" />
+  </Assets>
+</PackageManifest>

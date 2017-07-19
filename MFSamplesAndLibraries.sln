@@ -78,13 +78,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visual Studio Snippets", "Visual Studio Snippets", "{B4270C5B-2EAF-4A97-8F7D-6DC6DE5EC02D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault Application Framework", "Vault Application Framework", "{E6F3CC2D-2AC4-4D43-A25B-08F41D55766C}"
-	ProjectSection(SolutionItems) = preProject
-		Visual Studio Snippets\Vault Application Framework\MFConfiguration.snippet = Visual Studio Snippets\Vault Application Framework\MFConfiguration.snippet
-		Visual Studio Snippets\Vault Application Framework\MFEventHandlers.snippet = Visual Studio Snippets\Vault Application Framework\MFEventHandlers.snippet
-		Visual Studio Snippets\Vault Application Framework\MFProperties.snippet = Visual Studio Snippets\Vault Application Framework\MFProperties.snippet
-		Visual Studio Snippets\Vault Application Framework\MFVaultExtensionMethods.snippet = Visual Studio Snippets\Vault Application Framework\MFVaultExtensionMethods.snippet
-		Visual Studio Snippets\Vault Application Framework\MFWorkflows.snippet = Visual Studio Snippets\Vault Application Framework\MFWorkflows.snippet
-	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAFSnippets", "Visual Studio Snippets\Vault Application Framework\VAFSnippets.csproj", "{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -148,6 +143,10 @@ Global
 		{0E6C81B1-C87A-45F4-8501-05BFF0A70327}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E6C81B1-C87A-45F4-8501-05BFF0A70327}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E6C81B1-C87A-45F4-8501-05BFF0A70327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,5 +175,6 @@ Global
 		{68F9501D-C0A8-4980-AA59-752C89969806} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 		{6B42E110-C86E-43CD-907A-4CC9D3C8DED2} = {BE3E4CF5-2166-4626-A6F6-9048FF78E37B}
 		{E6F3CC2D-2AC4-4D43-A25B-08F41D55766C} = {B4270C5B-2EAF-4A97-8F7D-6DC6DE5EC02D}
+		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291} = {E6F3CC2D-2AC4-4D43-A25B-08F41D55766C}
 	EndGlobalSection
 EndGlobal

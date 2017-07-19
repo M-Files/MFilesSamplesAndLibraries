@@ -5,12 +5,12 @@
       <SnippetTypes>
         <SnippetType>Expansion</SnippetType>
       </SnippetTypes>
-      <Title>State Action Code Snippet</Title>
+      <Title>Property Calculation (Automatic Number) Code Snippet</Title>
       <Author>M-Files Corporation</Author>
-      <Description>Adds a VAF handler for a state action.</Description>
+      <Description>Adds a VAF handler for a property calculation via automatic number.</Description>
       <HelpUrl>
       </HelpUrl>
-      <Shortcut>MFStateAction</Shortcut>
+      <Shortcut>MFPropertyAutomaticNumber</Shortcut>
     </Header>
     <Snippet>
       <References>
@@ -25,23 +25,29 @@
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
-          <ToolTip>Replace with the workflow state alias.</ToolTip>
-          <Default>MyWorkflowStateAlias</Default>
+          <ID>PropertyDefinitionAlias</ID>
+          <ToolTip>Replace with the property definition alias.</ToolTip>
+          <Default>MyPropertyDefinitionAlias</Default>
           <Function>
           </Function>
         </Literal>
         <Literal Editable="true">
           <ID>MethodName</ID>
           <ToolTip>The name of the method in C#.</ToolTip>
-          <Default>MyWorkflowStateHandler</Default>
+          <Default>MyPropertyAutomaticNumberHandler</Default>
           <Function>
           </Function>
         </Literal>
       </Declarations>
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
-[StateAction("$WorkflowStateAlias$")]
-public void $MethodName$(StateEnvironment env)
+/// <summary>
+/// Calculates an automatic number for the property
+/// with alias "$PropertyDefinitionAlias$".
+/// </summary>
+/// <param name="env">The vault/object environment.</param>
+/// <returns>The number for the property.</returns>
+[PropertyAutomaticNumbering("$PropertyDefinitionAlias$")]
+public TypedValue $MethodName$(PropertyEnvironment env)
 {
 	throw new System.NotImplementedException();
 }
@@ -53,12 +59,12 @@ public void $MethodName$(StateEnvironment env)
       <SnippetTypes>
         <SnippetType>Expansion</SnippetType>
       </SnippetTypes>
-      <Title>State Pre-Condition Code Snippet</Title>
+      <Title>Property Calculation (Custom Value) Code Snippet</Title>
       <Author>M-Files Corporation</Author>
-      <Description>Adds a VAF handler for a state pre-condition.</Description>
+      <Description>Adds a VAF handler for a property calculation via a custom value.</Description>
       <HelpUrl>
       </HelpUrl>
-      <Shortcut>MFPreCondition</Shortcut>
+      <Shortcut>MFPropertyCustomValue</Shortcut>
     </Header>
     <Snippet>
       <References>
@@ -73,23 +79,29 @@ public void $MethodName$(StateEnvironment env)
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
-          <ToolTip>Replace with the workflow state alias.</ToolTip>
-          <Default>MyWorkflowStateAlias</Default>
+          <ID>PropertyDefinitionAlias</ID>
+          <ToolTip>Replace with the property definition alias.</ToolTip>
+          <Default>MyPropertyDefinitionAlias</Default>
           <Function>
           </Function>
         </Literal>
         <Literal Editable="true">
           <ID>MethodName</ID>
           <ToolTip>The name of the method in C#.</ToolTip>
-          <Default>MyWorkflowPreConditionHandler</Default>
+          <Default>MyPropertyCustomValueHandler</Default>
           <Function>
           </Function>
         </Literal>
       </Declarations>
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
-[StatePreConditions("$WorkflowStateAlias$")]
-public bool $MethodName$(StateEnvironment env, out string message)
+/// <summary>
+/// Calculates a custom value for the property
+/// with alias "$PropertyDefinitionAlias$".
+/// </summary>
+/// <param name="env">The vault/object environment.</param>
+/// <returns>The value for the property.</returns>
+[PropertyCustomValue("$PropertyDefinitionAlias$")]
+public TypedValue $MethodName$(PropertyEnvironment env)
 {
 	throw new System.NotImplementedException();
 }
@@ -101,12 +113,12 @@ public bool $MethodName$(StateEnvironment env, out string message)
       <SnippetTypes>
         <SnippetType>Expansion</SnippetType>
       </SnippetTypes>
-      <Title>State Post-Condition Code Snippet</Title>
+      <Title>Property Validation Code Snippet</Title>
       <Author>M-Files Corporation</Author>
-      <Description>Adds a VAF handler for a state post-condition.</Description>
+      <Description>Adds a VAF handler for a property validation.</Description>
       <HelpUrl>
       </HelpUrl>
-      <Shortcut>MFPostCondition</Shortcut>
+      <Shortcut>MFPropertyValidation</Shortcut>
     </Header>
     <Snippet>
       <References>
@@ -121,71 +133,30 @@ public bool $MethodName$(StateEnvironment env, out string message)
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
-          <ToolTip>Replace with the workflow state alias.</ToolTip>
-          <Default>MyWorkflowStateAlias</Default>
+          <ID>PropertyDefinitionAlias</ID>
+          <ToolTip>Replace with the property definition alias.</ToolTip>
+          <Default>MyPropertyDefinitionAlias</Default>
           <Function>
           </Function>
         </Literal>
         <Literal Editable="true">
           <ID>MethodName</ID>
           <ToolTip>The name of the method in C#.</ToolTip>
-          <Default>MyWorkflowStatePostConditionHandler</Default>
+          <Default>MyPropertyValidationHandler</Default>
           <Function>
           </Function>
         </Literal>
       </Declarations>
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
-[StatePostConditions("$WorkflowStateAlias$")]
-public bool $MethodName$(StateEnvironment env, out string message)
-{
-	throw new System.NotImplementedException();
-}
-				]]></Code>
-    </Snippet>
-  </CodeSnippet>
-  <CodeSnippet Format="1.0.0">
-    <Header>
-      <SnippetTypes>
-        <SnippetType>Expansion</SnippetType>
-      </SnippetTypes>
-      <Title>Automatic State Transition Trigger Code Snippet</Title>
-      <Author>M-Files Corporation</Author>
-      <Description>Adds a VAF handler for an automatic state transition trigger.</Description>
-      <HelpUrl>
-      </HelpUrl>
-      <Shortcut>MFAutomaticStateTransitionTrigger</Shortcut>
-    </Header>
-    <Snippet>
-      <References>
-        <Reference>
-          <Assembly>Interop.MFilesAPI.dll</Assembly>
-        </Reference>
-      </References>
-      <Imports>
-        <Import>
-          <Namespace>MFilesAPI</Namespace>
-        </Import>
-      </Imports>
-      <Declarations>
-        <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
-          <ToolTip>Replace with the workflow state alias.</ToolTip>
-          <Default>MyWorkflowStateAlias</Default>
-          <Function>
-          </Function>
-        </Literal>
-        <Literal Editable="true">
-          <ID>MethodName</ID>
-          <ToolTip>The name of the method in C#.</ToolTip>
-          <Default>MyWorkflowStateAutomaticStateTransitionTrigger</Default>
-          <Function>
-          </Function>
-        </Literal>
-      </Declarations>
-      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
-[AutomaticStateTransitionTrigger("$WorkflowStateAlias$")]
-public bool $MethodName$(StateEnvironment env, out int nextState)
+/// <summary>
+/// Validates a value for the property
+/// with alias "$PropertyDefinitionAlias$".
+/// </summary>
+/// <param name="env">The vault/object environment.</param>
+/// <param name="message">The message shown to the user if the validation fails (method returns false).</param>
+/// <returns>True if the property value passes validation, false otherwise.</returns>
+[PropertyValueValidation("$PropertyDefinitionAlias$")]
+public bool $MethodName$(PropertyEnvironment env, out string message)
 {
 	throw new System.NotImplementedException();
 }
