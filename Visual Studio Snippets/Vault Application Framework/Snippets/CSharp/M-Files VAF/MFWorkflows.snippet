@@ -25,7 +25,7 @@
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the workflow state alias.</ToolTip>
           <Default>MyWorkflowStateAlias</Default>
           <Function>
@@ -42,12 +42,13 @@
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// Executed when an object is moved into a workflow state
-/// with alias "$WorkflowStateAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <param name="env">The vault/object environment.</param>
-[StateAction("$WorkflowStateAlias$")]
+[StateAction("$Alias$")]
 public void $MethodName$(StateEnvironment env)
 {
+	$end$
 	throw new System.NotImplementedException();
 }
 				]]></Code>
@@ -78,7 +79,7 @@ public void $MethodName$(StateEnvironment env)
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the workflow state alias.</ToolTip>
           <Default>MyWorkflowStateAlias</Default>
           <Function>
@@ -95,14 +96,15 @@ public void $MethodName$(StateEnvironment env)
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// Executed to test whether an object can move into the
-/// workflow state with alias "$WorkflowStateAlias$".
+/// workflow state with alias "$Alias$".
 /// </summary>
 /// <param name="env">The vault/object environment.</param>
 /// <param name="message">The message, shown to the user if object cannot move into the state (method returns false).</param>
 /// <returns>True if the object can move into the state, false otherwise.</returns>
-[StatePreConditions("$WorkflowStateAlias$")]
+[StatePreConditions("$Alias$")]
 public bool $MethodName$(StateEnvironment env, out string message)
 {
+	$end$
 	throw new System.NotImplementedException();
 }
 				]]></Code>
@@ -133,7 +135,7 @@ public bool $MethodName$(StateEnvironment env, out string message)
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the workflow state alias.</ToolTip>
           <Default>MyWorkflowStateAlias</Default>
           <Function>
@@ -150,14 +152,15 @@ public bool $MethodName$(StateEnvironment env, out string message)
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// Executed to test whether an object can move out of the
-/// workflow state with alias "$WorkflowStateAlias$".
+/// workflow state with alias "$Alias$".
 /// </summary>
 /// <param name="env">The vault/object environment.</param>
 /// <param name="message">The message, shown to the user if object cannot move out of the state (method returns false).</param>
 /// <returns>True if the object can move out of the state, false otherwise.</returns>
-[StatePostConditions("$WorkflowStateAlias$")]
+[StatePostConditions("$Alias$")]
 public bool $MethodName$(StateEnvironment env, out string message)
 {
+	$end$
 	throw new System.NotImplementedException();
 }
 				]]></Code>
@@ -188,8 +191,8 @@ public bool $MethodName$(StateEnvironment env, out string message)
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
-          <ToolTip>Replace with the workflow state alias.</ToolTip>
+          <ID>Alias</ID>
+          <ToolTip>Replace with the workflow state transition alias.</ToolTip>
           <Default>MyWorkflowStateAlias</Default>
           <Function>
           </Function>
@@ -205,16 +208,17 @@ public bool $MethodName$(StateEnvironment env, out string message)
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// Executed to test whether an object can move from its current 
-/// workflow state along a transition with alias "$WorkflowStateAlias$".
+/// workflow state along a transition with alias "$Alias$".
 /// </summary>
 /// <param name="env">The vault/object environment.</param>
 /// <param name="nextState">The Id of the state to move the object into if the object can move (method returns true).</param>
 /// <returns>True if the object can move along the transition, false otherwise.</returns>
 /// <remarks>The default next state Id is available in <see cref="MFiles.VAF.Common.StateEnvironment.InitialNextStateID"/>, but this can be
 /// altered to any valid transition by setting <see cref="nextState"/> to a different state Id.</remarks>
-[AutomaticStateTransitionTrigger("$WorkflowStateAlias$")]
+[AutomaticStateTransitionTrigger("$Alias$")]
 public bool $MethodName$(StateEnvironment env, out int nextState)
 {
+	$end$
 	throw new System.NotImplementedException();
 }
 				]]></Code>

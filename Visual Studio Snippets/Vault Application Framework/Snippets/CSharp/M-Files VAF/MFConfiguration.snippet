@@ -25,7 +25,7 @@
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>ClassGroupAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the class group.</ToolTip>
           <Default>MyClassGroupAlias</Default>
           <Function>
@@ -49,12 +49,12 @@
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the class group
-/// with alias "$ClassGroupAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFClassGroup(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$ClassGroupAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -83,7 +83,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>ClassAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the class.</ToolTip>
           <Default>MyClassAlias</Default>
           <Function>
@@ -107,12 +107,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the class
-/// with alias "$ClassAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFClass(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$ClassAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -141,7 +141,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>ObjectTypeAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the object type.</ToolTip>
           <Default>MyObjectTypeAlias</Default>
           <Function>
@@ -165,12 +165,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the object type
-/// with alias "$ObjectTypeAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFObjType(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$ObjectTypeAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -199,7 +199,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>ValueListAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the value list.</ToolTip>
           <Default>MyValueListAlias</Default>
           <Function>
@@ -223,12 +223,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the value list
-/// with alias "$ValueListAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFValueList(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$ValueListAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -294,7 +294,7 @@ public MFIdentifier $PropertyName$ { get; set; }
 /// <remarks>If this alias/guid cannot be resolved then the ID will be -1.</remarks>
 [MFValueListItem(Required = $Required$, ValueList = "$ValueListAlias$")]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$ValueListItemGuid$";
+	= "$ValueListItemGuid$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -323,7 +323,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>NamedAccessControlListAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the named access control list.</ToolTip>
           <Default>MyNamedAccessControlListAlias</Default>
           <Function>
@@ -347,12 +347,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the access control list
-/// with alias "$NamedAccessControlListAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFNamedACL(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$NamedAccessControlListAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -381,7 +381,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>UserGroupAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the user group.</ToolTip>
           <Default>MyUserGroupAlias</Default>
           <Function>
@@ -405,12 +405,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the user group
-/// with alias "$UserGroupAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFUserGroup(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$UserGroupAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -439,7 +439,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>PropertyDefinitionAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the property definition.</ToolTip>
           <Default>MyPropertyDefinitionAlias</Default>
           <Function>
@@ -463,12 +463,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the property definition
-/// with alias "$PropertyDefinitionAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFPropertyDef(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$PropertyDefinitionAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -497,7 +497,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the workflow.</ToolTip>
           <Default>MyWorkflowAlias</Default>
           <Function>
@@ -521,12 +521,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the workflow
-/// with alias "$WorkflowAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFWorkflow(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$WorkflowAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -555,7 +555,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the workflow state.</ToolTip>
           <Default>MyWorkflowStateAlias</Default>
           <Function>
@@ -579,12 +579,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the workflow state
-/// with alias "$WorkflowStateAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFState(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$WorkflowStateAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -613,7 +613,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>WorkflowStateTransitionAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the alias of the workflow state transition.</ToolTip>
           <Default>MyWorkflowStateTransitionAlias</Default>
           <Function>
@@ -637,12 +637,12 @@ public MFIdentifier $PropertyName$ { get; set; }
       <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// A <see cref="MFIdentifier"/> for the workflow state transition
-/// with alias "$WorkflowStateTransitionAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <remarks>If this alias cannot be resolved then the ID will be -1.</remarks>
 [MFStateTransition(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= "$WorkflowStateTransitionAlias$";
+	= "$Alias$";$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -699,7 +699,7 @@ public MFIdentifier $PropertyName$ { get; set; }
 /// </summary>
 [MFView(Required = $Required$)]
 public MFIdentifier $PropertyName$ { get; set; }
-	= $ViewId$;
+	= $ViewId$;$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>
@@ -710,7 +710,7 @@ public MFIdentifier $PropertyName$ { get; set; }
       </SnippetTypes>
       <Title>Configuration object (MFConfiguration) Code Snippet</Title>
       <Author>M-Files Corporation</Author>
-      <Description>Adds an MFConfiguration property.</Description>
+      <Description>Adds a property for a configuration object, marked with the MFConfiguration attribute.</Description>
       <HelpUrl>
       </HelpUrl>
       <Shortcut>MFConfiguration</Shortcut>
@@ -763,7 +763,8 @@ public MFIdentifier $PropertyName$ { get; set; }
 /// and namespace "$Namespace$" with key "$Key$".
 /// </summary>
 [MFConfiguration("$Namespace$", "$Key$")]
-private $ConfigurationClassName$ $PropertyName$ = new $ConfigurationClassName$();
+private $ConfigurationClassName$ $PropertyName$ { get; set; }
+	= new $ConfigurationClassName$();$end$
 				]]></Code>
     </Snippet>
   </CodeSnippet>

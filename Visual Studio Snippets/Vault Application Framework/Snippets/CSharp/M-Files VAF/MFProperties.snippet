@@ -25,7 +25,7 @@
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>PropertyDefinitionAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the property definition alias.</ToolTip>
           <Default>MyPropertyDefinitionAlias</Default>
           <Function>
@@ -42,13 +42,14 @@
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// Calculates an automatic number for the property
-/// with alias "$PropertyDefinitionAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <param name="env">The vault/object environment.</param>
 /// <returns>The number for the property.</returns>
-[PropertyAutomaticNumbering("$PropertyDefinitionAlias$")]
+[PropertyAutomaticNumbering("$Alias$")]
 public TypedValue $MethodName$(PropertyEnvironment env)
 {
+	$end$
 	throw new System.NotImplementedException();
 }
 				]]></Code>
@@ -79,7 +80,7 @@ public TypedValue $MethodName$(PropertyEnvironment env)
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>PropertyDefinitionAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the property definition alias.</ToolTip>
           <Default>MyPropertyDefinitionAlias</Default>
           <Function>
@@ -96,13 +97,14 @@ public TypedValue $MethodName$(PropertyEnvironment env)
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// Calculates a custom value for the property
-/// with alias "$PropertyDefinitionAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <param name="env">The vault/object environment.</param>
 /// <returns>The value for the property.</returns>
-[PropertyCustomValue("$PropertyDefinitionAlias$")]
+[PropertyCustomValue("$Alias$")]
 public TypedValue $MethodName$(PropertyEnvironment env)
 {
+	$end$
 	throw new System.NotImplementedException();
 }
 				]]></Code>
@@ -133,7 +135,7 @@ public TypedValue $MethodName$(PropertyEnvironment env)
       </Imports>
       <Declarations>
         <Literal Editable="true">
-          <ID>PropertyDefinitionAlias</ID>
+          <ID>Alias</ID>
           <ToolTip>Replace with the property definition alias.</ToolTip>
           <Default>MyPropertyDefinitionAlias</Default>
           <Function>
@@ -150,14 +152,15 @@ public TypedValue $MethodName$(PropertyEnvironment env)
       <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
 /// <summary>
 /// Validates a value for the property
-/// with alias "$PropertyDefinitionAlias$".
+/// with alias "$Alias$".
 /// </summary>
 /// <param name="env">The vault/object environment.</param>
 /// <param name="message">The message shown to the user if the validation fails (method returns false).</param>
 /// <returns>True if the property value passes validation, false otherwise.</returns>
-[PropertyValueValidation("$PropertyDefinitionAlias$")]
+[PropertyValueValidation("$Alias$")]
 public bool $MethodName$(PropertyEnvironment env, out string message)
 {
+	$end$
 	throw new System.NotImplementedException();
 }
 				]]></Code>
