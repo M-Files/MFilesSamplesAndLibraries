@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>EventHandler Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds a VAF handler for an event handler.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFEventHandler</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>MethodName</ID>
+          <ToolTip>The name of the method in C#.</ToolTip>
+          <Default>MyEventHandler</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Object Editable="true">
+          <ID>EventHandlerType</ID>
+          <ToolTip>Replace with the event handler type.</ToolTip>
+          <Default>MFEventHandlerType.MFEventHandlerBeforeCheckInChanges</Default>
+          <Function>
+          </Function>
+          <Type>MFilesAPI.MFEventHandlerType</Type>
+        </Object>
+      </Declarations>
+      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+[EventHandler($EventHandlerType$)]
+public void $MethodName$(StateEnvironment env)
+{
+	throw new System.NotImplementedException();
+}
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

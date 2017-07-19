@@ -1,0 +1,705 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Class Group (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given class group.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFClassGroupIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>ClassGroupAlias</ID>
+          <ToolTip>Replace with the alias of the class group.</ToolTip>
+          <Default>MyClassGroupAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyClassGroup</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFClassGroup(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$ClassGroupAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Class (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given class.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFClassIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>ClassAlias</ID>
+          <ToolTip>Replace with the alias of the class.</ToolTip>
+          <Default>MyClassAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyClass</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFClass(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$ClassAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Object Type (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given object type.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFObjectTypeIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>ObjectTypeAlias</ID>
+          <ToolTip>Replace with the alias of the object type.</ToolTip>
+          <Default>MyObjectTypeAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyObjectType</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFObjType(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$ObjectTypeAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Value List (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given value list.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFValueListIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>ValueListAlias</ID>
+          <ToolTip>Replace with the alias of the value list.</ToolTip>
+          <Default>MyValueListAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyValueList</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFValueList(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$ValueListAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Value List Item (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given value list item.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFValueListItemIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>ValueListAlias</ID>
+          <ToolTip>Replace with the alias of the value list.</ToolTip>
+          <Default>MyValueListAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>ValueListItemGuid</ID>
+          <ToolTip>Replace with the guid of the value list item (in brace format).</ToolTip>
+          <Default>MyValueListItemGuid</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyValueListItem</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the guid cannot be found.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFValueListItem(Required = $Required$, ValueList = "$ValueListAlias$")]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$ValueListItemGuid$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Named Access Control List (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given named access control list.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFNamedAccessControlListIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>NamedAccessControlListAlias</ID>
+          <ToolTip>Replace with the alias of the named access control list.</ToolTip>
+          <Default>MyNamedAccessControlListAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyAccessControlList</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFNamedACL(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$NamedAccessControlListAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>User Group (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given user group.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFUserGroupIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>UserGroupAlias</ID>
+          <ToolTip>Replace with the alias of the user group.</ToolTip>
+          <Default>MyUserGroupAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyUserGroup</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFUserGroup(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$UserGroupAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Property Definition (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given property definition.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFPropertyDefinitionIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>PropertyDefinitionAlias</ID>
+          <ToolTip>Replace with the alias of the property definition.</ToolTip>
+          <Default>MyPropertyDefinitionAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyPropertyDef</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFPropertyDef(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$PropertyDefinitionAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Workflow (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given workflow.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFWorkflowIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>WorkflowAlias</ID>
+          <ToolTip>Replace with the alias of the workflow.</ToolTip>
+          <Default>MyWorkflowAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyWorkflow</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFWorkflow(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$WorkflowAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Workflow State (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given workflow state.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFWorkflowStateIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>WorkflowStateAlias</ID>
+          <ToolTip>Replace with the alias of the workflow state.</ToolTip>
+          <Default>MyWorkflowStateAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyWorkflowState</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFState(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$WorkflowStateAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Workflow State Transition (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given workflow state transition.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFWorkflowStateTransitionIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>WorkflowStateTransitionAlias</ID>
+          <ToolTip>Replace with the alias of the workflow state transition.</ToolTip>
+          <Default>MyWorkflowStateTransitionAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyWorkflowStateTransition</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFStateTransition(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= "$WorkflowStateTransitionAlias$";
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>View (MFIdentifier) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFIdentifier for the given view.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFWorkflowStateTransitionIdentifier</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>ViewId</ID>
+          <ToolTip>Replace with the Id of the view.</ToolTip>
+          <Default>0</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>MyView</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Required</ID>
+          <ToolTip>Whether to log an exception to the Windows Event Log if the alias cannot be resolved.</ToolTip>
+          <Default>true</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFView(Required = $Required$)]
+public MFIdentifier $PropertyName$ { get; set; }
+	= $ViewId$;
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Configuration object (MFConfiguration) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds an MFConfiguration property.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFConfiguration</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>Namespace</ID>
+          <ToolTip>Replace with the namespace to put the configuration into.</ToolTip>
+          <Default>MyNamespace</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Key</ID>
+          <ToolTip>Replace with the key to put the configuration into.</ToolTip>
+          <Default>config</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>The name of the property in C#.</ToolTip>
+          <Default>config</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>ConfigurationClassName</ID>
+          <ToolTip>The name of the configuration class to use.</ToolTip>
+          <Default>Configuration</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="type decl" Delimiter="$"><![CDATA[
+[MFConfiguration("$Namespace$", "$Key$")]
+private $ConfigurationClassName$ $PropertyName$ = new $ConfigurationClassName$();
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

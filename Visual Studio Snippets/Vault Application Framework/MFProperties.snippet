@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Property Calculation (Automatic Number) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds a VAF handler for a property calculation via automatic number.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFPropertyAutomaticNumber</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>PropertyDefinitionAlias</ID>
+          <ToolTip>Replace with the property definition alias.</ToolTip>
+          <Default>MyPropertyDefinitionAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>MethodName</ID>
+          <ToolTip>The name of the method in C#.</ToolTip>
+          <Default>MyPropertyAutomaticNumberHandler</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+[PropertyAutomaticNumbering("$PropertyDefinitionAlias$")]
+public TypedValue $MethodName$(PropertyEnvironment env)
+{
+	throw new System.NotImplementedException();
+}
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Property Calculation (Custom Value) Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds a VAF handler for a property calculation via a custom value.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFPropertyCustomValue</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>PropertyDefinitionAlias</ID>
+          <ToolTip>Replace with the property definition alias.</ToolTip>
+          <Default>MyPropertyDefinitionAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>MethodName</ID>
+          <ToolTip>The name of the method in C#.</ToolTip>
+          <Default>MyPropertyCustomValueHandler</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+[PropertyCustomValue("$PropertyDefinitionAlias$")]
+public TypedValue $MethodName$(PropertyEnvironment env)
+{
+	throw new System.NotImplementedException();
+}
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Property Validation Code Snippet</Title>
+      <Author>M-Files Corporation</Author>
+      <Description>Adds a VAF handler for a property validation.</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>MFPropertyValidation</Shortcut>
+    </Header>
+    <Snippet>
+      <References>
+        <Reference>
+          <Assembly>Interop.MFilesAPI.dll</Assembly>
+        </Reference>
+      </References>
+      <Imports>
+        <Import>
+          <Namespace>MFilesAPI</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>PropertyDefinitionAlias</ID>
+          <ToolTip>Replace with the property definition alias.</ToolTip>
+          <Default>MyPropertyDefinitionAlias</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>MethodName</ID>
+          <ToolTip>The name of the method in C#.</ToolTip>
+          <Default>MyPropertyValidationHandler</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+[PropertyValueValidation("$PropertyDefinitionAlias$")]
+public bool $MethodName$(PropertyEnvironment env, out string message)
+{
+	throw new System.NotImplementedException();
+}
+				]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
