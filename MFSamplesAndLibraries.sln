@@ -88,6 +88,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelloWorld", "HelloWorld", 
 		Samples\UIX Applications\HelloWorld\Readme.md = Samples\UIX Applications\HelloWorld\Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commands", "Commands", "{144ED41A-6DBF-4841-9CFB-A1143ECCCA2D}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\Commands\appdef.xml = Samples\UIX Applications\Commands\appdef.xml
+		Samples\UIX Applications\Commands\main.js = Samples\UIX Applications\Commands\main.js
+		Samples\UIX Applications\Commands\Readme.md = Samples\UIX Applications\Commands\Readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{DB20F67D-94C5-496D-A6CB-956E66A2C70A}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\Commands\icons\uparrow.ico = Samples\UIX Applications\Commands\icons\uparrow.ico
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -184,5 +196,7 @@ Global
 		{E6F3CC2D-2AC4-4D43-A25B-08F41D55766C} = {B4270C5B-2EAF-4A97-8F7D-6DC6DE5EC02D}
 		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291} = {E6F3CC2D-2AC4-4D43-A25B-08F41D55766C}
 		{AFD6B96A-D918-4DCC-B66D-F1221767069E} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{144ED41A-6DBF-4841-9CFB-A1143ECCCA2D} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{DB20F67D-94C5-496D-A6CB-956E66A2C70A} = {144ED41A-6DBF-4841-9CFB-A1143ECCCA2D}
 	EndGlobalSection
 EndGlobal
