@@ -1,3 +1,4 @@
+
 // NOTE! This code is for demonstration purposes only and does not contain any kind of
 // 		 error handling. MUST be revised before using in production.
 //		 Authored by: Craig Hawker / M-Files
@@ -27,7 +28,6 @@ function handleNewShellFrame(shellFrame)
 	// shellFrame.ShowMessage("A shell frame was created");
  
 	// Register to be notified when the shell frame is started.
-	// This time pass a reference to the function to call when the event is fired.
 	shellFrame.Events.Register(
 		Event_Started,
 		getShellFrameStartedHandler(shellFrame));
@@ -38,7 +38,6 @@ function getShellFrameStartedHandler(shellFrame)
 	/// <summary>Returns a function which handles the OnStarted event for an IShellFrame.</summary>
  
 	// The shell frame is now started and can be used.
-	// Note: we need to use the global-scope variable.
 
 	return function() {
 
@@ -64,7 +63,7 @@ function getShellFrameStartedHandler(shellFrame)
 			shellFrame.TaskPane.AddCustomCommandToGroup( commandTwoId, TaskPaneGroup_Main, 1 );
 		}
 		catch (e) {
-			// This will except if the task pane is not ready (e.g. in a History view).
+			// This will except if the task pane is not available (e.g. in a History view).
 		}
 
 		// Add the first and second commands to the context menu.
@@ -96,18 +95,4 @@ function getShellFrameStartedHandler(shellFrame)
 
 	}
 
-}
-function handleFirstCommandClicked(shellFrame, commandOneId, commandTwoId)
-{
-	/// <summary>Handles the click of the first command.</summary>
-	
-	// Show the second command.
-	
-}
-function handleSecondCommandClicked(shellFrame, commandOneId, commandTwoId)
-{
-	/// <summary>Handles the click of the first command.</summary>
-	
-	// Disable the second command.
-	
 }
