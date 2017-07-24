@@ -39,7 +39,6 @@ function getShellFrameStartedHandler(shellFrame)
  
 	return function() {
 		// The shell frame is now started and can be used.
-		// Note: we need to use the global-scope variable.
 		shellFrame.ShowMessage( "A shell frame is available for use." );
 	}
 }
