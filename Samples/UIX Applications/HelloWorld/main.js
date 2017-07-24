@@ -1,6 +1,9 @@
-// Execute some code when the shell frame is created and available.
-var g_shellFrame = null;
- 
+// NOTE! This code is for demonstration purposes only and does not contain any kind of
+// 		 error handling. MUST be revised before using in production.
+//		 Authored by: Craig Hawker / M-Files
+
+"use strict";
+
 function OnNewShellUI( shellUI )
 {
 	/// <summary>Executed by the UIX when a ShellUI module is started.</summary>
@@ -23,21 +26,20 @@ function handleNewShellFrame(shellFrame)
 	// The following line would throw an exception ("The object cannot be accessed, because it is not ready."):
 	// shellFrame.ShowMessage("A shell frame was created");
  
-	// Update global scope variable to point to new shell frame.
-	g_shellFrame = shellFrame;
- 
 	// Register to be notified when the shell frame is started.
 	// This time pass a reference to the function to call when the event is fired.
 	shellFrame.Events.Register(
 		Event_Started,
-		handleShellFrameStarted );
+		getShellFrameStartedHandler( shellFrame) );
 }
  
-function handleShellFrameStarted()
+function getShellFrameStartedHandler(shellFrame)
 {
-	/// <summary>Handles the OnStarted event for an IShellFrame.</summary>
+	/// <summary>Returns a function which handles the OnStarted event for an IShellFrame.</summary>
  
-	// The shell frame is now started and can be used.
-	// Note: we need to use the global-scope variable.
-	g_shellFrame.ShowMessage("A shell frame is available for use.");
+	return function() {
+		// The shell frame is now started and can be used.
+		// Note: we need to use the global-scope variable.
+		shellFrame.ShowMessage( "A shell frame is available for use." );
+	}
 }
