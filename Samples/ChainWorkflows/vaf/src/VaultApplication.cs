@@ -11,6 +11,8 @@ namespace ChainWorkflows
 	public class VaultApplication 
 		: VaultApplicationBase
 	{
+
+
 		/// <summary>
 		/// The running configuration, loaded from Name-Value storage.
 		/// </summary>

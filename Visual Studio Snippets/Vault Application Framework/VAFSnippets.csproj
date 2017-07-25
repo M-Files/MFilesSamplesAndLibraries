@@ -48,6 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Licence.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Snippets\CSharp\M-Files VAF\MFVAFConfiguration.snippet">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
