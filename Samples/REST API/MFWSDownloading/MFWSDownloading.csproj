@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5E028DB1-361C-407B-99CF-68C0184583F5}</ProjectGuid>
+    <ProjectGuid>{0847D452-BC13-4A6F-83D7-6EF351C1C3F8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MFWSSearching</RootNamespace>
-    <AssemblyName>MFWSSearching</AssemblyName>
+    <RootNamespace>MFWSDownloading</RootNamespace>
+    <AssemblyName>MFWSDownloading</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -55,7 +55,7 @@
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">
+    <ProjectReference Include="..\..\..\Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">
       <Project>{b28d0c6a-c87b-461d-bd12-d627e9f653fc}</Project>
       <Name>MFaaP.MFWSClient</Name>
     </ProjectReference>

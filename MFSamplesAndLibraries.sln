@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{7A1A
 		Samples\Readme.md = Samples\Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentedSearch", "Samples\SegmentedSearch\SegmentedSearch.csproj", "{5F9215B3-F0D3-4061-9064-B50C7F070AA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SegmentedSearch", "Samples\COM API\SegmentedSearch\SegmentedSearch.csproj", "{5F9215B3-F0D3-4061-9064-B50C7F070AA1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Searching", "Searching", "{C181BED6-870A-4C78-A156-57F922A556EB}"
 EndProject
@@ -39,9 +39,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M-Files Web Service", "M-Fi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFWSClient", "Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj", "{B28D0C6A-C87B-461D-BD12-D627E9F653FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSSearching", "Samples\MFWSSearching\MFWSSearching.csproj", "{5E028DB1-361C-407B-99CF-68C0184583F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSSearching", "Samples\REST API\MFWSSearching\MFWSSearching.csproj", "{5E028DB1-361C-407B-99CF-68C0184583F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchByDisplayId", "Samples\SearchByDisplayId\SearchByDisplayId.csproj", "{873D8E72-00A8-45F2-A8D2-3644E733C89F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchByDisplayId", "Samples\COM API\SearchByDisplayId\SearchByDisplayId.csproj", "{873D8E72-00A8-45F2-A8D2-3644E733C89F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFWSClient.Tests", "Libraries\MFaaP.MFWSClient.Tests\MFaaP.MFWSClient.Tests.csproj", "{166EB0F7-92DC-4FE0-935F-55AFE17146D9}"
 EndProject
@@ -49,13 +49,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C3F433B3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFilesAPI.Tests", "Libraries\MFaaP.MFilesAPI.Tests\MFaaP.MFilesAPI.Tests.csproj", "{6941C5D4-1D26-418A-9367-E511DF913A4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSDownloading", "Samples\MFWSDownloading\MFWSDownloading.csproj", "{0847D452-BC13-4A6F-83D7-6EF351C1C3F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSDownloading", "Samples\REST API\MFWSDownloading\MFWSDownloading.csproj", "{0847D452-BC13-4A6F-83D7-6EF351C1C3F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSViewNavigation", "Samples\MFWSViewNavigation\MFWSViewNavigation.csproj", "{C14184FA-5940-43C6-A8D3-81D175B8AEF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSViewNavigation", "Samples\REST API\MFWSViewNavigation\MFWSViewNavigation.csproj", "{C14184FA-5940-43C6-A8D3-81D175B8AEF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSCheckOutStatus", "Samples\MFWSCheckOutStatus\MFWSCheckOutStatus.csproj", "{5CDE9A3C-C7CF-45F9-BAC7-CACE11958DA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSCheckOutStatus", "Samples\REST API\MFWSCheckOutStatus\MFWSCheckOutStatus.csproj", "{5CDE9A3C-C7CF-45F9-BAC7-CACE11958DA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSVaultStructure", "Samples\MFWSVaultStructure\MFWSVaultStructure.csproj", "{A5EFF65F-5D70-4A7B-9869-9A08FD85E132}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSVaultStructure", "Samples\REST API\MFWSVaultStructure\MFWSVaultStructure.csproj", "{A5EFF65F-5D70-4A7B-9869-9A08FD85E132}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTracing", "Samples\EventTracing\vaf\EventTracing.csproj", "{0B26392D-BE9A-4D4D-8052-D5A7E7793B96}"
 EndProject

@@ -61,7 +61,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\MFaaP.MFilesAPI\MFaaP.MFilesAPI.csproj">
+    <ProjectReference Include="..\..\..\Libraries\MFaaP.MFilesAPI\MFaaP.MFilesAPI.csproj">
       <Project>{82567936-e6eb-45e5-9faf-8eefcd92f7bb}</Project>
       <Name>MFaaP.MFilesAPI</Name>
     </ProjectReference>

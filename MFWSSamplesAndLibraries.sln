@@ -22,19 +22,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M-Files Web Service", "M-Fi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFWSClient", "Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj", "{B28D0C6A-C87B-461D-BD12-D627E9F653FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSSearching", "Samples\MFWSSearching\MFWSSearching.csproj", "{5E028DB1-361C-407B-99CF-68C0184583F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSSearching", "Samples\REST API\MFWSSearching\MFWSSearching.csproj", "{5E028DB1-361C-407B-99CF-68C0184583F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFaaP.MFWSClient.Tests", "Libraries\MFaaP.MFWSClient.Tests\MFaaP.MFWSClient.Tests.csproj", "{166EB0F7-92DC-4FE0-935F-55AFE17146D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C3F433B3-4438-4113-938C-0EA51BB6746D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSDownloading", "Samples\MFWSDownloading\MFWSDownloading.csproj", "{0847D452-BC13-4A6F-83D7-6EF351C1C3F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSDownloading", "Samples\REST API\MFWSDownloading\MFWSDownloading.csproj", "{0847D452-BC13-4A6F-83D7-6EF351C1C3F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSViewNavigation", "Samples\MFWSViewNavigation\MFWSViewNavigation.csproj", "{C14184FA-5940-43C6-A8D3-81D175B8AEF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSViewNavigation", "Samples\REST API\MFWSViewNavigation\MFWSViewNavigation.csproj", "{C14184FA-5940-43C6-A8D3-81D175B8AEF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSVaultStructure", "Samples\MFWSVaultStructure\MFWSVaultStructure.csproj", "{A5EFF65F-5D70-4A7B-9869-9A08FD85E132}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSVaultStructure", "Samples\REST API\MFWSVaultStructure\MFWSVaultStructure.csproj", "{A5EFF65F-5D70-4A7B-9869-9A08FD85E132}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSCheckOutStatus", "Samples\MFWSCheckOutStatus\MFWSCheckOutStatus.csproj", "{5CDE9A3C-C7CF-45F9-BAC7-CACE11958DA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MFWSCheckOutStatus", "Samples\REST API\MFWSCheckOutStatus\MFWSCheckOutStatus.csproj", "{5CDE9A3C-C7CF-45F9-BAC7-CACE11958DA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

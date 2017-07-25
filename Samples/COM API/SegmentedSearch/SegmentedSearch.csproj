@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5CDE9A3C-C7CF-45F9-BAC7-CACE11958DA4}</ProjectGuid>
+    <ProjectGuid>{5F9215B3-F0D3-4061-9064-B50C7F070AA1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MFWSCheckOutStatus</RootNamespace>
-    <AssemblyName>MFWSCheckOutStatus</AssemblyName>
+    <RootNamespace>SegmentedSearch</RootNamespace>
+    <AssemblyName>SegmentedSearch</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,13 +47,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">
-      <Project>{B28D0C6A-C87B-461D-BD12-D627E9F653FC}</Project>
-      <Name>MFaaP.MFWSClient</Name>
+    <COMReference Include="MFilesAPI">
+      <Guid>{B9C079AA-92DD-4FB4-A0E0-AA3198955B45}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\MFaaP.MFilesAPI\MFaaP.MFilesAPI.csproj">
+      <Project>{82567936-e6eb-45e5-9faf-8eefcd92f7bb}</Project>
+      <Name>MFaaP.MFilesAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
