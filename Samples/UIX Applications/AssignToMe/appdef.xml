@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-client-v3.xsd">
+	<guid>1B9552B3-C1C5-44b9-905F-D4ABAC5E7FF2</guid>	
+	<name>Assign to me UIX sample</name>
+	<version>1.1</version>
+	<description>A demonstration application for reacting to selected items and assigning them via a command.</description>
+	<publisher>M-Files Corporation</publisher>
+	<copyright>(c) M-Files Corporation 2017</copyright>
+	<required-mfiles-version>11.3.0000.0</required-mfiles-version>
+	<platforms>
+		<platform>Desktop</platform>
+		<platform>Web</platform>
+	</platforms>
+	<modules>
+		<module environment="shellui">
+			<file>main.js</file>
+		</module>
+	</modules>
+</application>

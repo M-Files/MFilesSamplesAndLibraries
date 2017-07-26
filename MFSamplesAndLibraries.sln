@@ -107,6 +107,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DisplayPersistentWebPageInT
 		Samples\UIX Applications\DisplayPersistentWebPageInTab\Readme.md = Samples\UIX Applications\DisplayPersistentWebPageInTab\Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssignToMe", "AssignToMe", "{4BFB765D-E722-4657-A93F-4B962D70B6FB}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\AssignToMe\appdef.xml = Samples\UIX Applications\AssignToMe\appdef.xml
+		Samples\UIX Applications\AssignToMe\main.js = Samples\UIX Applications\AssignToMe\main.js
+		Samples\UIX Applications\AssignToMe\Readme.md = Samples\UIX Applications\AssignToMe\Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -206,5 +213,6 @@ Global
 		{144ED41A-6DBF-4841-9CFB-A1143ECCCA2D} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 		{DB20F67D-94C5-496D-A6CB-956E66A2C70A} = {144ED41A-6DBF-4841-9CFB-A1143ECCCA2D}
 		{3B58CAED-EA99-4AF9-BCB9-8A8C6C949E58} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{4BFB765D-E722-4657-A93F-4B962D70B6FB} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 	EndGlobalSection
 EndGlobal
