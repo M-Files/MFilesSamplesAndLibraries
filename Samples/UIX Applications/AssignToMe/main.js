@@ -4,6 +4,7 @@
 
 "use strict";
 
+// The currently-selected items in the active listing.
 var currentlySelectedItems = null;
 
 function OnNewShellUI(shellUI) {
