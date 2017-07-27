@@ -51,6 +51,12 @@ function getShellFrameStartedHandler(shellFrame) {
 			Event_NewShellListing,
 			getNewShellListingHandler( shellFrame, assignCommandId ) );
 
+		// Is there already a listing?  If so then we need to hook into it as well.
+		if (null != shellFrame.Listing)
+		{
+			getNewShellListingHandler( shellFrame, assignCommandId )( shellFrame.Listing );
+		}
+
 		// Register to respond to commands being clicked.
 		shellFrame.Commands.Events.Register(
 			Event_CustomCommand,
@@ -137,7 +143,7 @@ function retrieveRelationshipPropertyValues(shellFrame, selectedItems, callback)
 	/// <param name="callback">A function to be called back when the data is loaded.</param> 
 
 	// Note the number of items that we expect to retrieve data for.
-	var totalItems = selectedItems.ObjectVersions.Count - 1; // Note 1-based index.
+	var totalItems = selectedItems.ObjectVersions.Count;
 
 	// The number of items that have been retrieved is zero.
 	var itemsComplete = 0;
