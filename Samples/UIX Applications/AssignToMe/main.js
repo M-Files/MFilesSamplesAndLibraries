@@ -317,7 +317,8 @@ function createAssignmentObject(shellFrame)
 					accessControlList );
 
 				// Check it in.
-				shellFrame.ShellUI.Vault.Async.ObjectOperations.CheckIn( objectVersionAndProperties.ObjVer );
+				shellFrame.ShellUI.Vault.ObjectOperations.CheckIn( objectVersionAndProperties.ObjVer );
+
 				// Say that it worked.
 				shellFrame.ShowMessage( "Assigned to you." );
 			}
