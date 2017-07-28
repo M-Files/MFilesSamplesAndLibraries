@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Extensibility Framework"
 		Samples\UIX Applications\Readme.md = Samples\UIX Applications\Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "Samples\ChainWorkflows\vaf\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "Samples\Processes\ChainWorkflows\vaf\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{BE3E4CF5-2166-4626-A6F6-9048FF78E37B}"
 	ProjectSection(SolutionItems) = preProject
@@ -61,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTracing", "Samples\Eve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateApplicationPreApprovalKey.App", "Samples\GenerateApplicationPreApprovalKey\GenerateApplicationPreApprovalKey.App.csproj", "{0E6C81B1-C87A-45F4-8501-05BFF0A70327}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenExternalApplicationOnCommand", "OpenExternalApplicationOnCommand", "{68F9501D-C0A8-4980-AA59-752C89969806}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Open External Application On Command", "Open External Application On Command", "{68F9501D-C0A8-4980-AA59-752C89969806}"
 	ProjectSection(SolutionItems) = preProject
 		Samples\UIX Applications\OpenExternalApplicationOnCommand\appdef.xml = Samples\UIX Applications\OpenExternalApplicationOnCommand\appdef.xml
 		Samples\UIX Applications\OpenExternalApplicationOnCommand\main.js = Samples\UIX Applications\OpenExternalApplicationOnCommand\main.js
@@ -81,7 +81,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vault Application Framework
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAFSnippets", "Visual Studio Snippets\Vault Application Framework\VAFSnippets.csproj", "{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelloWorld", "HelloWorld", "{AFD6B96A-D918-4DCC-B66D-F1221767069E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hello World", "Hello World", "{AFD6B96A-D918-4DCC-B66D-F1221767069E}"
 	ProjectSection(SolutionItems) = preProject
 		Samples\UIX Applications\HelloWorld\appdef.xml = Samples\UIX Applications\HelloWorld\appdef.xml
 		Samples\UIX Applications\HelloWorld\main.js = Samples\UIX Applications\HelloWorld\main.js
@@ -100,19 +100,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{DB20F67D
 		Samples\UIX Applications\Commands\icons\uparrow.ico = Samples\UIX Applications\Commands\icons\uparrow.ico
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DisplayPersistentWebPageInTab", "DisplayPersistentWebPageInTab", "{3B58CAED-EA99-4AF9-BCB9-8A8C6C949E58}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Display Persistent Web Page In Tab", "Display Persistent Web Page In Tab", "{3B58CAED-EA99-4AF9-BCB9-8A8C6C949E58}"
 	ProjectSection(SolutionItems) = preProject
 		Samples\UIX Applications\DisplayPersistentWebPageInTab\appdef.xml = Samples\UIX Applications\DisplayPersistentWebPageInTab\appdef.xml
 		Samples\UIX Applications\DisplayPersistentWebPageInTab\main.js = Samples\UIX Applications\DisplayPersistentWebPageInTab\main.js
 		Samples\UIX Applications\DisplayPersistentWebPageInTab\Readme.md = Samples\UIX Applications\DisplayPersistentWebPageInTab\Readme.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssignToMe", "AssignToMe", "{4BFB765D-E722-4657-A93F-4B962D70B6FB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assign To Me", "Assign To Me", "{4BFB765D-E722-4657-A93F-4B962D70B6FB}"
 	ProjectSection(SolutionItems) = preProject
 		Samples\UIX Applications\AssignToMe\appdef.xml = Samples\UIX Applications\AssignToMe\appdef.xml
 		Samples\UIX Applications\AssignToMe\main.js = Samples\UIX Applications\AssignToMe\main.js
 		Samples\UIX Applications\AssignToMe\Readme.md = Samples\UIX Applications\AssignToMe\Readme.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client to Server Communication", "Client to Server Communication", "{D98CDFAA-A646-491C-948A-85A25E48E792}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerComponent", "Samples\Processes\ClientToServerCode\ServerComponent.csproj", "{CFDFADEC-1026-40EF-89D7-DF377558EB04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Processes", "Processes", "{55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chain Workflows", "Chain Workflows", "{44C9A717-D0E3-4998-8444-311B2E3284EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +188,10 @@ Global
 		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03E54A8C-A9FE-4F09-997B-F67C1DCFE291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFDFADEC-1026-40EF-89D7-DF377558EB04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFDFADEC-1026-40EF-89D7-DF377558EB04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFDFADEC-1026-40EF-89D7-DF377558EB04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFDFADEC-1026-40EF-89D7-DF377558EB04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -188,7 +200,7 @@ Global
 		{BFC9716E-3A29-4482-9385-7301436D8010} = {7A1A3026-5661-4EB2-B01D-81E714BAD0CD}
 		{64819656-F9ED-411C-827B-9EB4EBECF6E6} = {7A1A3026-5661-4EB2-B01D-81E714BAD0CD}
 		{E20EB0FB-B3F1-409D-8DDC-F89D69BA6118} = {7A1A3026-5661-4EB2-B01D-81E714BAD0CD}
-		{721000F5-1A08-4E41-A594-94D7BB6F852C} = {64819656-F9ED-411C-827B-9EB4EBECF6E6}
+		{721000F5-1A08-4E41-A594-94D7BB6F852C} = {44C9A717-D0E3-4998-8444-311B2E3284EF}
 		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB} = {BE3E4CF5-2166-4626-A6F6-9048FF78E37B}
 		{5F9215B3-F0D3-4061-9064-B50C7F070AA1} = {C181BED6-870A-4C78-A156-57F922A556EB}
 		{C181BED6-870A-4C78-A156-57F922A556EB} = {BFC9716E-3A29-4482-9385-7301436D8010}
@@ -214,5 +226,9 @@ Global
 		{DB20F67D-94C5-496D-A6CB-956E66A2C70A} = {144ED41A-6DBF-4841-9CFB-A1143ECCCA2D}
 		{3B58CAED-EA99-4AF9-BCB9-8A8C6C949E58} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 		{4BFB765D-E722-4657-A93F-4B962D70B6FB} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{D98CDFAA-A646-491C-948A-85A25E48E792} = {55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F}
+		{CFDFADEC-1026-40EF-89D7-DF377558EB04} = {D98CDFAA-A646-491C-948A-85A25E48E792}
+		{55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F} = {7A1A3026-5661-4EB2-B01D-81E714BAD0CD}
+		{44C9A717-D0E3-4998-8444-311B2E3284EF} = {55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F}
 	EndGlobalSection
 EndGlobal

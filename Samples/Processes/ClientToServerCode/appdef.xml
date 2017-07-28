@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application
+			type="server-application"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v1.xsd">
+  <guid>b0797ece-4c7e-4e60-8576-8fc74b3bf968</guid>
+  <name>The server component which will be called by the User Interface Extensibility Framework application</name>
+  <description></description>
+  <publisher></publisher>
+  <version>1.0.0.0</version>
+  <copyright></copyright>
+  <extension-objects>
+    <extension-object>
+      <name>ServerComponent</name>
+      <assembly>ServerComponent.dll</assembly>
+      <class>ServerComponent.VaultApplication</class>
+      <installation-method>Install</installation-method>
+      <uninstallation-method>Uninstall</uninstallation-method>
+      <initialization-method>Initialize</initialization-method>
+      <uninitialization-method>Uninitialize</uninitialization-method>
+      <start-operations-method>StartOperations</start-operations-method>
+    </extension-object>
+  </extension-objects>
+</application>

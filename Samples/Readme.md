@@ -21,5 +21,9 @@ The following samples are available in this solution:
 Please note that the build actions have been disabled in these samples.  This has been done simply to stop them all being installed at build time.  To enable the build action, remove the "REM" command from the start of the build action.
 
 * `Event Tracing` - An example to automatically log various vault events and VAF lifecycle events to the event log.  Useful to understand which events are executed in various scenarios.
+
+## Processes
+
 * `Chain Workflows` - An example to show how to move an object to a second workflow once it reaches the end of a first workflow.
+* `Client to Server communication` - An example of how to execute server-side code on a client-side event (e.g. a command click).
 
