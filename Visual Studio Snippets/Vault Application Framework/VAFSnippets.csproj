@@ -52,19 +52,19 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\M-Files VAF\MFVAFConfiguration.snippet">
+    <Content Include="Snippets\CSharp\MFilesVAF\MFVAFConfiguration.snippet">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\M-Files VAF\MFVAFEventHandlers.snippet">
+    <Content Include="Snippets\CSharp\MFilesVAF\MFVAFEventHandlers.snippet">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\M-Files VAF\MFVAFProperties.snippet">
+    <Content Include="Snippets\CSharp\MFilesVAF\MFVAFProperties.snippet">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\M-Files VAF\MFVAFVaultExtensionMethods.snippet">
+    <Content Include="Snippets\CSharp\MFilesVAF\MFVAFVaultExtensionMethods.snippet">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\M-Files VAF\MFVAFWorkflows.snippet">
+    <Content Include="Snippets\CSharp\MFilesVAF\MFVAFWorkflows.snippet">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="VAFSnippets.pkgdef">
