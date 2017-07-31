@@ -28,24 +28,32 @@ function newShellFrameHandler(shellFrame)
 		getShellFrameStartedHandler( shellFrame ) );
 }
 
-function getShellFrameStartedHandler(shellFrame) {
+function getShellFrameStartedHandler(shellFrame)
+{
 	/// <summary>Gets a function to handle the Started event for shell frame.</summary>
 	/// <param name="shellFrame" type="MFiles.ShellFrame">The current shell frame object.</param> 
 	/// <returns type="MFiles.Events.OnStarted">The event handler.</returns>
 
 	// Return the handler function for ShellFrame's Started event.
-	return function ()
+	return function()
 	{
 		// Create a command for "assign to me".
 		var assignCommandId = shellFrame.Commands.CreateCustomCommand( "Assign to me" );
 
-		// Add the command to the task pane.
-		// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
-		shellFrame.TaskPane.AddCustomCommandToGroup( assignCommandId, TaskPaneGroup_Main, 0 );
+		try
+		{
+			// Add the command to the task pane.
+			// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
+			shellFrame.TaskPane.AddCustomCommandToGroup( assignCommandId, TaskPaneGroup_Main, 0 );
+		}
+		catch (e)
+		{
+			// This will except if the task pane is not available (e.g. in a History view).
+		}
 
 		// Hide the command.  We will show it when the selected items change.
 		shellFrame.Commands.SetCommandState( assignCommandId, CommandLocation_All, CommandState_Hidden );
-		
+
 		// Register to listen to when new shell listings are created.
 		shellFrame.Events.Register(
 			Event_NewShellListing,
@@ -81,14 +89,15 @@ function getShellFrameStartedHandler(shellFrame) {
 	};
 }
 
-function getNewShellListingHandler(shellFrame, assignCommandId) {
+function getNewShellListingHandler(shellFrame, assignCommandId)
+{
 	/// <summary>Gets a function to handle the NewShellListing event for shell frame.</summary>
 	/// <param name="shellFrame" type="MFiles.ShellFrame">The current shell frame object.</param> 
 	/// <returns type="MFiles.Events.OnNewShellListing">The event handler.</returns>
 
 	// Return the handler function for NewShellListing event.
-	return function (shellListing) {
-
+	return function(shellListing)
+	{
 		// Listen for selection change events on the listing.
 		shellListing.Events.Register(
 			Event_SelectionChanged,
