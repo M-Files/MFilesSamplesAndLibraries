@@ -1,41 +1,126 @@
 Option Explicit
 
-' These are the element aliases we will use.
-Const strWorkflowTwoAlias = "MFiles.Workflows.Workflow2"
-Const strWorkflowTwoInitialStateAlias = "MFiles.WorkflowStates.Workflow2.Initial"
+' To create a copy of an object we need two things:
+' 1. The PropertyValues for the new object (https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~PropertyValues.html)
+' 2. The files for the new object (https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~SourceObjectFiles.html)
 
-' Convert the aliases to IDs in the current vault.
-Dim intWorkflowTwoId
-intWorkflowTwoId = Vault.WorkflowOperations.GetWorkflowIDByAlias(strWorkflowTwoAlias)
-Dim intWorkflowTwoInitialStateId
-intWorkflowTwoInitialStateId = Vault.WorkflowOperations.GetWorkflowStateIDByAlias(strWorkflowTwoInitialStateAlias)
+' Once we have these, we can call one of the CreateNewObject methods (e.g. https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectOperations~CreateNewObjectExQuick.html).
 
-' Get the workflow property value (hard-coded as always 38).
-' Note: in this context we WILL have a workflow value, but most code
-' should be written defensively to assume we do not.
-Dim objWorkflowPropertyValue
-Set objWorkflowPropertyValue = PropertyValues.SearchForProperty(38)
+' Special folder value for TemporaryFolder, from https://msdn.microsoft.com/en-us/library/a72y2t1c(v=vs.84).aspx.
+Const TemporaryFolder = 2
+	
+' Create a filesystemobject to help working with files.
+Dim objFSO: Set objFSO = CreateObject("Scripting.FileSystemObject")
 
-' Get the workflow state property value (hard-coded as always 39).
-' Note: in this context we WILL have a workflow state value, but most code
-' should be written defensively to assume we do not.
-Dim objWorkflowStatePropertyValue
-Set objWorkflowStatePropertyValue = PropertyValues.SearchForProperty(39)
+' Let's get a copy of the property values.
+Dim objNewObjectPropertyValues: Set objNewObjectPropertyValues = GetNewObjectPropertyValues(PropertyValues)
 
-' Set the property values.
-objWorkflowPropertyValue.Value.SetValue MFDataTypeLookup, intWorkflowTwoId
-objWorkflowStatePropertyValue.Value.SetValue MFDataTypeLookup, intWorkflowTwoInitialStateId
+' Let's get a copy of the files.
+Dim objNewObjectSourceFiles: Set objNewObjectSourceFiles = GetNewObjectSourceFiles(ObjVer)
 
-' Set up our collection of property values to save.
-Dim objPropertyValuesToSave
-Set objPropertyValuesToSave = CreateObject("MFilesAPI.PropertyValues")
-objPropertyValuesToSave.Add 0, objWorkflowPropertyValue
-objPropertyValuesToSave.Add 0, objWorkflowStatePropertyValue
+' Is it a single-file-document (has exactly one file, and type of document)?
+Dim bolIsSingleFileDocument: bolIsSingleFileDocument = False
+If objNewObjectSourceFiles.Count = 1 AND ObjVer.Type = MFBuiltInObjectTypeDocument Then
+	bolIsSingleFileDocument = True
+End If
 
-' Save the changes.
-Vault.ObjectPropertyOperations.SetProperties objVer, objPropertyValuesToSave
+' Create the object.
+Vault.ObjectOperations.CreateNewObjectExQuick ObjVer.Type, objNewObjectPropertyValues, objNewObjectSourceFiles, bolIsSingleFileDocument, True, CreateObject("MFilesAPI.AccessControlList")
 
-' Ensure the last modified is correct.
-Dim objLastModifiedBy: Set objLastModifiedBy = CreateObject("MFilesAPI.TypedValue")
-objLastModifiedBy.SetValue MFDataTypeLookup, CurrentUserId
-Vault.ObjectPropertyOperations.SetLastModificationInfoAdmin ObjVer, true, objLastModifiedBy, false, Nothing
+' Clean up.
+ClearTemporaryFiles objNewObjectSourceFiles
+
+''' HELPER FUNCTIONS
+
+' Gets a copy of the property values, for use when creating a new object.
+Function GetNewObjectPropertyValues(oPropertyValuesToCloneFrom)
+	
+	' Clone the property values we were passed.
+	Dim objNewObjectPropertyValues: Set objNewObjectPropertyValues = oPropertyValuesToCloneFrom.Clone()
+
+	' Remove the workflow and workflow state properties
+	' (as otherwise it'll try and put it in the same state, which tries to copy it, which... infinite loop).
+	RemovePropertyValueIfFound objNewObjectPropertyValues, MFBuiltInPropertyDefWorkflow
+	RemovePropertyValueIfFound objNewObjectPropertyValues, MFBuiltInPropertyDefState
+
+	' Possibly also want to remove some other built-in properties such as created and created by.
+	' Ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInPropertyDef.html
+	
+	' Return the property values.
+	Set GetNewObjectPropertyValues = objNewObjectPropertyValues
+	
+End Function
+
+' Removes a property value from the collection if it's found.
+Sub RemovePropertyValueIfFound(ByRef oPropertyValues, iPropertyDef)
+	
+	' Find the index of the property value (-1 if not found).
+	Dim index: index = oPropertyValues.IndexOf(iPropertyDef)
+
+	' If it was found then remove it.
+	If index > -1 Then oPropertyValues.Remove index
+	
+End Sub
+
+' Downloads the files for the provided object version and creates a
+' SourceObjectFiles collection for use when creating a new object.
+Function GetNewObjectSourceFiles(oSourceObjVer)
+
+	' Get a reference to the temporary folder.
+	Dim strTempFolderPath: strTempFolderPath = objFSO.GetSpecialFolder(TemporaryFolder).Path
+
+	' Get the files for the current objver.
+	Dim objFiles: Set objFiles = Vault.ObjectFileOperations.GetFiles(oSourceObjVer)
+
+	' Create our collection to return.
+	Dim objSourceFiles: Set objSourceFiles = CreateObject("MFilesAPI.SourceObjectFiles")
+
+	' Iterate over the files and download each in turn.
+	Dim intCounter, objFile
+	For intCounter = 1 To objFiles.Count
+		
+		' Which file are we working with?
+		Set objFile = objFiles.Item(intCounter)
+	
+		' Where can we download it?
+		Dim strTemporaryFilePath: strTemporaryFilePath = objFSO.BuildPath(strTempFolderPath, objFSO.GetTempName()) & "." & objFile.Extension
+
+		' Download the file.
+		Vault.ObjectFileOperations.DownloadFile objFile.ID, objFile.Version, strTemporaryFilePath
+
+		' Create an object source file for this temporary file.
+		Dim objObjectSourceFile: Set objObjectSourceFile = CreateObject("MFilesAPI.SourceObjectFile")
+		objObjectSourceFile.Extension = objFile.Extension
+		objObjectSourceFile.SourceFilePath = strTemporaryFilePath
+		objObjectSourceFile.Title = objFile.Title
+
+		' Add it to the collection.
+		objSourceFiles.Add -1, objObjectSourceFile
+
+	Next
+
+	' Return the temporary files.
+	Set GetNewObjectSourceFiles = objSourceFiles
+
+End Function
+
+' Clears temporary files.
+Sub ClearTemporaryFiles(objObjectSourceFiles)
+
+	' Iterate over the files and download each in turn.
+	Dim intCounter, objFile
+	For intCounter = 1 To objObjectSourceFiles.Count
+		
+		' Which file are we working with?
+		Set objFile = objObjectSourceFiles.Item(intCounter)
+		
+		' If it exists, try and delete it.
+		If objFSO.FileExists(objFile.SourceFilePath) Then
+			On Error Resume Next
+			objFSO.DeleteFile objFile.SourceFilePath, True
+			On Error Goto 0
+		End If
+
+	Next
+
+End Sub
