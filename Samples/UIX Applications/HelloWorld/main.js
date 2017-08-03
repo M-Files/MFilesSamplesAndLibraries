@@ -16,12 +16,12 @@ function OnNewShellUI(shellUI)
 	// ref: https://www.m-files.com/UI_Extensibility_Framework/index.html#Event_NewNormalShellFrame.html
 	shellUI.Events.Register(
 		Event_NewNormalShellFrame,
-		handleNewShellFrame );
+		handleNewNormalShellFrame );
 }
 
-function handleNewShellFrame(shellFrame)
+function handleNewNormalShellFrame(shellFrame)
 {
-	/// <summary>Handles the OnNewShellFrame event for an IShellUI.</summary>
+	/// <summary>Handles the OnNewNormalShellFrame event for an IShellUI.</summary>
 	/// <param name="shellFrame" type="MFiles.ShellFrame">The shell frame object which was created.</param>
 
 	// The shell frame was created but it cannot be used yet.
