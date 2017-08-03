@@ -251,26 +251,31 @@ function createAssignmentObject(shellFrame)
 	var propertyValues = new MFiles.PropertyValues();
 
 	// Class property value.
+	// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInPropertyDef.html
+	// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInObjectClass.html
 	var classPropertyValue = new MFiles.PropertyValue();
-	classPropertyValue.PropertyDef = 100; // Built-in property for class.
-	classPropertyValue.Value.SetValue( MFDatatypeLookup, -100 ); // Built-in class for assignment.
+	classPropertyValue.PropertyDef = MFBuiltInPropertyDefClass;
+	classPropertyValue.Value.SetValue( MFDatatypeLookup, MFBuiltInObjectClassGenericAssignment );
 	propertyValues.Add( -1, classPropertyValue );
 
 	// Name or title property.
+	// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInPropertyDef.html
 	var nameOrTitlePropertyValue = new MFiles.PropertyValue();
-	nameOrTitlePropertyValue.PropertyDef = 0; // Built-in property for name or title.
+	nameOrTitlePropertyValue.PropertyDef = MFBuiltInPropertyDefNameOrTitle;
 	nameOrTitlePropertyValue.Value.SetValue( MFDatatypeText, "Assignment" );
 	propertyValues.Add( -1, nameOrTitlePropertyValue );
 
 	// Single-file-document property.
+	// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInPropertyDef.html
 	var singleFileDocumentPropertyValue = new MFiles.PropertyValue();
-	singleFileDocumentPropertyValue.PropertyDef = 22; // Built-in property for single file document.
+	singleFileDocumentPropertyValue.PropertyDef = MFBuiltInPropertyDefSingleFileObject;
 	singleFileDocumentPropertyValue.Value.SetValue( MFDatatypeBoolean, false );
 	propertyValues.Add( -1, singleFileDocumentPropertyValue );
 
 	// Assigned to property.
+	// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInPropertyDef.html
 	var assignedToPropertyValue = new MFiles.PropertyValue();
-	assignedToPropertyValue.PropertyDef = 44; // Built-in property for assigned to.
+	assignedToPropertyValue.PropertyDef = MFBuiltInPropertyDefAssignedTo;
 	var userLookups = new MFiles.Lookups();
 	var userLookup = new MFiles.Lookup();
 	userLookup.Item = shellFrame.ShellUI.Vault.SessionInfo.UserID;
@@ -295,7 +300,8 @@ function createAssignmentObject(shellFrame)
 			}
 
 			// Create the default values for the assignment.
-			var assignmentObjectTypeId = 10;
+			// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInObjectType.html
+			var assignmentObjectTypeId = MFBuiltInObjectTypeAssignment;
 			var sourceObjectFiles = new MFiles.SourceObjectFiles();
 			var accessControlList = new MFiles.AccessControlList();
 
