@@ -11,15 +11,13 @@ function OnNewShellUI(shellUI)
 
 	// This is the start point of a ShellUI module.
 
-	// Register to be notified when a new shell frame (Event_NewShellFrame) is created.
-	try
-	{
-		shellUI.Events.Register(
-			Event_NewShellFrame,
-			handleNewShellFrame );
-	}
-	catch (e)
-	{} // Suppress any "not ready" exceptions.
+	
+	// Register to be notified when a new normal shell frame (Event_NewNormalShellFrame) is created.
+	// We use Event_NewNormalShellFrame rather than Event_NewShellFrame as this won't fire for history (etc.) dialogs.
+	// ref: https://www.m-files.com/UI_Extensibility_Framework/index.html#Event_NewNormalShellFrame.html
+	shellUI.Events.Register(
+		Event_NewNormalShellFrame,
+		handleNewShellFrame );
 }
 
 function handleNewShellFrame(shellFrame)
@@ -27,16 +25,11 @@ function handleNewShellFrame(shellFrame)
 	/// <summary>Handles the OnNewShellFrame event.</summary>
 	/// <param name="shellFrame" type="MFiles.ShellFrame">The new shell frame object.</param>
 
-	try
-	{
-		// Register to be notified when the shell frame is started.
-		// Note: the shell frame may not be usable yet.
-		shellFrame.Events.Register(
-			Event_Started,
-			getShellFrameStartedHandler( shellFrame ) );
-	}
-	catch (e)
-	{} // Suppress any "not ready" exceptions.
+	// Register to be notified when the shell frame is started.
+	// Note: the shell frame may not be usable yet.
+	shellFrame.Events.Register(
+		Event_Started,
+		getShellFrameStartedHandler( shellFrame ) );
 }
 
 function getShellFrameStartedHandler(shellFrame)
@@ -53,16 +46,9 @@ function getShellFrameStartedHandler(shellFrame)
 		// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ICommands~AddCustomCommandToMenu.html
 		shellFrame.Commands.AddCustomCommandToMenu( commandId, MenuLocation_ContextMenu_Top, 0 );
 
-		try
-		{
-			// Add it to the task pane.
-			// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
-			shellFrame.TaskPane.AddCustomCommandToGroup( commandId, TaskPaneGroup_Main, 0 );
-		}
-		catch (e)
-		{
-			// This excepts inside the history view, as the task pane cannot be accessed.
-		}
+		// Add it to the task pane.
+		// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
+		shellFrame.TaskPane.AddCustomCommandToGroup( commandId, TaskPaneGroup_Main, 0 );
 
 		// Register to be notified when someone clicks the button.
 		shellFrame.Commands.Events.Register(

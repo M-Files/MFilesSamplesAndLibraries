@@ -10,10 +10,12 @@ var currentlySelectedItems = null;
 function OnNewShellUI(shellUI) {
 	/// <summary>The entry point of ShellUI module.</summary>
 	/// <param name="shellUI" type="MFiles.ShellUI">The new shell UI object.</param> 
-
-	// Register to listen new shell frame creation event.
+	
+	// Register to be notified when a new normal shell frame (Event_NewNormalShellFrame) is created.
+	// We use Event_NewNormalShellFrame rather than Event_NewShellFrame as this won't fire for history (etc.) dialogs.
+	// ref: https://www.m-files.com/UI_Extensibility_Framework/index.html#Event_NewNormalShellFrame.html
 	shellUI.Events.Register(
-		Event_NewShellFrame,
+		Event_NewNormalShellFrame,
 		newShellFrameHandler );
 }
 
@@ -40,16 +42,9 @@ function getShellFrameStartedHandler(shellFrame)
 		// Create a command for "assign to me".
 		var assignCommandId = shellFrame.Commands.CreateCustomCommand( "Assign to me" );
 
-		try
-		{
-			// Add the command to the task pane.
-			// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
-			shellFrame.TaskPane.AddCustomCommandToGroup( assignCommandId, TaskPaneGroup_Main, 0 );
-		}
-		catch (e)
-		{
-			// This will except if the task pane is not available (e.g. in a History view).
-		}
+		// Add the command to the task pane.
+		// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
+		shellFrame.TaskPane.AddCustomCommandToGroup( assignCommandId, TaskPaneGroup_Main, 0 );
 
 		// Hide the command.  We will show it when the selected items change.
 		shellFrame.Commands.SetCommandState( assignCommandId, CommandLocation_All, CommandState_Hidden );

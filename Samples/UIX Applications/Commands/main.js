@@ -11,10 +11,12 @@ function OnNewShellUI(shellUI)
 	/// <param name="shellUI" type="MFiles.ShellUI">The shell UI object which was created.</param>
 
 	// This is the start point of a ShellUI module.
-
-	// Register to be notified when a new shell frame (Event_NewShellFrame) is created.
+	
+	// Register to be notified when a new normal shell frame (Event_NewNormalShellFrame) is created.
+	// We use Event_NewNormalShellFrame rather than Event_NewShellFrame as this won't fire for history (etc.) dialogs.
+	// ref: https://www.m-files.com/UI_Extensibility_Framework/index.html#Event_NewNormalShellFrame.html
 	shellUI.Events.Register(
-		Event_NewShellFrame,
+		Event_NewNormalShellFrame,
 		handleNewShellFrame );
 }
 
@@ -58,15 +60,8 @@ function getShellFrameStartedHandler(shellFrame)
 
 		// Add the first and second commands to the task area.
 		// ref: https://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
-		try
-		{
-			shellFrame.TaskPane.AddCustomCommandToGroup( commandOneId, TaskPaneGroup_Main, 1 );
-			shellFrame.TaskPane.AddCustomCommandToGroup( commandTwoId, TaskPaneGroup_Main, 1 );
-		}
-		catch (e)
-		{
-			// This will except if the task pane is not available (e.g. in a History view).
-		}
+		shellFrame.TaskPane.AddCustomCommandToGroup( commandOneId, TaskPaneGroup_Main, 1 );
+		shellFrame.TaskPane.AddCustomCommandToGroup( commandTwoId, TaskPaneGroup_Main, 1 );
 
 		// Add the first and second commands to the context menu.
 		// ref: https://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ICommands~AddCustomCommandToMenu.html
