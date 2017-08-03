@@ -255,7 +255,7 @@ function createAssignmentObject(shellFrame)
 	// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInObjectClass.html
 	var classPropertyValue = new MFiles.PropertyValue();
 	classPropertyValue.PropertyDef = MFBuiltInPropertyDefClass;
-	classPropertyValue.Value.SetValue( MFDatatypeLookup, MFBuiltInObjectClassGenericAssignment );
+	classPropertyValue.Value.SetValue( MFDatatypeLookup, -100 ); // MFBuiltInObjectClassGenericAssignment not defined in MFWA.
 	propertyValues.Add( -1, classPropertyValue );
 
 	// Name or title property.
@@ -300,8 +300,7 @@ function createAssignmentObject(shellFrame)
 			}
 
 			// Create the default values for the assignment.
-			// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInObjectType.html
-			var assignmentObjectTypeId = MFBuiltInObjectTypeAssignment;
+			var assignmentObjectTypeId = 10; // MFBuiltInObjectTypeAssignment not defined in MFWA.
 			var sourceObjectFiles = new MFiles.SourceObjectFiles();
 			var accessControlList = new MFiles.AccessControlList();
 

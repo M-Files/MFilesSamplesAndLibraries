@@ -2,7 +2,7 @@
 <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-client-v3.xsd">
 	<guid>1B9552B3-C1C5-44b9-905F-D4ABAC5E7FF2</guid>	
 	<name>Assign to me UIX sample</name>
-	<version>1.1</version>
+	<version>1.2</version>
 	<description>A demonstration application for reacting to selected items and assigning them via a command.</description>
 	<publisher>M-Files Corporation</publisher>
 	<copyright>(c) M-Files Corporation 2017</copyright>
