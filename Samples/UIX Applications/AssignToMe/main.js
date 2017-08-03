@@ -306,8 +306,8 @@ function createAssignmentObject(shellFrame)
 			var accessControlList = new MFiles.AccessControlList();
 
 			// If we are running in web then use the async operation.
-			// CurrentApplicationPlatform returns a 2 in web mode, but nothing on desktop.
-			if (2 == MFiles.CurrentApplicationPlatform)
+			// CurrentApplicationPlatform returns MFExtApplicationPlatformWeb in web mode, but nothing on desktop.
+			if (MFExtApplicationPlatformWeb == MFiles.CurrentApplicationPlatform)
 			{
 				shellFrame.ShellUI.Vault.Async.ObjectOperations.CreateNewObject(
 					assignmentObjectTypeId,
