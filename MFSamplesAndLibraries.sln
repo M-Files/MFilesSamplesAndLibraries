@@ -135,6 +135,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{AD7C3E92-590B-4F85-B3D4-83869281FD99}"
 	ProjectSection(SolutionItems) = preProject
 		Samples\UIX Applications\AssignToMe\icons\clipboard.ico = Samples\UIX Applications\AssignToMe\icons\clipboard.ico
+		Samples\UIX Applications\AssignToMe\icons\clipboard.png = Samples\UIX Applications\AssignToMe\icons\clipboard.png
 	EndProjectSection
 EndProject
 Global

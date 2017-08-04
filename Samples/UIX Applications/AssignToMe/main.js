@@ -43,7 +43,16 @@ function getShellFrameStartedHandler(shellFrame)
 		var assignCommandId = shellFrame.Commands.CreateCustomCommand( "Assign to me" );
 
 		// Set the icon for the command.
-		shellFrame.Commands.SetIconFromPath( assignCommandId, "icons/clipboard.ico" );
+		if (MFiles.CurrentApplicationPlatform == MFExtApplicationPlatformWeb)
+		{
+			// We are executing on the web; use the .png file.
+			shellFrame.Commands.SetIconFromPath( assignCommandId, "icons/clipboard.png" );
+		}
+		else
+		{
+			// We are executing on the desktop; use the .ico file.
+			shellFrame.Commands.SetIconFromPath( assignCommandId, "icons/clipboard.ico" );
+		}
 
 		// Add the command to the task pane.
 		// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
