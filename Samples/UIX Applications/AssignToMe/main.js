@@ -42,6 +42,9 @@ function getShellFrameStartedHandler(shellFrame)
 		// Create a command for "assign to me".
 		var assignCommandId = shellFrame.Commands.CreateCustomCommand( "Assign to me" );
 
+		// Set the icon for the command.
+		shellFrame.Commands.SetIconFromPath( assignCommandId, "icons/clipboard.ico" );
+
 		// Add the command to the task pane.
 		// ref: http://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~ITaskPane~AddCustomCommandToGroup.html
 		shellFrame.TaskPane.AddCustomCommandToGroup( assignCommandId, TaskPaneGroup_Main, 0 );
