@@ -418,15 +418,284 @@ namespace MFaaP.MFWSClient
         /// The actual folder contents.
         /// </summary>
         public List<FolderContentItem> Items { get; set; }
-        
+		
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public FolderUIState FolderUIState { get; set; }
+
     }
 
-    
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	/// <remarks>
+	/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~FolderUIState.html
+	/// </remarks>
+	public class FolderUIState
+	{
+		public FolderUIState()
+		{
+		}
 
-    /// <summary>
-    /// A workflow state on an object.
-    /// </summary>
-    public class ObjectWorkflowState
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool? BottomPaneBarMinimized { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool? HitHighlightingEnabled { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool? MetadataEditorInRightPane { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool? RelativeBottomPaneHeight { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool? RelativeRightPaneWidth { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool? RightPaneBarMinimized { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool? ShowBottomPaneBar { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool? ShowRightPaneBar { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public FolderListingUIState ListingUIState { get; set; }
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	/// <remarks>
+	/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~FolderListingUIState.html
+	/// </remarks>
+	public class FolderListingUIState
+	{
+		public FolderListingUIState()
+		{
+		}
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public List<FolderListingColumnSorting> ColumnSortings { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public List<FolderListingColumn> Columns { get; set; }
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	/// <remarks>
+	/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~FolderListingColumn.html
+	/// </remarks>
+	public class FolderListingColumn
+	{
+		public FolderListingColumn()
+		{
+		}
+
+		/// <summary>
+		/// The column ID to be sorted; the property definition ID or a pseudo-ID.
+		/// </summary>
+		/// <remarks>
+		/// The column ID is either a property definition ID (positive values) or a value in <see cref="MFFolderColumnId" /> Enumeration (negative values).
+		/// </remarks>
+		public int ID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public MFFolderListingColumnFlags Flags { get; set; }
+
+		/// <summary>
+		/// The column display name.
+		/// </summary>
+		public string Name { get; set; }
+
+		/// <summary>
+		/// Specifies the position for a visible column.
+		/// </summary>
+		/// <remarks>
+		/// Each column in the FolderListingColumns Collection should have a unique and linear position number for visible columns. The position for the leftmost column is 0.
+		/// For invisible columns, the position number is -1.
+		/// </remarks>
+		public int Position { get; set; }
+
+		/// <summary>
+		/// Specifies the column width.
+		/// </summary>
+		public int Width { get; set; }
+
+		/// <summary>
+		/// Specifies whether the column is visible.
+		/// </summary>
+		public bool Visible { get; set; }
+
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	/// <remarks>
+	/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFFolderListingColumnFlags.html
+	/// </remarks>
+	[Flags]
+	public enum MFFolderListingColumnFlags
+	{
+		None = 0,
+
+		/// <summary>
+		/// Displays the column with selected background color if the column on the left is selected.
+		/// </summary>
+		MFFolderListingColumnFlagsSelectIfLeftOfSelectedMainColumn = 1,
+
+		/// <summary>
+		/// Hides the column text.
+		/// </summary>
+		MFFolderListingColumnFlagsHideColumnText = 2
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	/// <remarks>
+	/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~FolderListingColumnSorting.html
+	/// </remarks>
+	public class FolderListingColumnSorting
+	{
+		public FolderListingColumnSorting()
+		{
+		}
+
+		/// <summary>
+		/// The column ID to be sorted; the property definition ID or a pseudo-ID.
+		/// </summary>
+		/// <remarks>
+		/// The column ID is either a property definition ID (positive values) or a value in <see cref="MFFolderColumnId" /> Enumeration (negative values).
+		/// </remarks>
+		public int ID { get; set; }
+
+		/// <summary>
+		/// The zero-based column index to be sorted.
+		/// </summary>
+		public int Index { get; set; }
+
+		/// <summary>
+		/// True to sort ascending, false to sort descending.
+		/// </summary>
+		public bool SortAscending { get; set; }
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	/// <remarks>
+	/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFFolderColumnId.html
+	/// </remarks>
+	public enum MFFolderColumnId
+	{
+		/// <summary>The identifier of the 'Date-Time' column.</summary>
+		MFFolderColumnIdCheckOutAt = -6,
+
+		/// <summary>The identifier of the 'Checked Out To' column.</summary>
+		MFFolderColumnIdCheckoutTo = -5,
+
+		/// <summary>The identifier of the 'Date Created' column.</summary>
+		MFFolderColumnIdDateCreated = -13,
+
+		/// <summary>The identifier of the 'Date Modified' column.</summary>
+		MFFolderColumnIdDateModified = -14,
+
+		/// <summary>The identifier of the 'Exported File' column.</summary>
+		MFFolderColumnIdExportedFile = -1000000,
+
+		/// <summary>The identifier of the 'Has Assignments' column.</summary>
+		MFFolderColumnIdHasAssignments = -22,
+
+		/// <summary>The identifier of the 'Has Relationships' column.</summary>
+		MFFolderColumnIdHasRelationships = -17,
+
+		/// <summary>The identifier of the ID Segment column.</summary>
+		MFFolderColumnIdIdSegment = -1000001,
+
+		/// <summary>The identifier of the 'Location' column.</summary>
+		MFFolderColumnIdLocation = -11,
+
+		/// <summary>The identifier of the 'Name' column.</summary>
+		MFFolderColumnIdName = -1,
+
+		/// <summary>The identifier of the 'ID' column (for display purposes).</summary>
+		MFFolderColumnIdObjectDispId = -7,
+
+		/// <summary>The identifier of the 'Permissions' column.</summary>
+		MFFolderColumnIdObjectPermissions = -20,
+
+		/// <summary>The identifier of the 'Object Type' column.</summary>
+		MFFolderColumnIdObjectType = -19,
+
+		/// <summary>The identifier of the 'Version' column.</summary>
+		MFFolderColumnIdObjectVersion = -8,
+
+		/// <summary>The identifier of the 'Description' column of a relationships view.</summary>
+		MFFolderColumnIdRelationshipDesc = -16,
+
+		/// <summary>The identifier of the 'Target Version' column of a relationships view.</summary>
+		MFFolderColumnIdRelationshipTargetVer = -18,
+
+		/// <summary>The identifier of the 'Relative Location' column. Used for special purposes only.</summary>
+		MFFolderColumnIdRelLocation = -12,
+
+		/// <summary>The identifier of the 'Score' column.</summary>
+		MFFolderColumnIdScore = -15,
+
+		/// <summary>The identifier of the 'User' column. Available in History view only.</summary>
+		MFFolderColumnIdShLastModifiedBy = -10,
+
+		/// <summary>The identifier of the 'Date-Time' column. Available in History view only.</summary>
+		MFFolderColumnIdShStatusChanged = -9,
+
+		/// <summary>The identifier of the 'Size' column.</summary>
+		MFFolderColumnIdSize = -3,
+
+		/// <summary>The identifier of the 'Status' column.</summary>
+		MFFolderColumnIdStatus = -4,
+
+		/// <summary>The identifier of the 'Type' column, basic type info.</summary>
+		MFFolderColumnIdType = -2,
+
+		/// <summary>The identifier of the 'Type' column, extended type info.</summary>
+		MFFolderColumnIdTypeEx = -21
+	}
+
+	/// <summary>
+	/// A workflow state on an object.
+	/// </summary>
+	public class ObjectWorkflowState
     {
 
         /// <summary>
@@ -832,8 +1101,18 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public int Version { get; set; }
-        
-    }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		/// <remarks>M-Files API uses LogicalSize.</remarks>
+		public long Size { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string FileGUID { get; set; }
+	}
 
     
 
