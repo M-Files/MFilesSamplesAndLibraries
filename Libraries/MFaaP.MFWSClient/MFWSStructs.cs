@@ -963,18 +963,31 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public int CheckedOutTo { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public string CheckedOutToUserName { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public int Class { get; set; }
-        
-        /// <summary>
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		/// <remarks>
+		/// Called CheckedOutToHostName in API.
+		/// </remarks>
+		public string CheckedOutFrom { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string CheckedOutToUserName { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public int Class { get; set; }
+
+		/// <summary>
+		/// The score of the item, if returned in a search.
+		/// </summary>
+	    public int Score { get; set; }
+
+	    /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public DateTime CreatedUtc { get; set; }
@@ -1048,16 +1061,24 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public bool ThisVersionLatestToThisUser { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public string Title { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public bool VisibleAfterOperation { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string Title { get; set; }
+
+		/// <summary>
+		/// The title that is compatible with file systems, including the ID.
+		/// </summary>
+		/// <remarks>
+		/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~ObjectVersion~GetNameForFileSystem.html
+		/// </remarks>
+		public string EscapedTitleWithID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool VisibleAfterOperation { get; set; }
 
         /// <summary>
         /// Based on M-Files API.
@@ -1085,22 +1106,33 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
+        /// <remarks>
+        /// When returned from the server it does not include the "." prefix.
+        /// </remarks>
         public string Extension { get; set; }
         
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int ID { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public string Name { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public int Version { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string Name { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		/// <remarks>
+		/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~ObjectFile~GetNameForFileSystem.html
+		/// </remarks>
+		public string EscapedName { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public int Version { get; set; }
 
 		/// <summary>
 		/// Based on M-Files API.
@@ -1789,19 +1821,16 @@ namespace MFaaP.MFWSClient
 	/// </summary>
 	public enum MFObjectVersionFlag
 	{
-
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
 		None  = 0,
 		
-
 		/// <summary>
 		/// 
 		/// </summary>
 		Completed  = 1,
-		
 
 		/// <summary>
 		/// 
