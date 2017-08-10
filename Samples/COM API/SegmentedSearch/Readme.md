@@ -38,6 +38,8 @@ The code  (`Program.cs`) contains two implementations of the search code:
 1. The `UseLibrary` method uses the M-Files API Helper Library to execute the various searches.  This library wraps some complexities of connecting/disconnecting from the vault, and creation of the SearchCondition objects.  The purpose of this code is to show the specific approach as cleanly as possible.
 2. The `UseAPI` method uses the M-Files API directly.  This method shows the specific code required to use this approach directly against the API.  It contains more boiler-plate code but is useful both for learning, and for situations where the M-Files API Helper Library cannot be used.
 
+:warning: Note that the code shown below retrieves all items from the vault in order to then simply  `.Count` the results.  When using M-Files 2015.3 and upwards, the [GetObjectCountInSearch](https://www.m-files.com/api/documentation/2015.3/index.html#MFilesAPI~VaultObjectSearchOperations~GetObjectCountInSearch.html) method is preferable, as this will simply return the count rather than all matching object versions.
+
 ### UseLibrary
 
 This sample uses a number of helper methods from the M-Files API Helper Library.  These helper methods make connecting to the vault simpler, as well as removing the complexity of creating search conditions.
