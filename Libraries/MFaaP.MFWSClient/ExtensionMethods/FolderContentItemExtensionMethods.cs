@@ -45,7 +45,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 		/// </remarks>
 		/// <param name="items">The items to return the view path for.</param>
 		/// <returns>The view path.</returns>
-		internal static string GetPath(this FolderContentItem[] items)
+		public static string GetPath(this FolderContentItem[] items)
 		{
 			// Sanity.
 			if (null == items || 0 == items.Length)
@@ -64,7 +64,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 		/// </remarks>
 		/// <param name="item">The item to return the view path for.</param>
 		/// <returns>The view path.</returns>
-		internal static string GetPath(this FolderContentItem item)
+		public static string GetPath(this FolderContentItem item)
 		{
 			// Sanity.
 			if (null == item)
@@ -132,7 +132,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 							return null;
 
 						// Return the formatted value.
-						return $"{prefix}{WebUtility.UrlDecode(suffix)}";
+						return $"{prefix}{WebUtility.UrlEncode(suffix)}";
 					}
 				default:
 					return null;

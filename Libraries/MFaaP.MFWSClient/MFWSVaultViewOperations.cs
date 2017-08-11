@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MFaaP.MFWSClient.ExtensionMethods;
@@ -72,17 +73,27 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="items"/>.
+		/// Gets the contents of the view specified by the <see cref="path"/>.
 		/// </summary>
-		/// <param name="items">A collection representing the view depth.
-		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
-		/// then zero or more <see cref="FolderContentItem"/>s representing the appropriate property groups being shown.</param>
+		/// <param name="path">A view path, formatted as per http://www.m-files.com/mfws/syntax.html#sect:viewpath. </param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The contents of the view.</returns>
-		public async Task<FolderContentItems> GetFolderContentsAsync(CancellationToken token, params FolderContentItem[] items)
+		public async Task<FolderContentItems> GetFolderContentsAsync(CancellationToken token, string path)
 		{
+			// Sanity.
+			if (false == string.IsNullOrWhiteSpace(path))
+			{
+				// If the path is not blank then it must end with a slash.
+				if (false == path.EndsWith("/"))
+					path += "/";
+
+				// It cannot start with a slash.
+				if (path.StartsWith("/"))
+					path = path.Substring(1);
+			}
+
 			// Create the request.
-			var request = new RestRequest($"/REST/views/{items.GetPath()}items");
+			var request = new RestRequest($"/REST/views/{path}items");
 
 			// Make the request and get the response.
 			var response = await this.MFWSClient.Get<FolderContentItems>(request, token)
@@ -90,6 +101,56 @@ namespace MFaaP.MFWSClient
 
 			// Return the data.
 			return response.Data;
+		}
+
+		/// <summary>
+		/// Gets the contents of the view specified by the <see cref="path"/>.
+		/// </summary>
+		/// <param name="path">A view path, formatted as per http://www.m-files.com/mfws/syntax.html#sect:viewpath. </param>
+		/// <returns>The contents of the view.</returns>
+		public Task<FolderContentItems> GetFolderContentsAsync(string path)
+		{
+			// Execute the async method.
+			return this.GetFolderContentsAsync(CancellationToken.None, path);
+		}
+
+		/// <summary>
+		/// Gets the contents of the view specified by the <see cref="path"/>.
+		/// </summary>
+		/// <param name="path">A view path, formatted as per http://www.m-files.com/mfws/syntax.html#sect:viewpath. </param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The contents of the view.</returns>
+		public FolderContentItems GetFolderContents(CancellationToken token, string path)
+		{
+			// Execute the async method.
+			return this.GetFolderContentsAsync(token, path)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Gets the contents of the view specified by the <see cref="path"/>.
+		/// </summary>
+		/// <param name="path">A view path, formatted as per http://www.m-files.com/mfws/syntax.html#sect:viewpath. </param>
+		/// <returns>The contents of the view.</returns>
+		public FolderContentItems GetFolderContents(string path)
+		{
+			// Execute the async method.
+			return this.GetFolderContents(CancellationToken.None, path);
+		}
+
+		/// <summary>
+		/// Gets the contents of the view specified by the <see cref="items"/>.
+		/// </summary>
+		/// <param name="items">A collection representing the view depth.
+		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
+		/// then zero or more <see cref="FolderContentItem"/>s representing the appropriate property groups being shown.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The contents of the view.</returns>
+		public Task<FolderContentItems> GetFolderContentsAsync(CancellationToken token, params FolderContentItem[] items)
+		{
+			return this.GetFolderContentsAsync(token, items.GetPath());
 		}
 
 		/// <summary>
