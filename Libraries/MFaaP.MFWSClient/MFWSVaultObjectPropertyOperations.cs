@@ -57,7 +57,7 @@ namespace MFaaP.MFWSClient
 		public async Task<PropertyValue[][]> GetPropertiesOfMultipleObjectsAsync(CancellationToken token, params ObjVer[] objVers)
 		{
 			// Sanity.
-			if (null == objVers)
+			if (null == objVers || objVers.Length == 0)
 				return new PropertyValue[0][];
 
 			// Create the request.
