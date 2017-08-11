@@ -63,14 +63,11 @@ namespace MFaaP.MFWSClient
 			// Create the request.
 			var request = new RestRequest("/REST/objects/properties");
 
-			// Add the content to the request.
-			foreach (var objVer in objVers)
-			{
-				request.Resource += $";{objVer.Type}/{objVer.ID}/{objVer.Version}";
-			}
+			// Add the body.
+			request.AddJsonBody(objVers);
 
 			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<List<List<PropertyValue>>>(request, token)
+			var response = await this.MFWSClient.Post<List<List<PropertyValue>>>(request, token)
 				.ConfigureAwait(false);
 
 			// Return the data.
