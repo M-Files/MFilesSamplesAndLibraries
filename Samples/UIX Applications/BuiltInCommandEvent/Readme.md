@@ -1,4 +1,4 @@
-# Creating assignments on button click
+# Reacting to built-in commands
 
 This application registers a [ShellUI module](http://developer.m-files.com/Frameworks/User-Interface-Extensibility-Framework/Modules/#shellui) that reacts when built-in commands are executed.
 
