@@ -34,18 +34,19 @@
         <Object Editable="true">
           <ID>EventHandlerType</ID>
           <ToolTip>Replace with the event handler type.</ToolTip>
-          <Default>MFEventHandlerType.MFEventHandlerBeforeCheckInChanges</Default>
+          <Default>MFEventHandlerBeforeCheckInChanges</Default>
           <Function>
           </Function>
           <Type>MFilesAPI.MFEventHandlerType</Type>
         </Object>
       </Declarations>
-      <Code Language="csharp" Kind="method decl" Delimiter="$"><![CDATA[
+      <Code Language="csharp" Kind="method decl" Delimiter="$">
+  <![CDATA[
 /// <summary>
-/// Handles the <see cref="MFilesAPI.MFEventHandlerType.MFEventHandlerBeforeCheckInChanges" /> event.
+/// Handles the <see cref="MFEventHandlerType.$EventHandlerType$" /> event.
 /// </summary>
 /// <param name="env">The vault/object environment.</param>
-[EventHandler($EventHandlerType$)]
+[EventHandler(MFEventHandlerType.$EventHandlerType$)]
 public void $MethodName$(EventHandlerEnvironment env)
 {
 	$end$
