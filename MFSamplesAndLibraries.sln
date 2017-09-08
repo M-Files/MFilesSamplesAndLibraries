@@ -138,6 +138,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{AD7C3E92
 		Samples\UIX Applications\AssignToMe\icons\clipboard.png = Samples\UIX Applications\AssignToMe\icons\clipboard.png
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuiltInCommand Event", "BuiltInCommand Event", "{1D8173C7-EB1B-44D6-AE36-DE0CFB68C741}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\BuiltInCommandEvent\appdef.xml = Samples\UIX Applications\BuiltInCommandEvent\appdef.xml
+		Samples\UIX Applications\BuiltInCommandEvent\main.js = Samples\UIX Applications\BuiltInCommandEvent\main.js
+		Samples\UIX Applications\BuiltInCommandEvent\Readme.md = Samples\UIX Applications\BuiltInCommandEvent\Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -253,5 +260,6 @@ Global
 		{FD201B59-BE79-4C66-A999-0231BA2C5765} = {55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F}
 		{0314EC81-67A8-4FD5-B9FD-F3129F0A175F} = {FD201B59-BE79-4C66-A999-0231BA2C5765}
 		{AD7C3E92-590B-4F85-B3D4-83869281FD99} = {4BFB765D-E722-4657-A93F-4B962D70B6FB}
+		{1D8173C7-EB1B-44D6-AE36-DE0CFB68C741} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,5 @@
 // NOTE! This code is for demonstration purposes only and does not contain any kind of
 // 		 error handling. MUST be revised before using in production.
-//		 Created by: Craig Hawker / M-Files
 
 "use strict";
 
@@ -24,7 +23,7 @@ function handleNewNormalShellFrame(shellFrame)
 	/// <summary>Handles the OnNewNormalShellFrame event for an IShellUI.</summary>
 	/// <param name="shellFrame" type="MFiles.ShellFrame">The shell frame object which was created.</param> 
 
-	// Register to listen to the started event.
+	// Register to be notified of the started event.
 	shellFrame.Events.Register(
 		Event_Started,
 		getShellFrameStartedHandler( shellFrame ) );

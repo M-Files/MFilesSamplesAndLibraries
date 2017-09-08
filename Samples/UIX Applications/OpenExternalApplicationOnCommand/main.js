@@ -1,6 +1,5 @@
 // NOTE! This code is for demonstration purposes only and does not contain any kind of
 // 		 error handling. MUST be revised before using in production.
-//		 Authored by: Craig Hawker / M-Files
 
 "use strict";
 

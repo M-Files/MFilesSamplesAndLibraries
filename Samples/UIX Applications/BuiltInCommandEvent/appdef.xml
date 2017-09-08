@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef.xsd">
+	<guid>BDB8D786-74AB-44E9-8F92-BF1FDDBB1FAE</guid>
+	<name>Built-in Command Demonstration</name>
+	<version>1.0</version>
+	<description>Simple M-Files built-in command demonstration</description>
+	<publisher>M-Files Corporation</publisher>
+	<copyright>(c) M-Files Corporation 2015</copyright>
+	<required-mfiles-version>11.1.4310.46</required-mfiles-version>
+	<modules>
+		<module environment="shellui">
+			<file>main.js</file>
+		</module>		
+	</modules>
+</application>
