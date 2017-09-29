@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MFaaP.MFWSClient.Searching;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using RestSharp;
@@ -1705,110 +1706,6 @@ namespace MFaaP.MFWSClient.Tests
 			Assert.AreEqual("/REST/objects?p123=456", resourceAddress);
 		}
 
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectSearchOperations.SearchForObjectsByConditions(MFaaP.MFWSClient.ISearchCondition[])"/>
-		/// requests the correct resource address.
-		/// </summary>
-		[TestMethod]
-		public async Task SearchForObjectsByConditionsAsync_LookupPropertyValueSearchCondition_CorrectResource_ExternalLookup()
-		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ObjectVersion>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ObjectVersion>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.ObjectSearchOperations.SearchForObjectsByConditionsAsync(new LookupPropertyValueSearchCondition(123, externalLookupIds: "456"));
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects?p123=e456", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectSearchOperations.SearchForObjectsByConditions(MFaaP.MFWSClient.ISearchCondition[])"/>
-		/// requests the correct resource address.
-		/// </summary>
-		[TestMethod]
-		public void SearchForObjectsByConditions_LookupPropertyValueSearchCondition_CorrectResource_ExternalLookup()
-		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ObjectVersion>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ObjectVersion>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.ObjectSearchOperations.SearchForObjectsByConditions(new LookupPropertyValueSearchCondition(123, externalLookupIds: "456"));
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects?p123=e456", resourceAddress);
-		}
-
 		#endregion
 
 		#region MultiSelectLookupPropertyValueSearchCondition
@@ -1915,110 +1812,6 @@ namespace MFaaP.MFWSClient.Tests
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/objects?p123=456%2C789", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectSearchOperations.SearchForObjectsByConditions(MFaaP.MFWSClient.ISearchCondition[])"/>
-		/// requests the correct resource address.
-		/// </summary>
-		[TestMethod]
-		public async Task SearchForObjectsByConditionsAsync_MultiSelectLookupPropertyValueSearchCondition_CorrectResource_ExternalLookup()
-		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ObjectVersion>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ObjectVersion>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.ObjectSearchOperations.SearchForObjectsByConditionsAsync(new MultiSelectLookupPropertyValueSearchCondition(123, externalLookupIds: new[] { "456", "789" }));
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects?p123=e456%2Ce789", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectSearchOperations.SearchForObjectsByConditions(MFaaP.MFWSClient.ISearchCondition[])"/>
-		/// requests the correct resource address.
-		/// </summary>
-		[TestMethod]
-		public void SearchForObjectsByConditions_MultiSelectLookupPropertyValueSearchCondition_CorrectResource_ExternalLookup()
-		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ObjectVersion>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ObjectVersion>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.ObjectSearchOperations.SearchForObjectsByConditions(new MultiSelectLookupPropertyValueSearchCondition(123, externalLookupIds: new[] { "456", "789" }));
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects?p123=e456%2Ce789", resourceAddress);
 		}
 
 		#endregion
@@ -2439,6 +2232,114 @@ namespace MFaaP.MFWSClient.Tests
 
 			// Resource must be correct.
 			Assert.AreEqual("/REST/objects?p123^=hello", resourceAddress);
+		}
+
+		#endregion
+		
+		#region ValueListSearchCondition
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectSearchOperations.SearchForObjectsByConditions(MFaaP.MFWSClient.ISearchCondition[])"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public async Task SearchForObjectsByConditionsAsync_ValueList_CorrectResource_InternalId()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<Results<ObjectVersion>>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new Results<ObjectVersion>());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			await mfwsClient.ObjectSearchOperations.SearchForObjectsByConditionsAsync(new ValueListSearchCondition(123, 123));
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual("/REST/objects?vl123=123", resourceAddress);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectSearchOperations.SearchForObjectsByConditions(MFaaP.MFWSClient.ISearchCondition[])"/>
+		/// requests the correct resource address.
+		/// </summary>
+		[TestMethod]
+		public void SearchForObjectsByConditionsAsync_ValueList_CorrectResource_ExternalId()
+		{
+			/* Arrange */
+
+			// The actual requested address.
+			var resourceAddress = "";
+
+			// Create our restsharp mock.
+			var mock = new Mock<IRestClient>();
+
+			// When the execute method is called, log the resource requested.
+			mock
+				.Setup(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					resourceAddress = r.Resource;
+				})
+				// Return a mock response.
+				.Returns(() =>
+				{
+					// Create the mock response.
+					var response = new Mock<IRestResponse<Results<ObjectVersion>>>();
+
+					// Setup the return data.
+					response.SetupGet(r => r.Data)
+						.Returns(new Results<ObjectVersion>());
+
+					//Return the mock object.
+					return Task.FromResult(response.Object);
+				});
+
+			/* Act */
+
+			// Create our MFWSClient.
+			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+			// Execute.
+			mfwsClient.ObjectSearchOperations.SearchForObjectsByConditions(new ValueListSearchCondition(123, "hello"));
+
+			/* Assert */
+
+			// Execute must be called once.
+			mock.Verify(c => c.ExecuteTaskAsync<Results<ObjectVersion>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Resource must be correct.
+			Assert.AreEqual("/REST/objects?vl123=ehello", resourceAddress);
 		}
 
 		#endregion
