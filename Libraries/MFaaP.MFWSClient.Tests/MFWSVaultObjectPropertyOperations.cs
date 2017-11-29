@@ -76,9 +76,9 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
-			Assert.AreEqual("/REST/objects/properties;1/2/0", resourceAddress);
+			Assert.AreEqual("/REST/objects/properties", resourceAddress);
 		}
-
+		
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetProperties"/>
 		/// requests the correct resource address.
@@ -138,7 +138,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Resource must be correct.
-			Assert.AreEqual("/REST/objects/properties;1/2/0", resourceAddress);
+			Assert.AreEqual("/REST/objects/properties", resourceAddress);
 		}
 
 		/// <summary>
@@ -200,7 +200,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			Assert.AreEqual(Method.POST, methodUsed);
 		}
 
 		/// <summary>
@@ -262,7 +262,7 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			Assert.AreEqual(Method.POST, methodUsed);
 		}
 
 		#endregion

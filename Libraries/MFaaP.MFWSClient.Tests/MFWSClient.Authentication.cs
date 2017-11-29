@@ -706,7 +706,7 @@ namespace MFaaP.MFWSClient.Tests
 			var mfwsClient = MFWSClient.GetMFWSClient(mock);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(vaultGuid, "my username", "my password", new DateTime(2017, 01, 01));
+			mfwsClient.AuthenticateUsingCredentials(vaultGuid, "my username", "my password", new DateTime(2017, 01, 01, 0, 0, 0, DateTimeKind.Utc));
 
 			/* Assert */
 
