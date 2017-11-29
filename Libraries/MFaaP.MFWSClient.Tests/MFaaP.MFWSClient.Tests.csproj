@@ -67,6 +67,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ExtensionMethods\IRestRequestExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\ListParameterExtensionMethods.cs" />
     <Compile Include="MFWSVaultObjectFileOperations.cs" />
     <Compile Include="MFWSVaultClassOperations.cs" />
     <Compile Include="MFWSVaultValueListOperations.cs" />

@@ -202,7 +202,9 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(request));
 
 			// Ensure method is correct.
-			request.Method = Method.DELETE;
+			// Note: we don't set the method to DELETE as this is not supported in some IIS instances.
+			request.Method = Method.POST;
+			request.AddQueryParameter("_method", "DELETE");
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -233,7 +235,9 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(request));
 
 			// Ensure method is correct.
-			request.Method = Method.DELETE;
+			// Note: we don't set the method to DELETE as this is not supported in some IIS instances.
+			request.Method = Method.POST;
+			request.AddQueryParameter("_method", "DELETE");
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -262,7 +266,9 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(request));
 
 			// Ensure method is correct.
-			request.Method = Method.PUT;
+			// Note: we don't set the method to PUT as this is not supported in some IIS instances.
+			request.Method = Method.POST;
+			request.AddQueryParameter("_method", "PUT");
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -293,7 +299,9 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(request));
 
 			// Ensure method is correct.
-			request.Method = Method.PUT;
+			// Note: we don't set the method to PUT as this is not supported in some IIS instances.
+			request.Method = Method.POST;
+			request.AddQueryParameter("_method", "PUT");
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);

@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MFaaP.MFilesAPI.Tests.ExtensionMethods;
 using MFaaP.MFWSClient.Tests.ExtensionMethods;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -340,6 +341,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// The method.
 			Method? methodUsed = null;
+			string methodParameter = null;
 
 			// Create our restsharp mock.
 			var mock = new Mock<IRestClient>();
@@ -349,6 +351,7 @@ namespace MFaaP.MFWSClient.Tests
 				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				.Callback((IRestRequest r, CancellationToken t) => {
 					methodUsed = r.Method;
+					methodParameter = r.Parameters.GetMethodQuerystringParameter();
 				})
 				// Return a mock response.
 				.Returns(() =>
@@ -386,7 +389,8 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
-			Assert.AreEqual(Method.PUT, methodUsed);
+			Assert.AreEqual(Method.POST, methodUsed);
+			Assert.AreEqual(Method.PUT.ToString(), methodParameter);
 		}
 
 		/// <summary>
@@ -520,6 +524,7 @@ namespace MFaaP.MFWSClient.Tests
 
 			// The method.
 			Method? methodUsed = null;
+			string methodParameter = null;
 
 			// Create our restsharp mock.
 			var mock = new Mock<IRestClient>();
@@ -529,6 +534,7 @@ namespace MFaaP.MFWSClient.Tests
 				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				.Callback((IRestRequest r, CancellationToken t) => {
 					methodUsed = r.Method;
+					methodParameter = r.Parameters.GetMethodQuerystringParameter();
 				})
 				// Return a mock response.
 				.Returns(() =>
@@ -558,7 +564,8 @@ namespace MFaaP.MFWSClient.Tests
 			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 
 			// Method must be correct.
-			Assert.AreEqual(Method.DELETE, methodUsed);
+			Assert.AreEqual(Method.POST, methodUsed);
+			Assert.AreEqual(Method.DELETE.ToString(), methodParameter);
 		}
 
 		#endregion
