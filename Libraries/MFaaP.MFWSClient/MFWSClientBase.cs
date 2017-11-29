@@ -121,6 +121,11 @@ namespace MFaaP.MFWSClient
 		public MFWSVaultClassOperations ClassOperations { get; }
 
 		/// <summary>
+		/// Gets the property definitions operations interface.
+		/// </summary>
+		public MFWSVaultPropertyDefOperations PropertyDefOperations { get; }
+
+		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>
 		/// <param name="restClient">The <see cref="IRestClient"/> to use for HTTP requests.</param>
@@ -144,6 +149,7 @@ namespace MFaaP.MFWSClient
 			this.ValueListOperations = new MFWSVaultValueListOperations(this);
 			this.ObjectFileOperations = new MFWSVaultObjectFileOperations(this);
 			this.ClassOperations = new MFWSVaultClassOperations(this);
+			this.PropertyDefOperations = new MFWSVaultPropertyDefOperations(this);
 		}
 
 		/// <summary>

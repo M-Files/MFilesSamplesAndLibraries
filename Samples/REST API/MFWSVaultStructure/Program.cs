@@ -70,7 +70,7 @@ namespace MFWSVaultStructure
 			{
 				// Output basic content.
 				System.Console.WriteLine($"\t{item.Name}");
-				System.Console.WriteLine("\t\tID: {item.ID}");
+				System.Console.WriteLine($"\t\tID: {item.ID}");
 
 				// Retrieve the items.
 				var valueListItems = await client.ValueListItemOperations.GetValueListItemsAsync(item.ID);
@@ -83,6 +83,18 @@ namespace MFWSVaultStructure
 				}
 
 			}
+
+			// Get the property definitions.
+			var propertyDefinitions = await client.PropertyDefOperations.GetPropertyDefsAsync();
+			Console.WriteLine($"There are {propertyDefinitions.Count} property definitions in the vault:");
+			foreach (var item in propertyDefinitions)
+			{
+				// Output basic content.
+				System.Console.WriteLine($"\t{item.Name}");
+				System.Console.WriteLine($"\t\tID: {item.ID}");
+
+			}
+
 
 		}
 	}
