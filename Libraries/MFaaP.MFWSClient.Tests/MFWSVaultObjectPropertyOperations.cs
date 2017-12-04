@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
@@ -15,255 +16,68 @@ namespace MFaaP.MFWSClient.Tests
 	[TestClass]
 	public class MFWSVaultObjectPropertyOperations
 	{
+		public TestContext TestContext { get; set; }
 
 		#region GetProperties
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetProperties"/>
-		/// requests the correct resource address.
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public async Task GetObjectPropertyValuesAsync_CorrectResource()
+		[RestApiTest(Method.POST, "/REST/objects/properties", typeof(List<List<PropertyValue>>))]
+		public void GetProperties()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<List<PropertyValue>>>();
+			runner.Setup(this.TestContext);
 
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<List<List<PropertyValue>>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new[]
-						{
-							new []
-							{
-								new PropertyValue()
-							}.ToList()
-						}.ToList());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.ObjectPropertyOperations.GetPropertiesAsync(new ObjVer()
+			// Create the object to send in the body.
+			var objVer = new ObjVer()
 			{
 				ID = 2,
 				Type = 1
-			});
+			};
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects/properties", resourceAddress);
-		}
-		
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetProperties"/>
-		/// requests the correct resource address.
-		/// </summary>
-		[TestMethod]
-		public void GetObjectPropertyValues_CorrectResource()
-		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<List<List<PropertyValue>>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new[]
-						{
-							new []
-							{
-								new PropertyValue()
-							}.ToList()
-						}.ToList());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// We should post a collection of objvers (but only with this one in it).
+			runner.SetExpectedRequestBody(new[] { objVer });
 
 			// Execute.
-			mfwsClient.ObjectPropertyOperations.GetProperties(new ObjVer()
-			{
-				ID = 2,
-				Type = 1
-			});
+			runner.MFWSClient.ObjectPropertyOperations.GetProperties(objVer);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects/properties", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetObjectPropertyValues(MFaaP.MFWSClient.ObjVer[])"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesAsync"/>
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public async Task GetObjectPropertyValuesAsync_CorrectMethod()
+		[RestApiTest(Method.POST, "/REST/objects/properties", typeof(List<List<PropertyValue>>))]
+		public async Task GetPropertiesAsync()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<List<PropertyValue>>>();
+			runner.Setup(this.TestContext);
 
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<List<List<PropertyValue>>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new[]
-						{
-							new []
-							{
-								new PropertyValue()
-							}.ToList()
-						}.ToList());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.ObjectPropertyOperations.GetPropertiesAsync(new ObjVer()
+			// Create the object to send in the body.
+			var objVer = new ObjVer()
 			{
 				ID = 2,
 				Type = 1
-			});
+			};
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetObjectPropertyValues(MFaaP.MFWSClient.ObjVer[])"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public void GetObjectPropertyValues_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<List<List<PropertyValue>>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new[]
-						{
-							new []
-							{
-								new PropertyValue()
-							}.ToList()
-						}.ToList());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// We should post a collection of objvers (but only with this one in it).
+			runner.SetExpectedRequestBody(new[] { objVer });
 
 			// Execute.
-			mfwsClient.ObjectPropertyOperations.GetProperties(new ObjVer()
-			{
-				ID = 2,
-				Type = 1
-			});
+			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesAsync(objVer);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<List<PropertyValue>>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion

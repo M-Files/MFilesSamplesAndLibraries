@@ -110,8 +110,8 @@ namespace MFaaP.MFWSClient
 
 			// Sanity.
 			return null != response && response.Length > 0
-				? new PropertyValue[0]
-				: response[0];
+				? response[0]
+				: new PropertyValue[0];
 		}
 
 		/// <summary>
