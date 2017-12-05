@@ -11,7 +11,6 @@ using RestSharp;
 namespace MFaaP.MFWSClient.Tests
 {
 	public partial class MFWSClient
-		: TestBase
 	{
 
 		#region AuthenticateUsingSingleSignOn
@@ -22,12 +21,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.GET, "/WebServiceSSO.aspx?popup=1&vault=e1ce61eb-b255-41c3-b64c-faa9feb070f0")]
 		public void AuthenticateUsingSingleSignOn()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner(Method.GET, "/WebServiceSSO.aspx?popup=1&vault=e1ce61eb-b255-41c3-b64c-faa9feb070f0");
 
 			// The ASP.NET session Id (dummy value).
 			var sessionId = Guid.NewGuid().ToString();
@@ -79,12 +76,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.GET, "/WebServiceSSO.aspx?popup=1&vault=e1ce61eb-b255-41c3-b64c-faa9feb070f0")]
 		public async Task AuthenticateUsingSingleSignOnAsync()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner(Method.GET, "/WebServiceSSO.aspx?popup=1&vault=e1ce61eb-b255-41c3-b64c-faa9feb070f0");
 
 			// The ASP.NET session Id (dummy value).
 			var sessionId = Guid.NewGuid().ToString();
@@ -140,12 +135,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.POST, "/REST/server/authenticationtokens")]
 		public void AuthenticateUsingCredentials()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<PrimitiveType<string>>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<PrimitiveType<string>>(Method.POST, "/REST/server/authenticationtokens");
 
 			// When the execute method is called, return a dummy authentication token.
 			runner.RestClientMock
@@ -199,12 +192,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.POST, "/REST/server/authenticationtokens")]
 		public async Task AuthenticateUsingCredentialsAsync()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<PrimitiveType<string>>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<PrimitiveType<string>>(Method.POST, "/REST/server/authenticationtokens");
 
 			// When the execute method is called, return a dummy authentication token.
 			runner.RestClientMock
@@ -262,12 +253,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.GET, "/REST/server/vaults?online=true")]
 		public void GetOnlineVaults()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<List<Vault>>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<List<Vault>>(Method.GET, "/REST/server/vaults?online=true");
 
 			// Execute.
 			runner.MFWSClient.GetOnlineVaults();
@@ -282,12 +271,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.GET, "/REST/server/vaults?online=true")]
 		public async Task GetOnlineVaultsAsync()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<List<Vault>>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<List<Vault>>(Method.GET, "/REST/server/vaults?online=true");
 
 			// Execute.
 			await runner.MFWSClient.GetOnlineVaultsAsync();

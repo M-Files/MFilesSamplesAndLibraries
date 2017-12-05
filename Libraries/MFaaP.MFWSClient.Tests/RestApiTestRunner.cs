@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,10 +16,13 @@ namespace MFaaP.MFWSClient.Tests
 	/// <summary>
 	/// A runner for REST API tests.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <remarks>
+	/// <see cref="RestApiTestRunner{T}"/> should be used in preference tot his base class.
+	/// This class is used when interacting with endpoints that do not operate as REST-style endpoints (e.g. authentication).
+	/// </remarks>
 	public class RestApiTestRunner
 	{
-		private object _lock = new object();
+		private readonly object _lock = new object();
 		private MFaaP.MFWSClient.MFWSClient mfwsClient;
 
 		/// <summary>
@@ -26,13 +30,14 @@ namespace MFaaP.MFWSClient.Tests
 		/// to verify that the required methods were called on the <see cref="RestClientMock"/>.
 		/// </summary>
 		/// <remarks>By default it will check that <see cref="IRestClient.ExecuteTaskAsync{T}(RestSharp.IRestRequest,System.Threading.CancellationToken)"/> is called exactly once.</remarks>
-		public Dictionary<Expression<Action<IRestClient>>, Moq.Times> VerifyTasks { get; protected set; }
+		public Dictionary<Expression<Action<IRestClient>>, Moq.Times> VerifyTasks { get; private set; }
 		= new Dictionary<Expression<Action<IRestClient>>, Moq.Times>();
 
 		/// <summary>
 		/// The mock of <see cref="IRestClient"/>.
 		/// </summary>
-		public Mock<IRestClient> RestClientMock { get; protected set; }
+		public Mock<IRestClient> RestClientMock { get; private set; }
+			= new Mock<IRestClient>();
 
 		/// <summary>
 		/// The fully-mocked <see cref="MFaaP.MFWSClient.MFWSClient"/> for interacting with the vault.
@@ -56,29 +61,78 @@ namespace MFaaP.MFWSClient.Tests
 			}
 			protected set { this.mfwsClient = value; }
 		}
+		/// <summary>
+		/// The HTTP method expected.
+		/// </summary>
+		public RestSharp.Method ExpectedMethod { get; set; }
 
 		/// <summary>
-		/// A reference to the <see cref="RestApiTestAttribute"/> used to describe the expected
-		/// endpoint behaviour.
+		/// The resource that should be requested.
 		/// </summary>
-		public RestApiTestAttribute RestApiTestAttribute { get; protected set; }
+		public string ExpectedResourceAddress { get; set; }
 
+		/// <summary>
+		/// The expected request format (used for formatting the body, if required).
+		/// </summary>
+		public DataFormat ExpectedRequestFormat { get; set; }
+		= DataFormat.Json;
+
+		/// <summary>
+		/// The HTTP response code to provide.
+		/// </summary>
+		public HttpStatusCode ResponseStatusCode { get; set; }
+			= HttpStatusCode.OK;
+		
 		/// <summary>
 		/// Gets or sets the response data which the endpoint will return.
 		/// Defaults to a new instance of <see cref="T"/>.
 		/// </summary>
 		public virtual string ResponseData { get; set; }
 			= null;
+		/// <summary>
+		/// The request body which is expected to be passed.
+		/// </summary>
+		public Parameter ExpectedRequestBody { get; set; }
 
+		/// <summary>
+		/// The serialiser to use for Json encoding (should be the same as set up within
+		/// RestSharp, so that the encoded bodies can be compared).
+		/// </summary>
 		public ISerializer JsonSerializer { get; set; }
 		= new RestSharp.Serializers.JsonSerializer();
 
+		/// <summary>
+		/// The serialiser to use for Xml encoding (should be the same as set up within
+		/// RestSharp, so that the encoded bodies can be compared).
+		/// </summary>
 		public ISerializer XmlSerializer { get; set; }
 		= new RestSharp.Serializers.XmlSerializer();
 
-		public RestApiTestRunner()
+		/// <summary>
+		/// Creates a <see cref="RestApiTestRunner"/> with the supplied information.
+		/// </summary>
+		/// <param name="expectedMethod">The HTTP method that this endpoint is expected to return for this test.</param>
+		/// <param name="expectedResourceAddress">
+		/// The resource that this point should request.  
+		/// <remarks>Should be of the format "/REST/objects...".</remarks>
+		/// </param>
+		public RestApiTestRunner(RestSharp.Method expectedMethod,
+			string expectedResourceAddress)
 		{
+			// Update object members.
+			this.ExpectedMethod = expectedMethod;
+			this.ExpectedResourceAddress = expectedResourceAddress;
+
+			// Add our basic verification task in.
 			this.VerifyTasks.Add(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Set up our mock.
+			this.RestClientMock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					this.HandleCallback(r);
+				})
+				.Returns((IRestRequest r, CancellationToken t) => this.HandleReturns(r));
 		}
 
 		/// <summary>
@@ -121,7 +175,7 @@ namespace MFaaP.MFWSClient.Tests
 			}
 
 			// Set up the expected request body parameter.
-			this.RestApiTestAttribute.ExpectedRequestBody = parameter;
+			this.ExpectedRequestBody = parameter;
 
 		}
 
@@ -144,8 +198,8 @@ namespace MFaaP.MFWSClient.Tests
 		protected virtual void HandleCallback(IRestRequest r)
 		{
 			// Ensure the HTTP method is correct.
-			var expectedMethod = this.RestApiTestAttribute.ExpectedMethod;
-			switch (this.RestApiTestAttribute.ExpectedMethod)
+			var expectedMethod = this.ExpectedMethod;
+			switch (this.ExpectedMethod)
 			{
 				case Method.GET:
 				case Method.POST:
@@ -160,8 +214,8 @@ namespace MFaaP.MFWSClient.Tests
 						.FirstOrDefault(p => p.Type == ParameterType.QueryString && p.Name == "_method");
 					Assert.IsNotNull(methodParameter, "A method parameter was not found on the request.");
 					Assert.AreEqual(methodParameter.Value,
-						this.RestApiTestAttribute.ExpectedMethod.ToString(),
-						$"The {this.RestApiTestAttribute.ExpectedMethod} should be routed through a HTTP POST, with the original method available in a querystring parameter named _method.");
+						this.ExpectedMethod.ToString(),
+						$"The {this.ExpectedMethod} should be routed through a HTTP POST, with the original method available in a querystring parameter named _method.");
 
 					break;
 			}
@@ -174,20 +228,17 @@ namespace MFaaP.MFWSClient.Tests
 
 			// Ensure the correct resource was requested.
 			Assert.AreEqual(
-				this.RestApiTestAttribute.ExpectedResourceAddress,
+				this.ExpectedResourceAddress,
 				r.Resource,
-				$"Resource {this.RestApiTestAttribute.ExpectedResourceAddress} expected, but a {r.Resource} was used.");
+				$"Resource {this.ExpectedResourceAddress} expected, but a {r.Resource} was used.");
 
-			// Ensure the data format is correct (if supplied).
-			if (this.RestApiTestAttribute.ExpectedRequestFormat.HasValue)
-			{
-				Assert.AreEqual(
-					this.RestApiTestAttribute.ExpectedRequestFormat.Value,
-					r.RequestFormat);
-			}
+			// Ensure the data format is correct.
+			Assert.AreEqual(
+				this.ExpectedRequestFormat,
+				r.RequestFormat);
 
 			// Was a request body expected?
-			if (null != this.RestApiTestAttribute.ExpectedRequestBody)
+			if (null != this.ExpectedRequestBody)
 			{
 				// Get the body from the request.
 				var requestBody = (r.Parameters ?? new List<Parameter>())
@@ -197,12 +248,12 @@ namespace MFaaP.MFWSClient.Tests
 
 				// Ensure the content type is correct.
 				Assert.AreEqual(
-					this.RestApiTestAttribute.ExpectedRequestBody.Name,
+					this.ExpectedRequestBody.Name,
 					requestBody.ContentType);
 
 				// Ensure that the value is correct.
 				Assert.AreEqual(
-					this.RestApiTestAttribute.ExpectedRequestBody.Value,
+					this.ExpectedRequestBody.Value,
 					requestBody.Value);
 			}
 		}
@@ -220,7 +271,7 @@ namespace MFaaP.MFWSClient.Tests
 			response.SetupGet(re => re.Content)
 				.Returns(this.ResponseData);
 			response.SetupGet(re => re.StatusCode)
-				.Returns(this.RestApiTestAttribute.ResponseStatusCode);
+				.Returns(this.ResponseStatusCode);
 			response.SetupGet(re => re.ResponseUri)
 				.Returns(new Uri(r.Resource, UriKind.Relative));
 
@@ -228,54 +279,39 @@ namespace MFaaP.MFWSClient.Tests
 			return Task.FromResult(response.Object);
 
 		}
-
-		public virtual void Setup(TestContext testContext)
-		{
-			// Get the RestApiTest attribute on the current test method.
-			this.RestApiTestAttribute = Type
-				.GetType(testContext.FullyQualifiedTestClassName)
-				.GetMethod(testContext.TestName)
-				.GetCustomAttribute<RestApiTestAttribute>();
-			if (null == this.RestApiTestAttribute)
-				throw new InvalidOperationException("No RestApiTestAttribute was found.");
-
-			// Set up the mock object.
-			this.RestClientMock = new Mock<IRestClient>();
-			this.RestClientMock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					this.HandleCallback(r);
-				})
-				.Returns((IRestRequest r, CancellationToken t) => this.HandleReturns(r));
-		}
 	}
 
 	/// <summary>
 	/// A runner for REST API tests.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">The response type provided by this endpoint.</typeparam>
 	public class RestApiTestRunner<T>
 		: RestApiTestRunner
 		where T : class, new()
 	{
-		/// <summary>
-		/// Gets or sets the response data which the endpoint will return.
-		/// Defaults to a new instance of <see cref="T"/>.
-		/// </summary>
+		/// <inheritdoc />
 		public new T ResponseData { get; set; }
 		= new T();
 
-		public RestApiTestRunner()
-			: base()
+		/// <inheritdoc />
+		public RestApiTestRunner(RestSharp.Method expectedMethod,
+			string expectedResourceAddress)
+			: base(expectedMethod, expectedResourceAddress)
 		{
+			// Remove the non-generic verification task.
 			this.VerifyTasks.Clear();
 			this.VerifyTasks.Add(c => c.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+			// Set up the mock for the generic ExecuteTaskAsync method.
+			this.RestClientMock
+				.Setup(c => c.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					this.HandleCallback(r);
+				})
+				.Returns((IRestRequest r, CancellationToken t) => this.HandleReturns(r));
 		}
 
-		/// <summary>
-		/// Defines the return value
-		/// </summary>
-		/// <returns></returns>
+		/// <inheritdoc />
 		public new Task<IRestResponse<T>> HandleReturns(IRestRequest r)
 		{
 			// Create the mock response.
@@ -285,33 +321,13 @@ namespace MFaaP.MFWSClient.Tests
 			response.SetupGet(re => re.Data)
 				.Returns(this.ResponseData);
 			response.SetupGet(re => re.StatusCode)
-				.Returns(this.RestApiTestAttribute.ResponseStatusCode);
+				.Returns(this.ResponseStatusCode);
 			response.SetupGet(re => re.ResponseUri)
 				.Returns(new Uri(r.Resource, UriKind.Relative));
 
 			//Return the mock object.
 			return Task.FromResult(response.Object);
 
-		}
-
-		public new void Setup(TestContext testContext)
-		{
-			// Get the RestApiTest attribute on the current test method.
-			this.RestApiTestAttribute = Type
-				.GetType(testContext.FullyQualifiedTestClassName)
-				.GetMethod(testContext.TestName)
-				.GetCustomAttribute<RestApiTestAttribute>();
-			if (null == this.RestApiTestAttribute)
-				throw new InvalidOperationException("No RestApiTestAttribute was found.");
-
-			// Set up the mock object.
-			this.RestClientMock = new Mock<IRestClient>();
-			this.RestClientMock
-				.Setup(c => c.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					this.HandleCallback(r);
-				})
-				.Returns((IRestRequest r, CancellationToken t) => this.HandleReturns(r));
 		}
 	}
 }

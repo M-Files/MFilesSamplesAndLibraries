@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MFaaP.MFilesAPI.Tests.ExtensionMethods;
-using MFaaP.MFWSClient.Tests.ExtensionMethods;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace MFaaP.MFWSClient.Tests
 {
 	[TestClass]
 	public class MFWSVaultObjectPropertyOperations
-		: TestBase
 	{
 
 		#region GetProperties
@@ -26,12 +17,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.POST, "/REST/objects/properties")]
 		public void GetProperties()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<List<List<PropertyValue>>>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<List<List<PropertyValue>>>(Method.POST, "/REST/objects/properties");
 
 			// Create the object to send in the body.
 			var body = new ObjVer()
@@ -56,12 +45,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.POST, "/REST/objects/properties")]
 		public async Task GetPropertiesAsync()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<List<List<PropertyValue>>>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<List<List<PropertyValue>>>(Method.POST, "/REST/objects/properties");
 
 			// Create the object to send in the body.
 			var body = new ObjVer()
@@ -90,12 +77,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.PUT, "/REST/objects/1/2/latest/properties/0")]
 		public void SetProperty()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ExtendedObjectVersion>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.PUT, "/REST/objects/1/2/latest/properties/0");
 
 			// Create the object to send in the body.
 			var body = new PropertyValue()
@@ -122,12 +107,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.PUT, "/REST/objects/1/2/latest/properties/0")]
 		public async Task SetPropertyAsync()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ExtendedObjectVersion>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.PUT, "/REST/objects/1/2/latest/properties/0");
 
 			// Create the object to send in the body.
 			var body = new PropertyValue()
@@ -158,12 +141,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.DELETE, "/REST/objects/1/2/latest/properties/0")]
 		public void RemoveProperty()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ExtendedObjectVersion>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.DELETE, "/REST/objects/1/2/latest/properties/0");
 
 			// Execute.
 			runner.MFWSClient.ObjectPropertyOperations.RemoveProperty(1, 2, 0);
@@ -178,12 +159,10 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.DELETE, "/REST/objects/1/2/latest/properties/0")]
 		public async Task RemovePropertyAsync()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ExtendedObjectVersion>();
-			runner.Setup(this.TestContext);
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.DELETE, "/REST/objects/1/2/latest/properties/0");
 
 			// Execute.
 			await runner.MFWSClient.ObjectPropertyOperations.RemovePropertyAsync(1, 2, 0);
