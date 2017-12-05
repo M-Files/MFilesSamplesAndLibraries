@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,41 +16,59 @@ namespace MFaaP.MFWSClient.Tests
 	/// A runner for REST API tests.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class RestApiTestRunner<T>
-		where T : class, new()
+	public class RestApiTestRunner
 	{
+		private object _lock = new object();
+		private MFaaP.MFWSClient.MFWSClient mfwsClient;
 
 		/// <summary>
 		/// A collection of tasks that will be passed to <see cref="Mock{T}.Verify(System.Linq.Expressions.Expression{System.Action{T}})"/>
 		/// to verify that the required methods were called on the <see cref="RestClientMock"/>.
 		/// </summary>
 		/// <remarks>By default it will check that <see cref="IRestClient.ExecuteTaskAsync{T}(RestSharp.IRestRequest,System.Threading.CancellationToken)"/> is called exactly once.</remarks>
-		public Dictionary<Expression<Action<IRestClient>>, Moq.Times> VerifyTasks { get; private set; }
+		public Dictionary<Expression<Action<IRestClient>>, Moq.Times> VerifyTasks { get; protected set; }
 		= new Dictionary<Expression<Action<IRestClient>>, Moq.Times>();
 
 		/// <summary>
 		/// The mock of <see cref="IRestClient"/>.
 		/// </summary>
-		public Mock<IRestClient> RestClientMock { get; private set; }
+		public Mock<IRestClient> RestClientMock { get; protected set; }
 
 		/// <summary>
 		/// The fully-mocked <see cref="MFaaP.MFWSClient.MFWSClient"/> for interacting with the vault.
 		/// Execute your tests against this.
 		/// </summary>
-		public MFaaP.MFWSClient.MFWSClient MFWSClient { get; private set; }
+		public MFaaP.MFWSClient.MFWSClient MFWSClient
+		{
+			get
+			{
+				if (null == this.mfwsClient)
+				{
+					lock (this._lock)
+					{
+						if (null == this.mfwsClient)
+						{
+							this.mfwsClient = Tests.MFWSClient.GetMFWSClient(this.RestClientMock);
+						}
+					}
+				}
+				return this.mfwsClient;
+			}
+			protected set { this.mfwsClient = value; }
+		}
 
 		/// <summary>
 		/// A reference to the <see cref="RestApiTestAttribute"/> used to describe the expected
 		/// endpoint behaviour.
 		/// </summary>
-		public RestApiTestAttribute RestApiTestAttribute { get; private set; }
+		public RestApiTestAttribute RestApiTestAttribute { get; protected set; }
 
 		/// <summary>
 		/// Gets or sets the response data which the endpoint will return.
 		/// Defaults to a new instance of <see cref="T"/>.
 		/// </summary>
-		public T ResponseData { get; set; }
-		= new T();
+		public virtual string ResponseData { get; set; }
+			= null;
 
 		public ISerializer JsonSerializer { get; set; }
 		= new RestSharp.Serializers.JsonSerializer();
@@ -62,7 +78,7 @@ namespace MFaaP.MFWSClient.Tests
 
 		public RestApiTestRunner()
 		{
-			this.VerifyTasks.Add(c => c.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+			this.VerifyTasks.Add(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
 		}
 
 		/// <summary>
@@ -74,7 +90,7 @@ namespace MFaaP.MFWSClient.Tests
 		public void SetExpectedRequestBody(object body, DataFormat dataFormat = DataFormat.Json, string xmlNamespace = "")
 		{
 			// Set up the parameter.
-			var parameter =  new Parameter()
+			var parameter = new Parameter()
 			{
 				Type = ParameterType.RequestBody
 			};
@@ -116,7 +132,7 @@ namespace MFaaP.MFWSClient.Tests
 		public void Verify()
 		{
 			// Iterate over the tasks and check they were called the correct number of times.
-			foreach(var task in this.VerifyTasks)
+			foreach (var task in this.VerifyTasks)
 				this.RestClientMock.Verify(task.Key, task.Value);
 		}
 
@@ -176,7 +192,7 @@ namespace MFaaP.MFWSClient.Tests
 				// Get the body from the request.
 				var requestBody = (r.Parameters ?? new List<Parameter>())
 					.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
-				if(null == requestBody)
+				if (null == requestBody)
 					Assert.Fail("A request body was expected but none was provided.");
 
 				// Ensure the content type is correct.
@@ -195,13 +211,13 @@ namespace MFaaP.MFWSClient.Tests
 		/// Defines the return value
 		/// </summary>
 		/// <returns></returns>
-		public virtual Task<IRestResponse<T>> HandleReturns(IRestRequest r)
+		public virtual Task<IRestResponse> HandleReturns(IRestRequest r)
 		{
 			// Create the mock response.
-			var response = new Mock<IRestResponse<T>>();
+			var response = new Mock<IRestResponse>();
 
 			// Setup the return data.
-			response.SetupGet(re => re.Data)
+			response.SetupGet(re => re.Content)
 				.Returns(this.ResponseData);
 			response.SetupGet(re => re.StatusCode)
 				.Returns(this.RestApiTestAttribute.ResponseStatusCode);
@@ -226,14 +242,76 @@ namespace MFaaP.MFWSClient.Tests
 			// Set up the mock object.
 			this.RestClientMock = new Mock<IRestClient>();
 			this.RestClientMock
+				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+				.Callback((IRestRequest r, CancellationToken t) => {
+					this.HandleCallback(r);
+				})
+				.Returns((IRestRequest r, CancellationToken t) => this.HandleReturns(r));
+		}
+	}
+
+	/// <summary>
+	/// A runner for REST API tests.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class RestApiTestRunner<T>
+		: RestApiTestRunner
+		where T : class, new()
+	{
+		/// <summary>
+		/// Gets or sets the response data which the endpoint will return.
+		/// Defaults to a new instance of <see cref="T"/>.
+		/// </summary>
+		public new T ResponseData { get; set; }
+		= new T();
+
+		public RestApiTestRunner()
+			: base()
+		{
+			this.VerifyTasks.Clear();
+			this.VerifyTasks.Add(c => c.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+		}
+
+		/// <summary>
+		/// Defines the return value
+		/// </summary>
+		/// <returns></returns>
+		public new Task<IRestResponse<T>> HandleReturns(IRestRequest r)
+		{
+			// Create the mock response.
+			var response = new Mock<IRestResponse<T>>();
+
+			// Setup the return data.
+			response.SetupGet(re => re.Data)
+				.Returns(this.ResponseData);
+			response.SetupGet(re => re.StatusCode)
+				.Returns(this.RestApiTestAttribute.ResponseStatusCode);
+			response.SetupGet(re => re.ResponseUri)
+				.Returns(new Uri(r.Resource, UriKind.Relative));
+
+			//Return the mock object.
+			return Task.FromResult(response.Object);
+
+		}
+
+		public new void Setup(TestContext testContext)
+		{
+			// Get the RestApiTest attribute on the current test method.
+			this.RestApiTestAttribute = Type
+				.GetType(testContext.FullyQualifiedTestClassName)
+				.GetMethod(testContext.TestName)
+				.GetCustomAttribute<RestApiTestAttribute>();
+			if (null == this.RestApiTestAttribute)
+				throw new InvalidOperationException("No RestApiTestAttribute was found.");
+
+			// Set up the mock object.
+			this.RestClientMock = new Mock<IRestClient>();
+			this.RestClientMock
 				.Setup(c => c.ExecuteTaskAsync<T>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				.Callback((IRestRequest r, CancellationToken t) => {
 					this.HandleCallback(r);
 				})
 				.Returns((IRestRequest r, CancellationToken t) => this.HandleReturns(r));
-
-			// Create our MFWSClient.
-			this.MFWSClient = MFaaP.MFWSClient.Tests.MFWSClient.GetMFWSClient(this.RestClientMock);
 		}
 	}
 }

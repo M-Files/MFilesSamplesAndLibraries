@@ -15,8 +15,8 @@ namespace MFaaP.MFWSClient.Tests
 {
 	[TestClass]
 	public class MFWSVaultObjectPropertyOperations
+		: TestBase
 	{
-		public TestContext TestContext { get; set; }
 
 		#region GetProperties
 

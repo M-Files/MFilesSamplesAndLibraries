@@ -11,209 +11,34 @@ using RestSharp;
 namespace MFaaP.MFWSClient.Tests
 {
 	public partial class MFWSClient
+		: TestBase
 	{
 
 		#region AuthenticateUsingSingleSignOn
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingSingleSignOn"/>
-		/// requests the correct resource address.
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public async Task AuthenticateUsingSingleSignOnAsync_CorrectResource()
+		[RestApiTest(Method.GET, "/WebServiceSSO.aspx?popup=1&vault=e1ce61eb-b255-41c3-b64c-faa9feb070f0")]
+		public void AuthenticateUsingSingleSignOn()
 		{
-			/* Arrange */
-
-			// The vault Guid to request.
-			var guid = Guid.NewGuid();
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(Task.FromResult(new Mock<IRestResponse>().Object));
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.AuthenticateUsingSingleSignOnAsync(guid);
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual($"/WebServiceSSO.aspx?popup=1&vault={guid:D}", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingSingleSignOn"/>
-		/// requests the correct resource address.
-		/// </summary>
-		[TestMethod]
-		public void AuthenticateUsingSingleSignOn_CorrectResource()
-		{
-			/* Arrange */
-
-			// The vault Guid to request.
-			var guid = Guid.NewGuid();
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(Task.FromResult(new Mock<IRestResponse>().Object));
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.AuthenticateUsingSingleSignOn(guid);
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual($"/WebServiceSSO.aspx?popup=1&vault={guid:D}", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingSingleSignOn"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public async Task AuthenticateUsingSingleSignOnAsync_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The vault Guid to request.
-			var guid = Guid.NewGuid();
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(Task.FromResult(new Mock<IRestResponse>().Object));
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.AuthenticateUsingSingleSignOnAsync(guid);
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingSingleSignOn"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public void AuthenticateUsingSingleSignOn_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The vault Guid to request.
-			var guid = Guid.NewGuid();
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(Task.FromResult(new Mock<IRestResponse>().Object));
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.AuthenticateUsingSingleSignOn(guid);
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingSingleSignOn"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public async Task AuthenticateUsingSingleSignOnAsync_SessionIdSet()
-		{
-			/* Arrange */
-
-			// The vault Guid to request.
-			var guid = Guid.NewGuid();
+			// Create our test runner.
+			var runner = new RestApiTestRunner();
+			runner.Setup(this.TestContext);
 
 			// The ASP.NET session Id (dummy value).
 			var sessionId = Guid.NewGuid().ToString();
 
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-			mock.SetupAllProperties();
-			mock.SetupGet(c => c.BaseUrl)
+			// We need to set a base url so that we can check the session ID values.
+			runner.RestClientMock.SetupAllProperties();
+			runner.RestClientMock.SetupGet(c => c.BaseUrl)
 				.Returns(new Uri("http://example.org/"));
 
-			// When the execute method is called, log the resource requested.
-			mock
+			// Set up the response to include the session Id.
+			runner.RestClientMock
 				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				// Return a mock response.
 				.Returns(() =>
@@ -231,22 +56,15 @@ namespace MFaaP.MFWSClient.Tests
 						});
 					return Task.FromResult(response.Object);
 				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
+			
 			// Execute.
-			await mfwsClient.AuthenticateUsingSingleSignOnAsync(guid);
+			runner.MFWSClient.AuthenticateUsingSingleSignOn(Guid.Parse("e1ce61eb-b255-41c3-b64c-faa9feb070f0"));
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+			// Verify.
+			runner.Verify();
 
 			// Ensure cookie is in default cookie container.
-			var requestSessionCookie = mfwsClient
+			var requestSessionCookie = runner.MFWSClient
 				.CookieContainer
 				.GetCookies(new Uri("http://example.org"))
 				.Cast<Cookie>()
@@ -256,28 +74,28 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingSingleSignOn"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingSingleSignOnAsync"/>
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public void AuthenticateUsingSingleSignOn_SessionIdSet()
+		[RestApiTest(Method.GET, "/WebServiceSSO.aspx?popup=1&vault=e1ce61eb-b255-41c3-b64c-faa9feb070f0")]
+		public async Task AuthenticateUsingSingleSignOnAsync()
 		{
-			/* Arrange */
-
-			// The vault Guid to request.
-			var guid = Guid.NewGuid();
+			// Create our test runner.
+			var runner = new RestApiTestRunner();
+			runner.Setup(this.TestContext);
 
 			// The ASP.NET session Id (dummy value).
 			var sessionId = Guid.NewGuid().ToString();
 
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-			mock.SetupAllProperties();
-			mock.SetupGet(c => c.BaseUrl)
+			// We need to set a base url so that we can check the session ID values.
+			runner.RestClientMock.SetupAllProperties();
+			runner.RestClientMock.SetupGet(c => c.BaseUrl)
 				.Returns(new Uri("http://example.org/"));
 
-			// When the execute method is called, log the resource requested.
-			mock
+			// Set up the response to include the session Id.
+			runner.RestClientMock
 				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				// Return a mock response.
 				.Returns(() =>
@@ -296,21 +114,14 @@ namespace MFaaP.MFWSClient.Tests
 					return Task.FromResult(response.Object);
 				});
 
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
 			// Execute.
-			mfwsClient.AuthenticateUsingSingleSignOn(guid);
+			await runner.MFWSClient.AuthenticateUsingSingleSignOnAsync(Guid.Parse("e1ce61eb-b255-41c3-b64c-faa9feb070f0"));
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+			// Verify.
+			runner.Verify();
 
 			// Ensure cookie is in default cookie container.
-			var requestSessionCookie = mfwsClient
+			var requestSessionCookie = runner.MFWSClient
 				.CookieContainer
 				.GetCookies(new Uri("http://example.org"))
 				.Cast<Cookie>()
@@ -324,413 +135,20 @@ namespace MFaaP.MFWSClient.Tests
 		#region AuthenticateUsingCredentials
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials(System.Nullable{System.Guid},string,string,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public async Task AuthenticateUsingCredentialsAsync_CorrectResource()
+		[RestApiTest(Method.POST, "/REST/server/authenticationtokens")]
+		public void AuthenticateUsingCredentials()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<string>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<string>()
-						{
-							Value = "hello world"
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.AuthenticateUsingCredentialsAsync(Guid.NewGuid(), "my username", "my password");
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/server/authenticationtokens", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// requests the correct resource address.
-		/// </summary>
-		[TestMethod]
-		public void AuthenticateUsingCredentials_CorrectResource()
-		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<string>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<string>()
-						{
-							Value = "hello world"
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/server/authenticationtokens", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public async Task AuthenticateUsingCredentialsAsync_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<string>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<string>()
-						{
-							Value = "hello world"
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.AuthenticateUsingCredentialsAsync(Guid.NewGuid(), "my username", "my password");
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public void AuthenticateUsingCredentials_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<string>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<string>()
-						{
-							Value = "hello world"
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// uses the correct body.
-		/// </summary>
-		[TestMethod]
-		public async Task AuthenticateUsingCredentialsAsync_CorrectBody()
-		{
-			/* Arrange */
-
-			// The vault guid.
-			var vaultGuid = Guid.NewGuid();
-
-			// The request body.
-			var requestBody = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					requestBody = r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<string>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<string>()
-						{
-							Value = "hello world"
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.AuthenticateUsingCredentialsAsync(vaultGuid, "my username", "my password");
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Body must be correct.
-			Assert.AreEqual($"{{\"Username\":\"my username\",\"Password\":\"my password\",\"Domain\":null,\"WindowsUser\":false,\"ComputerName\":null,\"VaultGuid\":\"{vaultGuid.ToString("D")}\",\"Expiration\":null,\"ReadOnly\":false,\"URL\":null,\"Method\":null}}", requestBody);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// uses the correct body.
-		/// </summary>
-		[TestMethod]
-		public void AuthenticateUsingCredentials_CorrectBody()
-		{
-			/* Arrange */
-
-			// The vault guid.
-			var vaultGuid = Guid.NewGuid();
-
-			// The request body.
-			var requestBody = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					requestBody = r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<string>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<string>()
-						{
-							Value = "hello world"
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(vaultGuid, "my username", "my password");
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Body must be correct.
-			Assert.AreEqual($"{{\"Username\":\"my username\",\"Password\":\"my password\",\"Domain\":null,\"WindowsUser\":false,\"ComputerName\":null,\"VaultGuid\":\"{vaultGuid.ToString("D")}\",\"Expiration\":null,\"ReadOnly\":false,\"URL\":null,\"Method\":null}}", requestBody);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// uses the correct body.
-		/// </summary>
-		[TestMethod]
-		public void AuthenticateUsingCredentials_CorrectBody_WithExpiration()
-		{
-			/* Arrange */
-
-			// The vault guid.
-			var vaultGuid = Guid.NewGuid();
-
-			// The request body.
-			var requestBody = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					requestBody = r.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody)?.Value?.ToString();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<string>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<string>()
-						{
-							Value = "hello world"
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(vaultGuid, "my username", "my password", new DateTime(2017, 01, 01, 0, 0, 0, DateTimeKind.Utc));
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Body must be correct.
-			Assert.AreEqual($"{{\"Username\":\"my username\",\"Password\":\"my password\",\"Domain\":null,\"WindowsUser\":false,\"ComputerName\":null,\"VaultGuid\":\"{vaultGuid.ToString("D")}\",\"Expiration\":\"2017-01-01T00:00:00Z\",\"ReadOnly\":false,\"URL\":null,\"Method\":null}}", requestBody);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// sets the authentication header.
-		/// </summary>
-		[TestMethod]
-		public async Task AuthenticateUsingCredentialsAsync_AuthenticationHeaderSet()
-		{
-			/* Arrange */
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
+			// Create our test runner.
+			var runner = new RestApiTestRunner<PrimitiveType<string>>();
+			runner.Setup(this.TestContext);
+
+			// When the execute method is called, return a dummy authentication token.
+			runner.RestClientMock
 				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				// Return a mock response.
 				.Returns(() =>
@@ -749,21 +167,26 @@ namespace MFaaP.MFWSClient.Tests
 					return Task.FromResult(response.Object);
 				});
 
-			/* Act */
+			// Create the object to send in the body.
+			var body = new Authentication
+			{
+				VaultGuid = Guid.NewGuid(),
+				Username = "my username",
+				Password = "my password",
+				Expiration = new DateTime(2017, 01, 01, 0, 0, 0, DateTimeKind.Utc)
+			};
 
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// We should post a collection of objvers (but only with this one in it).
+			runner.SetExpectedRequestBody(body);
 
 			// Execute.
-			await mfwsClient.AuthenticateUsingCredentialsAsync(Guid.NewGuid(), "my username", "my password");
+			runner.MFWSClient.AuthenticateUsingCredentials(body.VaultGuid.Value, body.Username, body.Password);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+			// Verify.
+			runner.Verify();
 
 			// Authentication header must exist.
-			var authenticationHeader = mock.Object
+			var authenticationHeader = runner.MFWSClient
 				.DefaultParameters
 				.FirstOrDefault(h => h.Type == ParameterType.HttpHeader && h.Name == "X-Authentication");
 			Assert.IsNotNull(authenticationHeader);
@@ -771,19 +194,20 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentials"/>
-		/// sets the authentication header.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.AuthenticateUsingCredentialsAsync(System.Nullable{System.Guid},string,string,System.Nullable{System.DateTime},System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public void AuthenticateUsingCredentials_AuthenticationHeaderSet()
+		[RestApiTest(Method.POST, "/REST/server/authenticationtokens")]
+		public async Task AuthenticateUsingCredentialsAsync()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<PrimitiveType<string>>();
+			runner.Setup(this.TestContext);
 
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
+			// When the execute method is called, return a dummy authentication token.
+			runner.RestClientMock
 				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
 				// Return a mock response.
 				.Returns(() =>
@@ -802,21 +226,26 @@ namespace MFaaP.MFWSClient.Tests
 					return Task.FromResult(response.Object);
 				});
 
-			/* Act */
+			// Create the object to send in the body.
+			var body = new Authentication
+			{
+				VaultGuid = Guid.NewGuid(),
+				Username = "my username",
+				Password = "my password",
+				Expiration = new DateTime(2017, 01, 01, 0, 0, 0, DateTimeKind.Utc)
+			};
 
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// We should post a collection of objvers (but only with this one in it).
+			runner.SetExpectedRequestBody(body);
 
 			// Execute.
-			mfwsClient.AuthenticateUsingCredentials(Guid.NewGuid(), "my username", "my password");
+			await runner.MFWSClient.AuthenticateUsingCredentialsAsync(body.VaultGuid.Value, body.Username, body.Password);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<string>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+			// Verify.
+			runner.Verify();
 
 			// Authentication header must exist.
-			var authenticationHeader = mock.Object
+			var authenticationHeader = runner.MFWSClient
 				.DefaultParameters
 				.FirstOrDefault(h => h.Type == ParameterType.HttpHeader && h.Name == "X-Authentication");
 			Assert.IsNotNull(authenticationHeader);
@@ -829,210 +258,42 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetOnlineVaults"/>
-		/// requests the correct resource address.
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public async Task GetOnlineVaultsAsync_CorrectResource()
+		[RestApiTest(Method.GET, "/REST/server/vaults?online=true")]
+		public void GetOnlineVaults()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<List<Vault>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new List<Vault>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<Vault>>();
+			runner.Setup(this.TestContext);
 
 			// Execute.
-			await mfwsClient.GetOnlineVaultsAsync();
+			runner.MFWSClient.GetOnlineVaults();
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/server/vaults?online=true", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetOnlineVaults"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetOnlineVaultsAsync"/>
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public void GetOnlineVaults_CorrectResource()
+		[RestApiTest(Method.GET, "/REST/server/vaults?online=true")]
+		public async Task GetOnlineVaultsAsync()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<List<Vault>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new List<Vault>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<Vault>>();
+			runner.Setup(this.TestContext);
 
 			// Execute.
-			mfwsClient.GetOnlineVaults();
+			await runner.MFWSClient.GetOnlineVaultsAsync();
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/server/vaults?online=true", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetOnlineVaults"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public async Task GetOnlineVaultsAsync_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<List<Vault>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new List<Vault>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.GetOnlineVaultsAsync();
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSClient.GetOnlineVaults"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public void GetOnlineVaults_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<List<Vault>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new List<Vault>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.GetOnlineVaults();
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<List<Vault>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion
