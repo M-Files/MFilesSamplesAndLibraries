@@ -21,11 +21,6 @@ namespace MFaaP.MFWSClient.Tests
 		public string ExpectedResourceAddress { get; set; }
 
 		/// <summary>
-		/// The type of the response body.
-		/// </summary>
-		public Type ResponseBodyType { get; set; }
-
-		/// <summary>
 		/// The HTTP response code to provide.
 		/// </summary>
 		public HttpStatusCode ResponseStatusCode { get; set; }
@@ -42,12 +37,10 @@ namespace MFaaP.MFWSClient.Tests
 		public Parameter ExpectedRequestBody { get; set; }
 
 		public RestApiTestAttribute(RestSharp.Method expectedMethod,
-			string expectedResourceAddress,
-			Type responseBodyType)
+			string expectedResourceAddress)
 		{
 			this.ExpectedMethod = expectedMethod;
 			this.ExpectedResourceAddress = expectedResourceAddress;
-			this.ResponseBodyType = responseBodyType;
 		}
 	}
 }

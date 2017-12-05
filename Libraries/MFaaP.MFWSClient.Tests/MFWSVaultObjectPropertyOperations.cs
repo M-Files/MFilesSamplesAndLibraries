@@ -26,7 +26,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.POST, "/REST/objects/properties", typeof(List<List<PropertyValue>>))]
+		[RestApiTest(Method.POST, "/REST/objects/properties")]
 		public void GetProperties()
 		{
 			// Create our test runner.
@@ -34,17 +34,17 @@ namespace MFaaP.MFWSClient.Tests
 			runner.Setup(this.TestContext);
 
 			// Create the object to send in the body.
-			var objVer = new ObjVer()
+			var body = new ObjVer()
 			{
 				ID = 2,
 				Type = 1
 			};
 
 			// We should post a collection of objvers (but only with this one in it).
-			runner.SetExpectedRequestBody(new[] { objVer });
+			runner.SetExpectedRequestBody(new[] { body });
 
 			// Execute.
-			runner.MFWSClient.ObjectPropertyOperations.GetProperties(objVer);
+			runner.MFWSClient.ObjectPropertyOperations.GetProperties(body);
 
 			// Verify.
 			runner.Verify();
@@ -56,7 +56,7 @@ namespace MFaaP.MFWSClient.Tests
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		[RestApiTest(Method.POST, "/REST/objects/properties", typeof(List<List<PropertyValue>>))]
+		[RestApiTest(Method.POST, "/REST/objects/properties")]
 		public async Task GetPropertiesAsync()
 		{
 			// Create our test runner.
@@ -64,17 +64,17 @@ namespace MFaaP.MFWSClient.Tests
 			runner.Setup(this.TestContext);
 
 			// Create the object to send in the body.
-			var objVer = new ObjVer()
+			var body = new ObjVer()
 			{
 				ID = 2,
 				Type = 1
 			};
 
 			// We should post a collection of objvers (but only with this one in it).
-			runner.SetExpectedRequestBody(new[] { objVer });
+			runner.SetExpectedRequestBody(new[] { body });
 
 			// Execute.
-			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesAsync(objVer);
+			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesAsync(body);
 
 			// Verify.
 			runner.Verify();
@@ -86,46 +86,19 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetProperty(int,int,MFaaP.MFWSClient.PropertyValue,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public void SetProperty_CorrectResource()
+		[RestApiTest(Method.PUT, "/REST/objects/1/2/latest/properties/0")]
+		public void SetProperty()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>();
+			runner.Setup(this.TestContext);
 
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ExtendedObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ExtendedObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.ObjectPropertyOperations.SetProperty(1, 2, new PropertyValue()
+			// Create the object to send in the body.
+			var body = new PropertyValue()
 			{
 				PropertyDef = 0,
 				TypedValue = new TypedValue()
@@ -133,61 +106,31 @@ namespace MFaaP.MFWSClient.Tests
 					DataType = MFDataType.Text,
 					Value = "hello world"
 				}
-			});
+			};
+			runner.SetExpectedRequestBody(body);
 
-			/* Assert */
+			// Execute.
+			runner.MFWSClient.ObjectPropertyOperations.SetProperty(1, 2, body);
 
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects/1/2/latest/properties/0", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetProperty(int,int,MFaaP.MFWSClient.PropertyValue,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetPropertyAsync(int,int,MFaaP.MFWSClient.PropertyValue,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public void SetProperty_CorrectMethod()
+		[RestApiTest(Method.PUT, "/REST/objects/1/2/latest/properties/0")]
+		public async Task SetPropertyAsync()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>();
+			runner.Setup(this.TestContext);
 
-			// The method.
-			Method? methodUsed = null;
-			string methodParameter = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-					methodParameter = r.Parameters.GetMethodQuerystringParameter();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ExtendedObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ExtendedObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.ObjectPropertyOperations.SetProperty(1, 2, new PropertyValue()
+			// Create the object to send in the body.
+			var body = new PropertyValue()
 			{
 				PropertyDef = 0,
 				TypedValue = new TypedValue()
@@ -195,80 +138,14 @@ namespace MFaaP.MFWSClient.Tests
 					DataType = MFDataType.Text,
 					Value = "hello world"
 				}
-			});
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-			Assert.AreEqual(Method.PUT.ToString(), methodParameter);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetProperty(int,int,MFaaP.MFWSClient.PropertyValue,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public void SetProperty_CorrectBody()
-		{
-			/* Arrange */
-
-			// The method.
-			PropertyValue body = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					body = r.DeserializeBody<PropertyValue>();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ExtendedObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ExtendedObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			};
+			runner.SetExpectedRequestBody(body);
 
 			// Execute.
-			mfwsClient.ObjectPropertyOperations.SetProperty(1, 2, new PropertyValue()
-			{
-				PropertyDef = 0,
-				TypedValue = new TypedValue()
-				{
-					DataType = MFDataType.Text,
-					Value = "hello world"
-				}
-			});
+			await runner.MFWSClient.ObjectPropertyOperations.SetPropertyAsync(1, 2, body);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Body must be correct.
-			Assert.IsNotNull(body);
-			Assert.AreEqual(0, body.PropertyDef);
-			Assert.IsNotNull(body.TypedValue);
-			Assert.AreEqual(MFDataType.Text, body.TypedValue.DataType);
-			Assert.AreEqual("hello world", body.TypedValue.Value);
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion
@@ -277,109 +154,42 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.RemoveProperty(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public void RemoveProperty_CorrectResource()
+		[RestApiTest(Method.DELETE, "/REST/objects/1/2/latest/properties/0")]
+		public void RemoveProperty()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ExtendedObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ExtendedObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>();
+			runner.Setup(this.TestContext);
 
 			// Execute.
-			mfwsClient.ObjectPropertyOperations.RemoveProperty(1, 2, 0);
+			runner.MFWSClient.ObjectPropertyOperations.RemoveProperty(1, 2, 0);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects/1/2/latest/properties/0", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.RemoveProperty(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.RemovePropertyAsync(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
 		/// </summary>
+		/// <returns></returns>
 		[TestMethod]
-		public void RemoveProperty_CorrectMethod()
+		[RestApiTest(Method.DELETE, "/REST/objects/1/2/latest/properties/0")]
+		public async Task RemovePropertyAsync()
 		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-			string methodParameter = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-					methodParameter = r.Parameters.GetMethodQuerystringParameter();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ExtendedObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ExtendedObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>();
+			runner.Setup(this.TestContext);
 
 			// Execute.
-			mfwsClient.ObjectPropertyOperations.RemoveProperty(1, 2, 0);
+			await runner.MFWSClient.ObjectPropertyOperations.RemovePropertyAsync(1, 2, 0);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ExtendedObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-			Assert.AreEqual(Method.DELETE.ToString(), methodParameter);
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion

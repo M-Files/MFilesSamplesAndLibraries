@@ -128,10 +128,33 @@ namespace MFaaP.MFWSClient.Tests
 		protected virtual void HandleCallback(IRestRequest r)
 		{
 			// Ensure the HTTP method is correct.
+			var expectedMethod = this.RestApiTestAttribute.ExpectedMethod;
+			switch (this.RestApiTestAttribute.ExpectedMethod)
+			{
+				case Method.GET:
+				case Method.POST:
+					// Get and post are fine, but others need to be routed correctly.
+					break;
+				default:
+					// Others should use a "POST" method and should have the appropriate _method querystring parameter.
+					expectedMethod = Method.POST;
+
+					// Retrieve the method parameter and ensure that it has the original HTTP method.
+					var methodParameter = r.Parameters
+						.FirstOrDefault(p => p.Type == ParameterType.QueryString && p.Name == "_method");
+					Assert.IsNotNull(methodParameter, "A method parameter was not found on the request.");
+					Assert.AreEqual(methodParameter.Value,
+						this.RestApiTestAttribute.ExpectedMethod.ToString(),
+						$"The {this.RestApiTestAttribute.ExpectedMethod} should be routed through a HTTP POST, with the original method available in a querystring parameter named _method.");
+
+					break;
+			}
+
+			// Check the HTTP method is as expected.
 			Assert.AreEqual(
-				this.RestApiTestAttribute.ExpectedMethod,
+				expectedMethod,
 				r.Method,
-				$"HTTP method {this.RestApiTestAttribute.ExpectedMethod} expected, but {r.Method} was executed.");
+				$"HTTP method {expectedMethod} expected, but {r.Method} was executed.");
 
 			// Ensure the correct resource was requested.
 			Assert.AreEqual(
