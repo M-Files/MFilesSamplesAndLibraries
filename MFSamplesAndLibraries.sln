@@ -141,6 +141,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuiltInCommand Event", "Bui
 		Samples\UIX Applications\BuiltInCommandEvent\Readme.md = Samples\UIX Applications\BuiltInCommandEvent\Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Confirm Workflow State Change", "Confirm Workflow State Change", "{DF24C1B8-607D-487D-A329-406D18385C6F}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\ConfirmWorkflowStateChange\appdef.xml = Samples\UIX Applications\ConfirmWorkflowStateChange\appdef.xml
+		Samples\UIX Applications\ConfirmWorkflowStateChange\Readme.md = Samples\UIX Applications\ConfirmWorkflowStateChange\Readme.md
+		Samples\UIX Applications\ConfirmWorkflowStateChange\vaultui.js = Samples\UIX Applications\ConfirmWorkflowStateChange\vaultui.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -251,5 +258,6 @@ Global
 		{0314EC81-67A8-4FD5-B9FD-F3129F0A175F} = {FD201B59-BE79-4C66-A999-0231BA2C5765}
 		{AD7C3E92-590B-4F85-B3D4-83869281FD99} = {4BFB765D-E722-4657-A93F-4B962D70B6FB}
 		{1D8173C7-EB1B-44D6-AE36-DE0CFB68C741} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{DF24C1B8-607D-487D-A329-406D18385C6F} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 	EndGlobalSection
 EndGlobal
