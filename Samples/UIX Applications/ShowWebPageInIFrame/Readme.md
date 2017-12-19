@@ -8,7 +8,7 @@ This application registers a [ShellUI module](http://developer.m-files.com/Frame
 
 * The application consists of three files:
   * `appdef.xml`, which [declares the application contents](http://developer.m-files.com/Frameworks/User-Interface-Extensibility-Framework/Application-Definition/).
-  * `main.js`, a ShellUI module, which creates the command (button) and opens Notepad as appropriate.
+  * `main.js`, a ShellUI module, which creates the tab and reacts as items are selected in the listing.
   * `dashboard.html`, the dashboard shown in the tab.  The dashboard contains an iframe which is shown full-screen, and renders the website within it.
 
 ## Approach
