@@ -148,6 +148,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Confirm Workflow State Chan
 		Samples\UIX Applications\ConfirmWorkflowStateChange\vaultui.js = Samples\UIX Applications\ConfirmWorkflowStateChange\vaultui.js
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Show Web Page in iframe", "Show Web Page in iframe", "{972802FE-20CE-4569-AC3A-BE26EFAD7DAD}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\ShowWebPageInIFrame\appdef.xml = Samples\UIX Applications\ShowWebPageInIFrame\appdef.xml
+		Samples\UIX Applications\ShowWebPageInIFrame\dashboard.html = Samples\UIX Applications\ShowWebPageInIFrame\dashboard.html
+		Samples\UIX Applications\ShowWebPageInIFrame\main.js = Samples\UIX Applications\ShowWebPageInIFrame\main.js
+		Samples\UIX Applications\ShowWebPageInIFrame\Readme.md = Samples\UIX Applications\ShowWebPageInIFrame\Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -259,5 +267,6 @@ Global
 		{AD7C3E92-590B-4F85-B3D4-83869281FD99} = {4BFB765D-E722-4657-A93F-4B962D70B6FB}
 		{1D8173C7-EB1B-44D6-AE36-DE0CFB68C741} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 		{DF24C1B8-607D-487D-A329-406D18385C6F} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{972802FE-20CE-4569-AC3A-BE26EFAD7DAD} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 	EndGlobalSection
 EndGlobal
