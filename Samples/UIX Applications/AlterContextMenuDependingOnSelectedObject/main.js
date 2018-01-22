@@ -39,31 +39,35 @@ function getShellFrameStartedHandler(shellFrame)
 	{
 		// The shell frame is now started and can be used.
 
-		// Create a new tab for the content to be shown in.
-		// ref: https://www.m-files.com/UI_Extensibility_Framework/index.html#MFClientScript~IShellPaneContainer~AddTab.html
-		// Tab ids ref: https://www.m-files.com/UI_Extensibility_Framework/#SidePaneTabs.html
-		var tab = shellFrame.RightPane.AddTab( "myDashboardId", "Search", "_last" );
+		// Create the command.
+		var myCommandId = shellFrame.Commands.CreateCustomCommand("My command");
+		shellFrame.Commands.AddCustomCommandToMenu( myCommandId, MenuLocation_ContextMenu_Top, 1);
 
-		// Show our dashboard.
-		tab.ShowDashboard("MyDashboard", {});
-
-		// Show the tab.
-		tab.visible = true;
-
+		// Register to be notified when a custom command is clicked.
+		// Note: this will fire for ALL custom commands, so we need to filter out others.
+		shellFrame.Commands.Events.Register(
+			Event_CustomCommand,
+			function(commandId)
+			{
+				shellFrame.ShowMessage( "The command was clicked" );
+				
+				return true;
+			} );
+			
 		// Register to be notified when new shell listings are created.
 		shellFrame.Events.Register(
 			Event_NewShellListing,
-			getNewShellListingHandler( shellFrame, tab ) );
+			getNewShellListingHandler( shellFrame, tab, myCommandId ) );
 
 		// Is there already a listing?  If so then we need to hook into it as well.
 		if (null != shellFrame.Listing)
 		{
-			getNewShellListingHandler( shellFrame, tab )( shellFrame.Listing );
+			getNewShellListingHandler( shellFrame, tab, myCommandId )( shellFrame.Listing );
 		}
 	};
 }
 
-function getNewShellListingHandler(shellFrame, tab)
+function getNewShellListingHandler(shellFrame, tab, commandId)
 {
 	/// <summary>Gets a function to handle the NewShellListing event for shell frame.</summary>
 	/// <param name="shellFrame" type="MFiles.ShellFrame">The current shell frame object.</param> 
@@ -74,7 +78,7 @@ function getNewShellListingHandler(shellFrame, tab)
 	{
 		// Listen for selection change events on the listing.
 		shellListing.Events.Register(
-			Event_SelectionChanged,
+			Event_ShowContextMenu,
 			function(selectedItems)
 			{
 				// Sanity.
@@ -83,8 +87,16 @@ function getNewShellListingHandler(shellFrame, tab)
 					return false;
 				}
 
-				// Show our dashboard.
-				tab.ShowDashboard("MyDashboard", selectedItems);
+				// Was there only one item selected (and is it an object version)?
+				var isOneObjectSelected = selectedItems.Count == 1 && selectedItems.ObjectVersions.Count == 1;
+				
+				// Show the context menu item only if there is 1 object selected.
+				// Additionally, this could check the type of the object (e.g. so the context menu is only shown on specific object types).
+				shellFrame.Commands.SetCommandState(
+					commandId,
+					CommandLocation_All,
+					isOneObjectSelected ? CommandState_Active : CommandState_Hidden
+				);
 
 				// We succeeded; return true.
 				return true;

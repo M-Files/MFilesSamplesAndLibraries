@@ -173,6 +173,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Class Library", "Class Libr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClassLibrary", "Samples\UIX Applications\UsingManagedAssemblies\classlibrary\MyClassLibrary.csproj", "{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Alter Context Menu Depending On Selected Object", "Alter Context Menu Depending On Selected Object", "{B5AFC8F2-671A-41F1-8AB8-887583279F6F}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\appdef.xml = Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\appdef.xml
+		Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\main.js = Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\main.js
+		Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\Readme.md = Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -293,5 +300,6 @@ Global
 		{D67692BC-DC8B-4551-8319-8DD82F4CB390} = {9F48014A-4586-46EC-B878-E020117264D6}
 		{41112AE8-CA87-44C5-A77C-26BB53C0E311} = {9F48014A-4586-46EC-B878-E020117264D6}
 		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05} = {41112AE8-CA87-44C5-A77C-26BB53C0E311}
+		{B5AFC8F2-671A-41F1-8AB8-887583279F6F} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 	EndGlobalSection
 EndGlobal
