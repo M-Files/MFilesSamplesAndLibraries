@@ -173,5 +173,141 @@ namespace MFaaP.MFWSClient.Tests
 
 		#endregion
 
+		#region SetProperties
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetProperties(int,int,MFaaP.MFWSClient.PropertyValue[], bool,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		public void SetProperties_ReplaceAllProperties()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.PUT, "/REST/objects/1/2/latest/properties");
+
+			// Create the object to send in the body.
+			var body = new[]
+			{
+				new PropertyValue()
+				{
+					PropertyDef = 0,
+					TypedValue = new TypedValue()
+					{
+						DataType = MFDataType.Text,
+						Value = "hello world"
+					}
+				}
+			};
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.ObjectPropertyOperations.SetProperties(1, 2, body, true);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetProperties(int,int,MFaaP.MFWSClient.PropertyValue[], bool,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		public void SetProperties_UpdateProperties()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.POST, "/REST/objects/1/2/latest/properties");
+
+			// Create the object to send in the body.
+			var body = new[]
+			{
+				new PropertyValue()
+				{
+					PropertyDef = 0,
+					TypedValue = new TypedValue()
+					{
+						DataType = MFDataType.Text,
+						Value = "hello world"
+					}
+				}
+			};
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.ObjectPropertyOperations.SetProperties(1, 2, body, false);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetPropertyAsync(int,int,MFaaP.MFWSClient.PropertyValue,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		public async Task SetPropertiesAsync_ReplaceAllProperties()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.PUT, "/REST/objects/1/2/latest/properties");
+
+			// Create the object to send in the body.
+			var body = new[]
+			{
+				new PropertyValue()
+				{
+					PropertyDef = 0,
+					TypedValue = new TypedValue()
+					{
+						DataType = MFDataType.Text,
+						Value = "hello world"
+					}
+				}
+			};
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.SetPropertiesAsync(1, 2, body, true);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetPropertyAsync(int,int,MFaaP.MFWSClient.PropertyValue,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		public async Task SetPropertiesAsync_UpdateProperties()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.POST, "/REST/objects/1/2/latest/properties");
+
+			// Create the object to send in the body.
+			var body = new[]
+			{
+				new PropertyValue()
+				{
+					PropertyDef = 0,
+					TypedValue = new TypedValue()
+					{
+						DataType = MFDataType.Text,
+						Value = "hello world"
+					}
+				}
+			};
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.SetPropertiesAsync(1, 2, body, false);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
+
 	}
 }

@@ -131,7 +131,7 @@ namespace MFaaP.MFWSClient
 
 		#endregion
 
-		#region Set property
+		#region Set (single) property
 
 		/// <summary>
 		/// Sets a single property on a single object.
@@ -139,7 +139,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectTypeId">The Id of the object type.</param>
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="version">The version (or null for latest).</param>
-		/// <param name="newPropertyValue">The new (or updated) property vlaue.</param>
+		/// <param name="newPropertyValue">The new (or updated) property value.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
 		/// <remarks>The object must be checked out to perform this action.</remarks>
@@ -174,7 +174,7 @@ namespace MFaaP.MFWSClient
 		/// Sets a single property on a single object.
 		/// </summary>
 		/// <param name="objVer">The object to set the property on.</param>
-		/// <param name="newPropertyValue">The new (or updated) property vlaue.</param>
+		/// <param name="newPropertyValue">The new (or updated) property value.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
 		/// <remarks>The object must be checked out to perform this action.</remarks>
@@ -188,7 +188,7 @@ namespace MFaaP.MFWSClient
 		/// Sets a single property on a single object.
 		/// </summary>
 		/// <param name="objId">The object to set the property on.</param>
-		/// <param name="newPropertyValue">The new (or updated) property vlaue.</param>
+		/// <param name="newPropertyValue">The new (or updated) property value.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
 		/// <remarks>The object must be checked out to perform this action.</remarks>
@@ -199,12 +199,12 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Retrieves the properties of a single object.
+		/// Sets a single property on a single object.
 		/// </summary>
 		/// <param name="objectTypeId">The Id of the object type.</param>
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="version">The version (or null for latest).</param>
-		/// <param name="newPropertyValue">The new (or updated) property vlaue.</param>
+		/// <param name="newPropertyValue">The new (or updated) property value.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
 		/// <remarks>The object must be checked out to perform this action.</remarks>
@@ -218,10 +218,10 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Retrieves the properties of a single object.
+		/// Sets a single property on a single object.
 		/// </summary>
 		/// <param name="objVer">The object to retrieve the properties of.</param>
-		/// <param name="newPropertyValue">The new (or updated) property vlaue.</param>
+		/// <param name="newPropertyValue">The new (or updated) property value.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
 		/// <remarks>The object must be checked out to perform this action.</remarks>
@@ -235,10 +235,10 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Retrieves the properties of a single object.
+		/// Sets a single property on a single object.
 		/// </summary>
 		/// <param name="objId">The object to set the property on.</param>
-		/// <param name="newPropertyValue">The new (or updated) property vlaue.</param>
+		/// <param name="newPropertyValue">The new (or updated) property value.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
 		/// <remarks>The object must be checked out to perform this action.</remarks>
@@ -246,6 +246,135 @@ namespace MFaaP.MFWSClient
 		{
 			// Execute the async method.
 			return this.SetPropertyAsync(objId, newPropertyValue, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		#endregion
+
+		#region Set (multiple) properties
+
+		/// <summary>
+		/// Set multiple properties on a single object.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="propertyValues">The property values for the object.</param>
+		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="version">The version (or null for latest).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The new object version.</returns>
+		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		public async Task<ExtendedObjectVersion> SetPropertiesAsync(int objectTypeId, int objectId, PropertyValue[] propertyValues, bool replaceAllProperties, int? version = null, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (objectTypeId < 0)
+				throw new ArgumentException("The object type id cannot be less than zero");
+			if (objectId <= 0)
+				throw new ArgumentException("The object id cannot be less than or equal to zero");
+			if (null == propertyValues)
+				throw new ArgumentNullException(nameof(propertyValues));
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/{version?.ToString() ?? "latest"}/properties");
+			request.Method = replaceAllProperties
+				? Method.PUT // If we wish to replace all properties then we need to use a PUT.
+				: Method.POST; // A POST will add or replace just the properties provided.
+
+			// Set the request body.
+			request.AddJsonBody(propertyValues);
+
+			// Make the request and get the response.
+			var response = replaceAllProperties
+				? await this.MFWSClient.Put<ExtendedObjectVersion>(request, token).ConfigureAwait(false)
+				: await this.MFWSClient.Post<ExtendedObjectVersion>(request, token).ConfigureAwait(false);
+
+			// Return the data.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Set multiple properties on a single object.
+		/// </summary>
+		/// <param name="objVer">The object to set the property on.</param>
+		/// <param name="propertyValues">The property values for the object.</param>
+		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The new object version.</returns>
+		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		public Task<ExtendedObjectVersion> SetPropertiesAsync(ObjVer objVer, PropertyValue[] propertyValues, bool replaceAllProperties, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.SetPropertiesAsync(objVer.Type, objVer.ID, propertyValues, replaceAllProperties, objVer.Version, token);
+		}
+
+		/// <summary>
+		/// Set multiple properties on a single object.
+		/// </summary>
+		/// <param name="objId">The object to set the property on.</param>
+		/// <param name="propertyValues">The property values for the object.</param>
+		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The new object version.</returns>
+		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		public Task<ExtendedObjectVersion> SetPropertiesAsync(ObjID objId, PropertyValue[] propertyValues, bool replaceAllProperties, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.SetPropertiesAsync(objId.Type, objId.ID, propertyValues, replaceAllProperties, null, token);
+		}
+
+		/// <summary>
+		/// Set multiple properties on a single object.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="version">The version (or null for latest).</param>
+		/// <param name="propertyValues">The property values for the object.</param>
+		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The new object version.</returns>
+		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		public ExtendedObjectVersion SetProperties(int objectTypeId, int objectId, PropertyValue[] propertyValues, bool replaceAllProperties, int? version = null, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.SetPropertiesAsync(objectTypeId, objectId, propertyValues, replaceAllProperties, version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Set multiple properties on a single object.
+		/// </summary>
+		/// <param name="objVer">The object to retrieve the properties of.</param>
+		/// <param name="propertyValues">The property values for the object.</param>
+		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The new object version.</returns>
+		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		public ExtendedObjectVersion SetProperties(ObjVer objVer, PropertyValue[] propertyValues, bool replaceAllProperties, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.SetPropertiesAsync(objVer, propertyValues, replaceAllProperties, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Set multiple properties on a single object.
+		/// </summary>
+		/// <param name="objId">The object to set the property on.</param>
+		/// <param name="propertyValues">The property values for the object.</param>
+		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The new object version.</returns>
+		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		public ExtendedObjectVersion SetProperties(ObjID objId, PropertyValue[] propertyValues, bool replaceAllProperties, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.SetPropertiesAsync(objId, propertyValues, replaceAllProperties, token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();
