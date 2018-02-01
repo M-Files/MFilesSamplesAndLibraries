@@ -86,6 +86,9 @@ namespace MFaaP.MFWSClient
 			// Ensure method is correct.
 			request.Method = Method.GET;
 
+			// We only deal with Json.
+			request.RequestFormat = DataFormat.Json;
+
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
@@ -115,6 +118,9 @@ namespace MFaaP.MFWSClient
 			// Ensure method is correct.
 			request.Method = Method.GET;
 
+			// We only deal with Json.
+			request.RequestFormat = DataFormat.Json;
+
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
@@ -143,6 +149,9 @@ namespace MFaaP.MFWSClient
 
 			// Ensure method is correct.
 			request.Method = Method.POST;
+
+			// We only deal with Json.
+			request.RequestFormat = DataFormat.Json;
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -175,6 +184,9 @@ namespace MFaaP.MFWSClient
 			// Ensure method is correct.
 			request.Method = Method.POST;
 
+			// We only deal with Json.
+			request.RequestFormat = DataFormat.Json;
+
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
@@ -202,7 +214,12 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(request));
 
 			// Ensure method is correct.
-			request.Method = Method.DELETE;
+			// Note: we don't set the method to DELETE as this is not supported in some IIS instances.
+			request.Method = Method.POST;
+			request.AddQueryParameter("_method", "DELETE");
+
+			// We only deal with Json.
+			request.RequestFormat = DataFormat.Json;
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -233,7 +250,12 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(request));
 
 			// Ensure method is correct.
-			request.Method = Method.DELETE;
+			// Note: we don't set the method to DELETE as this is not supported in some IIS instances.
+			request.Method = Method.POST;
+			request.AddQueryParameter("_method", "DELETE");
+
+			// We only deal with Json.
+			request.RequestFormat = DataFormat.Json;
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -262,7 +284,12 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(request));
 
 			// Ensure method is correct.
-			request.Method = Method.PUT;
+			// Note: we don't set the method to PUT as this is not supported in some IIS instances.
+			request.Method = Method.POST;
+			request.AddQueryParameter("_method", "PUT");
+
+			// We only deal with Json.
+			request.RequestFormat = DataFormat.Json;
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -293,7 +320,12 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(request));
 
 			// Ensure method is correct.
-			request.Method = Method.PUT;
+			// Note: we don't set the method to PUT as this is not supported in some IIS instances.
+			request.Method = Method.POST;
+			request.AddQueryParameter("_method", "PUT");
+
+			// We only deal with Json.
+			request.RequestFormat = DataFormat.Json;
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);

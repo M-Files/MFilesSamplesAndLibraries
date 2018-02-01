@@ -25,7 +25,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    Username: \"test\",\n    Password: \"t\",\n    VaultGuid: \"CB768165-581A-4978-BCD8-B0FA5D21F304\"\n}"
+							"raw": "{\n    \"Username\": \"test\",\n    \"Password\": \"t\",\n    \"VaultGuid\": \"CB768165-581A-4978-BCD8-B0FA5D21F304\"\n}"
 						},
 						"description": "Fetch vault level authentication token."
 					},
@@ -70,7 +70,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    Username: \"test\",\n    Password: \"t\"\n}"
+							"raw": "{\n    \"Username\": \"test\",\n    \"Password\": \"t\"\n}"
 						},
 						"description": "Fetch server level authentication token. \n\nWith the server level authentication token you can make a request to list the vaults and get the vault level authentication token of the correct vault."
 					},
@@ -307,7 +307,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    PropertyValues: [\n        {\n            PropertyDef: 0,\n            TypedValue: {\n                DataType: 1,\n                Value: \"{{DocumentName}}\"\n            }\n        },\n        {\n            PropertyDef: 22,\n            TypedValue: {\n                DataType: 8,\n                Value: false\n            }\n        },\n        {\n            PropertyDef: 100,\n            TypedValue: {\n                DataType: 9,\n                Lookup: {\n                    Item: {{ClassID}},\n                    Version: -1\n                }\n            }\n        }\n    ],\n    Files: []\n}"
+							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": false\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": []\n}"
 						},
 						"description": ""
 					},
@@ -357,7 +357,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    PropertyValues: [\n        {\n            PropertyDef: 0,\n            TypedValue: {\n                DataType: 1,\n                Value: \"{{DocumentName}}\"\n            }\n        },\n        {\n            PropertyDef: 22,\n            TypedValue: {\n                DataType: 8,\n                Value: true\n            }\n        },\n        {\n            PropertyDef: 100,\n            TypedValue: {\n                DataType: 9,\n                Lookup: {\n                    Item: {{ClassID}},\n                    Version: -1\n                }\n            }\n        }\n    ],\n    Files: [\n        {\n            UploadID: {{UploadIDFromUpload}},\n            Size: {{FileSizeFromUpload}},\n            Title: \"{{FileName}}\",\n            Extension: \"{{FileExtension}}\"\n        }\n    ]\n}"
+							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": true\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": [\n        {\n            \"UploadID\": {{UploadIDFromUpload}},\n            \"Size\": {{FileSizeFromUpload}},\n            \"Title\": \"{{FileName}}\",\n            \"Extension\": \"{{FileExtension}}\"\n        }\n    ]\n}"
 						},
 						"description": ""
 					},
@@ -382,7 +382,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    PropertyValues: [\n        {\n            PropertyDef: 0,\n            TypedValue: {\n                DataType: 1,\n                Value: \"{{DocumentName}}\"\n            }\n        },\n        {\n            PropertyDef: 22,\n            TypedValue: {\n                DataType: 8,\n                Value: false\n            }\n        },\n        {\n            PropertyDef: 100,\n            TypedValue: {\n                DataType: 9,\n                Lookup: {\n                    Item: {{ClassID}},\n                    Version: -1\n                }\n            }\n        }\n    ],\n    Files: [\n        {\n            UploadID: {{UploadIDFromUpload}},\n            Size: {{FileSizeFromUpload}},\n            Title: \"{{FileName}}\",\n            Extension: \"{{FileExtension}}\"\n        }\n    ]\n}"
+							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": false\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": [\n        {\n            \"UploadID\": {{UploadIDFromUpload}},\n            \"Size\": {{FileSizeFromUpload}},\n            \"Title\": \"{{FileName}}\",\n            \"Extension\": \"{{FileExtension}}\"\n        }\n    ]\n}"
 						},
 						"description": ""
 					},
@@ -432,7 +432,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t{\n\t    PropertyDef: {{PropertyDefID}},\n\t    TypedValue: {\n\t        DataType: {{DataType}},\n\t        Value: \"KeywordTest\"\n\t    }\n\t}\n]"
+							"raw": "[\n\t{\n\t    \"PropertyDef\": {{PropertyDefID}},\n\t    \"TypedValue\": {\n\t        \"DataType\": {{DataType}},\n\t        \"Value\": \"KeywordTest\"\n\t    }\n\t}\n]"
 						},
 						"description": "Sets the given properties creating new properties and overwriting existing values. The object does not have to be checked out.\n\nCheck the datatype number from the MFWS documentation (Enumerations).\n\n0\tUninitialized\t\n1\tText\t\n2\tInteger\t\n3\tFloating\t\n5\tDate\t\n6\tTime\t\n7\tTimestamp\t\n8\tBoolean\t\n9\tLookup\t\n10\tMultiSelectLookup\t\n11\tInteger64\t\n12\tFILETIME\t\n13\tMultiLineText\t\n14\tACL"
 					},
@@ -441,7 +441,7 @@
 				{
 					"name": "Set All Properties",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties/{{PropertyDefID}}?_method=DELETE",
+						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties/{{PropertyDefID}}?_method=PUT",
 						"method": "POST",
 						"header": [
 							{
@@ -457,7 +457,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  {\n  \t\"PropertyDef\": 0,\n    \"TypedValue\": {\n      \"Value\": \"Rapid Development of Vault Applications\",\n      \"DataType\": 1\n    }\n  },\n  {\n    \"PropertyDef\": 22,\n    \"TypedValue\": {\n      \"Value\": false,\n      \"DataType\": 8,\n    }\n  },\n  {\n    \"PropertyDef\": 100,\n    \"TypedValue\": {\n      \"Lookup\": {\n        \"Item\": 0\n      },\n      \"DataType\": 9\n    }\n  }\n]"
+							"raw": "[\n  {\n  \t\"PropertyDef\": 0,\n    \"TypedValue\": {\n      \"Value\": \"Rapid Development of Vault Applications\",\n      \"DataType\": 1\n    }\n  },\n  {\n    \"PropertyDef\": 22,\n    \"TypedValue\": {\n      \"Value\": false,\n      \"DataType\": 8\n    }\n  },\n  {\n    \"PropertyDef\": 100,\n    \"TypedValue\": {\n      \"Lookup\": {\n        \"Item\": 0\n      },\n      \"DataType\": 9\n    }\n  }\n]"
 						},
 						"description": "Sets all properties of the object. The missing properties will be removed. The object does not have to be checked out.\n\nAlso the Object Class can be changed with this method."
 					},
@@ -482,7 +482,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\tValue: \"1\"\n}"
+							"raw": "{\n\t\"Value\": \"1\"\n}"
 						},
 						"description": ""
 					},
@@ -582,7 +582,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\tValue: \"0\"\n}"
+							"raw": "{\n\t\"Value\": \"0\"\n}"
 						},
 						"description": ""
 					},
@@ -607,7 +607,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\tValue: \"1\"\n}"
+							"raw": "{\n\t\"Value\": \"1\"\n}"
 						},
 						"description": ""
 					},
@@ -950,7 +950,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    Name: \"New Agreement Type\"\n}"
+							"raw": "{\n    \"Name\": \"New Agreement Type\"\n}"
 						},
 						"description": ""
 					},

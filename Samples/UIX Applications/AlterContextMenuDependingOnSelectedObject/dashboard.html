@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dashboard example</title>
+
+		<style type="text/css">
+			html, body, iframe{
+				/* the iframe must fill the entire viewport */
+				margin: 0px;
+				padding: 0px;
+				width: 100%;
+				height: 100%;
+				border: 0px;
+			}
+			html, body{
+				/* hide any overflow (caused by scrollbars etc) */
+				/* the iframe will have its own scrollbars if needed */
+				overflow: hidden;
+			}
+		</style>
+
+		<script type="text/javascript">
+		function OnNewDashboard(dashboard)
+		{
+			/// <summary>Executed by the UIX when a dashboard is shown.</summary>
+			/// <param name="dashboard" type="MFiles.Dashboard">Information about the dashboard being shown.</param>
+
+			// This is the start point of a dashboard.
+
+			// Default to a blank search.
+			var src = "http://www.bing.com";
+
+			// If we got some content then show it.
+			if(null != dashboard.CustomData && null != dashboard.CustomData.ObjectVersions)
+			{
+				switch(dashboard.CustomData.ObjectVersions.Count)
+				{
+					case 0: // Nothing was selected.
+						break;
+					case 1: // One item was selected.
+						// Just search by the title.
+						src += "?q=" + escape(dashboard.CustomData.ObjectVersions.Item(1).Title);
+						break;
+					default: // > 1 item was selected.
+						// Let's search for them all.
+						src += "?q=";
+						for(var i=1; i<= dashboard.CustomData.ObjectVersions.Count; i++)
+						{
+							// Add on the title and a semi-colon.
+							src += escape(dashboard.CustomData.ObjectVersions.Item(i).Title) + "%3B";
+						}
+						break;
+				}
+			}
+
+			// Show a search.
+			document.getElementById("search").setAttribute("src", src);
+		}
+		</script>
+	</head>
+<body>
+	<iframe id="search"></iframe>
+</body>
+</html>

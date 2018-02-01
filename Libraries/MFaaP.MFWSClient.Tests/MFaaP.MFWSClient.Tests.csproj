@@ -67,8 +67,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ExtensionMethods\IRestRequestExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\ListParameterExtensionMethods.cs" />
     <Compile Include="MFWSVaultObjectFileOperations.cs" />
     <Compile Include="MFWSVaultClassOperations.cs" />
+    <Compile Include="MFWSVaultPropertyDefOperations.cs" />
     <Compile Include="MFWSVaultValueListOperations.cs" />
     <Compile Include="MFWSVaultObjectTypeOperations.cs" />
     <Compile Include="MFWSVaultObjectPropertyOperations.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="MFWSVaultViewOperations.cs" />
     <Compile Include="MFWSVaultObjectSearchOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestApiTestRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MFaaP.MFWSClient\MFaaP.MFWSClient.csproj">

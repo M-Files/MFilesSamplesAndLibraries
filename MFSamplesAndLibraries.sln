@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI Extensibility Framework"
 		Samples\UIX Applications\Readme.md = Samples\UIX Applications\Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainWorkflows", "Samples\Processes\ChainWorkflows\vaf\ChainWorkflows.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{BE3E4CF5-2166-4626-A6F6-9048FF78E37B}"
 	ProjectSection(SolutionItems) = preProject
 		Libraries\Readme.md = Libraries\Readme.md
@@ -126,8 +124,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Processes", "Processes", "{
 		Samples\Processes\Readme.md = Samples\Processes\Readme.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chain Workflows", "Chain Workflows", "{44C9A717-D0E3-4998-8444-311B2E3284EF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Copying Objects", "Copying Objects", "{FD201B59-BE79-4C66-A999-0231BA2C5765}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyingObjects", "Samples\Processes\CopyingObjects\vaf\CopyingObjects.csproj", "{0314EC81-67A8-4FD5-B9FD-F3129F0A175F}"
@@ -145,16 +141,51 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuiltInCommand Event", "Bui
 		Samples\UIX Applications\BuiltInCommandEvent\Readme.md = Samples\UIX Applications\BuiltInCommandEvent\Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Confirm Workflow State Change", "Confirm Workflow State Change", "{DF24C1B8-607D-487D-A329-406D18385C6F}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\ConfirmWorkflowStateChange\appdef.xml = Samples\UIX Applications\ConfirmWorkflowStateChange\appdef.xml
+		Samples\UIX Applications\ConfirmWorkflowStateChange\Readme.md = Samples\UIX Applications\ConfirmWorkflowStateChange\Readme.md
+		Samples\UIX Applications\ConfirmWorkflowStateChange\vaultui.js = Samples\UIX Applications\ConfirmWorkflowStateChange\vaultui.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Show Web Page in iframe", "Show Web Page in iframe", "{972802FE-20CE-4569-AC3A-BE26EFAD7DAD}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\ShowWebPageInIFrame\appdef.xml = Samples\UIX Applications\ShowWebPageInIFrame\appdef.xml
+		Samples\UIX Applications\ShowWebPageInIFrame\dashboard.html = Samples\UIX Applications\ShowWebPageInIFrame\dashboard.html
+		Samples\UIX Applications\ShowWebPageInIFrame\main.js = Samples\UIX Applications\ShowWebPageInIFrame\main.js
+		Samples\UIX Applications\ShowWebPageInIFrame\Readme.md = Samples\UIX Applications\ShowWebPageInIFrame\Readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Using Managed Assemblies", "Using Managed Assemblies", "{9F48014A-4586-46EC-B878-E020117264D6}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\UsingManagedAssemblies\Readme.md = Samples\UIX Applications\UsingManagedAssemblies\Readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UIX Application", "UIX Application", "{D67692BC-DC8B-4551-8319-8DD82F4CB390}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\UsingManagedAssemblies\uix\appdef.xml = Samples\UIX Applications\UsingManagedAssemblies\uix\appdef.xml
+		Samples\UIX Applications\UsingManagedAssemblies\uix\main.js = Samples\UIX Applications\UsingManagedAssemblies\uix\main.js
+		Samples\UIX Applications\UsingManagedAssemblies\uix\MyClassLibrary.dll = Samples\UIX Applications\UsingManagedAssemblies\uix\MyClassLibrary.dll
+		Samples\UIX Applications\UsingManagedAssemblies\uix\MyClassLibrary.pdb = Samples\UIX Applications\UsingManagedAssemblies\uix\MyClassLibrary.pdb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Class Library", "Class Library", "{41112AE8-CA87-44C5-A77C-26BB53C0E311}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClassLibrary", "Samples\UIX Applications\UsingManagedAssemblies\classlibrary\MyClassLibrary.csproj", "{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Alter Context Menu Depending On Selected Object", "Alter Context Menu Depending On Selected Object", "{B5AFC8F2-671A-41F1-8AB8-887583279F6F}"
+	ProjectSection(SolutionItems) = preProject
+		Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\appdef.xml = Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\appdef.xml
+		Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\main.js = Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\main.js
+		Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\Readme.md = Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -219,6 +250,10 @@ Global
 		{0314EC81-67A8-4FD5-B9FD-F3129F0A175F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0314EC81-67A8-4FD5-B9FD-F3129F0A175F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0314EC81-67A8-4FD5-B9FD-F3129F0A175F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -227,7 +262,6 @@ Global
 		{BFC9716E-3A29-4482-9385-7301436D8010} = {7A1A3026-5661-4EB2-B01D-81E714BAD0CD}
 		{64819656-F9ED-411C-827B-9EB4EBECF6E6} = {7A1A3026-5661-4EB2-B01D-81E714BAD0CD}
 		{E20EB0FB-B3F1-409D-8DDC-F89D69BA6118} = {7A1A3026-5661-4EB2-B01D-81E714BAD0CD}
-		{721000F5-1A08-4E41-A594-94D7BB6F852C} = {44C9A717-D0E3-4998-8444-311B2E3284EF}
 		{82567936-E6EB-45E5-9FAF-8EEFCD92F7BB} = {BE3E4CF5-2166-4626-A6F6-9048FF78E37B}
 		{5F9215B3-F0D3-4061-9064-B50C7F070AA1} = {C181BED6-870A-4C78-A156-57F922A556EB}
 		{C181BED6-870A-4C78-A156-57F922A556EB} = {BFC9716E-3A29-4482-9385-7301436D8010}
@@ -256,10 +290,16 @@ Global
 		{D98CDFAA-A646-491C-948A-85A25E48E792} = {55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F}
 		{CFDFADEC-1026-40EF-89D7-DF377558EB04} = {D98CDFAA-A646-491C-948A-85A25E48E792}
 		{55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F} = {7A1A3026-5661-4EB2-B01D-81E714BAD0CD}
-		{44C9A717-D0E3-4998-8444-311B2E3284EF} = {55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F}
 		{FD201B59-BE79-4C66-A999-0231BA2C5765} = {55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F}
 		{0314EC81-67A8-4FD5-B9FD-F3129F0A175F} = {FD201B59-BE79-4C66-A999-0231BA2C5765}
 		{AD7C3E92-590B-4F85-B3D4-83869281FD99} = {4BFB765D-E722-4657-A93F-4B962D70B6FB}
 		{1D8173C7-EB1B-44D6-AE36-DE0CFB68C741} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{DF24C1B8-607D-487D-A329-406D18385C6F} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{972802FE-20CE-4569-AC3A-BE26EFAD7DAD} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{9F48014A-4586-46EC-B878-E020117264D6} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{D67692BC-DC8B-4551-8319-8DD82F4CB390} = {9F48014A-4586-46EC-B878-E020117264D6}
+		{41112AE8-CA87-44C5-A77C-26BB53C0E311} = {9F48014A-4586-46EC-B878-E020117264D6}
+		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05} = {41112AE8-CA87-44C5-A77C-26BB53C0E311}
+		{B5AFC8F2-671A-41F1-8AB8-887583279F6F} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
 	EndGlobalSection
 EndGlobal

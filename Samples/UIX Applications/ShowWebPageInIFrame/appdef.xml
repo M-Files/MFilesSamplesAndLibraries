@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef.xsd">
+	<guid>1B9762B3-C2D5-44b9-905F-D4ABAC5E8AE2</guid>	
+	<name>Show web page in iframe</name>
+	<version>0.1</version>
+	<description></description>
+	<publisher>M-Files Corporation</publisher>
+	<copyright>(c) M-Files Corporation 2017</copyright>
+	<required-mfiles-version>11.3.4330.0</required-mfiles-version>
+	<modules>
+		<module environment="shellui">
+			<file>main.js</file>
+		</module>
+	</modules>
+	<dashboards>
+		<dashboard id="MyDashboard">	
+			<content>dashboard.html</content>
+			<trusted-content>http://</trusted-content>
+			<trusted-content>https://</trusted-content>
+		</dashboard>
+	</dashboards>
+</application>
