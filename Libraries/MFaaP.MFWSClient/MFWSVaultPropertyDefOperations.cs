@@ -84,41 +84,5 @@ namespace MFaaP.MFWSClient
 				.GetAwaiter()
 				.GetResult();
 		}
-
-        /// <summary>
-        /// Gets a single property definition in the vault.
-        /// </summary>
-        /// <param name="propertyDefId">The Id of the property definition to retrieve.</param>
-        /// <param name="token">A cancellation token for the request.</param>
-        /// <returns>The property definition.</returns>
-        /// <remarks>This may be affected by the user's permissions.</remarks>
-        public async Task<ExtendedPropertyDef> GetExtendedPropertyDefAsync(int propertyDefId, CancellationToken token = default(CancellationToken))
-        {
-            // Create the request.
-            var request = new RestRequest($"/REST/structure/properties/{propertyDefId}");
-
-            // Make the request and get the response.
-            var response = await this.MFWSClient.Get<ExtendedPropertyDef>(request, token)
-                .ConfigureAwait(false);
-
-            // Return the data.
-            return response.Data;
-        }
-
-        /// <summary>
-        /// Gets a single property definition in the vault.
-        /// </summary>
-        /// <param name="propertyDefId">The Id of the property definition to retrieve.</param>
-        /// <param name="token">A cancellation token for the request.</param>
-        /// <returns>The property definition.</returns>
-        /// <remarks>This may be affected by the user's permissions.</remarks>
-        public ExtendedPropertyDef GetExtendedPropertyDef(int propertyDefId, CancellationToken token = default(CancellationToken))
-        {
-            // Execute the async method.
-            return this.GetExtendedPropertyDefAsync(propertyDefId, token)
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
-        }
     }
 }
