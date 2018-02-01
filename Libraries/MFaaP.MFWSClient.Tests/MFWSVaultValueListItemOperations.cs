@@ -14,8 +14,8 @@ namespace MFaaP.MFWSClient.Tests
 		#region GetValueListItems
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItemsAsync"/>
+		/// requests the correct resource using the correct method.
 		/// </summary>
 		[TestMethod]
 		public async Task GetValueListItemsAsync()
@@ -32,7 +32,7 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// requests the correct resource using the correct method.
 		/// </summary>
 		[TestMethod]
 		public void GetValueListItems()
@@ -48,8 +48,8 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItemsAsync"/>
+		/// requests the correct resource using the correct method (when using a name filter).
 		/// </summary>
 		[TestMethod]
 		public async Task GetValueListItemsAsync_WithNameFilter()
@@ -66,7 +66,7 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// requests the correct resource using the correct method (when using a name filter).
 		/// </summary>
 		[TestMethod]
 		public void GetValueListItems_WithNameFilter()
@@ -82,8 +82,8 @@ namespace MFaaP.MFWSClient.Tests
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItemsAsync"/>
+		/// requests the correct resource using the correct method (when using a limit).
 		/// </summary>
 		[TestMethod]
 		public async Task GetValueListItemsAsync_WithLimit()
@@ -100,7 +100,7 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// requests the correct resource using the correct method (when using a limit).
 		/// </summary>
 		[TestMethod]
 		public void GetValueListItems_WithLimit()
@@ -114,10 +114,10 @@ namespace MFaaP.MFWSClient.Tests
 			// Verify.
 			runner.Verify();
 		}
-		
+
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItemsAsync"/>
+		/// requests the correct resource using the correct method (when using a name filter and limit).
 		/// </summary>
 		[TestMethod]
 		public async Task GetValueListItemsAsync_WithLimitAndNameFilter()
@@ -134,7 +134,7 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// requests the correct resource using the correct method (when using a name filter and limit).
 		/// </summary>
 		[TestMethod]
 		public void GetValueListItems_WithLimitAndNameFilter()
