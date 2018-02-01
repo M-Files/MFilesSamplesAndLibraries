@@ -523,7 +523,7 @@ namespace MFaaP.MFWSClient
 		/// The column ID to be sorted; the property definition ID or a pseudo-ID.
 		/// </summary>
 		/// <remarks>
-		/// The column ID is either a property definition ID (positive values) or a value in <see cref="MFFolderColumnId" /> Enumeration (negative values).
+		/// The column ID is either?a property definition ID (positive values) or a value in?<see cref="MFFolderColumnId" /> Enumeration (negative values).
 		/// </remarks>
 		public int ID { get; set; }
 
@@ -541,7 +541,7 @@ namespace MFaaP.MFWSClient
 		/// Specifies the position for a visible column.
 		/// </summary>
 		/// <remarks>
-		/// Each column in the FolderListingColumns Collection should have a unique and linear position number for visible columns. The position for the leftmost column is 0.
+		/// Each column in the?FolderListingColumns Collection should have a unique and linear position number for visible columns. The position for the leftmost column is 0.
 		/// For invisible columns, the position number is -1.
 		/// </remarks>
 		public int Position { get; set; }
@@ -596,7 +596,7 @@ namespace MFaaP.MFWSClient
 		/// The column ID to be sorted; the property definition ID or a pseudo-ID.
 		/// </summary>
 		/// <remarks>
-		/// The column ID is either a property definition ID (positive values) or a value in <see cref="MFFolderColumnId" /> Enumeration (negative values).
+		/// The column ID is either?a property definition ID (positive values) or a value in?<see cref="MFFolderColumnId" /> Enumeration (negative values).
 		/// </remarks>
 		public int ID { get; set; }
 
@@ -1361,14 +1361,68 @@ namespace MFaaP.MFWSClient
 		public bool CanAttachObjects { get; set; }
 	}
 
-
-
-	/// <summary>
+    /// <summary>
     /// Based on M-Files API.
     /// </summary>
     public class PropertyDef
     {
 
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public PropertyDef() { }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public bool IsCreatePermissionAllowed { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public Permissions Permissions { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public int ContentType { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public int DependencyPD { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public int DependencyRelation { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public string GUID { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public Ownerpropertydef OwnerPropertyDef { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public bool SortAscending { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public int UpdateType { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public int ValueListSortingType { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public bool IsOwnerPropertyDef { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public int SortingType { get; set; }
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
@@ -1398,11 +1452,6 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public int ID { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public string Name { get; set; }
         
         /// <summary>
         /// Based on M-Files API.
@@ -2074,5 +2123,34 @@ namespace MFaaP.MFWSClient
 		
 	}
 
-    
+
+    /// <summary>
+    /// Based on M-Files API.
+    /// </summary>
+    public class Permissions : Permission
+    {
+    }
+
+    /// <summary>
+    /// Based on M-Files API.
+    /// </summary>
+    public class Ownerpropertydef
+    {
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public Ownerpropertydef() { }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public int ID { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public int DependencyRelation { get; set; }
+        /// <summary>
+        /// Based on M-Files API.
+        /// </summary>
+        public bool IsRelationFiltering { get; set; }
+    }
 }

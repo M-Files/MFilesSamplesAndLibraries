@@ -29,11 +29,14 @@ namespace MFaaP.MFWSClient.Tests
 
 			// Create a temporary file.
 			var tempFile = new FileInfo(@"test.txt");
-			if (false == tempFile.Exists)
-				tempFile.Create();
+            if (false == tempFile.Exists)
+            {
+                tempFile.Create();
+                tempFile = new FileInfo(@"test.txt");  //If test.txt did not exist the first time the test was run then 'file.Length' will throw an exception of type 'System.IO.FileNotFoundException' in MFWSVaultObjectFileOperations.UploadFilesAsync
+            }
 
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
+            // Create our restsharp mock.
+            var mock = new Mock<IRestClient>();
 
 			// When the execute method is called, log the resource requested.
 			mock
