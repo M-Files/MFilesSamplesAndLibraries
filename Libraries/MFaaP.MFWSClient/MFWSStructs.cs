@@ -1342,22 +1342,46 @@ namespace MFaaP.MFWSClient
         public bool RealObjectType { get; set; }
 
 		/// <summary>
-		/// An overview of effective permissions.
+		/// Effective permissions for the current user.
 		/// </summary>
-	    public Permission Permission { get; set; }
+	    public Permissions Permission { get; set; }
 
-	    public bool Hierarchial { get; set; }
+		/// <summary>
+		/// Specifies whether this object type is hierarchical (has an internal hierarchy).
+		/// </summary>
+		/// <remarks>ref: https://www.m-files.com/api/documentation/latest/MFilesAPI~ObjType~Hierarchical.html</remarks>
+		public bool Hierarchial { get; set; }
 
     }
 
-	public class Permission
+	/// <summary>
+	/// Represents the effective permissions for the current user.
+	/// </summary>
+	public class Permissions
 	{
-		public Permission()
+		/// <summary>
+		/// Instantiates a Permissions object.
+		/// </summary>
+		public Permissions()
 		{
 		}
 
+		/// <summary>
+		/// Represents whether the user has
+		/// MFObjectAccessRead access (or MFPropertyDefAccessSee for <see cref="PropertyDef"/>s).
+		/// </summary>
 		public bool CanRead { get; set; }
+
+		/// <summary>
+		/// Represents whether the user has
+		/// MFObjectAccessEdit access.
+		/// </summary>
 		public bool CanEdit { get; set; }
+
+		/// <summary>
+		/// Represents whether the user has 
+		/// MFObjectAccessAttachObjects access.
+		/// </summary>
 		public bool CanAttachObjects { get; set; }
 	}
 
@@ -1375,26 +1399,32 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public bool IsCreatePermissionAllowed { get; set; }
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public Permissions Permissions { get; set; }
+
+		/// <summary>
+		/// Effective permissions for the current user.
+		/// </summary>
+		public Permissions Permissions { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int ContentType { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int DependencyPD { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int DependencyRelation { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public string GUID { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
@@ -1403,22 +1433,27 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public Ownerpropertydef OwnerPropertyDef { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public bool SortAscending { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int UpdateType { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int ValueListSortingType { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public bool IsOwnerPropertyDef { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
@@ -2122,14 +2157,6 @@ namespace MFaaP.MFWSClient
 		ObjectVersion  = 4,
 		
 	}
-
-
-    /// <summary>
-    /// Based on M-Files API.
-    /// </summary>
-    public class Permissions : Permission
-    {
-    }
 
     /// <summary>
     /// Based on M-Files API.
