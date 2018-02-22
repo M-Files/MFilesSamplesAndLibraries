@@ -383,12 +383,11 @@ namespace MFaaP.MFWSClient.Tests
 			// Resource must be correct.
 			Assert.AreEqual("/REST/objects/1/2/4/files/3/content", resourceAddress);
 		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
+/// <summary>
+        /// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
+        /// uses the correct Http method.
+        /// </summary>
+        [TestMethod]
 		public async Task DownloadFileAsync_CorrectMethod()
 		{
 			/* Arrange */
@@ -819,7 +818,214 @@ namespace MFaaP.MFWSClient.Tests
 			Assert.AreEqual(Method.POST, methodUsed);
 		}
 
-		#endregion
+        #endregion
 
-	}
+        #region Other file ops
+        /// <summary>
+        /// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.RenameFileAsync(int, int, int, string, int?, CancellationToken)"/>
+        /// requests the correct resource address.
+        /// </summary>
+        [TestMethod]
+        public async Task RenameFileAsync_CorrectResource()
+        {
+            /* Arrange */
+
+            // The actual requested address.
+            var resourceAddress = "";
+
+            // Create our restsharp mock.
+            var mock = new Mock<IRestClient>();
+
+            // When the execute method is called, log the resource requested.
+            mock
+                .Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+                .Callback((IRestRequest r, CancellationToken t) => {
+                    resourceAddress = r.Resource;
+                })
+                // Return a mock response.
+                .Returns(() =>
+                {
+                    // Create the mock response.
+                    var response = new Mock<IRestResponse<ObjectVersion>>();
+
+                    // Setup the return data.
+                    response.SetupGet(r => r.Data)
+                        .Returns(new ObjectVersion());
+
+                    //Return the mock object.
+                    return Task.FromResult(response.Object);
+                });
+
+            /* Act */
+
+            // Create our MFWSClient.
+            var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+            // Execute.
+            await mfwsClient.ObjectFileOperations.RenameFileAsync(1, 2, 3, "test.pdf");
+
+            /* Assert */
+
+            // Execute must be called once.
+            mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+            // Resource must be correct.
+            Assert.AreEqual($"/REST/objects/1/2/-1/files/3/1/rename.aspx?_method=PUT", resourceAddress);
+        }
+     /// <summary>
+        /// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.RenameFile(int, int, int, string, int?, CancellationToken)"/>
+        /// requests the correct resource address.
+        /// </summary>
+        [TestMethod]
+        public void RenameFile_CorrectResource()
+        {
+            /* Arrange */
+
+            // The actual requested address.
+            var resourceAddress = "";
+
+            // Create our restsharp mock.
+            var mock = new Mock<IRestClient>();
+
+            // When the execute method is called, log the resource requested.
+            mock
+                .Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+                .Callback((IRestRequest r, CancellationToken t) => {
+                    resourceAddress = r.Resource;
+                })
+                // Return a mock response.
+                .Returns(() =>
+                {
+                    // Create the mock response.
+                    var response = new Mock<IRestResponse<ObjectVersion>>();
+
+                    // Setup the return data.
+                    response.SetupGet(r => r.Data)
+                        .Returns(new ObjectVersion());
+
+                    //Return the mock object.
+                    return Task.FromResult(response.Object);
+                });
+
+            /* Act */
+
+            // Create our MFWSClient.
+            var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+            // Execute.
+            mfwsClient.ObjectFileOperations.RenameFile(1, 2, 3, "test.pdf");
+
+            /* Assert */
+
+            // Execute must be called once.
+            mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+            // Resource must be correct.
+            Assert.AreEqual($"/REST/objects/1/2/-1/files/3/1/rename.aspx?_method=PUT", resourceAddress);
+        }
+     /// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.RenameFileAsync(int, int, int, string, int?, CancellationToken)"/>
+		/// uses the correct Http method.
+		/// </summary>
+        [TestMethod]
+        public async Task RenameFileAsync_CorrectMethod()
+        {
+            /* Arrange */
+
+            // The method.
+            Method? methodUsed = null;
+
+            // Create our restsharp mock.
+            var mock = new Mock<IRestClient>();
+
+            // When the execute method is called, log the resource requested.
+            mock
+                .Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+                .Callback((IRestRequest r, CancellationToken t) => {
+                    methodUsed = r.Method;
+                })
+                // Return a mock response.
+                .Returns(() =>
+                {
+                    // Create the mock response.
+                    var response = new Mock<IRestResponse<ObjectVersion>>();
+
+                    // Setup the return data.
+                    response.SetupGet(r => r.Data)
+                        .Returns(new ObjectVersion());
+
+                    //Return the mock object.
+                    return Task.FromResult(response.Object);
+                });
+
+            /* Act */
+
+            // Create our MFWSClient.
+            var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+            // Execute.
+            await mfwsClient.ObjectFileOperations.RenameFileAsync(1, 2, 3, "test.pdf");
+
+            /* Assert */
+
+            // Execute must be called once.
+            mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+            // Method must be correct.
+            Assert.AreEqual(Method.POST, methodUsed);
+        }
+    /// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.RenameFile(int, int, int, string, int?, CancellationToken)"/>
+		/// uses the correct Http method.
+		/// </summary>
+        [TestMethod]
+        public void RenameFile_CorrectMethod()
+        {
+            /* Arrange */
+
+            // The method.
+            Method? methodUsed = null;
+
+            // Create our restsharp mock.
+            var mock = new Mock<IRestClient>();
+
+            // When the execute method is called, log the resource requested.
+            mock
+                .Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
+                .Callback((IRestRequest r, CancellationToken t) => {
+                    methodUsed = r.Method;
+                })
+                // Return a mock response.
+                .Returns(() =>
+                {
+                    // Create the mock response.
+                    var response = new Mock<IRestResponse<ObjectVersion>>();
+
+                    // Setup the return data.
+                    response.SetupGet(r => r.Data)
+                        .Returns(new ObjectVersion());
+
+                    //Return the mock object.
+                    return Task.FromResult(response.Object);
+                });
+
+            /* Act */
+
+            // Create our MFWSClient.
+            var mfwsClient = MFWSClient.GetMFWSClient(mock);
+
+            // Execute.
+            mfwsClient.ObjectFileOperations.RenameFile(1, 2, 3, "test.pdf");
+
+            /* Assert */
+
+            // Execute must be called once.
+            mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+
+            // Method must be correct.
+            Assert.AreEqual(Method.POST, methodUsed);
+        }
+        #endregion
+
+    }
 }
