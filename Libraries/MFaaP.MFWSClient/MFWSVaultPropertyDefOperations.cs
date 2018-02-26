@@ -84,5 +84,5 @@ namespace MFaaP.MFWSClient
 				.GetAwaiter()
 				.GetResult();
 		}
-	}
+    }
 }

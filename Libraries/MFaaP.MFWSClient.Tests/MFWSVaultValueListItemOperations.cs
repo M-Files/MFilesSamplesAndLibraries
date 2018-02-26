@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -13,315 +14,139 @@ namespace MFaaP.MFWSClient.Tests
 		#region GetValueListItems
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItemsAsync"/>
+		/// requests the correct resource using the correct method.
 		/// </summary>
 		[TestMethod]
-		public async Task GetValueListItemsAsync_CorrectResource()
+		public async Task GetValueListItemsAsync()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ValueListItem>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ValueListItem>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Results<ValueListItem>>(Method.GET, "/REST/valuelists/1/items");
 
 			// Execute.
-			await mfwsClient.ValueListItemOperations.GetValueListItemsAsync(1);
+			await runner.MFWSClient.ValueListItemOperations.GetValueListItemsAsync(1);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/valuelists/1/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// requests the correct resource using the correct method.
 		/// </summary>
 		[TestMethod]
-		public void GetValueListItems_CorrectResource()
+		public void GetValueListItems()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ValueListItem>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ValueListItem>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Results<ValueListItem>>(Method.GET, "/REST/valuelists/1/items");
 
 			// Execute.
-			mfwsClient.ValueListItemOperations.GetValueListItems(1);
+			runner.MFWSClient.ValueListItemOperations.GetValueListItems(1);
 
-			/* Assert */
+			// Verify.
+			runner.Verify();
+		}
 
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItemsAsync"/>
+		/// requests the correct resource using the correct method (when using a name filter).
+		/// </summary>
+		[TestMethod]
+		public async Task GetValueListItemsAsync_WithNameFilter()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Results<ValueListItem>>(Method.GET, "/REST/valuelists/1/items?filter=hello");
 
-			// Resource must be correct.
-			Assert.AreEqual("/REST/valuelists/1/items", resourceAddress);
+			// Execute.
+			await runner.MFWSClient.ValueListItemOperations.GetValueListItemsAsync(1, "hello");
+
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// requests the correct resource using the correct method (when using a name filter).
 		/// </summary>
 		[TestMethod]
-		public async Task GetValueListItemsAsync_CorrectResource_WithNameFilter()
+		public void GetValueListItems_WithNameFilter()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ValueListItem>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ValueListItem>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Results<ValueListItem>>(Method.GET, "/REST/valuelists/1/items?filter=hello");
 
 			// Execute.
-			await mfwsClient.ValueListItemOperations.GetValueListItemsAsync(1, "hello");
+			runner.MFWSClient.ValueListItemOperations.GetValueListItems(1, "hello");
 
-			/* Assert */
+			// Verify.
+			runner.Verify();
+		}
 
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItemsAsync"/>
+		/// requests the correct resource using the correct method (when using a limit).
+		/// </summary>
+		[TestMethod]
+		public async Task GetValueListItemsAsync_WithLimit()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Results<ValueListItem>>(Method.GET, "/REST/valuelists/1/items?limit=501");
 
-			// Resource must be correct.
-			Assert.AreEqual("/REST/valuelists/1/items?filter=hello", resourceAddress);
+			// Execute.
+			await runner.MFWSClient.ValueListItemOperations.GetValueListItemsAsync(1, limit: 501);
+
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// requests the correct resource address.
+		/// requests the correct resource using the correct method (when using a limit).
 		/// </summary>
 		[TestMethod]
-		public void GetValueListItems_CorrectResource_WithNameFilter()
+		public void GetValueListItems_WithLimit()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ValueListItem>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ValueListItem>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Results<ValueListItem>>(Method.GET, "/REST/valuelists/1/items?limit=501");
 
 			// Execute.
-			mfwsClient.ValueListItemOperations.GetValueListItems(1, "hello");
+			runner.MFWSClient.ValueListItemOperations.GetValueListItems(1, limit: 501);
 
-			/* Assert */
+			// Verify.
+			runner.Verify();
+		}
 
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItemsAsync"/>
+		/// requests the correct resource using the correct method (when using a name filter and limit).
+		/// </summary>
+		[TestMethod]
+		public async Task GetValueListItemsAsync_WithLimitAndNameFilter()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Results<ValueListItem>>(Method.GET, "/REST/valuelists/1/items?filter=hello&limit=501");
 
-			// Resource must be correct.
-			Assert.AreEqual("/REST/valuelists/1/items?filter=hello", resourceAddress);
+			// Execute.
+			await runner.MFWSClient.ValueListItemOperations.GetValueListItemsAsync(1, "hello", limit: 501);
+
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// uses the correct Http method.
+		/// requests the correct resource using the correct method (when using a name filter and limit).
 		/// </summary>
 		[TestMethod]
-		public async Task GetValueListItemsAsync_CorrectMethod()
+		public void GetValueListItems_WithLimitAndNameFilter()
 		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ValueListItem>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ValueListItem>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Results<ValueListItem>>(Method.GET, "/REST/valuelists/1/items?filter=hello&limit=501");
 
 			// Execute.
-			await mfwsClient.ValueListItemOperations.GetValueListItemsAsync(1);
+			runner.MFWSClient.ValueListItemOperations.GetValueListItems(1, "hello", limit: 501);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultValueListItemOperations.GetValueListItems"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public void GetValueListItems_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<Results<ValueListItem>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new Results<ValueListItem>());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.ValueListItemOperations.GetValueListItems(1);
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<Results<ValueListItem>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion
