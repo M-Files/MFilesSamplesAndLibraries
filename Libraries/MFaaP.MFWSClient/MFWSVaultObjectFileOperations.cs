@@ -510,50 +510,130 @@ namespace MFaaP.MFWSClient
             return this.AddFiles(objVer.Type, objVer.ID, objVer.Version, token, files);
         }
 
-        #endregion
+		#endregion
 
-        #region Other file ops
-        /// <summary>
-        /// Renames a specific file.
-        /// </summary>
-        /// <param name="objectType"></param>
-        /// <param name="objectId"></param>
-        /// <param name="fileId"></param>
-        /// <param name="newFileName"></param>
-        /// <param name="objectVersion"></param>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<ObjectVersion> RenameFileAsync(int objectType, int objectId, int fileId, string newFileName, int? objectVersion = null, CancellationToken token = default(CancellationToken))
+		#region Renaming a file
+
+		/// <summary>
+		/// Renames a specific file.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="fileId">The Id of the file to rename.</param>
+		/// <param name="newFileName">The (new) file name.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <param name="fileVersion">The version of the file, or null for the latest.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The updated object version.</returns>
+		public async Task<ObjectVersion> RenameFileAsync(int objectType,
+			int objectId,
+			int fileId,
+			string newFileName,
+			int? objectVersion = null,
+			int? fileVersion = null,
+			CancellationToken token = default(CancellationToken))
         {
-            var versionString = objectVersion?.ToString() ?? "-1";
+			// Create the version strings to be used for the uri segment.
+			var objectVersionString = objectVersion?.ToString() ?? "latest";
+			var fileVersionString = fileVersion?.ToString() ?? "latest";
 
-            // Build up the request.
-            var request = new RestRequest($"/REST/objects/{objectType}/{objectId}/{versionString}/files/{fileId}/1/rename.aspx?_method=PUT");
+			// Build up the request.
+			var request = new RestRequest($"/REST/objects/{objectType}/{objectId}/{objectVersionString}/files/{fileId}/{fileVersionString }/title");
 
-            request.AddHeader("X-Extensions", "MFWA");
-
-            request.AddJsonBody(new { Value = newFileName });
-
-
-            var response = await this.MFWSClient.Post<ObjectVersion>(request, token)
+			// Pass in the new file name.
+			// ref: http://www.m-files.com/mfws/resources/objects/type/objectid/version/files/file/title.html
+			request.AddJsonBody(new { Value = newFileName });
+			
+			// Execute the request.
+			var response = await this.MFWSClient.Put<ObjectVersion>(request, token)
                 .ConfigureAwait(false);
 
-            return response?.Data;
+			// Return the content.
+			return response?.Data;
 
-        }
-        /// <summary>
-        /// Renames a specific file.
-        /// </summary>
-        /// <returns></returns>
-        public ObjectVersion RenameFile(int objectType, int objectId, int fileId, string newFileName, int? objectVersion = null, CancellationToken token = default(CancellationToken))
-        {
-            // Execute the async method.
-            return this.RenameFileAsync(objectType, objectId, fileId, newFileName, objectVersion, token)
-                .ConfigureAwait(false)
-                .GetAwaiter()
-                .GetResult();
+		}
 
-        }
-        #endregion
-    }
+		/// <summary>
+		/// Renames a specific file.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="fileId">The Id of the file to rename.</param>
+		/// <param name="newFileName">The (new) file name.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <param name="fileVersion">The version of the file, or null for the latest.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The updated object version.</returns>
+		public ObjectVersion RenameFile(int objectType,
+			int objectId,
+			int fileId,
+			string newFileName,
+			int? objectVersion = null,
+			int? fileVersion = null,
+			CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.RenameFileAsync(objectType, objectId, fileId, newFileName, objectVersion, fileVersion, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+
+		}
+
+		/// <summary>
+		/// Renames a specific file.
+		/// </summary>
+		/// <param name="objId">The object containing the file to rename.</param>
+		/// <param name="fileVer">The file to rename.</param>
+		/// <param name="newFileName">The (new) file name.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The updated object version.</returns>
+		public ObjectVersion RenameFile(ObjID objId,
+			FileVer fileVer,
+			string newFileName,
+			CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+			if (null == fileVer)
+				throw new ArgumentNullException(nameof(fileVer));
+
+			// Call the other overload.
+			return this.RenameFileAsync(objId.Type, objId.ID, fileVer.ID, newFileName, null, fileVer.Version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+
+		}
+
+		/// <summary>
+		/// Renames a specific file.
+		/// </summary>
+		/// <param name="objVer">The object containing the file to rename.</param>
+		/// <param name="fileVer">The file to rename.</param>
+		/// <param name="newFileName">The (new) file name.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The updated object version.</returns>
+		public ObjectVersion RenameFile(ObjVer objVer,
+			FileVer fileVer,
+			string newFileName,
+			CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+			if (null == fileVer)
+				throw new ArgumentNullException(nameof(fileVer));
+
+			// Call the other overload.
+			return this.RenameFileAsync(objVer.Type, objVer.ID, fileVer.ID, newFileName, objVer.Version, fileVer.Version, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+
+		}
+
+		#endregion
+	}
 }
