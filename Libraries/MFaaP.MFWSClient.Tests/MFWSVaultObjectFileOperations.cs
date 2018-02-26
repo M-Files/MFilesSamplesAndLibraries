@@ -383,12 +383,11 @@ namespace MFaaP.MFWSClient.Tests
 			// Resource must be correct.
 			Assert.AreEqual("/REST/objects/1/2/4/files/3/content", resourceAddress);
 		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
+/// <summary>
+        /// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
+        /// uses the correct Http method.
+        /// </summary>
+        [TestMethod]
 		public async Task DownloadFileAsync_CorrectMethod()
 		{
 			/* Arrange */
@@ -817,6 +816,114 @@ namespace MFaaP.MFWSClient.Tests
 
 			// Method must be correct.
 			Assert.AreEqual(Method.POST, methodUsed);
+		}
+
+		#endregion
+
+		#region Renaming files
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.RenameFileAsync(int, int, int, string, int?, int?, CancellationToken)"/>
+		/// requests the correct resource address using the correct method..
+		/// </summary>
+		[TestMethod]
+		public async Task RenameFileAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, "/REST/objects/1/2/latest/files/3/latest/title");
+
+			// Create the object to send in the body.
+			var body = new PrimitiveType<string>()
+			{
+				Value = "renamed.pdf"
+			};
+
+			// Set the expected request body.
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.ObjectFileOperations.RenameFileAsync(1, 2, 3, "renamed.pdf");
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.RenameFileAsync(int, int, int, string, int?, int?, CancellationToken)"/>
+		/// requests the correct resource address using the correct method..
+		/// </summary>
+		[TestMethod]
+		public async Task RenameFileAsync_WithVersionData()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, "/REST/objects/1/2/4/files/3/5/title");
+
+			// Create the object to send in the body.
+			var body = new PrimitiveType<string>()
+			{
+				Value = "renamed.pdf"
+			};
+
+			// Set the expected request body.
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.ObjectFileOperations.RenameFileAsync(1, 2, 3, "renamed.pdf", 4, 5);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.RenameFile(int, int, int, string, int?, int?, CancellationToken)"/>
+		/// requests the correct resource address using the correct method..
+		/// </summary>
+		[TestMethod]
+		public void RenameFile()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, "/REST/objects/4/5/latest/files/6/latest/title");
+
+			// Create the object to send in the body.
+			var body = new PrimitiveType<string>()
+			{
+				Value = "renamed.pdf"
+			};
+
+			// Set the expected request body.
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.ObjectFileOperations.RenameFile(4, 5, 6, "renamed.pdf");
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.RenameFile(int, int, int, string, int?, int?, CancellationToken)"/>
+		/// requests the correct resource address using the correct method..
+		/// </summary>
+		[TestMethod]
+		public void RenameFileWithVersionData()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, "/REST/objects/4/5/7/files/6/8/title");
+
+			// Create the object to send in the body.
+			var body = new PrimitiveType<string>()
+			{
+				Value = "renamed.pdf"
+			};
+
+			// Set the expected request body.
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.ObjectFileOperations.RenameFile(4, 5, 6, "renamed.pdf", 7, 8);
+
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion

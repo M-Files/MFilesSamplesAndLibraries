@@ -1144,6 +1144,20 @@ namespace MFaaP.MFWSClient
 		/// Based on M-Files API.
 		/// </summary>
 		public string FileGUID { get; set; }
+
+		/// <summary>
+		/// Converts the file version into a <see cref="FileVer"/>.
+		/// </summary>
+		/// <returns>The file version information.</returns>
+		public FileVer AsFileVer()
+		{
+			return new FileVer()
+			{
+				Version = this.Version,
+				ID = this.ID
+			};
+		}
+
 	}
 
     
