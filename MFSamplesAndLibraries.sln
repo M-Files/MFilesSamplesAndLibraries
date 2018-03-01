@@ -182,7 +182,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Alter Context Menu Dependin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Maintain Original Template", "Maintain Original Template", "{D77073E5-C7F0-4D45-A010-0B21264B02D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaintainOriginalTemplate", "Samples\Processes\MaintainOriginalTemplate\vaf\MaintainOriginalTemplate\MaintainOriginalTemplate.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaintainOriginalTemplate", "Samples\Processes\MaintainOriginalTemplate\vaf\MaintainOriginalTemplate.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
