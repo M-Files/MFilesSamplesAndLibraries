@@ -1,7 +1,3 @@
-# M-Files Sample Process Applications
+# Maintaining the original object template
 
-The following applications are available:
-
-## [Client to Server Communication](ClientToServerCode)
-
-## [Copying Objects](CopyingObjects)
+This sample shows how to use an event handler to automatically maintain a reference to the template which was used to create an object.
