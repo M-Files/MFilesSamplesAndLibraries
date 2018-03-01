@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application
+			type="server-application"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v1.xsd">
+  <guid>b87f9e89-9061-4069-a8c8-078ef784f13a</guid>
+  <name>MaintainOriginalTemplate</name>
+  <description>MaintainOriginalTemplate</description>
+  <publisher></publisher>
+  <version>1.0.0.0</version>
+  <copyright></copyright>
+  <extension-objects>
+    <extension-object>
+      <name>MaintainOriginalTemplate</name>
+      <assembly>MaintainOriginalTemplate.dll</assembly>
+      <class>MaintainOriginalTemplate.VaultApplication</class>
+      <installation-method>Install</installation-method>
+      <uninstallation-method>Uninstall</uninstallation-method>
+      <initialization-method>Initialize</initialization-method>
+      <uninitialization-method>Uninitialize</uninitialization-method>
+      <start-operations-method>StartOperations</start-operations-method>
+    </extension-object>
+  </extension-objects>
+</application>

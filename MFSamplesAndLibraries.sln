@@ -180,6 +180,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Alter Context Menu Dependin
 		Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\Readme.md = Samples\UIX Applications\AlterContextMenuDependingOnSelectedObject\Readme.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Maintain Original Template", "Maintain Original Template", "{D77073E5-C7F0-4D45-A010-0B21264B02D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaintainOriginalTemplate", "Samples\Processes\MaintainOriginalTemplate\vaf\MaintainOriginalTemplate\MaintainOriginalTemplate.csproj", "{721000F5-1A08-4E41-A594-94D7BB6F852C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -254,6 +258,10 @@ Global
 		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{721000F5-1A08-4E41-A594-94D7BB6F852C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -301,5 +309,7 @@ Global
 		{41112AE8-CA87-44C5-A77C-26BB53C0E311} = {9F48014A-4586-46EC-B878-E020117264D6}
 		{11A8CE62-74B0-4A17-B7EF-8D7D00368D05} = {41112AE8-CA87-44C5-A77C-26BB53C0E311}
 		{B5AFC8F2-671A-41F1-8AB8-887583279F6F} = {E20EB0FB-B3F1-409D-8DDC-F89D69BA6118}
+		{D77073E5-C7F0-4D45-A010-0B21264B02D3} = {55B66DC1-48EC-4D55-95A8-7F4E6C67EC8F}
+		{721000F5-1A08-4E41-A594-94D7BB6F852C} = {D77073E5-C7F0-4D45-A010-0B21264B02D3}
 	EndGlobalSection
 EndGlobal
