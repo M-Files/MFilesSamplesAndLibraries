@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MFiles.VAF, Version=1.0.128.0, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\MFiles.VAF.1.0.128.0\lib\net45\MFiles.VAF.dll</HintPath>
+    <Reference Include="MFiles.VAF">
+      <HintPath>..\..\..\..\packages\MFiles.VAF.1.0.128.0\lib\net45\MFiles.VAF.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -76,7 +76,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>start "Installing Vault Application" /D "$(TargetDir)" "MFVaultApplicationInstaller.exe" "MaintainOriginalTemplate"</PostBuildEvent>
+    <PostBuildEvent>REM start "Installing Vault Application" /D "$(TargetDir)" "MFVaultApplicationInstaller.exe" "MaintainOriginalTemplate"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
