@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="VAFSnippets.MFiles.ac0b5b41-86d9-4471-af68-aab0d3041d77" Version="1.2.4" Language="en-US" Publisher="M-Files Corporation" />
+    <Identity Id="VAFSnippets.MFiles.ac0b5b41-86d9-4471-af68-aab0d3041d77" Version="1.2.5" Language="en-US" Publisher="M-Files Corporation" />
     <DisplayName>M-Files Code Snippets - VAF</DisplayName>
     <Description xml:space="preserve">Creates Visual Studio code snippets to create M-Files Vault Application Framework applications.</Description>
     <MoreInfo>http://developer.m-files.com/Frameworks/Vault-Application-Framework/Visual-Studio-Template/Code-Snippets/</MoreInfo>
