@@ -216,7 +216,7 @@ public bool $MethodName$(StateEnvironment env, out string message)
 /// <remarks>The default next state Id is available in <see cref="MFiles.VAF.Common.StateEnvironment.InitialNextStateID"/>, but this can be
 /// altered to any valid transition by setting <see cref="nextState"/> to a different state Id.</remarks>
 [AutomaticStateTransitionTrigger("$Alias$")]
-public bool $MethodName$(StateEnvironment env, out int nextState)
+public bool $MethodName$(StateTransitionEnvironment env, out int nextState)
 {
 	$end$
 	throw new System.NotImplementedException();
