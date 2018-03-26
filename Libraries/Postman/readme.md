@@ -1,7 +1,7 @@
 # Getting started with the M-Files Postman Collection and Environment
 
 1.	Make sure that M-Files Web is enabled in the development environment.
-1.	Install Postman Chrome Extension.
+1.	Install [Postman](https://www.getpostman.com/) from their website.
 1.	Open Postman.
 1.	Import the two json files (`M-Files.postman_collection.json` and `localhost.postman_environment.json`).
 1.	Edit the environment to change the `MFWSUrl` to the REST API url of your environment (M-Files Web Url + /REST).
