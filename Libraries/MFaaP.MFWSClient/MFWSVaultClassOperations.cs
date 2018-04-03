@@ -31,7 +31,7 @@ namespace MFaaP.MFWSClient
 		public async Task<ExtendedObjectClass> GetObjectClassAsync(int classId, bool includeTemplates = false, CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
-			var request = new RestRequest($"/REST/structure/classes/{classId}");
+			var request = new RestRequest($"/REST/structure/classes/{classId}.aspx");
 
 			// Templates?
 			if (includeTemplates)
@@ -73,7 +73,7 @@ namespace MFaaP.MFWSClient
 		public async Task<List<ExtendedObjectClass>> GetAllObjectClassesAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
-			var request = new RestRequest($"/REST/structure/classes");
+			var request = new RestRequest($"/REST/structure/classes.aspx");
 
 			// Make the request and get the response.
 			var response = await this.MFWSClient.Get<List<ExtendedObjectClass>>(request, token)
@@ -108,7 +108,7 @@ namespace MFaaP.MFWSClient
 		public async Task<List<ExtendedObjectClass>> GetObjectClassesAsync(int objectTypeId, CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
-			var request = new RestRequest($"/REST/structure/classes?objtype={objectTypeId}");
+			var request = new RestRequest($"/REST/structure/classes.aspx?objtype={objectTypeId}");
 
 			// Make the request and get the response.
 			var response = await this.MFWSClient.Get<List<ExtendedObjectClass>>(request, token)

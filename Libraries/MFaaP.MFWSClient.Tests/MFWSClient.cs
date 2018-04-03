@@ -44,6 +44,18 @@ namespace MFaaP.MFWSClient.Tests
 				: base(restClient)
 			{
 			}
+			protected override void OnAfterExecuteRequest(IRestResponse e)
+			{
+				// If the response is null it's because we were testing for the wrong endpoint details.
+				if (null == e)
+				{
+					Assert.Fail("Incorrect HTTP request (either method, endpoint address, or return type was invalid).");
+					return;
+				}
+
+				// Base implementation.
+				base.OnAfterExecuteRequest(e);
+			}
 		}
 	}
 }
