@@ -34,7 +34,7 @@ namespace MFaaP.MFWSClient
 			where TB : class
 		{
 			// Create the request.
-			var request = new RestRequest($"/REST/vault/extensionmethod/{extensionMethodName}");
+			var request = new RestRequest($"/REST/vault/extensionmethod/{extensionMethodName}.aspx");
 
 			// If we have a parameter then serialise it.
 			if (null != input)
@@ -84,7 +84,7 @@ namespace MFaaP.MFWSClient
 			where TB : class
 		{
 			// Create the request.
-			var request = new RestRequest($"/REST/vault/extensionmethod/{extensionMethodName}");
+			var request = new RestRequest($"/REST/vault/extensionmethod/{extensionMethodName}.aspx");
 
 			// If we have a parameter then serialise it.
 			if (null != input)
@@ -129,7 +129,7 @@ namespace MFaaP.MFWSClient
 		{
 
 			// Create the request.
-			var request = new RestRequest($"/REST/vault/extensionmethod/{extensionMethodName}");
+			var request = new RestRequest($"/REST/vault/extensionmethod/{extensionMethodName}.aspx");
 
 			// If we have a parameter then send it.
 			if (null != input)

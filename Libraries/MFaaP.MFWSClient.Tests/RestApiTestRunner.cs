@@ -85,7 +85,7 @@ namespace MFaaP.MFWSClient.Tests
 		
 		/// <summary>
 		/// Gets or sets the response data which the endpoint will return.
-		/// Defaults to a new instance of <see cref="T"/>.
+		/// Defaults to null string.
 		/// </summary>
 		public virtual string ResponseData { get; set; }
 			= null;
@@ -158,8 +158,11 @@ namespace MFaaP.MFWSClient.Tests
 					parameter.ContentType = serializer.ContentType;
 					if (null != body)
 					{
-						parameter.Value = serializer.Serialize(body);
+						parameter.Value = body is string
+							? body
+							: serializer.Serialize(body);
 					}
+
 					break;
 				case DataFormat.Xml:
 					serializer = this.XmlSerializer;
@@ -167,8 +170,11 @@ namespace MFaaP.MFWSClient.Tests
 					parameter.ContentType = serializer.ContentType;
 					if (null != body)
 					{
-						parameter.Value = serializer.Serialize(body);
+						parameter.Value = body is string
+							? body
+							: serializer.Serialize(body);
 					}
+
 					break;
 				default:
 					throw new ArgumentException("Data format not expected.");
@@ -289,9 +295,12 @@ namespace MFaaP.MFWSClient.Tests
 		: RestApiTestRunner
 		where T : class, new()
 	{
-		/// <inheritdoc />
+		/// <summary>
+		/// Gets or sets the response data which the endpoint will return.
+		/// Defaults to a new instance of <see cref="T"/>.
+		/// </summary>
 		public new T ResponseData { get; set; }
-		= new T();
+			= new T();
 
 		/// <inheritdoc />
 		public RestApiTestRunner(RestSharp.Method expectedMethod,
