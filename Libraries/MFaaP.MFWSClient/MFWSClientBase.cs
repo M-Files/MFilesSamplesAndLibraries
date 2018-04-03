@@ -239,6 +239,16 @@ namespace MFaaP.MFWSClient
 					System.Diagnostics.Debug.WriteLine($"\t({parameter.Type}) {parameter.Name} = {parameter.Value} (type: {parameter.ContentType ?? "Unspecified"})");
 				}
 			}
+
+			// If we have any files then output details.
+			if ((e.Files?.Count ?? 0) != 0)
+			{
+				// ReSharper disable once PossibleNullReferenceException
+				foreach (var file in e.Files)
+				{
+					System.Diagnostics.Debug.WriteLine($"\tFile {file.Name} ({file.ContentLength}b)");
+				}
+			}
 #endif
 
 			// Notify subscribers.

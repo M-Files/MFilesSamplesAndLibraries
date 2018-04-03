@@ -239,7 +239,7 @@ namespace MFaaP.MFWSClient
             // Create the request.
             // TODO: Possibly split this into multiple requests.
             // TODO: Can this be monitored?
-            var request = new RestRequest("/REST/files");
+            var request = new RestRequest("/REST/files.aspx");
             foreach (var file in files)
             {
                 request.AddFile(file.Name, file.FullName);

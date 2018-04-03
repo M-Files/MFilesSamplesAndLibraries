@@ -154,8 +154,6 @@ namespace MFaaP.MFWSClient.Tests
 				Password = "my password",
 				Expiration = new DateTime(2017, 01, 01, 0, 0, 0, DateTimeKind.Utc)
 			};
-
-			// We should post a collection of objvers (but only with this one in it).
 			runner.SetExpectedRequestBody(body);
 
 			// Execute.
@@ -197,8 +195,6 @@ namespace MFaaP.MFWSClient.Tests
 				Password = "my password",
 				Expiration = new DateTime(2017, 01, 01, 0, 0, 0, DateTimeKind.Utc)
 			};
-
-			// We should post a collection of objvers (but only with this one in it).
 			runner.SetExpectedRequestBody(body);
 
 			// Execute.
