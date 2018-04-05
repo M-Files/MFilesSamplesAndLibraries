@@ -22,6 +22,82 @@ namespace MFaaP.MFWSClient
 		{
 		}
 
+		#region Getting the latest object version and properties
+
+		/// <summary>
+		/// Retrieves the latest version of the specified object version.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is visible to the user.</returns>
+		public async Task<ExtendedObjectVersion> GetLatestObjectVersionAndPropertiesAsync(ObjID objId, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objId)
+				throw new ArgumentNullException(nameof(objId));
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/latest.aspx?include=properties");
+			request.Method = Method.GET;
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Get<ExtendedObjectVersion>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the object data.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Retrieves the latest version of the specified object version.
+		/// </summary>
+		/// <param name="objectTypeId">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is visible to the user.</returns>
+		public Task<ExtendedObjectVersion> GetLatestObjectVersionAndPropertiesAsync(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the other overload.
+			return this.GetLatestObjectVersionAndPropertiesAsync(new ObjID()
+			{
+				ID = objectId,
+				Type = objectTypeId,
+			}, token);
+		}
+
+		/// <summary>
+		/// Retrieves the latest version of the specified object version.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is visible to the user.</returns>
+		public ExtendedObjectVersion GetLatestObjectVersionAndProperties(ObjID objId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.GetLatestObjectVersionAndPropertiesAsync(objId, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Retrieves the latest version of the specified object version.
+		/// </summary>
+		/// <param name="objId">The Id of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The ObjectVersion, if it is visible to the user.</returns>
+		public ExtendedObjectVersion GetLatestObjectVersionAndProperties(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the other overload.
+			return this.GetLatestObjectVersionAndProperties(new ObjID()
+			{
+				ID = objectId,
+				Type = objectTypeId,
+			}, token);
+		}
+
+		#endregion
+
 		#region Creating new objects
 
 		/// <summary>

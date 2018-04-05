@@ -9,46 +9,153 @@ namespace MFaaP.MFWSClient.Tests
 	public class MFWSVaultObjectPropertyOperations
 	{
 
-		#region GetProperties
+		#region GetProperties (single object)
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetProperties"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetProperties(MFaaP.MFWSClient.ObjVer,System.Threading.CancellationToken)"/>
 		/// requests the correct resource address with the correct method.
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		public void GetProperties()
+		public void GetProperties_ObjVer()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<List<List<PropertyValue>>>(Method.POST, "/REST/objects/properties");
-
-			// Create the object to send in the body.
-			var body = new ObjVer()
-			{
-				ID = 2,
-				Type = 1
-			};
-
-			// We should post a collection of objvers (but only with this one in it).
-			runner.SetExpectedRequestBody(new[] { body });
+			var runner = new RestApiTestRunner<List<PropertyValue>>(Method.GET, "/REST/objects/1/2/4/properties.aspx");
 
 			// Execute.
-			runner.MFWSClient.ObjectPropertyOperations.GetProperties(body);
+			runner.MFWSClient.ObjectPropertyOperations.GetProperties(1, 2, 4);
 
 			// Verify.
 			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesAsync"/>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesAsync(MFaaP.MFWSClient.ObjVer,System.Threading.CancellationToken)"/>
 		/// requests the correct resource address with the correct method.
 		/// </summary>
 		/// <returns></returns>
 		[TestMethod]
-		public async Task GetPropertiesAsync()
+		public async Task GetPropertiesAsync_ObjVer()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<List<List<PropertyValue>>>(Method.POST, "/REST/objects/properties");
+			var runner = new RestApiTestRunner<List<PropertyValue>>(Method.GET, "/REST/objects/1/2/4/properties.aspx");
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesAsync(1, 2, 4);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetProperties(ObjID,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		public void GetProperties_ObjID()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<PropertyValue>>(Method.GET, "/REST/objects/1/2/latest/properties.aspx");
+
+			// Execute.
+			runner.MFWSClient.ObjectPropertyOperations.GetProperties(1, 2);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesAsync(ObjID,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		public async Task GetPropertiesAsync_ObjID()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<PropertyValue>>(Method.GET, "/REST/objects/1/2/latest/properties.aspx");
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesAsync(1, 2);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
+
+		#region GetProperties (multiple object versions)
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesOfMultipleObjects(MFaaP.MFWSClient.ObjVer[])"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		public void GetPropertiesOfMultipleObjects()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<List<PropertyValue>>>(Method.POST, "/REST/objects/properties.aspx");
+
+			// Create the object to send in the body.
+			var body = new ObjVer()
+			{
+				ID = 2,
+				Type = 1,
+				Version = 4
+			};
+
+			// We should post a collection of objvers (but only with this one in it).
+			runner.SetExpectedRequestBody(new[] { body });
+
+			// Execute.
+			runner.MFWSClient.ObjectPropertyOperations.GetPropertiesOfMultipleObjects(body);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesOfMultipleObjectsAsync(MFaaP.MFWSClient.ObjVer[])"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		public async Task GetPropertiesOfMultipleObjectsAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<List<PropertyValue>>>(Method.POST, "/REST/objects/properties.aspx");
+
+			// Create the object to send in the body.
+			var body = new ObjVer()
+			{
+				ID = 2,
+				Type = 1,
+				Version = 4
+			};
+
+			// We should post a collection of objvers (but only with this one in it).
+			runner.SetExpectedRequestBody(new[] { body });
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesOfMultipleObjectsAsync(body);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesOfMultipleObjects(MFaaP.MFWSClient.ObjVer[])"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		[ExpectedException(typeof(System.ArgumentException))]
+		public void GetPropertiesOfMultipleObjects_ExceptionForNoVersion()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<List<PropertyValue>>>(Method.POST, "/REST/objects/properties.aspx");
 
 			// Create the object to send in the body.
 			var body = new ObjVer()
@@ -61,7 +168,36 @@ namespace MFaaP.MFWSClient.Tests
 			runner.SetExpectedRequestBody(new[] { body });
 
 			// Execute.
-			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesAsync(body);
+			runner.MFWSClient.ObjectPropertyOperations.GetPropertiesOfMultipleObjects(body);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesOfMultipleObjectsAsync(MFaaP.MFWSClient.ObjVer[])"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		/// <returns></returns>
+		[TestMethod]
+		[ExpectedException(typeof(System.ArgumentException))]
+		public async Task GetPropertiesOfMultipleObjectsAsync_ExceptionForNoVersion()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<List<PropertyValue>>>(Method.POST, "/REST/objects/properties.aspx");
+
+			// Create the object to send in the body.
+			var body = new ObjVer()
+			{
+				ID = 2,
+				Type = 1
+			};
+
+			// We should post a collection of objvers (but only with this one in it).
+			runner.SetExpectedRequestBody(new[] { body });
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesOfMultipleObjectsAsync(body);
 
 			// Verify.
 			runner.Verify();

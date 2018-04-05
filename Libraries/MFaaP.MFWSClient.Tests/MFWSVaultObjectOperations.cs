@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MFaaP.MFilesAPI.Tests.ExtensionMethods;
 using MFaaP.MFWSClient.Tests.ExtensionMethods;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace MFaaP.MFWSClient.Tests
@@ -15,6 +13,44 @@ namespace MFaaP.MFWSClient.Tests
 	public class MFWSVaultObjectOperations
 	{
 
+		#region GetLatestObjectVersionAndProperties
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetLatestObjectVersionAndPropertiesAsync(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetLatestObjectVersionAndPropertiesAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.GET, "/REST/objects/0/123/latest.aspx?include=properties");
+
+			// Execute.
+			await runner.MFWSClient.ObjectOperations.GetLatestObjectVersionAndPropertiesAsync(0, 123);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetLatestObjectVersionAndProperties(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetLatestObjectVersionAndProperties()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.GET, "/REST/objects/0/123/latest.aspx?include=properties");
+
+			// Execute.
+			runner.MFWSClient.ObjectOperations.GetLatestObjectVersionAndProperties(0, 123);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
+		
 		#region Creating new objects
 
 		/// <summary>
