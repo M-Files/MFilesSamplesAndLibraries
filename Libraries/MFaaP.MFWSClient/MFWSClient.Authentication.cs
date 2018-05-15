@@ -16,10 +16,10 @@ namespace MFaaP.MFWSClient
 		/// This is the authentication token used in the request headers.
 		/// </summary>
 		/// <remarks>Not used when SSO authentication is used.</remarks>
-		protected string AuthenticationToken
+		public string AuthenticationToken
 		{
-			get { return this.authenticationToken; }
-			private set
+			protected get { return this.authenticationToken; }
+			set
 			{
 				this.authenticationToken = value;
 
