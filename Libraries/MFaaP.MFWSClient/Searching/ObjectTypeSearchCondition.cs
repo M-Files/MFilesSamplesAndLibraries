@@ -1,8 +1,11 @@
+using System;
+
 namespace MFaaP.MFWSClient
 {
 	/// <summary>
 	/// Represents a search condition that restricts by object type.
 	/// </summary>
+	[Serializable]
 	public class ObjectTypeSearchCondition
 		: SearchConditionBase<int>
 	{

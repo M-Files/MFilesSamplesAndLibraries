@@ -1,8 +1,11 @@
+using System;
+
 namespace MFaaP.MFWSClient
 {
 	/// <summary>
 	/// An enumeration of the supported operators (from http://www.m-files.com/mfws/syntax.html#sect:search-encoding).
 	/// </summary>
+	[Serializable]
 	public enum SearchConditionOperators
 	{
 		/// <summary>

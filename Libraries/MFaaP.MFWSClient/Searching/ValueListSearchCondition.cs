@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
 
-namespace MFaaP.MFWSClient.Searching
+namespace MFaaP.MFWSClient
 {
 	/// <summary>
 	/// Represents a search condition that restricts by a property reference to a value list item (any property).
 	/// </summary>
 	/// <remarks>Can be used for both value lists and object types.</remarks>
+	[Serializable]
 	public class ValueListSearchCondition
 		: SearchConditionBase
 	{

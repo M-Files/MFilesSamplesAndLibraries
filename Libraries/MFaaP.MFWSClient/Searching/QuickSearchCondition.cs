@@ -1,8 +1,11 @@
+using System;
+
 namespace MFaaP.MFWSClient
 {
 	/// <summary>
 	/// Represents a "quick search" search condition.
 	/// </summary>
+	[Serializable]
 	public class QuickSearchCondition
 		: SearchConditionBase<string>
 	{

@@ -1,8 +1,11 @@
+using System;
+
 namespace MFaaP.MFWSClient
 {
 	/// <summary>
 	/// Represents a search condition that restricts by a boolean property value.
 	/// </summary>
+	[Serializable]
 	public class BooleanPropertyValueSearchCondition
 		: PropertyValueSearchConditionBase<bool>
 	{

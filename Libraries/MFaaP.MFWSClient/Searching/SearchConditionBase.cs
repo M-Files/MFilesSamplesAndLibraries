@@ -1,8 +1,11 @@
+using System;
+
 namespace MFaaP.MFWSClient
 {
 	/// <summary>
 	/// A base implementation of <see cref="ISearchCondition"/>.
 	/// </summary>
+	[Serializable]
 	public abstract class SearchConditionBase
 		: ISearchCondition
 	{
@@ -18,6 +21,13 @@ namespace MFaaP.MFWSClient
 		/// <inheritdoc />
 		public abstract string EncodedValue { get; }
 
+		/// <summary>
+		/// Creates a <see cref="SearchConditionBase"/> with the supplied
+		/// basic information.
+		/// </summary>
+		/// <param name="expression">The expression (querystring parameter name).</param>
+		/// <param name="op">The operator (e.g. equals) to use for the match.</param>
+		/// <param name="invertOperator">Whether to invert the operator (true) or not (false).</param>
 		protected SearchConditionBase(
 			string expression,
 			SearchConditionOperators op,
@@ -32,12 +42,21 @@ namespace MFaaP.MFWSClient
 	/// <summary>
 	/// A base implementation of <see cref="ISearchCondition{T}"/>.
 	/// </summary>
+	[Serializable]
 	public abstract class SearchConditionBase<T>
 		: SearchConditionBase, ISearchCondition<T>
 	{
 		/// <inheritdoc />
 		public T Value { get; set; }
 
+		/// <summary>
+		/// Creates a <see cref="SearchConditionBase"/> with the supplied
+		/// basic information.
+		/// </summary>
+		/// <param name="expression">The expression (querystring parameter name).</param>
+		/// <param name="op">The operator (e.g. equals) to use for the match.</param>
+		/// <param name="value">The typed value to match.</param>
+		/// <param name="invertOperator">Whether to invert the operator (true) or not (false).</param>
 		protected SearchConditionBase(
 			string expression,
 			SearchConditionOperators op,

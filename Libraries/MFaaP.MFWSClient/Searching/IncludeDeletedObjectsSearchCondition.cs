@@ -1,9 +1,12 @@
+using System;
+
 namespace MFaaP.MFWSClient
 {
 	/// <summary>
 	/// Represents a search condition that includes deleted objects.
 	/// By default the M-Files Web Service excludes deleted objects.
 	/// </summary>
+	[Serializable]
 	public class IncludeDeletedObjectsSearchCondition
 		: SearchConditionBase
 	{

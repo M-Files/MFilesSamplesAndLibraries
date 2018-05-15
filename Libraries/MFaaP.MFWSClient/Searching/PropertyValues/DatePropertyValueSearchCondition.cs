@@ -5,6 +5,7 @@ namespace MFaaP.MFWSClient
 	/// <summary>
 	/// Represents a search condition that restricts by a Date property value.
 	/// </summary>
+	[Serializable]
 	public class DatePropertyValueSearchCondition
 		: PropertyValueSearchConditionBase<DateTime>
 	{
