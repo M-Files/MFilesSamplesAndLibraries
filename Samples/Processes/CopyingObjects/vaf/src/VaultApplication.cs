@@ -127,7 +127,9 @@ namespace CopyingObjects
 				}
 				catch(Exception e)
 				{
-					// TODO: Swallowing exceptions isn't nice.
+					SysUtils.ReportErrorToEventLog(SysUtils.DefaultEventSourceIdentifier,
+						$"Exception removing temporary file from {sourceObjectFile.SourceFilePath}.",
+						e);
 				}
 			}
 		}
