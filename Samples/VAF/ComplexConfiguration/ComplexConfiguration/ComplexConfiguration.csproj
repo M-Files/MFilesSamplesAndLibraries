@@ -75,6 +75,9 @@
     <Compile Include="MyConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConfigurationEditors\TextConfigurationEditors.cs" />
+    <Compile Include="ShowingAndHidingConfigurationOptions\ShowingAndHidingConfigurationOptions.cs" />
+    <Compile Include="ShowingAndHidingConfigurationOptions\HidingConfigurationOptions.cs" />
+    <Compile Include="ShowingAndHidingConfigurationOptions\ShowingConfigurationOptions.cs" />
     <Compile Include="VaultApplication.cs" />
     <Compile Include="VaultApplication.CustomValidation.cs" />
     <Compile Include="VaultApplication.Dashboard.cs" />

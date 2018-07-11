@@ -30,6 +30,14 @@ namespace ComplexConfiguration
 		public Lists.Lists Lists { get; set; }
 			= new Lists.Lists();
 
+		/// <summary>
+		/// Examples of showing and hiding configuration options depending on other configuration settings.
+		/// </summary>
+		[DataMember]
+		[JsonConfEditor(Label = "Controlling Configuration Visibility")]
+		public ShowingAndHidingConfigurationOptions.ShowingAndHidingConfigurationOptions ShowingAndHiding { get; set; }
+			= new ShowingAndHidingConfigurationOptions.ShowingAndHidingConfigurationOptions();
+
 		#region Serialization (just used to log to the Windows Event Log - not needed in real-world environments)
 
 		/// <summary>
