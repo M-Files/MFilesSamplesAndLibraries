@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application
+			type="server-application"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v1.xsd">
+  <guid>93d323d2-c3f5-44d7-a8f3-d052ba6ffcfb</guid>
+  <name>SimpleConfiguration</name>
+  <description>An example of a simple integration between a Vault Application and the M-Files 2018 Configurations area.</description>
+  <publisher></publisher>
+  <version>0.1</version>
+  <copyright>M-Files 2018 onwards</copyright>
+  <required-mfiles-version>12.0.6400.37</required-mfiles-version>
+  <extension-objects>
+    <extension-object>
+      <name>SimpleConfiguration</name>
+      <assembly>SimpleConfiguration.dll</assembly>
+      <class>SimpleConfiguration.VaultApplication</class>
+      <installation-method>Install</installation-method>
+      <uninstallation-method>Uninstall</uninstallation-method>
+      <initialization-method>Initialize</initialization-method>
+      <uninitialization-method>Uninitialize</uninitialization-method>
+      <start-operations-method>StartOperations</start-operations-method>
+    </extension-object>
+  </extension-objects>
+</application>

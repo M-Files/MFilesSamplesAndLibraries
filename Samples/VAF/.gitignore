@@ -1,0 +1,3 @@
+# VAF 2.0 must be included for now.
+!**/packages/MFiles.VAF.2.0.0.0
+!**/packages/MSBuildTasks.1.5.0.196
