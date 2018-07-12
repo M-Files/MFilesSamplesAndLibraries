@@ -101,6 +101,7 @@
   <ItemGroup>
     <None Include="install-application.ps1" />
     <None Include="packages.config" />
+    <None Include="Readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
