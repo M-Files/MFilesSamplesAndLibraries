@@ -110,7 +110,7 @@ namespace MFaaP.MFWSClient
 		public async Task<List<ObjType>> GetValueListsAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
-			var request = new RestRequest($"/REST/valuelists");
+			var request = new RestRequest($"/REST/valuelists.aspx");
 
 			// Make the request and get the response.
 			var response = await this.MFWSClient.Get<List<ObjType>>(request, token)
