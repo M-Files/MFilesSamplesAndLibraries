@@ -144,6 +144,11 @@ namespace MFaaP.MFWSClient
 		public MFWSVaultAutomaticMetadataOperations AutomaticMetadataOperations { get; }
 
 		/// <summary>
+		/// Gets the workflow operations interface.
+		/// </summary>
+		public MFWSVaultWorkflowOperations WorkflowOperations { get; }
+
+		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>
 		/// <param name="restClient">The <see cref="IRestClient"/> to use for HTTP requests.</param>
@@ -169,6 +174,7 @@ namespace MFaaP.MFWSClient
 			this.ClassOperations = new MFWSVaultClassOperations(this);
 			this.PropertyDefOperations = new MFWSVaultPropertyDefOperations(this);
 			this.AutomaticMetadataOperations = new MFWSVaultAutomaticMetadataOperations(this);
+			this.WorkflowOperations = new MFWSVaultWorkflowOperations(this);
 		}
 
 		/// <summary>
