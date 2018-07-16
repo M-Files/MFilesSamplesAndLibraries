@@ -126,6 +126,11 @@ namespace MFaaP.MFWSClient
 		public MFWSVaultPropertyDefOperations PropertyDefOperations { get; }
 
 		/// <summary>
+		/// Gets the automatic metadata operations interface.
+		/// </summary>
+		public MFWSVaultAutomaticMetadataOperations AutomaticMetadataOperations { get; }
+
+		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>
 		/// <param name="restClient">The <see cref="IRestClient"/> to use for HTTP requests.</param>
@@ -150,6 +155,10 @@ namespace MFaaP.MFWSClient
 			this.ObjectFileOperations = new MFWSVaultObjectFileOperations(this);
 			this.ClassOperations = new MFWSVaultClassOperations(this);
 			this.PropertyDefOperations = new MFWSVaultPropertyDefOperations(this);
+			this.AutomaticMetadataOperations = new MFWSVaultAutomaticMetadataOperations(this);
+
+			// Add the extensions default header (enable IML support).
+			this.AddDefaultHeader("X-Extensions", "MFWA,IML");
 		}
 
 		/// <summary>
@@ -182,7 +191,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="acceptLanguages">
 		/// The language string to use, in a valid format: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4.
-		/// <example>"da, en-gb;q=0.8, en;q=0.7" would mean "I prefer Danish, but will accept British English and other types of English".</example>
+		/// <example>"da, en-gb;q=0.8, en;q=0.7" would mean "I prefer Danish, but will accept British English and other types of English in that order of preference".</example>
 		/// </param>
 		/// <remarks>Removes any existing "Accept-Language" headers.</remarks>
 		public void SetAcceptLanguage(string acceptLanguages)
@@ -212,7 +221,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="acceptLanguages">
 		/// A collection of language strings to use.  Each string should contain the culture name (any acceptable format), optionally followed by a semi-colon and the weighting.
 		/// ref: http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4.
-		/// <example>"da", "en-gb;q=0.8", "en;q=0.7" would mean "I prefer Danish, but will accept British English and other types of English".</example>
+		/// <example>"da", "en-gb;q=0.8", "en;q=0.7" would mean "I prefer Danish, but will accept British English and other types of English in that order of preference".</example>
 		/// </param>
 		/// <remarks>Removes any existing "Accept-Language" headers.</remarks>
 		public void SetAcceptLanguage(params string[] acceptLanguages)

@@ -1446,7 +1446,7 @@ namespace MFaaP.MFWSClient
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
-        public Ownerpropertydef OwnerPropertyDef { get; set; }
+        public OwnerPropertyDef OwnerPropertyDef { get; set; }
 
         /// <summary>
         /// Based on M-Files API.
@@ -1994,99 +1994,110 @@ namespace MFaaP.MFWSClient
 		
 	}
 
-    
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	/// <remarks>ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInObjectType.html</remarks>
+	public enum MFBuiltInObjectType
+	{
+		/// <summary>
+		/// The document object type.
+		/// </summary>
+		MFBuiltInObjectTypeDocument = 0,
+
+		/// <summary>
+		/// The document collection type.
+		/// </summary>
+		MFBuiltInObjectTypeDocumentCollection = 9,
+
+		/// <summary>
+		/// The assignment object type.
+		/// </summary>
+		MFBuiltInObjectTypeAssignment = 10,
+
+		/// <summary>
+		/// A special value that refers to both the document and the document collection types. Can be used in e.g. search conditions.
+		/// </summary>
+		MFBuiltInObjectTypeDocumentOrDocumentCollection = -102
+	}
+
 
 	/// <summary>
-	/// 
+	/// Based on M-Files API.
 	/// </summary>
 	public enum MFDataType
 	{
-
-
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Uninitialized  = 0,
-		
+		Uninitialized = 0,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Text  = 1,
-		
+		Text = 1,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Integer  = 2,
-		
+		Integer = 2,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Floating  = 3,
-		
+		Floating = 3,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Date  = 5,
-		
+		Date = 5,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Time  = 6,
-		
+		Time = 6,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Timestamp  = 7,
+		Timestamp = 7,
 		
-
 		/// <summary>
-		/// 
+		/// The datatype of a boolean (true/false) property.
 		/// </summary>
 		Boolean  = 8,
 		
-
 		/// <summary>
-		/// 
+		/// The datatype of a lookup where only a single item can be selected.
 		/// </summary>
 		Lookup  = 9,
 		
-
 		/// <summary>
-		/// 
+		/// The datatype of a lookup where multiple items can be selected.
 		/// </summary>
 		MultiSelectLookup  = 10,
-		
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Integer64  = 11,
+		Integer64 = 11,
 		
-
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
 		// ReSharper disable once InconsistentNaming
 		FILETIME  = 12,
 		
-
 		/// <summary>
-		/// 
+		/// The datatype of a multi-line text property.
 		/// </summary>
 		MultiLineText  = 13,
-		
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
 		// ReSharper disable once InconsistentNaming
-		ACL  = 14,
+		ACL = 14,
 		
 	}
 
@@ -2135,63 +2146,139 @@ namespace MFaaP.MFWSClient
     
 
 	/// <summary>
-	/// 
+	/// Based on M-Files API.
 	/// </summary>
 	public enum MFFolderContentItemType
 	{
 
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		Unknown = 0,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		Unknown  = 0,
-		
+		ViewFolder = 1,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		ViewFolder  = 1,
-		
+		PropertyFolder = 2,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		PropertyFolder  = 2,
-		
+		TraditionalFolder = 3,
 
 		/// <summary>
-		/// 
+		/// Based on M-Files API.
 		/// </summary>
-		TraditionalFolder  = 3,
-		
-
-		/// <summary>
-		/// 
-		/// </summary>
-		ObjectVersion  = 4,
+		ObjectVersion = 4,
 		
 	}
 
     /// <summary>
     /// Based on M-Files API.
     /// </summary>
-    public class Ownerpropertydef
+    public class OwnerPropertyDef
     {
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
-        public Ownerpropertydef() { }
+        public OwnerPropertyDef() { }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int ID { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public int DependencyRelation { get; set; }
+
         /// <summary>
         /// Based on M-Files API.
         /// </summary>
         public bool IsRelationFiltering { get; set; }
-    }
+	}
+
+	/// <summary>
+	/// Holds file upload ids and property values for fetching automatic metadata. This struct is used when automatic metadata
+	/// is fetched from server.
+	/// </summary>
+	public class AutomaticMetadataRequestInfo
+	{
+		/// <summary>
+		/// List of temporary file upload ids.
+		/// </summary>
+		/// <remarks>May be empty.</remarks>
+		public List<int> UploadIds = new List<int>();
+
+		/// <summary>
+		/// Array of object's current property values.
+		/// </summary>
+		/// <remarks>May be empty.</remarks>
+		public List<PropertyValue> PropertyValues = new List<PropertyValue>();
+
+		/// <summary>
+		/// Object type.
+		/// </summary>
+		public int ObjectType;
+
+		/// <summary>
+		/// ObjVer of current object.
+		/// </summary>
+		/// <remarks>May be empty.</remarks>
+		public ObjVer ObjVer;
+
+		/// <summary>
+		/// List of metadata provider ids.
+		/// </summary>
+		/// <remarks>May be empty to return all data, or include values to filter.</remarks>
+		public List<string> MetadataProviderIds = new List<string>();
+
+		/// <summary>
+		/// Custom data.
+		/// </summary>
+		/// <remarks>May be empty.</remarks>
+		public string CustomData;
+	}
+	
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	public class PropertyValueSuggestion
+	{
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string DisplayValue { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool IsFact { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public bool IsNewValue { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public int PropertyDef { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public float Quality { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public TypedValue TypedValue { get; set; }
+	}
 }
