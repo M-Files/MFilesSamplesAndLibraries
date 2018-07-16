@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// A group of methods for creating and modifying property definitions.
+	/// </summary>
+	/// <remarks>ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultPropertyDefOperations.html </remarks>
 	public class MFWSVaultPropertyDefOperations
 		: MFWSVaultOperationsBase
 	{
@@ -14,6 +20,87 @@ namespace MFaaP.MFWSClient
 			: base(client)
 		{
 		}
+
+		#region Property definition alias to ID resolution
+
+		/// <summary>
+		/// Retrieves the ID for a property definition with a given alias in the vault.
+		/// </summary>
+		/// <param name="alias">The alias for the property definition.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An awaitable task for the request.</returns>
+		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no property definitions have the alias, or more than one does).</remarks>
+		public async Task<int> GetPropertyDefIDByAliasAsync(string alias, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			var output = await this.GetPropertyDefIDsByAliasesAsync(token, aliases: new string[] { alias });
+			return output?.Count == 1
+				? output[0]
+				: -1;
+		}
+
+		/// <summary>
+		/// Retrieves the ID for a property definition with a given alias in the vault.
+		/// </summary>
+		/// <param name="aliases">The aliases for the property definition.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An awaitable task for the request.</returns>
+		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no property definitions have the alias, or more than one does).</remarks>
+		public async Task<List<int>> GetPropertyDefIDsByAliasesAsync(CancellationToken token = default(CancellationToken), params string[] aliases)
+		{
+			// Sanity.
+			if(null == aliases)
+				throw new ArgumentNullException(nameof(aliases));
+			if (0 == aliases.Length)
+				return new List<int>();
+
+			// Create the request.
+			var request = new RestRequest($"/REST/structure/properties/itemidbyalias.aspx");
+			
+			// Assign the body.
+			request.AddJsonBody(aliases);
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Post<Dictionary<string, int>>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the data.
+			return aliases.Select(alias => response.Data.ContainsKey(alias) ? response.Data[alias] : -1).ToList();
+		}
+
+		/// <summary>
+		/// Retrieves the ID for a property definition with a given alias in the vault.
+		/// </summary>
+		/// <param name="aliases">The aliases for the property definition.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>A collection of resolved IDs.</returns>
+		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no property definitions have the alias, or more than one does).</remarks>
+		public List<int> GetPropertyDefIDsByAliases(CancellationToken token = default(CancellationToken), params string[] aliases)
+		{
+			// Execute the async method.
+			return this.GetPropertyDefIDsByAliasesAsync(token, aliases)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Retrieves the ID for a property definition with a given alias in the vault.
+		/// </summary>
+		/// <param name="alias">The alias for the property definition.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An awaitable task for the request.</returns>
+		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no property definitions have the alias, or more than one does).</remarks>
+		public int GetPropertyDefIDByAlias(string alias, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			var output = this.GetPropertyDefIDsByAliases(token, aliases: new string[] { alias });
+			return output?.Count == 1
+				? output[0]
+				: -1;
+		}
+
+		#endregion
 
 		/// <summary>
 		/// Gets all property definitions in the vault.
