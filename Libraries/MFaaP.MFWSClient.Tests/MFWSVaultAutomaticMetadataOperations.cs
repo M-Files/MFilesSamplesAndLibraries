@@ -59,7 +59,7 @@ namespace MFaaP.MFWSClient.Tests
 		{
 			// Create our test runner.
 			var runner = new RestApiTestRunner<List<PropertyValueSuggestion>>(Method.POST, "/REST/objects/automaticmetadata.aspx");
-			
+
 			// Set up the expected body.
 			var body = new AutomaticMetadataRequestInfo()
 			{
@@ -192,7 +192,8 @@ namespace MFaaP.MFWSClient.Tests
 		public void GetAutomaticMetadataForTemporaryFiles()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<List<PropertyValueSuggestion>>(Method.POST, "/REST/objects/automaticmetadata.aspx");
+			var runner =
+				new RestApiTestRunner<List<PropertyValueSuggestion>>(Method.POST, "/REST/objects/automaticmetadata.aspx");
 
 			// Set up the expected body.
 			var body = new AutomaticMetadataRequestInfo()

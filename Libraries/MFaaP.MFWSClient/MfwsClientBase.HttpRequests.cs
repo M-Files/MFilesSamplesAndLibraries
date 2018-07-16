@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -89,6 +91,9 @@ namespace MFaaP.MFWSClient
 			// We only deal with Json.
 			request.RequestFormat = DataFormat.Json;
 
+			// Ensure the extensions headers are specified.
+			this.EnsureEnabledExtensionsAreSpecified(request);
+
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
@@ -121,6 +126,9 @@ namespace MFaaP.MFWSClient
 			// We only deal with Json.
 			request.RequestFormat = DataFormat.Json;
 
+			// Ensure the extensions headers are specified.
+			this.EnsureEnabledExtensionsAreSpecified(request);
+
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
@@ -152,6 +160,9 @@ namespace MFaaP.MFWSClient
 
 			// We only deal with Json.
 			request.RequestFormat = DataFormat.Json;
+
+			// Ensure the extensions headers are specified.
+			this.EnsureEnabledExtensionsAreSpecified(request);
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -187,6 +198,9 @@ namespace MFaaP.MFWSClient
 			// We only deal with Json.
 			request.RequestFormat = DataFormat.Json;
 
+			// Ensure the extensions headers are specified.
+			this.EnsureEnabledExtensionsAreSpecified(request);
+
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
@@ -220,6 +234,9 @@ namespace MFaaP.MFWSClient
 
 			// We only deal with Json.
 			request.RequestFormat = DataFormat.Json;
+
+			// Ensure the extensions headers are specified.
+			this.EnsureEnabledExtensionsAreSpecified(request);
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -257,6 +274,9 @@ namespace MFaaP.MFWSClient
 			// We only deal with Json.
 			request.RequestFormat = DataFormat.Json;
 
+			// Ensure the extensions headers are specified.
+			this.EnsureEnabledExtensionsAreSpecified(request);
+
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
@@ -290,6 +310,9 @@ namespace MFaaP.MFWSClient
 
 			// We only deal with Json.
 			request.RequestFormat = DataFormat.Json;
+
+			// Ensure the extensions headers are specified.
+			this.EnsureEnabledExtensionsAreSpecified(request);
 
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
@@ -327,6 +350,9 @@ namespace MFaaP.MFWSClient
 			// We only deal with Json.
 			request.RequestFormat = DataFormat.Json;
 
+			// Ensure the extensions headers are specified.
+			this.EnsureEnabledExtensionsAreSpecified(request);
+
 			// Notify before we execute a request.
 			this.OnBeforeExecuteRequest(request);
 
@@ -339,6 +365,62 @@ namespace MFaaP.MFWSClient
 
 			// Return.
 			return response;
+		}
+
+		/// <summary>
+		/// Ensures that extensions specified in <see cref="EnabledMFWSExtensions"/> are
+		/// contained within the <see cref="ExtensionsHttpHeaderName"/> HTTP header on the request.
+		/// </summary>
+		/// <param name="request">The request to alter.</param>
+		public virtual void EnsureEnabledExtensionsAreSpecified(IRestRequest request)
+		{
+			// Sanity.
+			if(null == request)
+				throw new ArgumentNullException(nameof(request));
+
+			// Shortcut if we can.
+			if (this.EnabledMFWSExtensions == MFWSExtensions.None)
+				return;
+
+			// Retrieve the current X-Extensions values (comma-separated) as an array.
+			// Need to handle various null/empty scenarios here.
+			var existingExtensions = ((request.Parameters ?? new List<Parameter>())
+										.FirstOrDefault(p =>
+											p.Type == ParameterType.HttpHeader
+											&& p.Name == MFWSClientBase.ExtensionsHttpHeaderName)?
+										.Value as string)?
+									.Split(",".ToCharArray())
+									.Select(v => v.Trim())?
+									.ToList()
+									?? new List<string>();
+
+			// Ensure that the ones we want are added.
+			foreach (var possibleExtension in Enum.GetValues(typeof(MFWSExtensions)).Cast<MFWSExtensions>())
+			{
+				// Ignore "none".
+				if (possibleExtension == MFWSExtensions.None)
+					continue;
+
+				// Have we enabled this extension?
+				if (false == this.EnabledMFWSExtensions.HasFlag(possibleExtension))
+					continue;
+
+				// Do we need to add it?
+				if (false == existingExtensions.Contains(possibleExtension.ToString()))
+					existingExtensions.Add(possibleExtension.ToString());
+			}
+
+			// Remove the existing header, if it exists.
+			request.Parameters?
+				.RemoveAll(p => p.Type == ParameterType.HttpHeader && p.Name == MFWSClientBase.ExtensionsHttpHeaderName);
+
+			// Add the header.
+			request.Parameters?.Add(new Parameter()
+			{
+				Type = ParameterType.HttpHeader,
+				Name = MFWSClientBase.ExtensionsHttpHeaderName,
+				Value = string.Join(",", existingExtensions)
+			});
 		}
 	}
 }

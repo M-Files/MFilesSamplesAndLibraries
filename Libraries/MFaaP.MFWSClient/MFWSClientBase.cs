@@ -15,7 +15,20 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// The HTTP header name for the "Accept Language" header.
 		/// </summary>
-		private const string AcceptLanguageHttpHeaderName = "Accept-Language";
+		public const string AcceptLanguageHttpHeaderName = "Accept-Language";
+
+		/// <summary>
+		/// The HTTP header for the extensions.
+		/// </summary>
+		public const string ExtensionsHttpHeaderName = "X-Extensions";
+
+		/// <summary>
+		/// Defines the extensions that are enabled via the <see cref="ExtensionsHttpHeaderName"/> HTTP header.
+		/// </summary>
+		/// <remarks>Some extensions may be required for server functionality to work.
+		/// For example: <see cref="MFWSExtensions.IML"/> is required for methods on <see cref="MFWSVaultAutomaticMetadataOperations"/>.</remarks>
+		public MFWSExtensions EnabledMFWSExtensions { get; set; }
+			= MFWSExtensions.None;
 
 		/// <summary>
 		/// Expected signature for the <see cref="MFWSClientBase.BeforeExecuteRequest"/> event.
@@ -156,9 +169,6 @@ namespace MFaaP.MFWSClient
 			this.ClassOperations = new MFWSVaultClassOperations(this);
 			this.PropertyDefOperations = new MFWSVaultPropertyDefOperations(this);
 			this.AutomaticMetadataOperations = new MFWSVaultAutomaticMetadataOperations(this);
-
-			// Add the extensions default header (enable IML support).
-			this.AddDefaultHeader("X-Extensions", "MFWA,IML");
 		}
 
 		/// <summary>
@@ -232,7 +242,8 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Notifies any subscribers of <see cref="BeforeExecuteRequest"/>.
 		/// </summary>
-		/// <param name="e"></param>
+		/// <param name="e">The request being executed.</param>
+		/// <remarks>Ensures that the request contains any <see cref="EnabledMFWSExtensions"/>.  This base implementation should always be called.</remarks>
 		protected virtual void OnBeforeExecuteRequest(IRestRequest e)
 		{
 #if DEBUG
