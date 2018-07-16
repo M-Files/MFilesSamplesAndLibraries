@@ -7,6 +7,10 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// A group of methods for creating and modifying object types.
+	/// </summary>
+	/// <remarks>ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultObjectTypeOperations.html </remarks>
 	public class MFWSVaultObjectTypeOperations
 		: MFWSVaultOperationsBase
 	{
