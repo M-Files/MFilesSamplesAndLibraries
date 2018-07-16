@@ -107,7 +107,7 @@ namespace MFaaP.MFWSClient
 		public async Task<List<ObjType>> GetObjectTypesAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Create the request.
-			var request = new RestRequest($"/REST/structure/objecttypes");
+			var request = new RestRequest($"/REST/structure/objecttypes.aspx");
 
 			// Make the request and get the response.
 			var response = await this.MFWSClient.Get<List<ObjType>>(request, token)
