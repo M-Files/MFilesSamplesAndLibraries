@@ -97,5 +97,93 @@ namespace MFaaP.MFWSClient.Tests
 
 		#endregion
 
+		#region Workflow state alias to ID resolution
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultWorkflowOperations.GetWorkflowStateIDByAliasAsync"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetWorkflowStateIDByAliasAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/workflowstates/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello world" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.WorkflowOperations.GetWorkflowStateIDByAliasAsync("hello world");
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultWorkflowOperations.GetWorkflowStateIDsByAliasesAsync"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetWorkflowStateIDsByAliasesAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/workflowstates/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello", "world", "third option" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.WorkflowOperations.GetWorkflowStateIDsByAliasesAsync(aliases: new string[] { "hello", "world", "third option" });
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultWorkflowOperations.GetWorkflowStateIDsByAliases"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetWorkflowStateIDsByAliases()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/workflowstates/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello", "world", "third option" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.WorkflowOperations.GetWorkflowStateIDsByAliases(aliases: new string[] { "hello", "world", "third option" });
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultWorkflowOperations.GetWorkflowStateIDByAlias"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetWorkflowStateIDByAlias()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/workflowstates/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello world" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.WorkflowOperations.GetWorkflowStateIDByAlias("hello world");
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
+
 	}
 }
