@@ -11,6 +11,30 @@ namespace MFaaP.MFWSClient
 {
 	public abstract partial class MFWSClientBase
 	{
+
+		/// <summary>
+		/// Expected signature for the <see cref="MFWSClientBase.BeforeExecuteRequest"/> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The arguments.</param>
+		public delegate void BeforeExecuteRequestHandler(object sender, RestRequestEventArgs e);
+
+		/// <summary>
+		/// Occurs before a request is executed.
+		/// </summary>
+		public event BeforeExecuteRequestHandler BeforeExecuteRequest;
+		/// <summary>
+		/// Expected signature for the <see cref="MFWSClientBase.AfterExecuteRequest"/> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The arguments.</param>
+		public delegate void AfterExecuteRequestHandler(object sender, RestResponseEventArgs e);
+
+		/// <summary>
+		/// Occurs after a request is executed.
+		/// </summary>
+		public event AfterExecuteRequestHandler AfterExecuteRequest;
+
 		/// <summary>
 		/// The deserialiser used for deserialising exception data.
 		/// </summary>
@@ -421,6 +445,62 @@ namespace MFaaP.MFWSClient
 				Name = MFWSClientBase.ExtensionsHttpHeaderName,
 				Value = string.Join(",", existingExtensions)
 			});
+		}
+
+		/// <summary>
+		/// Notifies any subscribers of <see cref="BeforeExecuteRequest"/>.
+		/// </summary>
+		/// <param name="e">The request being executed.</param>
+		/// <remarks>Ensures that the request contains any <see cref="EnabledMFWSExtensions"/>.  This base implementation should always be called.</remarks>
+		protected virtual void OnBeforeExecuteRequest(IRestRequest e)
+		{
+#if DEBUG
+			// Output the basic request data.
+			System.Diagnostics.Debug.WriteLine($"Executing {e.Method} request to {e.Resource}");
+
+			// If we have any parameters then output them.
+			if ((e.Parameters?.Count ?? 0) != 0)
+			{
+				// ReSharper disable once PossibleNullReferenceException
+				foreach (var parameter in e.Parameters)
+				{
+					System.Diagnostics.Debug.WriteLine($"\t({parameter.Type}) {parameter.Name} = {parameter.Value} (type: {parameter.ContentType ?? "Unspecified"})");
+				}
+			}
+
+			// If we have any files then output details.
+			if ((e.Files?.Count ?? 0) != 0)
+			{
+				// ReSharper disable once PossibleNullReferenceException
+				foreach (var file in e.Files)
+				{
+					System.Diagnostics.Debug.WriteLine($"\tFile {file.Name} ({file.ContentLength}b)");
+				}
+			}
+#endif
+
+			// Notify subscribers.
+			this.BeforeExecuteRequest?.Invoke(this, new RestRequestEventArgs(e));
+		}
+
+		/// <summary>
+		/// Notifies any subscribers of <see cref="AfterExecuteRequest"/>
+		/// </summary>
+		/// <param name="e"></param>
+		protected virtual void OnAfterExecuteRequest(IRestResponse e)
+		{
+#if DEBUG
+			if (null != e)
+			{
+				System.Diagnostics.Debug.WriteLine($"{e.StatusCode} received from {e.ResponseUri}: {e.Content}");
+			}
+#endif
+
+			// Notify subscribers.
+			this.AfterExecuteRequest?.Invoke(this, new RestResponseEventArgs(e));
+
+			// If we had an invalid response, throw it.
+			this.EnsureValidResponse(e);
 		}
 	}
 }

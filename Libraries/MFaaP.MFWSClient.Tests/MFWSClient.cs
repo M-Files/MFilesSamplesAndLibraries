@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestSharp;
 
@@ -8,6 +9,49 @@ namespace MFaaP.MFWSClient.Tests
 	[TestClass]
 	public partial class MFWSClient
 	{
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFWSClientBase.GetMetadataStructureIDsByAliasesAsync"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetMetadataStructureIDsByAliasesAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<VaultStructureAliasResponse>(Method.POST, "/REST/structure/metadatastructure/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new VaultStructureAliasRequest();
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.GetMetadataStructureIDsByAliasesAsync(body);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFWSClientBase.GetMetadataStructureIDsByAliases"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetMetadataStructureIDsByAliases()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<VaultStructureAliasResponse>(Method.POST, "/REST/structure/metadatastructure/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new VaultStructureAliasRequest();
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.GetMetadataStructureIDsByAliases(body);
+
+			// Verify.
+			runner.Verify();
+		}
+
 		/// <summary>
 		/// Creates a MFWSClient using the supplied mock request client.
 		/// </summary>
