@@ -203,46 +203,5 @@ namespace MFaaP.MFWSClient
 				.GetAwaiter()
 				.GetResult();
 		}
-
-		/// <summary>
-		/// Based on the M-Files API.
-		/// </summary>
-		public enum MFBuiltInView
-		{
-			/// <summary>
-			/// Checked-out-to-me view.
-			/// </summary>
-			MFBuiltInViewCheckedOutToCurrentUser = 5,
-
-			/// <summary>
-			/// Recently-modified-by-me view.
-			/// </summary>
-			MFBuiltInViewRecentlyModifiedByMe = 7,
-
-			/// <summary>
-			/// Templates view.
-			/// </summary>
-			MFBuiltInViewTemplates = 8,
-
-			/// <summary>
-			/// Assigned-to-me view.
-			/// </summary>
-			MFBuiltInViewAssignedToMe = 9,
-
-			/// <summary>
-			/// Latest-searches view container.
-			/// </summary>
-			MFBuiltInViewLatestSearches = 11,
-
-			/// <summary>
-			/// Recently Accessed by Me view.
-			/// </summary>
-			MFBuiltInViewRecentlyAccessedByMe = 14,
-
-			/// <summary>
-			/// Favorites view.
-			/// </summary>
-			MFBuiltInViewFavorites = 15
-		}
 	}
 }

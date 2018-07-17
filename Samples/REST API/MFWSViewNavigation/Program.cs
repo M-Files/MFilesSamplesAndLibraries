@@ -93,23 +93,37 @@ namespace MFWSViewNavigation
 					// If they chose to go "into" an object then return the history.
 					if (nextNavItem.FolderContentItemType == MFFolderContentItemType.ObjectVersion)
 					{
-						// Get the history.
-						var versions = await client.ObjectOperations.GetHistoryAsync(new ObjID()
+						// If it's an unpromoted external object then we can't do anything.
+						if (nextNavItem.ObjectVersion.ObjVer.ID == 0
+							&& false == string.IsNullOrEmpty(nextNavItem.ObjectVersion.ObjVer.ExternalRepositoryObjectID))
 						{
-							Type = nextNavItem.ObjectVersion.ObjVer.Type,
-							ID = nextNavItem.ObjectVersion.ObjVer.ID
-						});
-
-						// Output them.
-						Console.WriteLine($"There are {versions.Count} versions:");
-						foreach (var version in versions)
-						{
-							Console.WriteLine($"{version.ObjVer.Version} (Created: {version.LastModifiedUtc})");
+							Console.WriteLine("History cannot be viewed on unpromoted objects.");
+							Console.WriteLine("Press any key to go back to the previous listing.");
+							Console.ReadKey();
 						}
+						else
+						{
 
-						// Allow the user to go out.
-						Console.WriteLine("Press any key to go back to the previous listing.");
-						Console.ReadKey();
+							// Get the history.
+							var versions = await client.ObjectOperations.GetHistoryAsync(new ObjID()
+							{
+								Type = nextNavItem.ObjectVersion.ObjVer.Type,
+								ID = nextNavItem.ObjectVersion.ObjVer.ID,
+								ExternalRepositoryName = nextNavItem.ObjectVersion.ObjVer.ExternalRepositoryName,
+								ExternalRepositoryObjectID = nextNavItem.ObjectVersion.ObjVer.ExternalRepositoryObjectID
+							});
+
+							// Output them.
+							Console.WriteLine($"There are {versions.Count} versions:");
+							foreach (var version in versions)
+							{
+								Console.WriteLine($"{version.ObjVer.Version} (Created: {version.LastModifiedUtc})");
+							}
+
+							// Allow the user to go out.
+							Console.WriteLine("Press any key to go back to the previous listing.");
+							Console.ReadKey();
+						}
 					}
 					else
 					{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using RestSharp.Extensions.MonoHttp;
 
 namespace MFaaP.MFWSClient.ExtensionMethods
 {
@@ -31,6 +32,8 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 						: item.View.Name;
 				case MFFolderContentItemType.TraditionalFolder:
 					return item.TraditionalFolder.DisplayValue;
+				case MFFolderContentItemType.ExternalViewFolder:
+					return item.ExternalView.DisplayName;
 				default:
 					// Unknown.
 					return string.Empty;
@@ -74,6 +77,8 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 			// See: http://www.m-files.com/mfws/syntax.html
 			switch (item.FolderContentItemType)
 			{
+				case MFFolderContentItemType.ExternalViewFolder:
+					return WebUtility.UrlEncode($"u{item.ExternalView.ExternalRepositoryName}:{item.ExternalView.ID}");
 				case MFFolderContentItemType.ViewFolder:
 					return "v" + item.View.ID;
 				case MFFolderContentItemType.TraditionalFolder:

@@ -44,7 +44,46 @@ using System.Web;
 namespace MFaaP.MFWSClient
 {
 
+	/// <summary>
+	/// Based on the M-Files API.
+	/// </summary>
+	public enum MFBuiltInView
+	{
+		/// <summary>
+		/// Checked-out-to-me view.
+		/// </summary>
+		MFBuiltInViewCheckedOutToCurrentUser = 5,
 
+		/// <summary>
+		/// Recently-modified-by-me view.
+		/// </summary>
+		MFBuiltInViewRecentlyModifiedByMe = 7,
+
+		/// <summary>
+		/// Templates view.
+		/// </summary>
+		MFBuiltInViewTemplates = 8,
+
+		/// <summary>
+		/// Assigned-to-me view.
+		/// </summary>
+		MFBuiltInViewAssignedToMe = 9,
+
+		/// <summary>
+		/// Latest-searches view container.
+		/// </summary>
+		MFBuiltInViewLatestSearches = 11,
+
+		/// <summary>
+		/// Recently Accessed by Me view.
+		/// </summary>
+		MFBuiltInViewRecentlyAccessedByMe = 14,
+
+		/// <summary>
+		/// Favorites view.
+		/// </summary>
+		MFBuiltInViewFavorites = 15
+	}
 
 	/// <summary>
 	/// Specifies the information required when creating a new object.
@@ -1160,12 +1199,12 @@ namespace MFaaP.MFWSClient
 
 	}
 
-    
 
-    /// <summary>
-    /// Based on M-Files API.
-    /// </summary>
-    public class ObjVer
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	public class ObjVer
 	{
 
 		public ObjVer()
@@ -1176,25 +1215,73 @@ namespace MFaaP.MFWSClient
 		/// Based on M-Files API.
 		/// </summary>
 		public int ID { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public int Type { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public int Version { get; set; }
-        
-    }
 
-    
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public int Type { get; set; }
 
-    /// <summary>
-    /// Based on M-Files API.
-    /// </summary>
-    public class PropertyValue
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public int Version { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ExternalRepositoryName { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ExternalRepositoryObjectID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ExternalRepositoryObjectVersionID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public MFObjVerVersionType VersionType { get; set; }
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	public enum MFObjVerVersionType
+	{
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		All = 3,
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		Any = 2,
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		Latest = 1,
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		Specific = 4,
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		Uninitialized = 0
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	public class PropertyValue
 	{
 		public PropertyValue()
 		{
@@ -1606,8 +1693,18 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public int Type { get; set; }
-        
-    }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ExternalRepositoryName { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ExternalRepositoryObjectID { get; set; }
+
+	}
 
     
 
@@ -1732,20 +1829,60 @@ namespace MFaaP.MFWSClient
         /// Based on M-Files API.
         /// </summary>
         public Lookup TraditionalFolder { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public View View { get; set; }
-        
-    }
 
-    
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public View View { get; set; }
 
-    /// <summary>
-    /// Based on M-Files API.
-    /// </summary>
-    public class View
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public ExternalView ExternalView { get; set; }
+
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	public class ExternalView
+	{
+
+		public ExternalView()
+		{
+		}
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string DisplayName { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ExternalRepositoryName { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string IconID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public ObjectVersion ObjectData { get; set; }
+
+	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	public class View
 	{
 
 		public View()
@@ -2175,7 +2312,12 @@ namespace MFaaP.MFWSClient
 		/// Based on M-Files API.
 		/// </summary>
 		ObjectVersion = 4,
-		
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		ExternalViewFolder = 5,
+
 	}
 
     /// <summary>
