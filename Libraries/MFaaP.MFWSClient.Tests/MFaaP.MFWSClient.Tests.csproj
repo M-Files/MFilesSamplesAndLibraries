@@ -71,6 +71,7 @@
     <Compile Include="MFWSVaultAutomaticMetadataOperations.cs" />
     <Compile Include="MFWSVaultObjectFileOperations.cs" />
     <Compile Include="MFWSVaultClassOperations.cs" />
+    <Compile Include="MFWSVaultWorkflowOperations.cs" />
     <Compile Include="MFWSVaultPropertyDefOperations.cs" />
     <Compile Include="MFWSVaultValueListOperations.cs" />
     <Compile Include="MFWSVaultObjectTypeOperations.cs" />

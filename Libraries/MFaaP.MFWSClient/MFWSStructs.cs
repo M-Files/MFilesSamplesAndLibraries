@@ -2281,4 +2281,100 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		public TypedValue TypedValue { get; set; }
 	}
+	
+	/// <summary>
+	/// A request to resolve multiple vault structural aliases to ids at once.
+	/// </summary>
+	public class VaultStructureAliasRequest
+	{
+		/// <summary>
+		/// Aliases of properties to resolve.
+		/// </summary>
+		public List<string> Properties { get; set; }
+			= new List<string>();
+
+		/// <summary>
+		/// Aliases of classes to resolve.
+		/// </summary>
+		public List<string> Classes { get; set; }
+			= new List<string>();
+
+		/// <summary>
+		/// Aliases of object types to resolve.
+		/// </summary>
+		public List<string> ObjectTypes { get; set; }
+			= new List<string>();
+
+		/// <summary>
+		/// Aliases of workflows to resolve.
+		/// </summary>
+		public List<string> Workflows { get; set; }
+			= new List<string>();
+
+		/// <summary>
+		/// Aliases of workflow states to resolve.
+		/// </summary>
+		public List<string> WorkflowStates { get; set; }
+			= new List<string>();
+
+		/// <summary>
+		/// Aliases of workflow state transitions to resolve.
+		/// </summary>
+		public List<string> StateTransitions { get; set; }
+			= new List<string>();
+
+		/// <summary>
+		/// Aliases of value lists to resolve.
+		/// </summary>
+		public List<string> ValueLists { get; set; }
+			= new List<string>();
+	}
+
+	/// <summary>
+	/// The response of attempting to execute a <see cref="VaultStructureAliasRequest"/>.
+	/// </summary>
+	public class VaultStructureAliasResponse
+	{
+		/// <summary>
+		/// Aliases of properties to resolve.
+		/// </summary>
+		public Dictionary<string, int> Properties { get; set; }
+			= new Dictionary<string, int>();
+
+		/// <summary>
+		/// Aliases of classes to resolve.
+		/// </summary>
+		public Dictionary<string, int> Classes { get; set; }
+			= new Dictionary<string, int>();
+
+		/// <summary>
+		/// Aliases of object types to resolve.
+		/// </summary>
+		public Dictionary<string, int> ObjectTypes { get; set; }
+			= new Dictionary<string, int>();
+
+		/// <summary>
+		/// Aliases of workflows to resolve.
+		/// </summary>
+		public Dictionary<string, int> Workflows { get; set; }
+			= new Dictionary<string, int>();
+
+		/// <summary>
+		/// Aliases of workflow states to resolve.
+		/// </summary>
+		public Dictionary<string, int> WorkflowStates { get; set; }
+			= new Dictionary<string, int>();
+
+		/// <summary>
+		/// Aliases of workflow state transitions to resolve.
+		/// </summary>
+		public Dictionary<string, int> StateTransitions { get; set; }
+			= new Dictionary<string, int>();
+
+		/// <summary>
+		/// Aliases of value lists to resolve.
+		/// </summary>
+		public Dictionary<string, int> ValueLists { get; set; }
+			= new Dictionary<string, int>();
+	}
 }

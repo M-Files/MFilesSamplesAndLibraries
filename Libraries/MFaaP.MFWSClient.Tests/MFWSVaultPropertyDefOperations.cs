@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,6 +10,94 @@ namespace MFaaP.MFWSClient.Tests
 	[TestClass]
 	public class MFWSVaultPropertyDefOperations
 	{
+
+		#region Property definition alias to ID resolution
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultPropertyDefOperations.GetPropertyDefIDByAliasAsync"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetPropertyDefIDByAliasAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/properties/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello world" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.PropertyDefOperations.GetPropertyDefIDByAliasAsync("hello world");
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultPropertyDefOperations.GetPropertyDefIDsByAliasesAsync"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetPropertyDefIDsByAliasesAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/properties/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello", "world", "third option" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.PropertyDefOperations.GetPropertyDefIDsByAliasesAsync(aliases: new string[] { "hello", "world", "third option" });
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultPropertyDefOperations.GetPropertyDefIDsByAliases"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetPropertyDefIDsByAliases()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/properties/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello", "world", "third option" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.PropertyDefOperations.GetPropertyDefIDsByAliases(aliases: new string[] {  "hello", "world", "third option" });
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultPropertyDefOperations.GetPropertyDefIDByAlias"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetPropertyDefIDByAlias()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/properties/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello world" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.PropertyDefOperations.GetPropertyDefIDByAlias("hello world");
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
 
 		#region GetPropertyDefs
 

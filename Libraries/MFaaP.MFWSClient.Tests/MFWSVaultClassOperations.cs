@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using RestSharp;
 
 namespace MFaaP.MFWSClient.Tests
@@ -10,6 +8,94 @@ namespace MFaaP.MFWSClient.Tests
 	[TestClass]
 	public class MFWSVaultClassOperations
 	{
+
+		#region Object type alias to ID resolution
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClassIDByAliasAsync"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetObjectClassIDByAliasAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/classes/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello world" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.ClassOperations.GetObjectClassIDByAliasAsync("hello world");
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClassIDsByAliasesAsync"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetObjectClassIDsByAliasesAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/classes/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello", "world", "third option" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.ClassOperations.GetObjectClassIDsByAliasesAsync(aliases: new string[] { "hello", "world", "third option" });
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClassIDsByAliases"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetObjectClassIDsByAliases()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/classes/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello", "world", "third option" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.ClassOperations.GetObjectClassIDsByAliases(aliases: new string[] { "hello", "world", "third option" });
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultClassOperations.GetObjectClassIDByAlias"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetObjectClassIDByAlias()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<Dictionary<string, int>>(Method.POST, "/REST/structure/classes/itemidbyalias.aspx");
+
+			// Set up the expected body.
+			var body = new JsonArray { "hello world" };
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.ClassOperations.GetObjectClassIDByAlias("hello world");
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
 
 		#region GetAllObjectClasses
 

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using RestSharp;
 
 namespace MFaaP.MFWSClient
@@ -29,29 +31,6 @@ namespace MFaaP.MFWSClient
 		/// For example: <see cref="MFWSExtensions.IML"/> is required for methods on <see cref="MFWSVaultAutomaticMetadataOperations"/>.</remarks>
 		public MFWSExtensions EnabledMFWSExtensions { get; set; }
 			= MFWSExtensions.None;
-
-		/// <summary>
-		/// Expected signature for the <see cref="MFWSClientBase.BeforeExecuteRequest"/> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The arguments.</param>
-		public delegate void BeforeExecuteRequestHandler(object sender, RestRequestEventArgs e);
-
-		/// <summary>
-		/// Occurs before a request is executed.
-		/// </summary>
-		public event BeforeExecuteRequestHandler BeforeExecuteRequest;
-		/// <summary>
-		/// Expected signature for the <see cref="MFWSClientBase.AfterExecuteRequest"/> event.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="e">The arguments.</param>
-		public delegate void AfterExecuteRequestHandler(object sender, RestResponseEventArgs e);
-
-		/// <summary>
-		/// Occurs after a request is executed.
-		/// </summary>
-		public event AfterExecuteRequestHandler AfterExecuteRequest;
 
 		/// <summary>
 		/// This is the RestClient which will do the actual requests.
@@ -144,6 +123,11 @@ namespace MFaaP.MFWSClient
 		public MFWSVaultAutomaticMetadataOperations AutomaticMetadataOperations { get; }
 
 		/// <summary>
+		/// Gets the workflow operations interface.
+		/// </summary>
+		public MFWSVaultWorkflowOperations WorkflowOperations { get; }
+
+		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>
 		/// <param name="restClient">The <see cref="IRestClient"/> to use for HTTP requests.</param>
@@ -169,6 +153,7 @@ namespace MFaaP.MFWSClient
 			this.ClassOperations = new MFWSVaultClassOperations(this);
 			this.PropertyDefOperations = new MFWSVaultPropertyDefOperations(this);
 			this.AutomaticMetadataOperations = new MFWSVaultAutomaticMetadataOperations(this);
+			this.WorkflowOperations = new MFWSVaultWorkflowOperations(this);
 		}
 
 		/// <summary>
@@ -240,59 +225,47 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Notifies any subscribers of <see cref="BeforeExecuteRequest"/>.
+		/// Resolves multiple vault structural aliases to ids at once.
 		/// </summary>
-		/// <param name="e">The request being executed.</param>
-		/// <remarks>Ensures that the request contains any <see cref="EnabledMFWSExtensions"/>.  This base implementation should always be called.</remarks>
-		protected virtual void OnBeforeExecuteRequest(IRestRequest e)
+		/// <param name="aliasRequest">The collection of aliases to resolve.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An awaitable task for the request.</returns>
+		public async Task<VaultStructureAliasResponse> GetMetadataStructureIDsByAliasesAsync(VaultStructureAliasRequest aliasRequest,
+			CancellationToken token = default(CancellationToken))
 		{
-#if DEBUG
-			// Output the basic request data.
-			System.Diagnostics.Debug.WriteLine($"Executing {e.Method} request to {e.Resource}");
+			// Sanity.
+			if (null == aliasRequest)
+				throw new ArgumentNullException(nameof(aliasRequest));
 
-			// If we have any parameters then output them.
-			if ((e.Parameters?.Count ?? 0) != 0)
-			{
-				// ReSharper disable once PossibleNullReferenceException
-				foreach (var parameter in e.Parameters)
-				{
-					System.Diagnostics.Debug.WriteLine($"\t({parameter.Type}) {parameter.Name} = {parameter.Value} (type: {parameter.ContentType ?? "Unspecified"})");
-				}
-			}
+			// Create the request.
+			var request = new RestRequest($"/REST/structure/metadatastructure/itemidbyalias.aspx");
 
-			// If we have any files then output details.
-			if ((e.Files?.Count ?? 0) != 0)
-			{
-				// ReSharper disable once PossibleNullReferenceException
-				foreach (var file in e.Files)
-				{
-					System.Diagnostics.Debug.WriteLine($"\tFile {file.Name} ({file.ContentLength}b)");
-				}
-			}
-#endif
+			// Assign the body.
+			request.AddJsonBody(aliasRequest);
 
-			// Notify subscribers.
-			this.BeforeExecuteRequest?.Invoke(this, new RestRequestEventArgs(e));
+			// Make the request and get the response.
+			var response = await this.Post<VaultStructureAliasResponse>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the data.
+			return response.Data;
 		}
 
 		/// <summary>
-		/// Notifies any subscribers of <see cref="AfterExecuteRequest"/>
+		/// Resolves multiple vault structural aliases to ids at once.
 		/// </summary>
-		/// <param name="e"></param>
-		protected virtual void OnAfterExecuteRequest(IRestResponse e)
+		/// <param name="aliasRequest">The collection of aliases to resolve.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An awaitable task for the request.</returns>
+		public VaultStructureAliasResponse GetMetadataStructureIDsByAliases(VaultStructureAliasRequest aliasRequest,
+			CancellationToken token = default(CancellationToken))
 		{
-#if DEBUG
-			if (null != e)
-			{
-				System.Diagnostics.Debug.WriteLine($"{e.StatusCode} received from {e.ResponseUri}: {e.Content}");
-			}
-#endif
-
-			// Notify subscribers.
-			this.AfterExecuteRequest?.Invoke(this, new RestResponseEventArgs(e));
-
-			// If we had an invalid response, throw it.
-			this.EnsureValidResponse(e);
+			// Execute the async method.
+			return this.GetMetadataStructureIDsByAliasesAsync(aliasRequest, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 		}
+
 	}
 }
