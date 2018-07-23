@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestSharp;
@@ -438,6 +439,160 @@ namespace MFaaP.MFWSClient.Tests
 
 			// Execute.
 			await runner.MFWSClient.ObjectPropertyOperations.SetPropertiesAsync(1, 2, body, false);
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
+
+		#region Set properties of multiple objects at once
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetPropertiesOfMultipleObjectsAsync"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task SetPropertiesOfMultipleObjectsAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<ExtendedObjectVersion>>(Method.PUT, "/REST/objects/setmultipleobjproperties");
+
+			// Create the expected body.
+			var body = new ObjectsUpdateInfo()
+			{
+				MultipleObjectInfo = new[]
+				{
+					new ObjectVersionUpdateInformation()
+					{
+						ObjVer = new ObjVer()
+						{
+							Type = 0,
+							ID = 1,
+							Version = 2
+						},
+						Properties = new List<PropertyValue>
+						{
+							new PropertyValue()
+							{
+								PropertyDef = (int) MFBuiltInPropertyDef.MFBuiltInPropertyDefClass,
+								TypedValue = new TypedValue()
+								{
+									Lookup = new Lookup()
+									{
+										Item = (int) MFBuiltInDocumentClass.MFBuiltInDocumentClassOtherDocument
+									}
+								}
+							}
+						}
+					},
+					new ObjectVersionUpdateInformation()
+					{
+						ObjVer = new ObjVer()
+						{
+							Type = 0,
+							ID = 2,
+							Version = 1
+						},
+						Properties = new List<PropertyValue>
+						{
+							new PropertyValue()
+							{
+								PropertyDef = (int) MFBuiltInPropertyDef.MFBuiltInPropertyDefClass,
+								TypedValue = new TypedValue()
+								{
+									Lookup = new Lookup()
+									{
+										Item = (int) MFBuiltInDocumentClass.MFBuiltInDocumentClassOtherDocument
+									}
+								}
+							}
+						}
+					}
+				}.ToList()
+			};
+
+			// Set the expected body.
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.SetPropertiesOfMultipleObjectsAsync(
+				objectVersionUpdateInformation: body.MultipleObjectInfo.ToArray());
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.SetPropertiesOfMultipleObjects"/>
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void SetPropertiesOfMultipleObjects()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<ExtendedObjectVersion>>(Method.PUT, "/REST/objects/setmultipleobjproperties");
+
+			// Create the expected body.
+			var body = new ObjectsUpdateInfo()
+			{
+				MultipleObjectInfo = new[]
+				{
+					new ObjectVersionUpdateInformation()
+					{
+						ObjVer = new ObjVer()
+						{
+							Type = 0,
+							ID = 1,
+							Version = 2
+						},
+						Properties = new List<PropertyValue>
+						{
+							new PropertyValue()
+							{
+								PropertyDef = (int) MFBuiltInPropertyDef.MFBuiltInPropertyDefClass,
+								TypedValue = new TypedValue()
+								{
+									Lookup = new Lookup()
+									{
+										Item = (int) MFBuiltInDocumentClass.MFBuiltInDocumentClassOtherDocument
+									}
+								}
+							}
+						}
+					},
+					new ObjectVersionUpdateInformation()
+					{
+						ObjVer = new ObjVer()
+						{
+							Type = 0,
+							ID = 2,
+							Version = 1
+						},
+						Properties = new List<PropertyValue>
+						{
+							new PropertyValue()
+							{
+								PropertyDef = (int) MFBuiltInPropertyDef.MFBuiltInPropertyDefClass,
+								TypedValue = new TypedValue()
+								{
+									Lookup = new Lookup()
+									{
+										Item = (int) MFBuiltInDocumentClass.MFBuiltInDocumentClassOtherDocument
+									}
+								}
+							}
+						}
+					}
+				}.ToList()
+			};
+
+			// Set the expected body.
+			runner.SetExpectedRequestBody(body);
+
+			// Execute.
+			runner.MFWSClient.ExternalObjectOperations.PromoteObjects(
+				objectVersionUpdateInformation: body.MultipleObjectInfo.ToArray());
 
 			// Verify.
 			runner.Verify();

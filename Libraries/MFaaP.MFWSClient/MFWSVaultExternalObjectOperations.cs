@@ -110,30 +110,12 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectVersionUpdateInformation">Information on the objects to promote.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <remarks>The property values must be valid for the class, as they would if an object were being created.</remarks>
-		public async Task<List<ExtendedObjectVersion>> PromoteObjectsAsync(CancellationToken token = default(CancellationToken), params ObjectVersionUpdateInformation[] objectVersionUpdateInformation)
+		public Task<List<ExtendedObjectVersion>> PromoteObjectsAsync(CancellationToken token = default(CancellationToken), params ObjectVersionUpdateInformation[] objectVersionUpdateInformation)
 		{
-			// Sanity.
-			if (null == objectVersionUpdateInformation)
-				throw new ArgumentNullException(nameof(objectVersionUpdateInformation));
-			if(objectVersionUpdateInformation.Length == 0)
-				return new List<ExtendedObjectVersion>();
-
-			// Create the request.
-			var request = new RestRequest($"/REST/objects/setmultipleobjproperties");
-
-			// Create the request body.
-			var body = new ObjectsUpdateInfo();
-			body.MultipleObjectInfo.AddRange(objectVersionUpdateInformation);
-
-			// Set the request body.
-			request.AddJsonBody(body);
-
-			// Make the request and get the response.
-			var response = await this.MFWSClient.Put<List<ExtendedObjectVersion>>(request, token)
-				.ConfigureAwait(false);
-
-			// Return the object data.
-			return response.Data;
+			// Use the "SetPropertiesOfMultipleObjects" method to perform this.
+			return this.MFWSClient.ObjectPropertyOperations.SetPropertiesOfMultipleObjectsAsync(
+				token,
+				objectVersionUpdateInformation);
 		}
 
 		/// <summary>

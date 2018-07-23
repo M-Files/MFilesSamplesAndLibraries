@@ -449,6 +449,57 @@ namespace MFaaP.MFWSClient
 
 		#endregion
 
+		#region Set properties of multiple objects at once
+
+		/// <summary>
+		/// Sets the properties of multiple objects in one HTTP request.
+		/// </summary>
+		/// <param name="objectVersionUpdateInformation">Information on the objects to promote.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <remarks>Will also promote objects if they are external and a class property value is provided (see <see cref="MFWSVaultExternalObjectOperations.PromoteObjectsAsync"/>).</remarks>
+		public async Task<List<ExtendedObjectVersion>> SetPropertiesOfMultipleObjectsAsync(CancellationToken token = default(CancellationToken), params ObjectVersionUpdateInformation[] objectVersionUpdateInformation)
+		{
+			// Sanity.
+			if (null == objectVersionUpdateInformation)
+				throw new ArgumentNullException(nameof(objectVersionUpdateInformation));
+			if (objectVersionUpdateInformation.Length == 0)
+				return new List<ExtendedObjectVersion>();
+
+			// Create the request.
+			var request = new RestRequest($"/REST/objects/setmultipleobjproperties");
+
+			// Create the request body.
+			var body = new ObjectsUpdateInfo();
+			body.MultipleObjectInfo.AddRange(objectVersionUpdateInformation);
+
+			// Set the request body.
+			request.AddJsonBody(body);
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Put<List<ExtendedObjectVersion>>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the object data.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Promotes unmanaged objects to managed object.
+		/// </summary>
+		/// <param name="objectVersionUpdateInformation">Information on the objects to promote.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <remarks>The property values must be valid for the class, as they would if an object were being created.</remarks>
+		public List<ExtendedObjectVersion> SetPropertiesOfMultipleObjects(CancellationToken token = default(CancellationToken), params ObjectVersionUpdateInformation[] objectVersionUpdateInformation)
+		{
+			// Execute the async method.
+			return this.SetPropertiesOfMultipleObjectsAsync(token, objectVersionUpdateInformation)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		#endregion
+
 		#region Remove property
 
 		/// <summary>
