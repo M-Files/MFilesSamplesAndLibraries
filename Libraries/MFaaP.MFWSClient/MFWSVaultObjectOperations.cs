@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,8 +38,17 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(objId));
 
 			// Create the request.
-			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/latest.aspx?include=properties");
-			request.Method = Method.GET;
+			string resource = $"/REST/objects/{objId.Type}/{objId.ID}/latest.aspx?include=properties";
+
+			// If it's an unpromoted IML object then use the external details.
+			if (objId.ID == 0
+				&& false == string.IsNullOrEmpty(objId.ExternalRepositoryName)
+				&& false == string.IsNullOrEmpty(objId.ExternalRepositoryObjectID))
+			{
+				resource = $"/REST/objects/{objId.Type}/u{WebUtility.UrlEncode(objId.ExternalRepositoryName)}:{WebUtility.UrlEncode(objId.ExternalRepositoryObjectID)}/latest.aspx?include=properties";
+			}
+
+			var request = new RestRequest(resource);
 
 			// Make the request and get the response.
 			var response = await this.MFWSClient.Get<ExtendedObjectVersion>(request, token)

@@ -97,7 +97,8 @@ namespace MFWSViewNavigation
 						if (nextNavItem.ObjectVersion.ObjVer.ID == 0
 							&& false == string.IsNullOrEmpty(nextNavItem.ObjectVersion.ObjVer.ExternalRepositoryObjectID))
 						{
-							Console.WriteLine("History cannot be viewed on unpromoted objects.");
+							Console.WriteLine("History cannot be viewed on unpromoted objects:.");
+							Console.WriteLine($"\tu{nextNavItem.ObjectVersion.ObjVer.ExternalRepositoryName}:{nextNavItem.ObjectVersion.ObjVer.ExternalRepositoryObjectID}");
 							Console.WriteLine("Press any key to go back to the previous listing.");
 							Console.ReadKey();
 						}

@@ -43,6 +43,329 @@ using System.Web;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// Based on the M-Files API.
+	/// </summary>
+	/// <remarks>ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInPropertyDef.html </remarks>
+	public enum MFBuiltInPropertyDef
+	{/// <summary>
+	 /// The last time the object was accessed by the current user.
+	 /// </summary>
+		MFBuiltInPropertyDefAccessedByMe = 81,
+
+		/// <summary>
+		/// The date and time of the last change to the ACL of the object version.
+		/// </summary>
+		MFBuiltInPropertyDefACLChanged = 90,
+
+		/// <summary>
+		/// A list of additional classes for the object.
+		/// </summary>
+		MFBuiltInPropertyDefAdditionalClasses = 36,
+
+		/// <summary>
+		/// A list of users to whom the object version is assigned.
+		/// </summary>
+		MFBuiltInPropertyDefAssignedTo = 44,
+
+		/// <summary>
+		/// The assignment description for the current object version assignment.
+		/// </summary>
+		MFBuiltInPropertyDefAssignmentDescription = 41,
+
+		/// <summary>
+		/// The class of the object.
+		/// </summary>
+		MFBuiltInPropertyDefClass = 100,
+
+		/// <summary>
+		/// The class group of the object.
+		/// </summary>
+		MFBuiltInPropertyDefClassGroups = 101,
+
+		/// <summary>
+		/// A list of document collections belonging to the document collection.
+		/// </summary>
+		MFBuiltInPropertyDefCollectionMemberCollections = 47,
+
+		/// <summary>
+		/// A list of documents belonging to the document collection.
+		/// </summary>
+		MFBuiltInPropertyDefCollectionMemberDocuments = 46,
+
+		/// <summary>
+		/// Comment text for the object version. Same as MFBuiltInPropertyDefVersionComment.
+		/// </summary>
+		MFBuiltInPropertyDefComment = 33,
+
+		/// <summary>
+		/// Specifies whether or not the assignment has been completed.
+		/// </summary>
+		MFBuiltInPropertyDefCompleted = 98,
+
+		/// <summary>
+		/// A list of users who have completed the current assignment.
+		/// </summary>
+		MFBuiltInPropertyDefCompletedBy = 45,
+
+		/// <summary>
+		/// The date and time a conflict was last resolved in favor of the object.
+		/// </summary>
+		MFBuiltInPropertyDefConflictResolved = 96,
+
+		/// <summary>
+		/// Constituent documents for the current object.
+		/// </summary>
+		MFBuiltInPropertyDefConstituent = 48,
+
+		/// <summary>
+		/// The creation date and time of an object.
+		/// </summary>
+		MFBuiltInPropertyDefCreated = 20,
+
+		/// <summary>
+		/// Identifies the user who created the object.
+		/// </summary>
+		MFBuiltInPropertyDefCreatedBy = 25,
+
+		/// <summary>
+		/// The external source from which the object was imported.
+		/// </summary>
+		MFBuiltInPropertyDefCreatedFromExternalLocation = 35,
+
+		/// <summary>
+		/// The deadline date for the current object version assignment.
+		/// </summary>
+		MFBuiltInPropertyDefDeadline = 42,
+
+		/// <summary>
+		/// The deletion date and time of the object.
+		/// </summary>
+		MFBuiltInPropertyDefDeleted = 27,
+
+		/// <summary>
+		/// Identifies the user who deleted the object.
+		/// </summary>
+		MFBuiltInPropertyDefDeletedBy = 28,
+
+		/// <summary>
+		/// The date and time of the last change to the deletion status of the object.
+		/// </summary>
+		MFBuiltInPropertyDefDeletionStatusChanged = 93,
+
+		/// <summary>
+		/// The 'favorite views' where the object should be shown.
+		/// </summary>
+		MFBuiltInPropertyDefFavoriteView = 82,
+
+		/// <summary>
+		/// E-mail in-reply-to internet header value.
+		/// </summary>
+		MFBuiltInPropertyDefInReplyTo = 84,
+
+		/// <summary>
+		/// E-mail in-reply-to references between documents belonging to the same conversation.
+		/// </summary>
+		MFBuiltInPropertyDefInReplyToReference = 85,
+
+		/// <summary>
+		/// A Boolean property identifying whether the object is a template.
+		/// </summary>
+		MFBuiltInPropertyDefIsTemplate = 37,
+
+		/// <summary>
+		/// Keywords for the object.
+		/// </summary>
+		MFBuiltInPropertyDefKeywords = 26,
+
+		/// <summary>
+		/// The last modification date and time of an object.
+		/// </summary>
+		MFBuiltInPropertyDefLastModified = 21,
+
+		/// <summary>
+		/// Identifies the user who performed the last modification for the object.
+		/// </summary>
+		MFBuiltInPropertyDefLastModifiedBy = 23,
+
+		/// <summary>
+		/// The location in a repository.
+		/// </summary>
+		MFBuiltInPropertyDefLocation = 103,
+
+		/// <summary>
+		/// A Boolean property identifying whether the object is marked for archiving.
+		/// </summary>
+		MFBuiltInPropertyDefMarkedForArchiving = 32,
+
+		/// <summary>
+		/// E-mail message-id from internet headers.
+		/// </summary>
+		MFBuiltInPropertyDefMessageID = 83,
+
+		/// <summary>
+		/// A list of users who are monitoring the current assignment.
+		/// </summary>
+		MFBuiltInPropertyDefMonitoredBy = 43,
+
+		/// <summary>
+		/// The name or title property definition.
+		/// </summary>
+		MFBuiltInPropertyDefNameOrTitle = 0,
+
+		/// <summary>
+		/// The date and time of the last change to the object.
+		/// </summary>
+		MFBuiltInPropertyDefObjectChanged = 89,
+
+		/// <summary>
+		/// This special value is used for referring to Object ID in ObjectTypeColumnMapping.TargetPropertyDef.
+		/// </summary>
+		MFBuiltInPropertyDefObjectID = -102,
+
+		/// <summary>
+		/// The location from which the object was imported to M-Files.
+		/// </summary>
+		MFBuiltInPropertyDefOriginalPath = 75,
+
+		/// <summary>
+		/// The location from which the object was imported to M-Files (continued).
+		/// </summary>
+		MFBuiltInPropertyDefOriginalPath2 = 77,
+
+		/// <summary>
+		/// The location from which the object was imported to M-Files (continued).
+		/// </summary>
+		MFBuiltInPropertyDefOriginalPath3 = 78,
+
+		/// <summary>
+		/// A list of referenced documents.
+		/// </summary>
+		MFBuiltInPropertyDefReference = 76,
+
+		/// <summary>
+		/// A list of users who have rejected the current assignment.
+		/// </summary>
+		MFBuiltInPropertyDefRejectedBy = 97,
+
+		/// <summary>
+		/// Report placement.
+		/// </summary>
+		MFBuiltInPropertyDefReportPlacement = 88,
+
+		/// <summary>
+		/// Report URL.
+		/// </summary>
+		MFBuiltInPropertyDefReportURL = 87,
+
+		/// <summary>
+		/// The repository of an object.
+		/// </summary>
+		MFBuiltInPropertyDefRepository = 102,
+
+		/// <summary>
+		/// The shared location paths of the object's shared files.
+		/// </summary>
+		MFBuiltInPropertyDefSharedFiles = 95,
+
+		/// <summary>
+		/// Signature manifestation.
+		/// </summary>
+		MFBuiltInPropertyDefSignatureManifestation = 86,
+
+		/// <summary>
+		/// A Boolean property identifying whether the object is a single-file object.
+		/// </summary>
+		MFBuiltInPropertyDefSingleFileObject = 22,
+
+		/// <summary>
+		/// The total size of all object versions.
+		/// </summary>
+		MFBuiltInPropertyDefSizeOnServerAllVersions = 31,
+
+		/// <summary>
+		/// The size of this object version.
+		/// </summary>
+		MFBuiltInPropertyDefSizeOnServerThisVersion = 30,
+
+		/// <summary>
+		/// The workflow state of the object.
+		/// </summary>
+		MFBuiltInPropertyDefState = 39,
+
+		/// <summary>
+		/// The date when the object state was changed to the current state.
+		/// </summary>
+		MFBuiltInPropertyDefStateEntered = 40,
+
+		/// <summary>
+		/// The workflow state transition of the object.
+		/// </summary>
+		MFBuiltInPropertyDefStateTransition = 99,
+
+		/// <summary>
+		/// The date and time of the last status change of the object.
+		/// </summary>
+		MFBuiltInPropertyDefStatusChanged = 24,
+
+		/// <summary>
+		/// A traditional folder containing this object version.
+		/// </summary>
+		MFBuiltInPropertyDefTraditionalFolder = 34,
+
+		/// <summary>
+		/// The GUID of the vault that contains or contained the object to which the shortcut object refers to.
+		/// </summary>
+		MFBuiltInPropertyDefVaultGUID = 94,
+
+		/// <summary>
+		/// Comment text for the object version. Same as MFBuiltInPropertyDefComment.
+		/// </summary>
+		MFBuiltInPropertyDefVersionComment = 33,
+
+		/// <summary>
+		/// The date and time of the last change to the comment of the object version.
+		/// </summary>
+		MFBuiltInPropertyDefVersionCommentChanged = 92,
+
+		/// <summary>
+		/// The version label for the object.
+		/// </summary>
+		MFBuiltInPropertyDefVersionLabel = 29,
+
+		/// <summary>
+		/// The date and time of the last change to the version label of the object version.
+		/// </summary>
+		MFBuiltInPropertyDefVersionLabelChanged = 91,
+
+		/// <summary>
+		/// The workflow for the object.
+		/// </summary>
+		MFBuiltInPropertyDefWorkflow = 38,
+
+		/// <summary>
+		/// A property which indicates the assignment related to the workflow of the object.
+		/// </summary>
+		MFBuiltInPropertyDefWorkflowAssignment = 79
+
+	}
+
+	/// <summary>
+	/// Based on the M-Files API.
+	/// </summary>
+	/// <remarks>ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFBuiltInDocumentClass.html </remarks>
+	public enum MFBuiltInDocumentClass
+	{
+		/// <summary>
+		/// Document.
+		/// </summary>
+		MFBuiltInDocumentClassUnclassifiedDocument = 0,
+
+		/// <summary>
+		/// Other document.
+		/// </summary>
+		MFBuiltInDocumentClassOtherDocument = 1
+	}
 
 	/// <summary>
 	/// Based on the M-Files API.
@@ -2518,5 +2841,42 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		public Dictionary<string, int> ValueLists { get; set; }
 			= new Dictionary<string, int>();
+	}
+	
+	/// <summary>
+	/// Holds objects and list of properties needs to be set for the objects.  This struct is used when multiple
+	/// objects need to be updated at once.
+	/// </summary>
+	public class ObjectsUpdateInfo
+	{
+		public ObjectsUpdateInfo()
+		{
+			this.MultipleObjectInfo = new List<ObjectVersionUpdateInformation>();
+		}
+
+		public ObjectsUpdateInfo(ObjVer objVer, List<PropertyValue> properties, bool allowNameChange)
+		: this()
+		{
+			this.MultipleObjectInfo.Add(new ObjectVersionUpdateInformation
+			{
+				ObjVer = objVer,
+				Properties = properties,
+				AllowNameChange = allowNameChange
+			});
+		}
+
+		public List<ObjectVersionUpdateInformation> MultipleObjectInfo;
+	}
+
+	/// <summary>
+	/// Holds objectversion and list of properties for the objectversion. This object used during property udpate.
+	/// </summary>
+	public class ObjectVersionUpdateInformation
+		: ExtendedObjectVersion
+	{
+		/// <summary>
+		/// Flag to denote if operation is allowed to change name of the object.
+		/// </summary> 
+		public bool AllowNameChange;
 	}
 }

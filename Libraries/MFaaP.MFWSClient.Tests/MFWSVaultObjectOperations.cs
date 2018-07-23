@@ -49,8 +49,54 @@ namespace MFaaP.MFWSClient.Tests
 			runner.Verify();
 		}
 
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetLatestObjectVersionAndPropertiesAsync(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// using an external object's details
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetLatestObjectVersionAndPropertiesAsync_External()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.GET, "/REST/objects/0/uhello+world:123%25123/latest.aspx?include=properties");
+
+			// Execute.
+			await runner.MFWSClient.ObjectOperations.GetLatestObjectVersionAndPropertiesAsync(new ObjID()
+			{
+				Type = 0,
+				ExternalRepositoryName = "hello world",
+				ExternalRepositoryObjectID = "123%123"
+			});
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetLatestObjectVersionAndProperties(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
+		/// using an external object's details
+		/// requests the correct resource address with the correct method.
+		/// </summary>
+		[TestMethod]
+		public void GetLatestObjectVersionAndProperties_External()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.GET, "/REST/objects/0/uhello+world:123%25123/latest.aspx?include=properties");
+
+			// Execute.
+			runner.MFWSClient.ObjectOperations.GetLatestObjectVersionAndProperties(new ObjID()
+			{
+				Type = 0,
+				ExternalRepositoryName = "hello world",
+				ExternalRepositoryObjectID = "123%123"
+			});
+
+			// Verify.
+			runner.Verify();
+		}
+
 		#endregion
-		
+
 		#region Creating new objects
 
 		/// <summary>

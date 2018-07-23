@@ -49,6 +49,7 @@
     <Compile Include="ExtensionMethods\FolderContentItemExtensionMethods.cs" />
     <Compile Include="MFWSClient.Authentication.cs" />
     <Compile Include="MFWSExtensions.cs" />
+    <Compile Include="MFWSVaultExternalObjectOperations.cs" />
     <Compile Include="MFWSVaultAutomaticMetadataOperations.cs" />
     <Compile Include="MFWSVaultClassOperations.cs" />
     <Compile Include="MFWSVaultWorkflowOperations.cs" />
