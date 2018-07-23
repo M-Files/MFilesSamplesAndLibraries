@@ -236,6 +236,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="aliasRequest">The collection of aliases to resolve.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public async Task<VaultStructureAliasResponse> GetMetadataStructureIDsByAliasesAsync(VaultStructureAliasRequest aliasRequest,
 			CancellationToken token = default(CancellationToken))
 		{

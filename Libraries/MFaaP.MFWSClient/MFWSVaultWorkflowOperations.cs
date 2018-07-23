@@ -30,6 +30,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflows have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public async Task<int> GetWorkflowIDByAliasAsync(string alias, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
@@ -46,6 +47,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflows have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public async Task<List<int>> GetWorkflowIDsByAliasesAsync(CancellationToken token = default(CancellationToken), params string[] aliases)
 		{
 			// Sanity.
@@ -91,6 +93,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflows have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public int GetWorkflowIDByAlias(string alias, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
@@ -111,6 +114,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflow states have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public async Task<int> GetWorkflowStateIDByAliasAsync(string alias, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
@@ -127,6 +131,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflow states have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public async Task<List<int>> GetWorkflowStateIDsByAliasesAsync(CancellationToken token = default(CancellationToken), params string[] aliases)
 		{
 			// Sanity.
@@ -172,6 +177,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflow states have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public int GetWorkflowStateIDByAlias(string alias, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
@@ -192,6 +198,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflow state transitions have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public async Task<int> GetWorkflowStateTransitionIDByAliasAsync(string alias, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
@@ -208,6 +215,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflow state transitions have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public async Task<List<int>> GetWorkflowStateTransitionIDsByAliasesAsync(CancellationToken token = default(CancellationToken), params string[] aliases)
 		{
 			// Sanity.
@@ -253,6 +261,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>An awaitable task for the request.</returns>
 		/// <remarks>Returns -1 if the alias cannot be resolved (e.g. no workflow state transitions have the alias, or more than one does).</remarks>
+		/// <remarks>Only available in M-Files 12.0.6768.0 upwards.</remarks>
 		public int GetWorkflowStateTransitionIDByAlias(string alias, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
