@@ -2879,4 +2879,172 @@ namespace MFaaP.MFWSClient
 		/// </summary> 
 		public bool AllowNameChange;
 	}
+
+	/// <summary>
+	/// Based on M-Files API.
+	/// </summary>
+	/// <remarks>ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~MFExtensionAuthenticationSpecialUserType.html </remarks>
+	public enum MFExtensionAuthenticationSpecialUserType
+	{
+		/// <summary>
+		/// No special type.
+		/// </summary>
+		MFExtensionAuthenticationSpecialUserTypeNone = 0,
+
+		/// <summary>
+		/// Common.
+		/// </summary>
+		MFExtensionAuthenticationSpecialUserTypeCommon = 1,
+
+		/// <summary>
+		/// Indexer.
+		/// </summary>
+		MFExtensionAuthenticationSpecialUserTypeIndexer = 2,
+
+		/// <summary>
+		/// Permissions.
+		/// </summary>
+		MFExtensionAuthenticationSpecialUserTypePermissions = 3
+	}
+
+	/// <summary>
+	/// Structure defining one external repository authentication status.
+	/// </summary>
+	public class RepositoryAuthenticationStatus
+	{
+		/// <summary>
+		/// Account name used for authentication.
+		/// </summary>
+		public string AccountName { get; set; }
+
+		/// <summary>
+		/// User type used in authentication.
+		/// </summary>
+		public MFExtensionAuthenticationSpecialUserType ExtensionAuthenticationSpecialUserType { get; set; }
+
+		/// <summary>
+		/// ID of the target repository.
+		/// </summary>
+		public string TargetID { get; set; }
+
+		/// <summary>
+		/// ID of the authenticated M-Files user.
+		/// </summary>
+		public int UserID { get; set; }
+	}
+
+	/// <summary>
+	/// Structure defining one external repository authentication target.
+	/// </summary>
+	[Serializable]
+	public class RepositoryAuthenticationTarget
+	{
+		/// <summary>
+		/// Display name of the target repository.
+		/// </summary>
+		public string DisplayName { get; set; }
+
+		/// <summary>
+		/// Icon id of the target repository.
+		/// </summary>
+		public string IconID { get; set; }
+
+		/// <summary>
+		/// ID of the target repository.
+		/// </summary>
+		public string ID { get; set; }
+
+		/// <summary>
+		/// Array of plugin configurations.
+		/// </summary>
+		public List<PluginInfoConfiguration> PluginInfoConfigurations { get; set; }
+
+		/// <summary>
+		/// Flag indicating if user specific authentication is required.
+		/// </summary>
+		public bool RequiresUserSpecificAuthentication { get; set; }
+
+		/// <summary>
+		/// Current authentication status.
+		/// </summary>
+		public RepositoryAuthenticationStatus RepositoryAuthenticationStatus { get; set; }
+		
+	}
+
+	/// <summary>
+	/// The configuration for authentication plugin.
+	/// </summary>
+	public class PluginInfoConfiguration
+	{
+		/// <summary>
+		/// The name of the plugin configuration.
+		/// </summary>
+		public string Name { get; set; }
+
+		/// <summary>
+		/// Specifies if this is the default plugin configuration.
+		/// </summary>
+		public bool IsDefault { get; set; }
+
+		/// <summary>
+		/// Assembly name.
+		/// </summary>
+		public string AssemblyName { get; set; }
+
+		/// <summary>
+		/// Bridge class name.
+		/// </summary>
+		public string BridgeClassName { get; set; }
+
+		/// <summary>
+		/// Specifies if this plugin configuration is independent of scope.
+		/// </summary>
+		public bool IsScopeIndependent { get; set; }
+
+		/// <summary>
+		/// The used protocol for the plug-in, e.g. SAMLv2.0.
+		/// </summary>
+		public string Protocol { get; set; }
+
+		/// <summary>
+		/// The plugin ClientSpecific configuration.
+		/// </summary>
+		public Dictionary<string, string> Configuration { get; set; }
+
+		/// <summary>
+		/// Configuration source.
+		/// </summary>
+		public Dictionary<string, string> ConfigurationSource { get; set; }
+	}
+	
+	/// <summary>
+	/// Structure defining authentication data for external repository authentication.
+	/// </summary>
+	public class RepositoryAuthentication
+	{
+		/// <summary>
+		/// Name of the authentication configuration.
+		/// </summary>
+		public string ConfigurationName { get; set; }
+
+		/// <summary>
+		/// Username used for basic authentication.
+		/// </summary>
+		public string Username { get; set; }
+
+		/// <summary>
+		/// Password used for basic authentication.
+		/// </summary>
+		public string Password { get; set; }
+
+		/// <summary>
+		/// The authentication token for plugin authentication.
+		/// </summary>
+		public string AuthenticationToken { get; set; }
+
+		/// <summary>
+		/// The refresh token for plugin authentication.
+		/// </summary>
+		public string RefreshToken { get; set; }
+	}
 }

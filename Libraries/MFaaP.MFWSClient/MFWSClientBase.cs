@@ -133,6 +133,11 @@ namespace MFaaP.MFWSClient
 		public MFWSVaultExternalObjectOperations ExternalObjectOperations { get; }
 
 		/// <summary>
+		/// Gets the extension authentications operations interface.
+		/// </summary>
+		public MFWSVaultExtensionAuthenticationOperations ExtensionAuthenticationOperations { get; }
+
+		/// <summary>
 		/// Creates an MFWSClient pointing at the MFWA site.
 		/// </summary>
 		/// <param name="restClient">The <see cref="IRestClient"/> to use for HTTP requests.</param>
@@ -160,6 +165,7 @@ namespace MFaaP.MFWSClient
 			this.AutomaticMetadataOperations = new MFWSVaultAutomaticMetadataOperations(this);
 			this.WorkflowOperations = new MFWSVaultWorkflowOperations(this);
 			this.ExternalObjectOperations = new MFWSVaultExternalObjectOperations(this);
+			this.ExtensionAuthenticationOperations = new MFWSVaultExtensionAuthenticationOperations(this);
 		}
 
 		/// <summary>

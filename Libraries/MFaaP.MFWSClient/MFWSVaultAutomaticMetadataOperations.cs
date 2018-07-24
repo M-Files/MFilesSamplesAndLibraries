@@ -13,7 +13,7 @@ namespace MFaaP.MFWSClient
 		: MFWSVaultOperationsBase
 	{
 		/// <summary>
-		/// Creates a new <see cref="MFWSVaultClassOperations"/> object.
+		/// Creates a new <see cref="MFWSVaultAutomaticMetadataOperations"/> object.
 		/// </summary>
 		/// <param name="client">The client to interact with the server.</param>
 		internal MFWSVaultAutomaticMetadataOperations(MFWSClientBase client)
