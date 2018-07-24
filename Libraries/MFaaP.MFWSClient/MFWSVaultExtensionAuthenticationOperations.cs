@@ -10,6 +10,7 @@ namespace MFaaP.MFWSClient
 	/// <summary>
 	/// The 'VaultExtensionAuthenticationOperations' class represents the available extension authentication operations.
 	/// </summary>
+	/// <remarks>ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~VaultExtensionAuthenticationOperations.html </remarks>
 	public class MFWSVaultExtensionAuthenticationOperations
 		: MFWSVaultOperationsBase
 	{
