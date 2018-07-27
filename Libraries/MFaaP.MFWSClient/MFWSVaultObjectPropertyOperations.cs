@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp;
@@ -125,17 +126,15 @@ namespace MFaaP.MFWSClient
 		/// <param name="version">The version (or null for latest).</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>A collection of property values for the supplied object.</returns>
-		public async Task<PropertyValue[]> GetPropertiesAsync(int objectTypeId, int objectId, int? version = null, CancellationToken token = default(CancellationToken))
+		public Task<PropertyValue[]> GetPropertiesAsync(int objectTypeId, int objectId, int? version = null, CancellationToken token = default(CancellationToken))
 		{
-			// Create the request.
-			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/{version?.ToString() ?? "latest"}/properties.aspx");
-
-			// Make the request and get the response.
-			var response = await this.MFWSClient.Get<List<PropertyValue>>(request, token)
-				.ConfigureAwait(false);
-
-			// Return the data.
-			return response.Data?.ToArray();
+			// Use the other method.
+			return this.GetPropertiesAsync(new ObjVer()
+			{
+				Type = objectTypeId,
+				ID = objectId,
+				Version = version ?? -1
+			}, token);
 		}
 
 		/// <summary>
@@ -186,14 +185,35 @@ namespace MFaaP.MFWSClient
 		/// <param name="objVer">The object to retrieve the properties of.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>A collection of property values for the supplied object.</returns>
-		public Task<PropertyValue[]> GetPropertiesAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
+		public async Task<PropertyValue[]> GetPropertiesAsync(ObjVer objVer, CancellationToken token = default(CancellationToken))
 		{
 			// Sanity.
 			if (null == objVer)
 				throw new ArgumentNullException(nameof(objVer));
 
-			// Use the other overload.
-			return this.GetPropertiesAsync(objVer.Type, objVer.ID, objVer.Version, token);
+			// Create the request.
+			string version = objVer.Version == -1 ? "latest" : objVer.Version.ToString();
+			string resource = $"/REST/objects/{objVer.Type}/{objVer.ID}/{version}/properties.aspx";
+
+			// If it's an unpromoted IML object then use the external details.
+			if (objVer.ID == 0
+				&& false == string.IsNullOrEmpty(objVer.ExternalRepositoryName)
+				&& false == string.IsNullOrEmpty(objVer.ExternalRepositoryObjectID))
+			{
+				version = string.IsNullOrWhiteSpace(objVer.ExternalRepositoryObjectVersionID)
+					? "latest"
+					: objVer.ExternalRepositoryObjectVersionID;
+				resource = $"/REST/objects/{objVer.Type}/u{WebUtility.UrlEncode(objVer.ExternalRepositoryName)}:{WebUtility.UrlEncode(objVer.ExternalRepositoryObjectID)}/{WebUtility.UrlEncode(version)}/properties.aspx";
+			}
+
+			var request = new RestRequest(resource);
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Get<List<PropertyValue>>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the data.
+			return response.Data?.ToArray();
 		}
 
 		#endregion

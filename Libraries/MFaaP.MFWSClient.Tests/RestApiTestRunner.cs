@@ -243,7 +243,7 @@ namespace MFaaP.MFWSClient.Tests
 			Assert.AreEqual(
 				this.ExpectedResourceAddress,
 				r.Resource,
-				$"Resource {this.ExpectedResourceAddress} expected, but a {r.Resource} was used.");
+				$"Resource {this.ExpectedResourceAddress} expected, but {r.Resource} was used.");
 
 			// Ensure the data format is correct.
 			Assert.AreEqual(

@@ -312,223 +312,141 @@ namespace MFaaP.MFWSClient.Tests
 		#region GetCheckoutStatus
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatus(int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatusAsync(ObjVer,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task GetCheckoutStatusAsync_CorrectResource()
+		public async Task GetCheckoutStatusAsync()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<MFCheckOutStatus>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<MFCheckOutStatus>()
-						{
-							Value = MFCheckOutStatus.CheckedOutToMe
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<PrimitiveType<MFCheckOutStatus>>(Method.GET, $"/REST/objects/0/1/2/checkedout");
 
 			// Execute.
-			await mfwsClient.ObjectOperations.GetCheckoutStatusAsync(0, 1, 2);
+			await runner.MFWSClient.ObjectOperations.GetCheckoutStatusAsync(new ObjVer()
+			{
+				Type = 0,
+				ID = 1,
+				Version = 2
+			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual($"/REST/objects/0/1/2/checkedout", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatus(int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatus(ObjVer,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void GetCheckoutStatus_CorrectResource()
+		public void GetCheckoutStatus()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<MFCheckOutStatus>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<MFCheckOutStatus>()
-						{
-							Value = MFCheckOutStatus.CheckedOutToMe
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<PrimitiveType<MFCheckOutStatus>>(Method.GET, $"/REST/objects/0/1/2/checkedout");
 
 			// Execute.
-			mfwsClient.ObjectOperations.GetCheckoutStatus(0, 1, 2);
+			runner.MFWSClient.ObjectOperations.GetCheckoutStatus(new ObjVer()
+			{
+				Type = 0,
+				ID = 1,
+				Version = 2
+			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual($"/REST/objects/0/1/2/checkedout", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatus(int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatusAsync(ObjVer,System.Threading.CancellationToken)"/>
+		/// when using unmanaged object details
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task GetCheckoutStatusAsync_CorrectMethod()
+		public async Task GetCheckoutStatusAsync_External()
 		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<MFCheckOutStatus>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<MFCheckOutStatus>()
-						{
-							Value = MFCheckOutStatus.CheckedOutToMe
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<PrimitiveType<MFCheckOutStatus>>(Method.GET, $"/REST/objects/0/umy+repository:hello+world/latest/checkedout");
 
 			// Execute.
-			await mfwsClient.ObjectOperations.GetCheckoutStatusAsync(0, 1, 2);
+			await runner.MFWSClient.ObjectOperations.GetCheckoutStatusAsync(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryObjectID = "hello world",
+				ExternalRepositoryName = "my repository"
+			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatus(int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatus(ObjVer,System.Threading.CancellationToken)"/>
+		/// when using unmanaged object details
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void GetCheckoutStatus_CorrectMethod()
+		public void GetCheckoutStatus_External()
 		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<PrimitiveType<MFCheckOutStatus>>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new PrimitiveType<MFCheckOutStatus>()
-						{
-							Value = MFCheckOutStatus.CheckedOutToMe
-						});
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<PrimitiveType<MFCheckOutStatus>>(Method.GET, $"/REST/objects/0/umy+repository:hello+world/latest/checkedout");
 
 			// Execute.
-			mfwsClient.ObjectOperations.GetCheckoutStatus(0, 1, 2);
+			runner.MFWSClient.ObjectOperations.GetCheckoutStatus(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryObjectID = "hello world",
+				ExternalRepositoryName = "my repository"
+			});
 
-			/* Assert */
+			// Verify.
+			runner.Verify();
+		}
 
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<PrimitiveType<MFCheckOutStatus>>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatusAsync(ObjVer,System.Threading.CancellationToken)"/>
+		/// when using unmanaged object details
+		/// requests the correct resource address using the correct HTTP method.
+		/// </summary>
+		[TestMethod]
+		public async Task GetCheckoutStatusAsync_External_WithVersion()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<PrimitiveType<MFCheckOutStatus>>(Method.GET, $"/REST/objects/0/umy+repository:hello+world/myversionid/checkedout");
 
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			// Execute.
+			await runner.MFWSClient.ObjectOperations.GetCheckoutStatusAsync(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryObjectID = "hello world",
+				ExternalRepositoryName = "my repository",
+				ExternalRepositoryObjectVersionID = "myversionid"
+			});
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.GetCheckoutStatus(ObjVer,System.Threading.CancellationToken)"/>
+		/// when using unmanaged object details
+		/// requests the correct resource address using the correct HTTP method.
+		/// </summary>
+		[TestMethod]
+		public void GetCheckoutStatus_External_WithVersion()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<PrimitiveType<MFCheckOutStatus>>(Method.GET, $"/REST/objects/0/umy+repository:hello+world/myversionid/checkedout");
+
+			// Execute.
+			runner.MFWSClient.ObjectOperations.GetCheckoutStatus(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryObjectID = "hello world",
+				ExternalRepositoryName = "my repository",
+				ExternalRepositoryObjectVersionID = "myversionid"
+			});
+
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion
@@ -751,7 +669,7 @@ namespace MFaaP.MFWSClient.Tests
 
 		#endregion
 
-		#region Delete object
+		#region Undelete object
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.UndeleteObject(MFaaP.MFWSClient.ObjID,System.Threading.CancellationToken)"/>
@@ -1193,537 +1111,233 @@ namespace MFaaP.MFWSClient.Tests
 		#region SetCheckoutStatus
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatusAsync(ObjVer,MFaaP.MFWSClient.MFCheckOutStatus,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task SetCheckoutStatusAsync_CorrectResource()
+		public async Task SetCheckoutStatusAsync()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/1/2/checkedout");
 
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
 
 			// Execute.
-			await mfwsClient.ObjectOperations.SetCheckoutStatusAsync(0, 1, MFCheckOutStatus.CheckedOutToMe, 2);
+			await runner.MFWSClient.ObjectOperations.SetCheckoutStatusAsync(new ObjVer()
+			{
+				Type = 0,
+				ID = 1,
+				Version = 2
+			}, MFCheckOutStatus.CheckedOutToMe);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual($"/REST/objects/0/1/2/checkedout", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(ObjVer,MFaaP.MFWSClient.MFCheckOutStatus,System.Threading.CancellationToken)"/>
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void SetCheckoutStatus_CorrectResource()
+		public void SetCheckoutStatus()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/1/2/checkedout");
 
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
 
 			// Execute.
-			mfwsClient.ObjectOperations.SetCheckoutStatus(0, 1, MFCheckOutStatus.CheckedOutToMe, 2);
+			runner.MFWSClient.ObjectOperations.SetCheckoutStatus(new ObjVer()
+			{
+				Type = 0,
+				ID = 1,
+				Version = 2
+			}, MFCheckOutStatus.CheckedOutToMe);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual($"/REST/objects/0/1/2/checkedout", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatusAsync(ObjVer,MFaaP.MFWSClient.MFCheckOutStatus,System.Threading.CancellationToken)"/>
+		/// when using an unmanaged object
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task SetCheckoutStatusAsync_CorrectResource_LatestVersion()
+		public async Task SetCheckoutStatusAsync_External()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository+name:my+object/version+1/checkedout");
 
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
 
 			// Execute.
-			await mfwsClient.ObjectOperations.SetCheckoutStatusAsync(0, 1, MFCheckOutStatus.CheckedOutToMe);
+			await runner.MFWSClient.ObjectOperations.SetCheckoutStatusAsync(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryName = "repository name",
+				ExternalRepositoryObjectID = "my object",
+				ExternalRepositoryObjectVersionID = "version 1"
+			}, MFCheckOutStatus.CheckedOutToMe);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual($"/REST/objects/0/1/latest/checkedout", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(ObjVer,MFaaP.MFWSClient.MFCheckOutStatus,System.Threading.CancellationToken)"/>
+		/// when using an unmanaged object
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void SetCheckoutStatus_CorrectResource_LatestVersion()
+		public void SetCheckoutStatus_External()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository+name:my+object/version+1/checkedout");
 
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
 
 			// Execute.
-			mfwsClient.ObjectOperations.SetCheckoutStatus(0, 1, MFCheckOutStatus.CheckedOutToMe);
+			runner.MFWSClient.ObjectOperations.SetCheckoutStatus(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryName = "repository name",
+				ExternalRepositoryObjectID = "my object",
+				ExternalRepositoryObjectVersionID = "version 1"
+			}, MFCheckOutStatus.CheckedOutToMe);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual($"/REST/objects/0/1/latest/checkedout", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(ObjVer,MFaaP.MFWSClient.MFCheckOutStatus,System.Threading.CancellationToken)"/>
+		/// when using an unmanaged object
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task SetCheckoutStatusAsync_CorrectMethod()
+		public void SetCheckoutStatus_External_Latest()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository+name:my+object/latest/checkedout");
 
-			// The method.
-			Method? methodUsed = null;
-			string methodParameter = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-					methodParameter = r.Parameters.GetMethodQuerystringParameter();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
 
 			// Execute.
-			await mfwsClient.ObjectOperations.SetCheckoutStatusAsync(0, 1, MFCheckOutStatus.CheckedOutToMe, 2);
+			runner.MFWSClient.ObjectOperations.SetCheckoutStatus(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryName = "repository name",
+				ExternalRepositoryObjectID = "my object"
+			}, MFCheckOutStatus.CheckedOutToMe);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-			Assert.AreEqual(Method.PUT.ToString(), methodParameter);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatusAsync(ObjID,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// when providing the latest version
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void SetCheckoutStatus_CorrectMethod()
+		public async Task SetCheckoutStatusAsync_LatestVersion()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/1/latest/checkedout");
 
-			// The method.
-			Method? methodUsed = null;
-			string methodParameter = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-					methodParameter = r.Parameters.GetMethodQuerystringParameter();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
 
 			// Execute.
-			mfwsClient.ObjectOperations.SetCheckoutStatus(0, 1, MFCheckOutStatus.CheckedOutToMe, 2);
+			await runner.MFWSClient.ObjectOperations.SetCheckoutStatusAsync(new ObjID()
+			{
+				Type = 0,
+				ID = 1
+			}, MFCheckOutStatus.CheckedOutToMe);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-			Assert.AreEqual(Method.PUT.ToString(), methodParameter);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(ObjID,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// when providing the latest version
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task SetCheckoutStatusAsync_CorrectMethod_LatestVersion()
+		public void SetCheckoutStatus_LatestVersion()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/1/latest/checkedout");
 
-			// The method.
-			Method? methodUsed = null;
-			string methodParameter = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-					methodParameter = r.Parameters.GetMethodQuerystringParameter();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
 
 			// Execute.
-			await mfwsClient.ObjectOperations.SetCheckoutStatusAsync(0, 1, MFCheckOutStatus.CheckedOutToMe);
+			runner.MFWSClient.ObjectOperations.SetCheckoutStatus(new ObjID()
+			{
+				Type = 0,
+				ID = 1
+			}, MFCheckOutStatus.CheckedOutToMe);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-			Assert.AreEqual(Method.PUT.ToString(), methodParameter);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(ObjID,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// when providing the latest version
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void SetCheckoutStatus_CorrectMethod_LatestVersion()
+		public void SetCheckoutStatus_CheckIn()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/1/latest/checkedout");
 
-			// The method.
-			Method? methodUsed = null;
-			string methodParameter = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-					methodParameter = r.Parameters.GetMethodQuerystringParameter();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedIn });
 
 			// Execute.
-			mfwsClient.ObjectOperations.SetCheckoutStatus(0, 1, MFCheckOutStatus.CheckedOutToMe);
+			runner.MFWSClient.ObjectOperations.SetCheckoutStatus(new ObjID()
+			{
+				Type = 0,
+				ID = 1
+			}, MFCheckOutStatus.CheckedIn);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.POST, methodUsed);
-			Assert.AreEqual(Method.PUT.ToString(), methodParameter);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct request body.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(ObjID,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// when providing the latest version
+		/// requests the correct resource address using the correct HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void SetCheckoutStatus_CorrectRequestBody_CheckedIn()
+		public void SetCheckoutStatus_CheckedOutToMe()
 		{
-			/* Arrange */
+			// Create our test runner.
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/1/latest/checkedout");
 
-			// The request body.
-			PrimitiveType<MFCheckOutStatus> body = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the body requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					body = r.DeserializeBody<PrimitiveType<MFCheckOutStatus>>();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Set the expected body.
+			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
 
 			// Execute.
-			mfwsClient.ObjectOperations.SetCheckoutStatus(1, 2, MFCheckOutStatus.CheckedIn);
+			runner.MFWSClient.ObjectOperations.SetCheckoutStatus(new ObjID()
+			{
+				Type = 0,
+				ID = 1
+			}, MFCheckOutStatus.CheckedOutToMe);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Body must be correct.
-			Assert.IsNotNull(body);
-			Assert.AreEqual(MFCheckOutStatus.CheckedIn, body.Value);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectOperations.SetCheckoutStatus(int,int,MFaaP.MFWSClient.MFCheckOutStatus,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct request body.
-		/// </summary>
-		[TestMethod]
-		public void SetCheckoutStatus_CorrectRequestBody_CheckedOutToMe()
-		{
-			/* Arrange */
-
-			// The request body.
-			PrimitiveType<MFCheckOutStatus> body = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the body requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					body = r.DeserializeBody<PrimitiveType<MFCheckOutStatus>>();
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<ObjectVersion>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new ObjectVersion());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.ObjectOperations.SetCheckoutStatus(1, 2, MFCheckOutStatus.CheckedOutToMe);
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<ObjectVersion>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Body must be correct.
-			Assert.IsNotNull(body);
-			Assert.AreEqual(MFCheckOutStatus.CheckedOutToMe, body.Value);
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion
