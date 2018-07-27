@@ -23,6 +23,113 @@ namespace MFaaP.MFWSClient
 		{
 		}
 
+		#region Renaming objects
+
+		/// <summary>
+		/// Renames the object by altering its title.
+		/// </summary>
+		/// <param name="objVer">The object to rename.</param>
+		/// <param name="newObjectName">The new name of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>Information on the renamed object.</returns>
+		public async Task<ObjectVersion> RenameObjectAsync(ObjVer objVer,
+			string newObjectName,
+			CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+
+			// Create the request.
+			string id = objVer.ID == 0
+						&& false == string.IsNullOrWhiteSpace(objVer.ExternalRepositoryName)
+						&& false == string.IsNullOrWhiteSpace(objVer.ExternalRepositoryObjectID)
+				? $"u{WebUtility.UrlEncode(objVer.ExternalRepositoryName)}:{WebUtility.UrlEncode(objVer.ExternalRepositoryObjectID)}" // External object.
+				: objVer.ID.ToString(); // Internal object.
+			string version = objVer.ID > 0
+				? (objVer.Version > 0 ? objVer.Version.ToString() : "latest") // Internal object.
+				: string.IsNullOrWhiteSpace(objVer.ExternalRepositoryObjectVersionID) ? "latest" : WebUtility.UrlEncode(objVer.ExternalRepositoryObjectVersionID); // External object.
+			var request = new RestRequest($"/REST/objects/{objVer.Type}/{id}/{version}/title");
+			request.AddJsonBody(new PrimitiveType<string>() { Value = newObjectName });
+
+			// Make the request and get the response.
+			var response = await this.MFWSClient.Put<ObjectVersion>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the data.
+			return response.Data;
+		}
+
+		/// <summary>
+		/// Renames the object by altering its title.
+		/// </summary>
+		/// <param name="objId">The object to rename.</param>
+		/// <param name="newObjectName">The new name of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>Information on the renamed object.</returns>
+		public Task<ObjectVersion> RenameObjectAsync(
+			ObjID objId,
+			string newObjectName,
+			CancellationToken token = default(CancellationToken))
+		{
+			return this.RenameObjectAsync(new ObjVer()
+			{
+				Version = -1,
+				ID = objId.ID,
+				Type = objId.Type,
+				ExternalRepositoryObjectID = objId.ExternalRepositoryObjectID,
+				ExternalRepositoryName = objId.ExternalRepositoryName,
+				ExternalRepositoryObjectVersionID = null,
+				VersionType = MFObjVerVersionType.Latest
+			}, newObjectName, token);
+		}
+
+		/// <summary>
+		/// Renames the object by altering its title.
+		/// </summary>
+		/// <param name="objVer">The object to rename.</param>
+		/// <param name="newObjectName">The new name of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>Information on the renamed object.</returns>
+		/// <remarks>ref: http://developer.m-files.com/APIs/REST-API/Reference/resources/objects/type/objectid/version/title/ </remarks>
+		public ObjectVersion RenameObject(ObjVer objVer,
+			string newObjectName,
+			CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.RenameObjectAsync(objVer, newObjectName, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Renames the object by altering its title.
+		/// </summary>
+		/// <param name="objId">The object to rename.</param>
+		/// <param name="newObjectName">The new name of the object.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>Information on the renamed object.</returns>
+		public ObjectVersion RenameObject(
+			ObjID objId,
+			string newObjectName,
+			CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.RenameObject(new ObjVer()
+			{
+				Version = -1,
+				ID = objId.ID,
+				Type = objId.Type,
+				ExternalRepositoryObjectID = objId.ExternalRepositoryObjectID,
+				ExternalRepositoryName = objId.ExternalRepositoryName,
+				ExternalRepositoryObjectVersionID = null,
+				VersionType = MFObjVerVersionType.Latest
+			}, newObjectName, token);
+		}
+
+		#endregion
+
 		#region Getting the latest object version and properties
 
 		/// <summary>
@@ -119,7 +226,6 @@ namespace MFaaP.MFWSClient
 		/// <returns>Information on the created object.</returns>
 		public async Task<ObjectVersion> CreateNewObjectAsync(int objectTypeId, ObjectCreationInfo creationInfo, CancellationToken token = default(CancellationToken))
 		{
-
 			// Sanity.
 			if (null == creationInfo)
 				throw new ArgumentNullException();
@@ -187,7 +293,6 @@ namespace MFaaP.MFWSClient
 		public Task<ObjectVersion> SetCheckoutStatusAsync(int objectTypeId, int objectId, MFCheckOutStatus status, int? version = null,
 			CancellationToken token = default(CancellationToken))
 		{
-
 			// Sanity.
 			if (objectTypeId < 0)
 				throw new ArgumentException("The object type id cannot be less than zero");
@@ -1022,7 +1127,7 @@ namespace MFaaP.MFWSClient
 
 		#endregion
 
-		#region Destroying objects.
+		#region Destroying objects
 
 		/// <summary>
 		/// Destroys all versions of an object.
