@@ -78,7 +78,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 			switch (item.FolderContentItemType)
 			{
 				case MFFolderContentItemType.ExternalViewFolder:
-					return WebUtility.UrlEncode($"u{item.ExternalView.ExternalRepositoryName}:{item.ExternalView.ID}");
+					return WebUtility.UrlEncode($"u{WebUtility.UrlEncode(item.ExternalView.ExternalRepositoryName)}:{WebUtility.UrlEncode(item.ExternalView.ID)}");
 				case MFFolderContentItemType.ViewFolder:
 					return "v" + item.View.ID;
 				case MFFolderContentItemType.TraditionalFolder:

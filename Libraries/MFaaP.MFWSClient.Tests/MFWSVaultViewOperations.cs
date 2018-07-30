@@ -14,210 +14,36 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetRootFolderContents"/>
-		/// requests the correct resource address.
+		/// requests the correct resource address and HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task GetRootViewContentsAsync_CorrectResource()
+		public async Task GetRootViewContentsAsync()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetRootFolderContentsAsync();
+			await runner.MFWSClient.ViewOperations.GetRootFolderContentsAsync();
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetRootFolderContents"/>
-		/// requests the correct resource address.
+		/// requests the correct resource address and HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void GetRootViewContents_CorrectResource()
+		public void GetRootViewContents()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/items");
 
 			// Execute.
-			mfwsClient.ViewOperations.GetRootFolderContents();
+			runner.MFWSClient.ViewOperations.GetRootFolderContents();
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/items", resourceAddress);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetRootFolderContents"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public async Task GetRootViewContentsAsync_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.ViewOperations.GetRootFolderContentsAsync();
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetRootFolderContents"/>
-		/// uses the correct Http method.
-		/// </summary>
-		[TestMethod]
-		public void GetRootViewContents_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.ViewOperations.GetRootFolderContents();
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion
@@ -226,150 +52,50 @@ namespace MFaaP.MFWSClient.Tests
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task GetViewContentsAsync_CorrectResource()
+		public async Task GetViewContentsAsync()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync();
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync();
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void GetViewContents_CorrectResource()
+		public void GetViewContents()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/items");
 
 			// Execute.
-			mfwsClient.ViewOperations.GetFolderContents();
+			runner.MFWSClient.ViewOperations.GetFolderContents();
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (with a view).
 		/// </summary>
 		[TestMethod]
-		public async Task GetViewContentsAsync_CorrectResource_WithView()
+		public async Task GetViewContentsAsync_WithView()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v15/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
 			{
 				FolderContentItemType = MFFolderContentItemType.ViewFolder,
 				View = new View()
@@ -379,57 +105,22 @@ namespace MFaaP.MFWSClient.Tests
 				}
 			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v15/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (with a view).
 		/// </summary>
 		[TestMethod]
-		public void GetViewContents_CorrectResource_WithView()
+		public void GetViewContents_WithView()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v15/items");
 
 			// Execute.
-			mfwsClient.ViewOperations.GetFolderContents(new FolderContentItem()
+			runner.MFWSClient.ViewOperations.GetFolderContents(new FolderContentItem()
 			{
 				FolderContentItemType = MFFolderContentItemType.ViewFolder,
 				View = new View()
@@ -439,57 +130,22 @@ namespace MFaaP.MFWSClient.Tests
 				}
 			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v15/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (with view and lookup grouping).
 		/// </summary>
 		[TestMethod]
-		public async Task GetViewContentsAsync_CorrectResource_WithView_OneGrouping()
+		public async Task GetViewContentsAsync_WithView_OneGrouping()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v216/L4/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
 			{
 				FolderContentItemType = MFFolderContentItemType.ViewFolder,
 				View = new View()
@@ -510,57 +166,22 @@ namespace MFaaP.MFWSClient.Tests
 				}
 			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v216/L4/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (with view and lookup grouping).
 		/// </summary>
 		[TestMethod]
-		public void GetViewContents_CorrectResource_WithView_OneGrouping()
+		public void GetViewContents_WithView_OneGrouping()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v216/L4/items");
 
 			// Execute.
-			mfwsClient.ViewOperations.GetFolderContents(new FolderContentItem()
+			runner.MFWSClient.ViewOperations.GetFolderContents(new FolderContentItem()
 			{
 				FolderContentItemType = MFFolderContentItemType.ViewFolder,
 				View = new View()
@@ -581,57 +202,22 @@ namespace MFaaP.MFWSClient.Tests
 				}
 			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v216/L4/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (with view and two lookup groupings).
 		/// </summary>
 		[TestMethod]
-		public async Task GetViewContentsAsync_CorrectResource_WithView_TwoGroupings()
+		public async Task GetViewContentsAsync_WithView_TwoGroupings()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v216/L4/L19/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
 			{
 				FolderContentItemType = MFFolderContentItemType.ViewFolder,
 				View = new View()
@@ -663,57 +249,22 @@ namespace MFaaP.MFWSClient.Tests
 				}
 			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v216/L4/L19/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (with view and two lookup groupings).
 		/// </summary>
 		[TestMethod]
-		public void GetViewContents_CorrectResource_WithView_TwoGroupings()
+		public void GetViewContents_WithView_TwoGroupings()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v216/L4/L19/items");
 
 			// Execute.
-			mfwsClient.ViewOperations.GetFolderContents(new FolderContentItem()
+			runner.MFWSClient.ViewOperations.GetFolderContents(new FolderContentItem()
 			{
 				FolderContentItemType = MFFolderContentItemType.ViewFolder,
 				View = new View()
@@ -745,177 +296,22 @@ namespace MFaaP.MFWSClient.Tests
 				}
 			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v216/L4/L19/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// uses the correct Http method (no path).
+		/// requests the correct resource address and HTTP method (with view and text grouping, testing url encoding of property data).
 		/// </summary>
 		[TestMethod]
-		public async Task GetViewContentsAsync_CorrectMethod()
+		public async Task GetViewContentsAsync_WithView_OneGrouping_UrlEncoded()
 		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v216/TIntelligent+Metadata+Layer/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
-			{
-				FolderContentItemType = MFFolderContentItemType.ViewFolder,
-				View = new View()
-				{
-					ID = 15,
-					Name = "Favourites"
-				}
-			});
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// uses the correct Http method (no path).
-		/// </summary>
-		[TestMethod]
-		public void GetViewContents_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			mfwsClient.ViewOperations.GetFolderContents(new FolderContentItem()
-			{
-				FolderContentItemType = MFFolderContentItemType.ViewFolder,
-				View = new View()
-				{
-					ID = 15,
-					Name = "Favourites"
-				}
-			});
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
-		}
-
-		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
-		/// </summary>
-		[TestMethod]
-		public async Task GetViewContentsAsync_CorrectResource_WithView_OneGrouping_UrlEncoded()
-		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
 			{
 				FolderContentItemType = MFFolderContentItemType.ViewFolder,
 				View = new View()
@@ -933,57 +329,22 @@ namespace MFaaP.MFWSClient.Tests
 				}
 			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v216/TIntelligent+Metadata+Layer/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (with view and text grouping, testing url encoding of property data).
 		/// </summary>
 		[TestMethod]
-		public async Task GetViewContentsAsync_CorrectResource_WithView_OneGrouping_UrlEncoded_WithSlashes()
+		public async Task GetViewContentsAsync_WithView_OneGrouping_UrlEncoded_WithSlashes()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v216/TOne%2FTwo+Options/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
 			{
 				FolderContentItemType = MFFolderContentItemType.ViewFolder,
 				View = new View()
@@ -1001,117 +362,42 @@ namespace MFaaP.MFWSClient.Tests
 				}
 			});
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v216/TOne%2FTwo+Options/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (view path must be formatted correctly if the path does not end with a slash).
 		/// </summary>
 		[TestMethod]
 		public async Task GetViewContentsAsync_CorrectResource_ViewPathMustEndWithSlash()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v123/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync("v123");
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync("v123");
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v123/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetFolderContents(MFaaP.MFWSClient.FolderContentItem[])"/>
-		/// requests the correct resource address (no path).
+		/// requests the correct resource address and HTTP method (view path must be formatted correctly if the path starts with a slash).
 		/// </summary>
 		[TestMethod]
 		public async Task GetViewContentsAsync_CorrectResource_ViewPathMustNotStartWithSlash()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse<FolderContentItems>>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.Data)
-						.Returns(new FolderContentItems());
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/v123/items");
 
 			// Execute.
-			await mfwsClient.ViewOperations.GetFolderContentsAsync("/v123/");
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync("/v123/");
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync<FolderContentItems>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/views/v123/items", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion
