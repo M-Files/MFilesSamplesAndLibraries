@@ -957,8 +957,13 @@ namespace MFaaP.MFWSClient
 			if (null == objId)
 				throw new ArgumentNullException(nameof(objId));
 
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId;
+			objId.GetUriParameters(out objectTypeId, out objectId);
+
 			// Create the request.
-			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/deleted");
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/deleted");
 
 			// Make the request and get the response.
 			var response = await this.MFWSClient.Get<PrimitiveType<bool>>(request, token)
@@ -999,8 +1004,13 @@ namespace MFaaP.MFWSClient
 			if (null == objId)
 				throw new ArgumentNullException(nameof(objId));
 
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId;
+			objId.GetUriParameters(out objectTypeId, out objectId);
+
 			// Create the request.
-			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/deleted");
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/deleted");
 			request.Method = Method.PUT;
 
 			// Add the body.
@@ -1065,8 +1075,13 @@ namespace MFaaP.MFWSClient
 			if (null == objId)
 				throw new ArgumentNullException(nameof(objId));
 
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId;
+			objId.GetUriParameters(out objectTypeId, out objectId);
+
 			// Create the request.
-			var request = new RestRequest($"/REST/objects/{objId.Type}/{objId.ID}/deleted");
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/deleted");
 			request.Method = Method.PUT;
 			
 			// Add the body.
