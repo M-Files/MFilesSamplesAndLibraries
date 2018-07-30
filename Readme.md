@@ -6,7 +6,7 @@ This solution contains a series of libraries and samples to help developers buil
 
 Whilst the code aims to be as compatible as possible, please note that this is currently tested using the following configuration:
 
-* The latest public M-Files build (currently M-Files 2015.3 SR2)
+* The latest public M-Files build (currently M-Files 2018)
 * Visual Studio 2015 Update 3
 
 **We expect people interacting with this repository to follow our [code of conduct](CODE_OF_CONDUCT.md), and have published [contribution guidelines](CONTRIBUTING.md).**
