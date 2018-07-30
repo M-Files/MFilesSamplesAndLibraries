@@ -191,20 +191,13 @@ namespace MFaaP.MFWSClient
 			if (null == objVer)
 				throw new ArgumentNullException(nameof(objVer));
 
-			// Create the request.
-			string version = objVer.Version == -1 ? "latest" : objVer.Version.ToString();
-			string resource = $"/REST/objects/{objVer.Type}/{objVer.ID}/{version}/properties.aspx";
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId, objectVersionId;
+			objVer.GetUriParameters(out objectTypeId, out objectId, out objectVersionId);
 
-			// If it's an unpromoted IML object then use the external details.
-			if (objVer.ID == 0
-				&& false == string.IsNullOrEmpty(objVer.ExternalRepositoryName)
-				&& false == string.IsNullOrEmpty(objVer.ExternalRepositoryObjectID))
-			{
-				version = string.IsNullOrWhiteSpace(objVer.ExternalRepositoryObjectVersionID)
-					? "latest"
-					: objVer.ExternalRepositoryObjectVersionID;
-				resource = $"/REST/objects/{objVer.Type}/u{WebUtility.UrlEncode(objVer.ExternalRepositoryName)}:{WebUtility.UrlEncode(objVer.ExternalRepositoryObjectID)}/{WebUtility.UrlEncode(version)}/properties.aspx";
-			}
+			// Create the request.
+			string resource = $"/REST/objects/{objectTypeId}/{objectId}/{objectVersionId}/properties.aspx";
 
 			var request = new RestRequest(resource);
 

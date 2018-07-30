@@ -10,6 +10,35 @@ namespace MFaaP.MFWSClient.Tests
 	public class MFWSVaultViewOperations
 	{
 
+		#region Path encoding for external view folders.
+		
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultViewOperations.GetRootFolderContents"/>
+		/// correctly encodes paths for external view folders.
+		/// </summary>
+		[TestMethod]
+		public async Task GetExternalViewFolderAsync()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<FolderContentItems>(Method.GET, $"/REST/views/umyrepository%3A12%2B3456/items");
+
+			// Execute.
+			await runner.MFWSClient.ViewOperations.GetFolderContentsAsync(new FolderContentItem()
+			{
+				FolderContentItemType = MFFolderContentItemType.ExternalViewFolder,
+				ExternalView = new ExternalView()
+				{
+					ExternalRepositoryName = "myrepository",
+					ID = "12 3456" // NOTE: This will be double-encoded (" " to "+", then to "%2B").
+				}
+			});
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
+
 		#region GetRootViewContents
 
 		/// <summary>

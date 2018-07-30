@@ -34,6 +34,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 #if !WINDOWS_UWP
 using System.Web;
 #endif
@@ -1528,6 +1529,7 @@ namespace MFaaP.MFWSClient
 	/// Based on M-Files API.
 	/// </summary>
 	public class ObjVer
+	: ObjID
 	{
 
 		public ObjVer()
@@ -1537,27 +1539,7 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Based on M-Files API.
 		/// </summary>
-		public int ID { get; set; }
-
-		/// <summary>
-		/// Based on M-Files API.
-		/// </summary>
-		public int Type { get; set; }
-
-		/// <summary>
-		/// Based on M-Files API.
-		/// </summary>
 		public int Version { get; set; }
-
-		/// <summary>
-		/// Based on M-Files API.
-		/// </summary>
-		public string ExternalRepositoryName { get; set; }
-
-		/// <summary>
-		/// Based on M-Files API.
-		/// </summary>
-		public string ExternalRepositoryObjectID { get; set; }
 
 		/// <summary>
 		/// Based on M-Files API.
@@ -1568,6 +1550,41 @@ namespace MFaaP.MFWSClient
 		/// Based on M-Files API.
 		/// </summary>
 		public MFObjVerVersionType VersionType { get; set; }
+
+		/// <summary>
+		/// Retrieves the URI parameters for the current <see cref="ObjID"/>.
+		/// </summary>
+		/// <param name="objectTypeId">The ID of the object type.</param>
+		/// <param name="objectId">The ID of the object.</param>
+		/// <param name="objectVersionId">The ID of the object version.</param>
+		public void GetUriParameters(out int objectTypeId, out string objectId, out string objectVersionId)
+		{
+			// Use the base implementation to get the type and object IDs.
+			base.GetUriParameters(out objectTypeId, out objectId);
+			
+			// If it has an internal ID and is a document then treat it as an M-Files object (promoted or native).
+			if (this.ID > 0 || this.Type != 0)
+			{
+				// If we have a version then use it, otherwise return "latest".
+				objectVersionId = this.Version > 0
+					? this.Version.ToString()
+					: "latest";
+				return;
+			}
+
+			// If we don't have an external version then use latest.
+			if (string.IsNullOrWhiteSpace(this.ExternalRepositoryObjectVersionID))
+			{
+				objectVersionId = "latest";
+				return;
+			}
+
+			// The version ID is:
+			//		The letter "u",
+			//		The external object version ID (URI-encoded).
+			//	This entire string is then URI-encoded again.
+			objectVersionId = WebUtility.UrlEncode($"u{WebUtility.UrlEncode(this.ExternalRepositoryObjectVersionID)}");
+		}
 	}
 
 	/// <summary>
@@ -2026,6 +2043,43 @@ namespace MFaaP.MFWSClient
 		/// Based on M-Files API.
 		/// </summary>
 		public string ExternalRepositoryObjectID { get; set; }
+
+		/// <summary>
+		/// Retrieves the URI parameters for the current <see cref="ObjID"/>.
+		/// </summary>
+		/// <param name="objectTypeId">The ID of the object type.</param>
+		/// <param name="objectId">The ID of the object.</param>
+		public void GetUriParameters(out int objectTypeId, out string objectId)
+		{
+			// This one is easy.
+			objectTypeId = this.Type;
+
+			// If it has an internal ID then use that.
+			// NOTE: We currently only support unmanaged documents, so we can short-cut if it's not a document.
+			if (this.ID > 0 || this.Type != 0)
+			{
+				objectId = this.ID.ToString();
+				return;
+			}
+
+			// If the external repository name or object ID are blank then throw.
+			if (string.IsNullOrWhiteSpace(this.ExternalRepositoryName)
+				|| string.IsNullOrWhiteSpace(this.ExternalRepositoryObjectID))
+			{
+				throw new InvalidOperationException("The ObjID has neither an internal ID nor external repository data.");
+			}
+
+			// The object ID is:
+			//		The letter "u",
+			//		The external repository name (URI-encoded),
+			//		The character ":",
+			//		The external repository object ID (URI-encoded).
+			//	This entire string is then URI-encoded again.
+			objectId = WebUtility.UrlEncode("u"
+											+ WebUtility.UrlEncode(this.ExternalRepositoryName)
+											+ ":"
+											+ WebUtility.UrlEncode(this.ExternalRepositoryObjectID));
+		}
 
 	}
 

@@ -40,16 +40,13 @@ namespace MFaaP.MFWSClient
 			if (null == objVer)
 				throw new ArgumentNullException(nameof(objVer));
 
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId, objectVersionId;
+			objVer.GetUriParameters(out objectTypeId, out objectId, out objectVersionId);
+
 			// Create the request.
-			string id = objVer.ID == 0
-						&& false == string.IsNullOrWhiteSpace(objVer.ExternalRepositoryName)
-						&& false == string.IsNullOrWhiteSpace(objVer.ExternalRepositoryObjectID)
-				? $"u{WebUtility.UrlEncode(objVer.ExternalRepositoryName)}:{WebUtility.UrlEncode(objVer.ExternalRepositoryObjectID)}" // External object.
-				: objVer.ID.ToString(); // Internal object.
-			string version = objVer.ID > 0
-				? (objVer.Version > 0 ? objVer.Version.ToString() : "latest") // Internal object.
-				: string.IsNullOrWhiteSpace(objVer.ExternalRepositoryObjectVersionID) ? "latest" : WebUtility.UrlEncode(objVer.ExternalRepositoryObjectVersionID); // External object.
-			var request = new RestRequest($"/REST/objects/{objVer.Type}/{id}/{version}/title");
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/{objectVersionId}/title");
 			request.AddJsonBody(new PrimitiveType<string>() { Value = newObjectName });
 
 			// Make the request and get the response.
@@ -387,16 +384,13 @@ namespace MFaaP.MFWSClient
 			if (null == objVer)
 				throw new ArgumentNullException(nameof(objVer));
 
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId, objectVersionId;
+			objVer.GetUriParameters(out objectTypeId, out objectId, out objectVersionId);
+
 			// Create the request.
-			string id = objVer.ID == 0
-						&& false == string.IsNullOrWhiteSpace(objVer.ExternalRepositoryName)
-						&& false == string.IsNullOrWhiteSpace(objVer.ExternalRepositoryObjectID)
-				? $"u{WebUtility.UrlEncode(objVer.ExternalRepositoryName)}:{WebUtility.UrlEncode(objVer.ExternalRepositoryObjectID)}" // External object.
-				: objVer.ID.ToString(); // Internal object.
-			string version = objVer.ID > 0
-				? (objVer.Version > 0 ? objVer.Version.ToString() : "latest") // Internal object.
-				: string.IsNullOrWhiteSpace(objVer.ExternalRepositoryObjectVersionID) ? "latest" : WebUtility.UrlEncode(objVer.ExternalRepositoryObjectVersionID); // External object.
-			var request = new RestRequest($"/REST/objects/{objVer.Type}/{id}/{version}/checkedout");
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/{objectVersionId}/checkedout");
 			request.AddJsonBody(new PrimitiveType<MFCheckOutStatus>() { Value = status });
 
 			// Make the request and get the response.
@@ -639,7 +633,7 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(objVer));
 
 			// Execute the async method.
-			return this.CheckOutAsync(objVer.Type, objVer.ID, objVer.Version, token)
+			return this.CheckOutAsync(objVer, token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();
@@ -699,7 +693,7 @@ namespace MFaaP.MFWSClient
 			if (null == objVer)
 				throw new ArgumentNullException(nameof(objVer));
 
-			return this.SetCheckoutStatusAsync(objVer.Type, objVer.ID, MFCheckOutStatus.CheckedIn, objVer.Version, token);
+			return this.SetCheckoutStatusAsync(objVer, MFCheckOutStatus.CheckedIn, token);
 		}
 
 		/// <summary>
@@ -715,7 +709,7 @@ namespace MFaaP.MFWSClient
 				throw new ArgumentNullException(nameof(objVer));
 
 			// Execute the async method.
-			return this.CheckInAsync(objVer.Type, objVer.ID, objVer.Version, token)
+			return this.CheckInAsync(objVer, token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();

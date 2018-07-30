@@ -52,7 +52,7 @@ namespace MFaaP.MFWSClient.Tests
 		public async Task RenameObjectAsync_Unmanaged()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/uhello:world/again/title");
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/uhello%3Aworld/uagain/title");
 
 			// Set the expected body.
 			var newObjectName = new PrimitiveType<string>()
@@ -83,7 +83,7 @@ namespace MFaaP.MFWSClient.Tests
 		public async Task RenameObjectAsync_Unmanaged_Latest()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/uhello:world/latest/title");
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/uhello%3Aworld/latest/title");
 
 			// Set the expected body.
 			var newObjectName = new PrimitiveType<string>()
@@ -1290,7 +1290,7 @@ namespace MFaaP.MFWSClient.Tests
 		public async Task SetCheckoutStatusAsync_External()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository+name:my+object/version+1/checkedout");
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository%2Bname%3Amy%2Bobject/uversion%2B1/checkedout");
 
 			// Set the expected body.
 			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
@@ -1317,7 +1317,7 @@ namespace MFaaP.MFWSClient.Tests
 		public void SetCheckoutStatus_External()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository+name:my+object/version+1/checkedout");
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository%2Bname%3Amy%2Bobject/uversion%2B1/checkedout");
 
 			// Set the expected body.
 			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });
@@ -1344,7 +1344,7 @@ namespace MFaaP.MFWSClient.Tests
 		public void SetCheckoutStatus_External_Latest()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository+name:my+object/latest/checkedout");
+			var runner = new RestApiTestRunner<ObjectVersion>(Method.PUT, $"/REST/objects/0/urepository%2Bname%3Amy%2Bobject/latest/checkedout");
 
 			// Set the expected body.
 			runner.SetExpectedRequestBody(new PrimitiveType<MFCheckOutStatus>() { Value = MFCheckOutStatus.CheckedOutToMe });

@@ -78,6 +78,8 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 			switch (item.FolderContentItemType)
 			{
 				case MFFolderContentItemType.ExternalViewFolder:
+					// NOTE: The string should be "u", followed by the URL-encoded external repository name, followed by a colon, followed by the URL-encoded view ID.
+					// The entire string should then be URL-encoded a second time to ensure that it is passed correctly.
 					return WebUtility.UrlEncode($"u{WebUtility.UrlEncode(item.ExternalView.ExternalRepositoryName)}:{WebUtility.UrlEncode(item.ExternalView.ID)}");
 				case MFFolderContentItemType.ViewFolder:
 					return "v" + item.View.ID;

@@ -10,6 +10,57 @@ namespace MFaaP.MFWSClient.Tests
 	public class MFWSVaultObjectPropertyOperations
 	{
 
+		#region Path encoding for unmanaged objects
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesAsync(ObjVer,System.Threading.CancellationToken)"/>
+		/// correctly encodes paths for unmanaged objects.
+		/// </summary>
+		[TestMethod]
+		public async Task GetPropertiesAsync_ExternalObject_LatestVersion()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<PropertyValue>>(Method.GET, $"/REST/objects/0/umyrepository%3A12%2B3456/latest/properties.aspx");
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesAsync(new ObjVer()
+			{
+				Type = 0,
+				VersionType = MFObjVerVersionType.Latest,
+				ExternalRepositoryName = "myrepository",
+				ExternalRepositoryObjectID = "12 3456" // NOTE: This will be double-encoded (" " to "+", then to "%2B").
+			});
+
+			// Verify.
+			runner.Verify();
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectPropertyOperations.GetPropertiesAsync(ObjVer,System.Threading.CancellationToken)"/>
+		/// correctly encodes paths for unmanaged objects.
+		/// </summary>
+		[TestMethod]
+		public async Task GetPropertiesAsync_ExternalObject_SpecificVersion()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner<List<PropertyValue>>(Method.GET, $"/REST/objects/0/umyrepository%3A12%2B3456/uabc%253A123/properties.aspx");
+
+			// Execute.
+			await runner.MFWSClient.ObjectPropertyOperations.GetPropertiesAsync(new ObjVer()
+			{
+				Type = 0,
+				VersionType = MFObjVerVersionType.Latest,
+				ExternalRepositoryName = "myrepository",
+				ExternalRepositoryObjectID = "12 3456", // NOTE: This will be double-encoded (" " to "+", then to "%2B").
+				ExternalRepositoryObjectVersionID = "abc:123" // NOTE: This will be double-encoded (":" to "%3A", then to "%253A").
+			});
+
+			// Verify.
+			runner.Verify();
+		}
+
+		#endregion
+
 		#region GetProperties (single object)
 
 		/// <summary>
