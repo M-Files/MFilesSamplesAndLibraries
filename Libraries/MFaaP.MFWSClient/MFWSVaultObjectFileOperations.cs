@@ -15,7 +15,7 @@ namespace MFaaP.MFWSClient
             : base(client)
         {
         }
-
+		
 		#region Downloading files
 
 		/// <summary>
@@ -653,24 +653,89 @@ namespace MFaaP.MFWSClient
 
             // Execute the other overload.
             return this.AddFilesAsync(objVer.Type, objVer.ID, objVer.Version, token, files);
-        }
+		}
 
-        /// <summary>
-        /// Adds files to an existing object.
-        /// </summary>
-        /// <param name="objVer">The object to add the file to.</param>
-        /// <param name="token">A cancellation token for the request.</param>
-        /// <param name="files">The files to attach.</param>
-        /// <returns>The updated object version.</returns>
-        public ExtendedObjectVersion AddFiles(ObjVer objVer, CancellationToken token = default(CancellationToken), params FileInfo[] files)
-        {
-            // Sanity.
-            if (null == objVer)
-                throw new ArgumentNullException(nameof(objVer));
+		/// <summary>
+		/// Adds files to an existing object.
+		/// </summary>
+		/// <param name="objVer">The object to add the file to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <param name="files">The files to attach.</param>
+		/// <returns>The updated object version.</returns>
+		public ExtendedObjectVersion AddFiles(ObjVer objVer, CancellationToken token = default(CancellationToken), params FileInfo[] files)
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
 
-            // Execute the other overload.
-            return this.AddFiles(objVer.Type, objVer.ID, objVer.Version, token, files);
-        }
+			// Execute the other overload.
+			return this.AddFiles(objVer.Type, objVer.ID, objVer.Version, token, files);
+		}
+
+		/// <summary>
+		/// Replaces the content of a(n existing) single file.
+		/// </summary>
+		/// <param name="objVer">The object that the file belongs to.</param>
+		/// <param name="fileVer">The file to replace.</param>
+		/// <param name="filePath">The path to the file to upload in its replacement.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The updated object version.</returns>
+		public async Task<ExtendedObjectVersion> UploadFileAsync(ObjVer objVer, FileVer fileVer, string filePath, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+			if (null == fileVer)
+				throw new ArgumentNullException(nameof(fileVer));
+			try
+			{
+				if (false == System.IO.File.Exists(filePath))
+					throw new ArgumentException("The file path must exist.", nameof(filePath));
+			}
+			catch (Exception e)
+			{
+				throw new ArgumentException("Could not confirm file path location.", nameof(filePath), e);
+			}
+
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId, objectVersionId;
+			objVer.GetUriParameters(out objectTypeId, out objectId, out objectVersionId);
+			string fileId, fileVersionId;
+			fileVer.GetUriParameters(out fileId, out fileVersionId);
+
+			// Build up the request.
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/{objectVersionId}/files/{fileId}/content.aspx");
+
+			// Add the file as a body.
+			var fileInfo = new System.IO.FileInfo(filePath);
+			request.AddFile(fileInfo.Name, fileInfo.FullName);
+
+			// Execute the request.
+			var response = await this.MFWSClient.Put<ExtendedObjectVersion>(request, token)
+				.ConfigureAwait(false);
+
+			// Return the data.
+			return response.Data;
+
+		}
+
+		/// <summary>
+		/// Replaces the content of a(n existing) single file.
+		/// </summary>
+		/// <param name="objVer">The object that the file belongs to.</param>
+		/// <param name="fileVer">The file to replace.</param>
+		/// <param name="filePath">The path to the file to upload in its replacement.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The updated object version.</returns>
+		public ExtendedObjectVersion UploadFile(ObjVer objVer, FileVer fileVer, string filePath, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.UploadFileAsync(objVer, fileVer, filePath, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
 
 		#endregion
 

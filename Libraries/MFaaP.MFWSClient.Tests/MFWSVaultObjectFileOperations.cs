@@ -44,6 +44,133 @@ namespace MFaaP.MFWSClient.Tests
 		#region Uploading files
 
 		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.UploadFileAsync"/>
+		/// requests the correct resource address using the correct method, with the correct request body.
+		/// </summary>
+		[TestMethod]
+		public async Task UploadFileAsync()
+		{
+			// Create our test runner.
+			var runner = new FileRestApiTestRunner<ExtendedObjectVersion>(Method.PUT, "/REST/objects/456/123/9/files/123/content.aspx");
+
+			// Create a temporary file.
+			var tempFile = new FileInfo(@"test.txt");
+			if (false == tempFile.Exists)
+			{
+				tempFile.Create();
+
+				// NOTE: If test.txt did not exist the first time the test was run then 'file.Length' will throw an exception
+				// of type 'System.IO.FileNotFoundException' in MFWSVaultObjectFileOperations.UploadFilesAsync.
+				tempFile = new FileInfo(@"test.txt");
+			}
+
+			// Execute.
+			await runner.MFWSClient.ObjectFileOperations.UploadFileAsync(new ObjVer()
+			{
+				Type = 456,
+				ID = 123,
+				Version = 9
+			}, new FileVer()
+			{
+				ID = 123
+			}, tempFile.FullName);
+
+			// Verify.
+			runner.Verify();
+
+			// Ensure the file data was passed.
+			Assert.IsNotNull(runner.RequestFiles);
+			Assert.AreEqual(1, runner.RequestFiles.Count);
+			Assert.AreEqual(tempFile.Name, runner.RequestFiles[0].Name);
+			Assert.AreEqual(tempFile.Length, runner.RequestFiles[0].ContentLength);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.UploadFileAsync"/>
+		/// requests the correct resource address using the correct method, with the correct request body.
+		/// </summary>
+		[TestMethod]
+		public async Task UploadFileAsync_Latest()
+		{
+			// Create our test runner.
+			var runner = new FileRestApiTestRunner<ExtendedObjectVersion>(Method.PUT, "/REST/objects/456/123/latest/files/123/content.aspx");
+
+			// Create a temporary file.
+			var tempFile = new FileInfo(@"test.txt");
+			if (false == tempFile.Exists)
+			{
+				tempFile.Create();
+
+				// NOTE: If test.txt did not exist the first time the test was run then 'file.Length' will throw an exception
+				// of type 'System.IO.FileNotFoundException' in MFWSVaultObjectFileOperations.UploadFilesAsync.
+				tempFile = new FileInfo(@"test.txt");
+			}
+
+			// Execute.
+			await runner.MFWSClient.ObjectFileOperations.UploadFileAsync(new ObjVer()
+			{
+				Type = 456,
+				ID = 123
+			}, new FileVer()
+			{
+				ID = 123
+			}, tempFile.FullName);
+
+			// Verify.
+			runner.Verify();
+
+			// Ensure the file data was passed.
+			Assert.IsNotNull(runner.RequestFiles);
+			Assert.AreEqual(1, runner.RequestFiles.Count);
+			Assert.AreEqual(tempFile.Name, runner.RequestFiles[0].Name);
+			Assert.AreEqual(tempFile.Length, runner.RequestFiles[0].ContentLength);
+		}
+
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.UploadFileAsync"/>
+		/// requests the correct resource address using the correct method, with the correct request body.
+		/// </summary>
+		[TestMethod]
+		public async Task UploadFileAsync_Unmanaged()
+		{
+			// Create our test runner.
+			var runner = new FileRestApiTestRunner<ExtendedObjectVersion>(Method.PUT, "/REST/objects/0/umy%2Brepository%3Amy%2Bobject/uversion%2B1/files/umy%2Bfile/content.aspx");
+
+			// Create a temporary file.
+			var tempFile = new FileInfo(@"test.txt");
+			if (false == tempFile.Exists)
+			{
+				tempFile.Create();
+
+				// NOTE: If test.txt did not exist the first time the test was run then 'file.Length' will throw an exception
+				// of type 'System.IO.FileNotFoundException' in MFWSVaultObjectFileOperations.UploadFilesAsync.
+				tempFile = new FileInfo(@"test.txt");
+			}
+
+			// Execute.
+			await runner.MFWSClient.ObjectFileOperations.UploadFileAsync(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryName = "my repository",
+				ExternalRepositoryObjectID = "my object",
+				ExternalRepositoryObjectVersionID = "version 1"
+			}, new FileVer()
+			{
+				ExternalRepositoryFileID = "my file",
+				ExternalRepositoryFileVersionID = "version 2"
+			}, tempFile.FullName);
+
+			// Verify.
+			runner.Verify();
+
+			// Ensure the file data was passed.
+			Assert.IsNotNull(runner.RequestFiles);
+			Assert.AreEqual(1, runner.RequestFiles.Count);
+			Assert.AreEqual(tempFile.Name, runner.RequestFiles[0].Name);
+			Assert.AreEqual(tempFile.Length, runner.RequestFiles[0].ContentLength);
+		}
+
+		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.UploadFilesAsync(System.IO.FileInfo[])"/>
 		/// requests the correct resource address using the correct method, with the correct request body.
 		/// </summary>
