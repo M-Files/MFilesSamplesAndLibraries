@@ -134,222 +134,91 @@ namespace MFaaP.MFWSClient.Tests
 		#region Downloading files
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFileAsync(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
+		/// requests the correct resource address and HTTP method.
 		/// </summary>
 		[TestMethod]
-		public async Task DownloadFileAsync_CorrectResource()
+		public async Task DownloadFileAsync()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// The return value.
-			byte[] content = new byte[0];
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.RawBytes)
-						.Returns(content);
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner(Method.GET, "/REST/objects/1/2/4/files/3/content");
 
 			// Execute.
-			await mfwsClient.ObjectFileOperations.DownloadFileAsync(1, 2, 3, 4);
+			await runner.MFWSClient.ObjectFileOperations.DownloadFileAsync(1, 2, 3, 4);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects/1/2/4/files/3/content", resourceAddress);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
 		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// requests the correct resource address.
+		/// requests the correct resource address and HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void DownloadFile_CorrectResource()
+		public void DownloadFile()
 		{
-			/* Arrange */
-
-			// The actual requested address.
-			var resourceAddress = "";
-
-			// The return value.
-			byte[] content = new byte[0];
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					resourceAddress = r.Resource;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.RawBytes)
-						.Returns(content);
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner(Method.GET, "/REST/objects/1/2/4/files/3/content");
 
 			// Execute.
-			mfwsClient.ObjectFileOperations.DownloadFile(1, 2, 3, 4);
+			runner.MFWSClient.ObjectFileOperations.DownloadFile(1, 2, 3, 4);
 
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Resource must be correct.
-			Assert.AreEqual("/REST/objects/1/2/4/files/3/content", resourceAddress);
-		}
-/// <summary>
-        /// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-        /// uses the correct Http method.
-        /// </summary>
-        [TestMethod]
-		public async Task DownloadFileAsync_CorrectMethod()
-		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// The return value.
-			byte[] content = new byte[0];
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.RawBytes)
-						.Returns(content);
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
-
-			// Execute.
-			await mfwsClient.ObjectFileOperations.DownloadFileAsync(1, 2, 3, 4);
-
-			/* Assert */
-
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			// Verify.
+			runner.Verify();
 		}
 
 		/// <summary>
-		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(int,int,int,System.Nullable{int},System.Threading.CancellationToken)"/>
-		/// uses the correct Http method.
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFileAsync(ObjVer, FileVer, CancellationToken)"/>
+		/// when using an unmanaged object data
+		/// requests the correct resource address and HTTP method.
 		/// </summary>
 		[TestMethod]
-		public void DownloadFile_CorrectMethod()
+		public async Task DownloadFileAsync_Umanaged()
 		{
-			/* Arrange */
-
-			// The method.
-			Method? methodUsed = null;
-
-			// The return value.
-			byte[] content = new byte[0];
-
-			// Create our restsharp mock.
-			var mock = new Mock<IRestClient>();
-
-			// When the execute method is called, log the resource requested.
-			mock
-				.Setup(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()))
-				.Callback((IRestRequest r, CancellationToken t) => {
-					methodUsed = r.Method;
-				})
-				// Return a mock response.
-				.Returns(() =>
-				{
-					// Create the mock response.
-					var response = new Mock<IRestResponse>();
-
-					// Setup the return data.
-					response.SetupGet(r => r.RawBytes)
-						.Returns(content);
-
-					//Return the mock object.
-					return Task.FromResult(response.Object);
-				});
-
-			/* Act */
-
-			// Create our MFWSClient.
-			var mfwsClient = MFWSClient.GetMFWSClient(mock);
+			// Create our test runner.
+			var runner = new RestApiTestRunner(Method.GET, "/REST/objects/0/umy%2Brepository%3Amy%2Bobject/uversion%2B1/files/umy%2Bfile/content");
 
 			// Execute.
-			mfwsClient.ObjectFileOperations.DownloadFile(1, 2, 3, 4);
+			await runner.MFWSClient.ObjectFileOperations.DownloadFileAsync(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryName = "my repository", // Will be double-encoded.
+				ExternalRepositoryObjectID = "my object", // Will be double-encoded.
+				ExternalRepositoryObjectVersionID = "version 1" // Will be double-encoded.
+			}, new FileVer()
+			{
+				ExternalRepositoryFileID = "my file" // Will be double-encoded.
+			});
 
-			/* Assert */
+			// Verify.
+			runner.Verify();
+		}
 
-			// Execute must be called once.
-			mock.Verify(c => c.ExecuteTaskAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+		/// <summary>
+		/// Ensures that a call to <see cref="MFaaP.MFWSClient.MFWSVaultObjectFileOperations.DownloadFile(ObjVer, FileVer, CancellationToken)"/>
+		/// when using an unmanaged object data
+		/// requests the correct resource address and HTTP method.
+		/// </summary>
+		[TestMethod]
+		public void DownloadFile_Unmanaged()
+		{
+			// Create our test runner.
+			var runner = new RestApiTestRunner(Method.GET, "/REST/objects/0/umy%2Brepository%3Amy%2Bobject/uversion%2B1/files/umy%2Bfile/content");
 
-			// Method must be correct.
-			Assert.AreEqual(Method.GET, methodUsed);
+			// Execute.
+			runner.MFWSClient.ObjectFileOperations.DownloadFile(new ObjVer()
+			{
+				Type = 0,
+				ExternalRepositoryName = "my repository", // Will be double-encoded.
+				ExternalRepositoryObjectID = "my object", // Will be double-encoded.
+				ExternalRepositoryObjectVersionID = "version 1" // Will be double-encoded.
+			}, new FileVer()
+			{
+				ExternalRepositoryFileID = "my file" // Will be double-encoded.
+			});
+
+			// Verify.
+			runner.Verify();
 		}
 
 		#endregion
