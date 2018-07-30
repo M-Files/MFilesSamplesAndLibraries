@@ -558,6 +558,86 @@ namespace MFaaP.MFWSClient
 		/// Based on M-Files API.
 		/// </summary>
 		public int Version { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ExternalRepositoryFileID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		public string ExternalRepositoryFileVersionID { get; set; }
+
+		/// <summary>
+		/// Based on M-Files API.
+		/// </summary>
+		/// <remarks>ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~FileVer~Type.html </remarks>
+		public MFFileVerVersionType FileVersionType { get; set; }
+
+		/// <summary>
+		/// Retrieves the URI parameters for the current <see cref="ObjID"/>.
+		/// </summary>
+		/// <param name="fileId">The ID of the file.</param>
+		/// <param name="fileVersionId">The version of the file.</param>
+		public void GetUriParameters(out string fileId, out string fileVersionId)
+		{
+			// If we have an internal ID then we will return internal data.
+			if (this.ID > 0)
+			{
+				fileId = this.ID.ToString();
+				fileVersionId = this.Version > 0
+					? this.Version.ToString()
+					: "latest";
+				return;
+			}
+
+			// The file ID is:
+			//		The letter "u",
+			//		The external file ID (URI-encoded).
+			//	This entire string is then URI-encoded again.
+			fileId = WebUtility.UrlEncode($"u{WebUtility.UrlEncode(this.ExternalRepositoryFileID)}");
+
+			// If we don't have an external version then use latest.
+			if (string.IsNullOrWhiteSpace(this.ExternalRepositoryFileVersionID))
+			{
+				fileVersionId = "latest";
+				return;
+			}
+
+			// The version ID is:
+			//		The letter "u",
+			//		The external file version ID (URI-encoded).
+			//	This entire string is then URI-encoded again.
+			fileVersionId = WebUtility.UrlEncode($"u{WebUtility.UrlEncode(this.ExternalRepositoryFileVersionID)}");
+
+		}
+	}
+
+	/// <summary>
+	/// Base on M-Files API.
+	/// </summary>
+	public enum MFFileVerVersionType
+	{
+		/// <summary>
+		/// A non-initialized version.
+		/// </summary>
+		MFFileVerVersionTypeUninitialized = 0,
+
+		/// <summary>
+		/// A version that represents the latest file version.
+		/// </summary>
+		MFFileVerVersionTypeLatest = 1,
+
+		/// <summary>
+		/// A version that represents any file version.
+		/// </summary>
+		MFFileVerVersionTypeAny = 2,
+
+		/// <summary>
+		/// A version that represents a reference to a specific version.
+		/// </summary>
+		MFFileVerVersionTypeSpecific = 3
 	}
 
 
@@ -1455,6 +1535,7 @@ namespace MFaaP.MFWSClient
     /// Based on M-Files API.
     /// </summary>
     public class ObjectFile
+		: FileVer
 	{
 
 		public ObjectFile()
@@ -1473,11 +1554,6 @@ namespace MFaaP.MFWSClient
         /// When returned from the server it does not include the "." prefix.
         /// </remarks>
         public string Extension { get; set; }
-        
-        /// <summary>
-        /// Based on M-Files API.
-        /// </summary>
-        public int ID { get; set; }
 
 		/// <summary>
 		/// Based on M-Files API.
@@ -1491,11 +1567,6 @@ namespace MFaaP.MFWSClient
 		/// ref: https://www.m-files.com/api/documentation/latest/index.html#MFilesAPI~ObjectFile~GetNameForFileSystem.html
 		/// </remarks>
 		public string EscapedName { get; set; }
-
-		/// <summary>
-		/// Based on M-Files API.
-		/// </summary>
-		public int Version { get; set; }
 
 		/// <summary>
 		/// Based on M-Files API.
@@ -1514,11 +1585,7 @@ namespace MFaaP.MFWSClient
 		/// <returns>The file version information.</returns>
 		public FileVer AsFileVer()
 		{
-			return new FileVer()
-			{
-				Version = this.Version,
-				ID = this.ID
-			};
+			return (FileVer) this;
 		}
 
 	}

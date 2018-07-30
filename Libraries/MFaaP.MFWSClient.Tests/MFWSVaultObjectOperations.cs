@@ -179,14 +179,14 @@ namespace MFaaP.MFWSClient.Tests
 		public async Task GetLatestObjectVersionAndPropertiesAsync_External()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.GET, "/REST/objects/0/uhello+world:123%25123/latest.aspx?include=properties");
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.GET, "/REST/objects/0/uhello%2Bworld%3A123%2525123/latest.aspx?include=properties");
 
 			// Execute.
 			await runner.MFWSClient.ObjectOperations.GetLatestObjectVersionAndPropertiesAsync(new ObjID()
 			{
 				Type = 0,
-				ExternalRepositoryName = "hello world",
-				ExternalRepositoryObjectID = "123%123"
+				ExternalRepositoryName = "hello world", // This will be double-encoded.
+				ExternalRepositoryObjectID = "123%123" // This will be double-encoded.
 			});
 
 			// Verify.
@@ -202,14 +202,14 @@ namespace MFaaP.MFWSClient.Tests
 		public void GetLatestObjectVersionAndProperties_External()
 		{
 			// Create our test runner.
-			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.GET, "/REST/objects/0/uhello+world:123%25123/latest.aspx?include=properties");
+			var runner = new RestApiTestRunner<ExtendedObjectVersion>(Method.GET, "/REST/objects/0/uhello%2Bworld%3A123%2525123/latest.aspx?include=properties");
 
 			// Execute.
 			runner.MFWSClient.ObjectOperations.GetLatestObjectVersionAndProperties(new ObjID()
 			{
 				Type = 0,
-				ExternalRepositoryName = "hello world",
-				ExternalRepositoryObjectID = "123%123"
+				ExternalRepositoryName = "hello world", // This will be double-encoded.
+				ExternalRepositoryObjectID = "123%123" // This will be double-encoded.
 			});
 
 			// Verify.

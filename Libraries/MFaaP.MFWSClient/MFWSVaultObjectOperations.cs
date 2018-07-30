@@ -141,17 +141,13 @@ namespace MFaaP.MFWSClient
 			if (null == objId)
 				throw new ArgumentNullException(nameof(objId));
 
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId;
+			objId.GetUriParameters(out objectTypeId, out objectId);
+
 			// Create the request.
-			string resource = $"/REST/objects/{objId.Type}/{objId.ID}/latest.aspx?include=properties";
-
-			// If it's an unpromoted IML object then use the external details.
-			if (objId.ID == 0
-				&& false == string.IsNullOrEmpty(objId.ExternalRepositoryName)
-				&& false == string.IsNullOrEmpty(objId.ExternalRepositoryObjectID))
-			{
-				resource = $"/REST/objects/{objId.Type}/u{WebUtility.UrlEncode(objId.ExternalRepositoryName)}:{WebUtility.UrlEncode(objId.ExternalRepositoryObjectID)}/latest.aspx?include=properties";
-			}
-
+			string resource = $"/REST/objects/{objectTypeId}/{objectId}/latest.aspx?include=properties";
 			var request = new RestRequest(resource);
 
 			// Make the request and get the response.

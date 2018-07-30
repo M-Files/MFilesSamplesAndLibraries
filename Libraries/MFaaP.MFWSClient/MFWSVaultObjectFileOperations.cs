@@ -16,31 +16,78 @@ namespace MFaaP.MFWSClient
         {
         }
 
-        #region Downloading files
+		#region Downloading files
 
-        /// <summary>0
-        /// Initiates the download of a specific file.
-        /// </summary>
-        /// <param name="objectType">The Id of the object type.</param>
-        /// <param name="objectId">The Id of the object.</param>
-        /// <param name="fileId">The Id of the file.</param>
-        /// <param name="objectVersion">The version of the object, or null for the latest.</param>
-        /// <param name="token">A cancellation token for the request.</param>
-        /// <returns>The raw response from the HTTP request.</returns>
-        public async Task<byte[]> DownloadFileAsync(int objectType, int objectId, int fileId, int? objectVersion = null, CancellationToken token = default(CancellationToken))
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objVer">The object that contains the file to download.</param>
+		/// <param name="fileVer">The file to download.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public async Task<byte[]> DownloadFileAsync(ObjVer objVer, FileVer fileVer, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+			if (null == fileVer)
+				throw new ArgumentNullException(nameof(fileVer));
+
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId, objectVersionId;
+			objVer.GetUriParameters(out objectTypeId, out objectId, out objectVersionId);
+			string fileId, fileVersionId;
+			fileVer.GetUriParameters(out fileId, out fileVersionId);
+
+			// Build up the request.
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/{objectVersionId}/files/{fileId}/content");
+
+			// Execute the request.
+			var response = await this.MFWSClient.Get(request, token)
+				.ConfigureAwait(false);
+
+			// Return the content.
+			return response?.RawBytes;
+		}
+
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objVer">The object that contains the file to download.</param>
+		/// <param name="fileVer">The file to download.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public byte[] DownloadFile(ObjVer objVer, FileVer fileVer, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.DownloadFileAsync(objVer, fileVer, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="fileId">The Id of the file.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public Task<byte[]> DownloadFileAsync(int objectType, int objectId, int fileId, int? objectVersion = null, CancellationToken token = default(CancellationToken))
         {
-            // Create the version string to be used for the uri segment.
-            var versionString = objectVersion?.ToString() ?? "latest";
-
-            // Build up the request.
-            var request = new RestRequest($"/REST/objects/{objectType}/{objectId}/{versionString}/files/{fileId}/content");
-
-            // Execute the request.
-            var response = await this.MFWSClient.Get(request, token)
-                .ConfigureAwait(false);
-
-            // Return the content.
-            return response?.RawBytes;
+			// Use the other overload.
+			return this.DownloadFileAsync(new ObjVer()
+			{
+				Type = objectType,
+				ID = objectId,
+				Version =  objectVersion ?? 0
+			}, new FileVer()
+			{
+				ID = fileId
+			}, token);
         }
 
         /// <summary>
@@ -59,45 +106,96 @@ namespace MFaaP.MFWSClient
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
-        }
+		}
 
-        /// <summary>
-        /// Initiates the download of a specific file.
-        /// </summary>
-        /// <param name="objectType">The Id of the object type.</param>
-        /// <param name="objectId">The Id of the object.</param>
-        /// <param name="fileId">The Id of the file.</param>
-        /// <param name="outputStream">The output stream for the response to be written to.</param>
-        /// <param name="objectVersion">The version of the object, or null for the latest.</param>
-        /// <param name="token">A cancellation token for the request.</param>
-        /// <returns>The raw response from the HTTP request.</returns>
-        public async Task DownloadFileAsync(int objectType, int objectId, int fileId, System.IO.Stream outputStream, int? objectVersion = null, CancellationToken token = default(CancellationToken))
-        {
-            // Create the version string to be used for the uri segment.
-            var versionString = objectVersion?.ToString() ?? "latest";
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objVer">The object that contains the file to download.</param>
+		/// <param name="fileVer">The file to download.</param>
+		/// <param name="outputStream">The output stream for the response to be written to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public async Task DownloadFileAsync(ObjVer objVer, FileVer fileVer, System.IO.Stream outputStream, CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == objVer)
+				throw new ArgumentNullException(nameof(objVer));
+			if (null == fileVer)
+				throw new ArgumentNullException(nameof(fileVer));
 
-            // Build up the request.
-            var request = new RestRequest($"/REST/objects/{objectType}/{objectId}/{versionString}/files/{fileId}/content");
+			// Extract the URI elements.
+			int objectTypeId;
+			string objectId, objectVersionId;
+			objVer.GetUriParameters(out objectTypeId, out objectId, out objectVersionId);
+			string fileId, fileVersionId;
+			fileVer.GetUriParameters(out fileId, out fileVersionId);
 
-            // Output the response to the given stream.
-            request.ResponseWriter = (responseStream) => responseStream.CopyTo(outputStream);
+			// Build up the request.
+			var request = new RestRequest($"/REST/objects/{objectTypeId}/{objectId}/{objectVersionId}/files/{fileId}/content");
 
-            // Execute the request.
-            await this.MFWSClient.Get(request, token)
-                .ConfigureAwait(false);
-        }
+			// Output the response to the given stream.
+			request.ResponseWriter = (responseStream) => responseStream.CopyTo(outputStream);
 
-        /// <summary>
-        /// Initiates the download of a specific file.
-        /// </summary>
-        /// <param name="objectType">The Id of the object type.</param>
-        /// <param name="objectId">The Id of the object.</param>
-        /// <param name="fileId">The Id of the file.</param>
-        /// <param name="outputStream">The output stream for the response to be written to.</param>
-        /// <param name="objectVersion">The version of the object, or null for the latest.</param>
-        /// <param name="token">A cancellation token for the request.</param>
-        /// <returns>The raw response from the HTTP request.</returns>
-        public void DownloadFile(int objectType, int objectId, int fileId, System.IO.Stream outputStream, int? objectVersion = null, CancellationToken token = default(CancellationToken))
+			// Execute the request.
+			await this.MFWSClient.Get(request, token)
+				.ConfigureAwait(false);
+		}
+
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objVer">The object that contains the file to download.</param>
+		/// <param name="fileVer">The file to download.</param>
+		/// <param name="outputStream">The output stream for the response to be written to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public void DownloadFile(ObjVer objVer, FileVer fileVer, System.IO.Stream outputStream, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			this.DownloadFileAsync(objVer, fileVer, outputStream, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="fileId">The Id of the file.</param>
+		/// <param name="outputStream">The output stream for the response to be written to.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public Task DownloadFileAsync(int objectType, int objectId, int fileId, System.IO.Stream outputStream, int? objectVersion = null, CancellationToken token = default(CancellationToken))
+		{
+			// Use the other overload.
+			return this.DownloadFileAsync(new ObjVer()
+				{
+					Type = objectType,
+					ID = objectId,
+					Version = objectVersion ?? 0
+				}, new FileVer()
+				{
+					ID = fileId
+				},
+				outputStream,
+				token);
+		}
+
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="fileId">The Id of the file.</param>
+		/// <param name="outputStream">The output stream for the response to be written to.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public void DownloadFile(int objectType, int objectId, int fileId, System.IO.Stream outputStream, int? objectVersion = null, CancellationToken token = default(CancellationToken))
         {
             // Execute the async method.
             this.DownloadFileAsync(objectType, objectId, fileId, outputStream, objectVersion, token)
@@ -123,19 +221,39 @@ namespace MFaaP.MFWSClient
 
             // Use the other overload to download it.
             return this.DownloadFileAsync(objectType, objectId, fileId, outputFileInfo, objectVersion, token);
-        }
+		}
 
-        /// <summary>
-        /// Initiates the download of a specific file.
-        /// </summary>
-        /// <param name="objectType">The Id of the object type.</param>
-        /// <param name="objectId">The Id of the object.</param>
-        /// <param name="fileId">The Id of the file.</param>
-        /// <param name="outputFileName">The full path to the file to output to.</param>
-        /// <param name="objectVersion">The version of the object, or null for the latest.</param>
-        /// <param name="token">A cancellation token for the request.</param>
-        /// <returns>An awaitable task for the download process.</returns>
-        public void DownloadFile(int objectType, int objectId, int fileId, string outputFileName, int? objectVersion = null, CancellationToken token = default(CancellationToken))
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objVer">The object that contains the file to download.</param>
+		/// <param name="fileVer">The file to download.</param>
+		/// <param name="outputFileName">The full path to the file to output to.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public void DownloadFile(ObjVer objVer, FileVer fileVer, string outputFileName, CancellationToken token = default(CancellationToken))
+		{
+			// Create a FileInfo for the output.
+			var outputFileInfo = new System.IO.FileInfo(outputFileName);
+
+			// Execute the async method.
+			this.DownloadFileAsync(objVer, fileVer, outputFileInfo, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objectType">The Id of the object type.</param>
+		/// <param name="objectId">The Id of the object.</param>
+		/// <param name="fileId">The Id of the file.</param>
+		/// <param name="outputFileName">The full path to the file to output to.</param>
+		/// <param name="objectVersion">The version of the object, or null for the latest.</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An awaitable task for the download process.</returns>
+		public void DownloadFile(int objectType, int objectId, int fileId, string outputFileName, int? objectVersion = null, CancellationToken token = default(CancellationToken))
         {
             // Execute the async method.
             this.DownloadFileAsync(objectType, objectId, fileId, outputFileName, objectVersion, token)
@@ -154,25 +272,24 @@ namespace MFaaP.MFWSClient
         /// <param name="objectVersion">The version of the object, or null for the latest.</param>
         /// <param name="token">A cancellation token for the request.</param>
         /// <returns>An awaitable task for the download process.</returns>
-        public async Task DownloadFileAsync(int objectType, int objectId, int fileId, System.IO.FileInfo outputFileInfo, int? objectVersion = null,
+        public Task DownloadFileAsync(int objectType, int objectId, int fileId, System.IO.FileInfo outputFileInfo, int? objectVersion = null,
             CancellationToken token = default(CancellationToken))
         {
             // Sanity.
             if (null == outputFileInfo)
                 throw new ArgumentNullException(nameof(outputFileInfo));
 
-            // Delete the file if it already exists.
-            if (outputFileInfo.Exists)
-                outputFileInfo.Delete();
-
-            // Open a stream to the file.
-            using (var stream = outputFileInfo.Create())
-            {
-                // Download the file to disk.
-                await this.DownloadFileAsync(objectType, objectId, fileId, stream, objectVersion, token)
-                    .ConfigureAwait(false);
-            }
-        }
+			// Use the other overload.
+			return this.DownloadFileAsync(new ObjVer()
+			{
+				Type = objectType,
+				ID = objectId,
+				Version = objectVersion ?? 0
+			}, new FileVer()
+			{
+				ID = fileId
+			}, outputFileInfo, token);
+		}
 
         /// <summary>
         /// Initiates the download of a specific file.
@@ -192,18 +309,63 @@ namespace MFaaP.MFWSClient
                 .ConfigureAwait(false)
                 .GetAwaiter()
                 .GetResult();
-        }
+		}
 
-        #endregion
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objVer">The object that contains the file to download.</param>
+		/// <param name="fileVer">The file to download.</param>
+		/// <param name="outputFileInfo">The file to output the content to (will be overwritten if exists).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>An awaitable task for the download process.</returns>
+		public async Task DownloadFileAsync(ObjVer objVer, FileVer fileVer, System.IO.FileInfo outputFileInfo,
+			CancellationToken token = default(CancellationToken))
+		{
+			// Sanity.
+			if (null == outputFileInfo)
+				throw new ArgumentNullException(nameof(outputFileInfo));
 
-        #region Uploading files
+			// Delete the file if it already exists.
+			if (outputFileInfo.Exists)
+				outputFileInfo.Delete();
 
-        /// <summary>
-        /// Uploads files to the temporary location.
-        /// </summary>
-        /// <param name="files">The files to upload.</param>
-        /// <returns>Information on the upload.</returns>
-        public Task<UploadInfo[]> UploadFilesAsync(params FileInfo[] files)
+			// Open a stream to the file.
+			using (var stream = outputFileInfo.Create())
+			{
+				// Download the file to disk.
+				await this.DownloadFileAsync(objVer, fileVer, stream, token)
+					.ConfigureAwait(false);
+			}
+		}
+
+		/// <summary>
+		/// Initiates the download of a specific file.
+		/// </summary>
+		/// <param name="objVer">The object that contains the file to download.</param>
+		/// <param name="fileVer">The file to download.</param>
+		/// <param name="outputFileInfo">The file to output the content to (will be overwritten if exists).</param>
+		/// <param name="token">A cancellation token for the request.</param>
+		/// <returns>The raw response from the HTTP request.</returns>
+		public void DownloadFile(ObjVer objVer, FileVer fileVer, System.IO.FileInfo outputFileInfo, CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			this.DownloadFileAsync(objVer, fileVer, outputFileInfo, token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		#endregion
+
+		#region Uploading files
+
+		/// <summary>
+		/// Uploads files to the temporary location.
+		/// </summary>
+		/// <param name="files">The files to upload.</param>
+		/// <returns>Information on the upload.</returns>
+		public Task<UploadInfo[]> UploadFilesAsync(params FileInfo[] files)
         {
             return this.UploadFilesAsync(CancellationToken.None, files);
         }
