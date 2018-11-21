@@ -31,8 +31,10 @@ namespace MaintainOriginalTemplate
 		/// Ensures that the "Original Template" property is maintained on templates.
 		/// </summary>
 		/// <param name="env">The vault/object environment.</param>
-		[EventHandler(MFEventHandlerType.MFEventHandlerBeforeCreateNewObjectFinalize)]
-		[EventHandler(MFEventHandlerType.MFEventHandlerBeforeCheckInChangesFinalize)]
+		[EventHandler(MFEventHandlerType.MFEventHandlerBeforeCreateNewObjectFinalize,
+			ObjectType=(int)MFBuiltInObjectType.MFBuiltInObjectTypeDocument)]
+		[EventHandler(MFEventHandlerType.MFEventHandlerBeforeCheckInChangesFinalize,
+			ObjectType = (int)MFBuiltInObjectType.MFBuiltInObjectTypeDocument)]
 		public void MaintainOriginalTemplateProperty(EventHandlerEnvironment env)
 		{
 			// Sanity.
