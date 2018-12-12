@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <guid>ae94b402-e56f-4b69-984d-3177d7277312</guid>
+  <name>M-Files View URL Generator</name>
+  <description>Adds a Get M-Files View URL command to the context menu. The option appears when the user right-clicks above a selected view or virtual folder.</description>
+  <version>0.0.1</version>
+  <modules>
+    <module environment="shellui">
+      <file>Application.js</file>
+    </module>
+  </modules>
+  <dashboards>
+    <dashboard id="dashboard">
+      <content>dashboard.html</content>
+    </dashboard>
+  </dashboards>
+</application>

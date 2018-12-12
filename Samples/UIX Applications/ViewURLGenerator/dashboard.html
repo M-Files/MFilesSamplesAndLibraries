@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>M-Files View URL Generator</title>
+        <script src="jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+
+            function getViewURL(vault, folderDefs) {
+                /// <summary>
+                /// Builds an MFiles URL for a view or property folder.
+                /// </summary>
+                /// <param name="vault">vault in which view resides</param>
+                /// <param name="folderDefs" type="MFilesAPI.FolderDefs">view/property folder path folders</param>	
+                /// <returns type="string">MFiles URL</returns>
+
+                var folderDef, // current folderDef for loop
+					view, // lowest level view
+					propFolders = MFiles.CreateInstance("TypedValues"); // list of property folders reference below "view"
+
+                // Loop through folderDefs to find the lowest level view,
+                // and the property folders underneath it
+                for (var i = 1; i <= folderDefs.Count; i++) {
+
+                    folderDef = folderDefs.Item(i);
+
+                    if (folderDef.FolderDefType == MFFolderDefTypeViewFolder) {
+
+                        // Set inner most view, and reset property folders 
+                        view = folderDef.View;
+                        propFolders = MFiles.CreateInstance("TypedValues");
+
+                    } else if (folderDef.FolderDefType == MFFolderDefTypePropertyFolder) {
+
+                        //add property folder
+                        propFolders.Add(-1, folderDef.PropertyFolder);
+                    }
+                }
+
+                try {
+
+                    // attempt to return the url with simple format
+                    return vault.ViewOperations.GetMFilesURLForView(view, propFolders, true);
+
+                } catch (e) {
+
+                    // simple format failed, use base64 format instead
+                    return vault.ViewOperations.GetMFilesURLForView(view, propFolders, false);
+                }
+
+            }
+
+
+            // Dashboard initialization
+            function OnNewDashboard(dashboard) {
+
+                // get vault, and current folder reference
+                var shellFrame = dashboard.Parent,
+                    vault = shellFrame.ShellUI.Vault,
+					curFolder = shellFrame.CurrentFolder,
+                    viewPath;
+
+                // set dashboard parameters
+                dashboard.Window.Title = "M-Files URL to the View/Folder";
+                dashboard.Window.Width = 650;
+                dashboard.Window.Height = 20;
+                dashboard.Window.Resizable = false;
+                
+
+                if (shellFrame.Listing.CurrentSelection.Folders.Count === 1) {
+
+                    // if a single folder is selected,
+                    // add its folder def to the current folder's path
+                    curFolder.Add(-1, shellFrame.Listing.CurrentSelection.Folders.Item(1));
+                }
+
+                // resolve and display view path in dashboard
+                viewPath = getViewURL(vault, curFolder)
+                $("#url").val(viewPath).select();
+
+
+                // Add dashboard "close" functionality to OK button 
+                $("#okButton").click(function () {
+                    dashboard.Window.Close();
+                });
+
+            }
+
+
+        </script>
+    </head>
+    <body style="background:#F0F0F0; font-family:Segoe UI">
+		<div style="width:95%; margin: 50px auto;font-size:12px;">
+			M-Files URL:
+			<input id="url" value="" style="width:100%;margin:5px 0px;" />			
+		</div>
+		<input id="okButton" type="button" value="OK" style="position:absolute; bottom:15px; right:15px; width:50px;" />
+    </body>
+</html>
