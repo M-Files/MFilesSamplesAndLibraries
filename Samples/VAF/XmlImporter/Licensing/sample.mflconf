@@ -1,0 +1,69 @@
+{
+  "GeneratorHeader": "M-Files Vault Application Framework License Generator",
+  "Advanced": true,
+
+  "KeyFile": "sample.Keys.conf",
+  //"Keys": {},
+
+  //"EditorFile": "MyApp.editor.json",
+  "Editor": {
+	"editors" : {
+		"LicenseConfiguration" : {
+			"type" : "LicenseConfiguration",
+			"extend" : "object",
+			"members" : {
+				"Description" : {
+					"type" : "string",
+					"helpText" : "License Name:",
+					"defaultValue" : "Xml Importer"
+				},
+				"LicensedTo" : {
+					"type" : "string",
+					"helpText" : "Customer:"
+				},
+				"Application" : {
+					"type" : "string",
+					"defaultValue" : "{468e859a-704f-470f-aa4f-d57ec81b0112}",
+					"hidden": true,
+					"includeInHeader": false
+				},
+				"LicenseExpireDate" : {
+					"type" : "date",
+					"helpText" : "Expire date:\n(unset is never)",
+					"format" : "d.M.yyyy"
+				},
+				"Vaults": {
+					"type": "array",
+					"childTemplate": "string",
+					"helpText": "Only valid in vaults:\n(empty for allow all)" ,
+					"freeAdd": true,
+				},
+				"Modules": {
+					"type": "array",
+					"childTemplate": "string",
+					"selectOptions": [
+						{ 
+						  "value": "Option1-Value", 
+						  "label": "Option 1" },
+						{ "value": "Option2-Value", 
+						  "label": "Option 2" }
+					],
+					"defaultValue": [ "Option1-Value" ],
+					"freeAdd": true
+				},
+				"CustomField1" : {
+					"type" : "string"
+				}
+			}
+		}
+	},
+	"type" : "LicenseConfiguration"
+},
+
+  "Password": "",
+  "SignatureField": "",
+  "Mode": "TwoKeys",
+  "Version": 3,
+  "IncludeHeader": true,
+  "Template": "Hello World"
+}
