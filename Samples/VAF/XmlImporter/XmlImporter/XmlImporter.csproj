@@ -73,7 +73,7 @@
     <Compile Include="VaultApplication.Configuration.cs" />
     <Compile Include="VaultApplication.cs" />
     <Compile Include="VaultApplication.Dashboard.cs" />
-    <Compile Include="VaultApplication.ExceptionHandling.rename.cs" />
+    <Compile Include="VaultApplication.ExceptionHandling.cs" />
     <Compile Include="VaultApplication.ImportXmlFile.cs" />
     <Compile Include="VaultApplication.Licensing.cs" />
     <Compile Include="XmlNamespace.cs" />
