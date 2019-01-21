@@ -1,21 +1,22 @@
 ﻿using System;
+using System.Diagnostics;
 using MFiles.VAF.Common;
+using MFilesAPI;
 
 namespace XmlImporter
 {
 	public partial class VaultApplication
 	{
+		/// <summary>
+		/// The name of the background operation.
+		/// </summary>
+		public const string BackgroundOperationName = "XmlImporter";
 
 		#region Overrides of VaultApplicationBase
 
-		/// <inheritdoc />
-		protected override void StartApplication()
+		private void StartRecurringBackgroundOperation(string name = VaultApplication.BackgroundOperationName)
 		{
-			base.StartApplication();
-
-			// Every one minute execute our import instructions.
-			this.BackgroundOperations.StartRecurringBackgroundOperation
-			(
+			this.ImportBackgroundOperation = this.BackgroundOperations.StartRecurringBackgroundOperation(
 				"XmlImporter",
 #if DEBUG
 				TimeSpan.FromSeconds(10),
@@ -45,12 +46,59 @@ namespace XmlImporter
 							SysUtils.ReportErrorMessageToEventLog("Exception importing file", e);
 						}
 					}
-				}
-			);
-
+				});
 		}
 
-#endregion
+		#endregion
+
+		/// <summary>
+		/// The background operation for importing files.
+		/// </summary>
+		private BackgroundOperation ImportBackgroundOperation { get; set; }
+
+		/// <summary>
+		/// Stops the current import operation, if possible.
+		/// </summary>
+		public void StopImportBackgroundOperation()
+		{
+			// Sanity.
+			if (null == this.ImportBackgroundOperation)
+				return;
+
+			// Stop the background operation from running, if we can.
+			try
+			{
+				this.ImportBackgroundOperation.StopRunningAtIntervals();
+				this.ImportBackgroundOperation.Cancel(true);
+			}
+			catch (Exception e)
+			{
+				SysUtils.ReportErrorMessageToEventLog(
+					base.EventSourceIdentifier,
+					"Exception cancelling background operation.",
+					e,
+					EventLogEntryType.Warning);
+			}
+		}
+
+		/// <summary>
+		/// Starts the background operation, if possible.
+		/// </summary>
+		public void StartImportBackgroundOperation()
+		{
+			// First stop the operation if we can.
+			this.StopImportBackgroundOperation();
+
+			// Run the background at the appropriate interval.
+			try
+			{
+				this.StartRecurringBackgroundOperation();
+			}
+			catch (Exception e)
+			{
+				SysUtils.ReportErrorMessageToEventLog("Exception starting background operation", e);
+			}
+		}
 
 	}
 }
