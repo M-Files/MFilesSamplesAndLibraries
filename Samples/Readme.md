@@ -30,3 +30,6 @@ Please note that the build actions have been disabled in these samples.  This ha
 * `Chain Workflows` - An example to show how to move an object to a second workflow once it reaches the end of a first workflow.
 * `Client to Server communication` - An example of how to execute server-side code on a client-side event (e.g. a command click).
 
+## External Object Type Data Sources
+
+* `ExtOTDS.Json` - An example of creating a custom external object type data source, reading and writing data from .json files on disk.
