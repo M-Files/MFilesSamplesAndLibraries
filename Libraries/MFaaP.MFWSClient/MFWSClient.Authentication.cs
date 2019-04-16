@@ -13,6 +13,11 @@ namespace MFaaP.MFWSClient
 		private string authenticationToken;
 
 		/// <summary>
+		/// The HTTP header name for the X-Authentication header.
+		/// </summary>
+		protected const string XAuthenticationHttpHeaderName = "X-Authentication";
+
+		/// <summary>
 		/// This is the authentication token used in the request headers.
 		/// </summary>
 		/// <remarks>Not used when SSO authentication is used.</remarks>
@@ -21,27 +26,26 @@ namespace MFaaP.MFWSClient
 			protected get { return this.authenticationToken; }
 			set
 			{
+				// Set the token.
 				this.authenticationToken = value;
 
-				// Update the authentication header.
-				string authenticationHttpHeaderName = "X-Authentication";
-
 				// Remove any existing default parameters.
-				foreach (Parameter parameter in this.DefaultParameters.Where(p => p.Name == authenticationHttpHeaderName)
+				foreach (Parameter parameter in this.DefaultParameters.Where(p => p.Name == MFWSClient.XAuthenticationHttpHeaderName)
 					.ToArray())
 				{
 					this.DefaultParameters.Remove(parameter);
 				}
 
 				// Add the new one.
-				this.AddDefaultHeader(authenticationHttpHeaderName, this.authenticationToken);
+				if(null != this.authenticationToken)
+					this.AddDefaultHeader(MFWSClient.XAuthenticationHttpHeaderName, this.authenticationToken);
 			}
 		}
 
 		/// <summary>
 		/// Clears the authentication tokens used by the client.
 		/// </summary>
-		protected void ClearAuthenticationToken()
+		protected virtual void ClearAuthenticationToken()
 		{
 			// Clear the authentication token.
 			this.AuthenticationToken = null;
