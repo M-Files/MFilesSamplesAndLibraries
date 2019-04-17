@@ -128,12 +128,12 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="pluginConfiguration">The configuration for the OAuth 2.0 identity provider.</param>
 		/// <param name="oAuthTokens">The OAuth 2.0 tokens.</param>
+		/// <param name="setHttpHeaders">If true, <see cref="AddAuthorizationHeader"/> will be called automatically.</param>
 		/// <param name="token">A cancellation token for the task.</param>
 		/// <returns>The updated access token data.</returns>
 		public OAuth2TokenResponse RefreshOAuth2Token(
 			OAuth2Configuration pluginConfiguration,
 			OAuth2TokenResponse oAuthTokens,
-			/// <param name="setHttpHeaders">If true, <see cref="AddAuthorizationHeader"/> will be called automatically.</param>
 			bool setHttpHeaders = true,
 			CancellationToken token = default(CancellationToken))
 		{
