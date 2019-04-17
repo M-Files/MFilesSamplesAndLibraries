@@ -47,9 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods\DictionaryExtensionMethods.cs" />
-    <Compile Include="ExtensionMethods\EnumerableExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\IEnumerableExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\FolderContentItemExtensionMethods.cs" />
-    <Compile Include="ExtensionMethods\ListPluginInfoConfigurationExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\IEnumerablePluginInfoConfigurationExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\RestRequestExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\UriBuilderExtensionMethods.cs" />
     <Compile Include="MFWSClient.Authentication.cs" />

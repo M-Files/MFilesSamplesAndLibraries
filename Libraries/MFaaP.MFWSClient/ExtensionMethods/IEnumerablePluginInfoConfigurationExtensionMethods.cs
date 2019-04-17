@@ -8,7 +8,8 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 	/// <summary>
 	/// Helper methods for working with authentication plugin configuration data.
 	/// </summary>
-	public static class ListPluginInfoConfigurationExtensionMethods
+	// ReSharper disable once InconsistentNaming
+	public static class IEnumerablePluginInfoConfigurationExtensionMethods
 	{
 		/// <summary>
 		/// The <see cref="PluginInfoConfiguration.Protocol"/> for OAuth 2.0 configurations.
@@ -20,16 +21,16 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 		/// </summary>
 		/// <param name="pluginInfoConfiguration">The list of defined authentication plugins defined.</param>
 		/// <returns>True if OAuth is found, false otherwise.</returns>
-		/// <remarks>Use <see cref="TryGetOAuth2Configuration(List{PluginInfoConfiguration}, out PluginInfoConfiguration)"/> to obtain the configuration efficiently.</remarks>
-		public static bool SupportsOAuth2(this List<PluginInfoConfiguration> pluginInfoConfiguration)
+		/// <remarks>Use <see cref="TryGetOAuth2Configuration(IEnumerable{PluginInfoConfiguration}, out PluginInfoConfiguration)"/> to obtain the configuration efficiently.</remarks>
+		public static bool SupportsOAuth2(this IEnumerable<PluginInfoConfiguration> pluginInfoConfiguration)
 		{
 			// Sanity.
 			if (null == pluginInfoConfiguration)
 				throw new ArgumentNullException(nameof(pluginInfoConfiguration));
 
-			// Is OAuth 2.0 specified?
-			return pluginInfoConfiguration
-				.Any(pic => pic.Protocol == ListPluginInfoConfigurationExtensionMethods.OAuth2PluginConfigurationProtocol);
+			// Use the other overload.
+			PluginInfoConfiguration configuration;
+			return pluginInfoConfiguration.TryGetOAuth2Configuration(out configuration);
 		}
 
 		/// <summary>
@@ -38,7 +39,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 		/// <param name="pluginInfoConfiguration">The list of defined authentication plugins defined.</param>
 		/// <param name="oAuth2Configuration">The configuration, if found, or null otherwise.</param>
 		/// <returns>True if OAuth is found, false otherwise.</returns>
-		public static bool TryGetOAuth2Configuration(this List<PluginInfoConfiguration> pluginInfoConfiguration, out PluginInfoConfiguration oAuth2Configuration)
+		public static bool TryGetOAuth2Configuration(this IEnumerable<PluginInfoConfiguration> pluginInfoConfiguration, out PluginInfoConfiguration oAuth2Configuration)
 		{
 			// Sanity.
 			if (null == pluginInfoConfiguration)
@@ -46,7 +47,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 
 			// Is OAuth 2.0 specified?
 			oAuth2Configuration = pluginInfoConfiguration
-				.FirstOrDefault(pic => pic.Protocol == ListPluginInfoConfigurationExtensionMethods.OAuth2PluginConfigurationProtocol);
+				.FirstOrDefault(pic => pic.Protocol == IEnumerablePluginInfoConfigurationExtensionMethods.OAuth2PluginConfigurationProtocol);
 
 			// Did we get a value?
 			return oAuth2Configuration != null;
