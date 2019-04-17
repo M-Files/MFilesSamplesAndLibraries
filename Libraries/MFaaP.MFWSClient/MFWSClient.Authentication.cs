@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using MFaaP.MFWSClient.ExtensionMethods;
+using MFaaP.MFWSClient.OAuth2;
 using RestSharp;
 
 namespace MFaaP.MFWSClient
@@ -18,9 +20,19 @@ namespace MFaaP.MFWSClient
 		protected const string XAuthenticationHttpHeaderName = "X-Authentication";
 
 		/// <summary>
+		/// The HTTP header name used for the authorization token (<see cref="AddAuthorizationHeader"/>).
+		/// </summary>
+		protected const string AuthorizationHttpHeaderName = "Authorization";
+
+		/// <summary>
+		/// The HTTP header name used for the vault guid (<see cref="AddVaultHeader(System.Guid)"/>).
+		/// </summary>
+		protected const string VaultHttpHeaderName = "X-Vault";
+
+		/// <summary>
 		/// This is the authentication token used in the request headers.
 		/// </summary>
-		/// <remarks>Not used when SSO authentication is used.</remarks>
+		/// <remarks>Not used when SSO or OAuth authentication is used.</remarks>
 		public string AuthenticationToken
 		{
 			protected get { return this.authenticationToken; }
@@ -43,8 +55,69 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
+		/// Adds the default Authorization HTTP header as appropriate for the OAuth configuration.
+		/// </summary>
+		/// <param name="pluginConfiguration">The configuration for the OAuth 2.0 plugin.</param>
+		/// <param name="oAuthTokens">The access tokens retrieved via the OAuth flow.</param>
+		/// <remarks><see cref="OAuth2Configuration.UseIdTokenAsAccessToken"/> defines whether <see cref="OAuth2TokenResponse.IdToken"/> (if true) or
+		/// <see cref="OAuth2TokenResponse.AccessToken"/> (if false) should be used for the bearer value.</remarks>
+		public void AddAuthorizationHeader(OAuth2Configuration pluginConfiguration, OAuth2TokenResponse oAuthTokens)
+		{
+			// Sanity.
+			if (null == pluginConfiguration)
+				throw new ArgumentNullException(nameof(pluginConfiguration));
+
+			// Clear the authorisation token.
+			this.ClearAuthenticationToken();
+
+			// Add the authorisation token to the headers.
+			if (pluginConfiguration.UseIdTokenAsAccessToken)
+			{
+				this.AddDefaultHeader(MFWSClient.AuthorizationHttpHeaderName, "Bearer " + oAuthTokens.IdToken);
+			}
+			else
+			{
+				this.AddDefaultHeader(MFWSClient.AuthorizationHttpHeaderName, "Bearer " + oAuthTokens.AccessToken);
+			}
+		}
+
+		/// <summary>
+		/// Adds the "X-Vault" header to the default headers collection.
+		/// </summary>
+		/// <param name="vaultGuid">The GUID of the vault to use.</param>
+		/// <remarks>Typically used with OAuth authentication tokens.</remarks>
+		public void AddVaultHeader(Guid vaultGuid)
+		{
+			this.AddVaultHeader(vaultGuid.ToString("B"));
+		}
+
+		/// <summary>
+		/// Adds the "X-Vault" header to the default headers collection.
+		/// </summary>
+		/// <param name="vaultGuid">The GUID of the vault to use.  All common .NET GUID formatting accepted.</param>
+		/// <remarks>Typically used with OAuth authentication tokens.</remarks>
+		public void AddVaultHeader(string vaultGuid)
+		{
+			this.AddDefaultHeader(MFWSClient.VaultHttpHeaderName, vaultGuid);
+		}
+
+		/// <summary>
+		/// Removes the "X-Vault" header from the default headers collection.
+		/// </summary>
+		public void ClearVaultHeader()
+		{
+			// Remove the authorisation header.
+			foreach (Parameter parameter in this.DefaultParameters.Where(p => p.Name == MFWSClient.VaultHttpHeaderName)
+				.ToArray())
+			{
+				this.DefaultParameters.Remove(parameter);
+			}
+		}
+
+		/// <summary>
 		/// Clears the authentication tokens used by the client.
 		/// </summary>
+		/// <remarks>If <see cref="AddVaultHeader(System.Guid)"/> has been set then does not remove it.  Call <see cref="ClearVaultHeader"/> too.</remarks>
 		protected virtual void ClearAuthenticationToken()
 		{
 			// Clear the authentication token.
@@ -52,6 +125,65 @@ namespace MFaaP.MFWSClient
 
 			// Clear any cookies that are held (e.g. SSO) too.
 			this.CookieContainer = new CookieContainer();
+
+			// Remove the authorisation header.
+			foreach (Parameter parameter in this.DefaultParameters.Where(p => p.Name == MFWSClient.AuthorizationHttpHeaderName)
+				.ToArray())
+			{
+				this.DefaultParameters.Remove(parameter);
+			}
+		}
+
+		/// <summary>
+		/// Using the <see cref="code"/> from the OAuth authorisation endpoint, 
+		/// requests tokens from the token endpoint and sets up the client to use them.
+		/// The token data is returned in case it is needed in the future (e.g. <see cref="RefreshOAuthToken"/>).
+		/// </summary>
+		/// <param name="pluginConfiguration">The configuration of the OAuth plugin.</param>
+		/// <param name="code">The code returned from the OAuth authorisation endpoint.</param>
+		/// <returns>The data returned from the token endpoint.</returns>
+		public OAuth2TokenResponse ConvertOAuthAuthorizationCodeToTokens(OAuth2Configuration pluginConfiguration, string code)
+		{
+			// Sanity.
+			if (null == pluginConfiguration)
+				throw new ArgumentNullException(nameof(pluginConfiguration));
+			if (null == code)
+				throw new ArgumentNullException(nameof(code));
+
+			// Create the request, adding the mandatory items.
+			var tokenEndpoint = new Uri(pluginConfiguration.TokenEndpoint, uriKind: UriKind.Absolute);
+			var request = new RestSharp.RestRequest(tokenEndpoint.PathAndQuery, RestSharp.Method.POST);
+			request.AddParameter("code", code);
+			request.AddParameter("grant_type", pluginConfiguration.GrantType);
+			request.AddParameter("redirect_uri", pluginConfiguration.GetAppropriateRedirectUri());
+
+			// Add the client id.  If there's a realm then use that here too.
+			request.AddParameter(
+				"client_id",
+				string.IsNullOrWhiteSpace(pluginConfiguration.SiteRealm)
+					? pluginConfiguration.ClientID // If no site realm is supplied, just pass the client ID.
+					: $"{pluginConfiguration.ClientID}@{pluginConfiguration.SiteRealm}" // Otherwise pass client ID @ site realm.
+			);
+
+			// Add the optional bits.
+			request.AddParameterIfNotNullOrWhitespace("resource", pluginConfiguration.Resource);
+			request.AddParameterIfNotNullOrWhitespace("scope", pluginConfiguration.Scope);;
+			request.AddParameterIfNotNullOrWhitespace("client_secret", pluginConfiguration.ClientSecret);
+
+			// Make a post to the token endpoint.
+			// NOTE: We must use a new RestClient here otherwise it'll try and add the token endpoint to the MFWA base url.
+			var restClient = new RestSharp.RestClient(tokenEndpoint.GetLeftPart(UriPartial.Authority));
+			var response = restClient.ExecuteAsPost<OAuth2TokenResponse>(request, "POST");
+
+			// Validate response.
+			if (null == response.Data
+				|| response.Data.TokenType != "Bearer")
+			{
+				throw new InvalidOperationException("OAuth token not received from endpoint, or token type was not bearer.");
+			}
+
+			// Return the access token data.
+			return response.Data;
 		}
 
 		/// <summary>
@@ -239,6 +371,35 @@ namespace MFaaP.MFWSClient
 		{
 			// Execute the async method.
 			return this.GetOnlineVaultsAsync(token)
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
+		}
+
+		/// <summary>
+		/// Gets the configured authentication plugins.
+		/// </summary>
+		/// <param name="token">A cancellation token for the task.</param>
+		/// <returns>The authentication plugin configuration.</returns>
+		public async Task<List<MFaaP.MFWSClient.PluginInfoConfiguration>> GetAuthenticationPluginsAsync(CancellationToken token = default(CancellationToken))
+		{
+			// Create the request.
+			var request = new RestRequest("/REST/server/authenticationprotocols", Method.GET);
+
+			// Return the plugins specified.
+			return (await base.Get<List<MFaaP.MFWSClient.PluginInfoConfiguration>>(request, token)).Data
+					?? new List<PluginInfoConfiguration>();
+		}
+
+		/// <summary>
+		/// Gets the configured authentication plugins.
+		/// </summary>
+		/// <param name="token">A cancellation token for the task.</param>
+		/// <returns>The authentication plugin configuration.</returns>
+		public List<MFaaP.MFWSClient.PluginInfoConfiguration> GetAuthenticationPlugins(CancellationToken token = default(CancellationToken))
+		{
+			// Execute the async method.
+			return this.GetAuthenticationPluginsAsync(token)
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();

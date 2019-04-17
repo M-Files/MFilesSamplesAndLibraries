@@ -46,7 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionMethods\DictionaryExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\EnumerableExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\FolderContentItemExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\ListPluginInfoConfigurationExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\RestRequestExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\UriBuilderExtensionMethods.cs" />
     <Compile Include="MFWSClient.Authentication.cs" />
     <Compile Include="MFWSExtensions.cs" />
     <Compile Include="MFWSVaultExtensionAuthenticationOperations.cs" />
@@ -70,6 +75,8 @@
     <Compile Include="MFWSStructs.cs" />
     <Compile Include="MFWSVaultObjectSearchOperations.cs" />
     <Compile Include="MFWSVaultOperationsBase.cs" />
+    <Compile Include="OAuth2\OAuth2Configuration.cs" />
+    <Compile Include="OAuth2\OAuth2TokenResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestRequestEventArgs.cs" />
     <Compile Include="RestResponseEventArgs.cs" />
