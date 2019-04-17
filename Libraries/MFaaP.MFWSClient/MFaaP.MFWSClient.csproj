@@ -53,6 +53,7 @@
     <Compile Include="ExtensionMethods\RestRequestExtensionMethods.cs" />
     <Compile Include="ExtensionMethods\UriBuilderExtensionMethods.cs" />
     <Compile Include="MFWSClient.Authentication.cs" />
+    <Compile Include="MFWSClient.Authentication.OAuth.cs" />
     <Compile Include="MFWSExtensions.cs" />
     <Compile Include="MFWSVaultExtensionAuthenticationOperations.cs" />
     <Compile Include="MFWSVaultExternalObjectOperations.cs" />
