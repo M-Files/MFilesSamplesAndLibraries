@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MFaaP.MFWSClient;
+using MFaaP.MFWSClient.OAuth2;
 
 namespace MFaaP.MFWSClient.ExtensionMethods
 {
@@ -21,7 +22,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 		/// </summary>
 		/// <param name="pluginInfoConfiguration">The list of defined authentication plugins defined.</param>
 		/// <returns>True if OAuth is found, false otherwise.</returns>
-		/// <remarks>Use <see cref="TryGetOAuth2Configuration(IEnumerable{PluginInfoConfiguration}, out PluginInfoConfiguration)"/> to obtain the configuration efficiently.</remarks>
+		/// <remarks>Use <see cref="TryGetOAuth2Configuration(IEnumerable{PluginInfoConfiguration}, out OAuth2Configuration)"/> to obtain the configuration efficiently.</remarks>
 		public static bool SupportsOAuth2(this IEnumerable<PluginInfoConfiguration> pluginInfoConfiguration)
 		{
 			// Sanity.
@@ -29,7 +30,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 				throw new ArgumentNullException(nameof(pluginInfoConfiguration));
 
 			// Use the other overload.
-			PluginInfoConfiguration configuration;
+			OAuth2Configuration configuration;
 			return pluginInfoConfiguration.TryGetOAuth2Configuration(out configuration);
 		}
 
@@ -39,7 +40,7 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 		/// <param name="pluginInfoConfiguration">The list of defined authentication plugins defined.</param>
 		/// <param name="oAuth2Configuration">The configuration, if found, or null otherwise.</param>
 		/// <returns>True if OAuth is found, false otherwise.</returns>
-		public static bool TryGetOAuth2Configuration(this IEnumerable<PluginInfoConfiguration> pluginInfoConfiguration, out PluginInfoConfiguration oAuth2Configuration)
+		public static bool TryGetOAuth2Configuration(this IEnumerable<PluginInfoConfiguration> pluginInfoConfiguration, out OAuth2Configuration oAuth2Configuration)
 		{
 			// Sanity.
 			if (null == pluginInfoConfiguration)
@@ -47,7 +48,9 @@ namespace MFaaP.MFWSClient.ExtensionMethods
 
 			// Is OAuth 2.0 specified?
 			oAuth2Configuration = pluginInfoConfiguration
-				.FirstOrDefault(pic => pic.Protocol == IEnumerablePluginInfoConfigurationExtensionMethods.OAuth2PluginConfigurationProtocol);
+				.Where(pic => pic.Protocol == IEnumerablePluginInfoConfigurationExtensionMethods.OAuth2PluginConfigurationProtocol)
+				.Select(pic => OAuth2Configuration.ParseFrom(pic.Configuration))
+				.FirstOrDefault();
 
 			// Did we get a value?
 			return oAuth2Configuration != null;
