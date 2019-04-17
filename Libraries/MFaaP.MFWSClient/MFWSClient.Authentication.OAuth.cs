@@ -49,7 +49,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="code">The code returned from the OAuth authorisation endpoint.</param>
 		/// <param name="cancellationToken">A cancellation token for the task.</param>
 		/// <returns>The data returned from the token endpoint.</returns>
-		public OAuth2TokenResponse ConvertOAuth2AuthorizationCodeToTokens(
+		protected OAuth2TokenResponse ConvertOAuth2AuthorizationCodeToTokens(
 			OAuth2Configuration pluginConfiguration, 
 			string code,
 			CancellationToken cancellationToken = default(CancellationToken))
@@ -70,13 +70,13 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Using the <see cref="code"/> from the OAuth authorisation endpoint, 
 		/// requests tokens from the token endpoint and sets up the client to use them.
-		/// The token data is returned in case it is needed in the future (e.g. <see cref="Refresh2OAuthTokenAsync"/>).
+		/// The token data is returned in case it is needed in the future (e.g. <see cref="RefreshOAuth2TokenAsync(MFaaP.MFWSClient.OAuth2.OAuth2Configuration,MFaaP.MFWSClient.OAuth2.OAuth2TokenResponse,bool,System.Threading.CancellationToken)"/>).
 		/// </summary>
 		/// <param name="pluginConfiguration">The configuration of the OAuth plugin.</param>
 		/// <param name="code">The code returned from the OAuth authorisation endpoint.</param>
 		/// <param name="cancellationToken">A cancellation token for the task.</param>
 		/// <returns>The data returned from the token endpoint.</returns>
-		public async Task<OAuth2TokenResponse> ConvertOAuth2AuthorizationCodeToTokensAsync(
+		protected async Task<OAuth2TokenResponse> ConvertOAuth2AuthorizationCodeToTokensAsync(
 			OAuth2Configuration pluginConfiguration, 
 			string code,
 			CancellationToken cancellationToken = default(CancellationToken))
