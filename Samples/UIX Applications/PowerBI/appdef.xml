@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef.xsd">
+	<guid>5C76769E-D507-481c-9BE4-39319BCB5F57</guid>
+	<name>M-Files Power BI Reports</name>
+	<version>1.0.2</version>
+	<description>M-Files Power BI Report UI Extension</description>
+	<publisher>M-Files Corporation</publisher>
+	<copyright>(c) M-Files Corporation 2017</copyright>
+	<optional>true</optional>
+	<enabled-by-default>true</enabled-by-default>
+	<modules>
+		<module environment="shellui">
+			<file>mfshell.js</file>
+		</module>
+	</modules>
+</application>
