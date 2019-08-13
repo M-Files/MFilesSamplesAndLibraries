@@ -282,25 +282,33 @@ ObjectCreationInfo PurchaseOrderCollection = new ObjectCreationInfo() {
 			PropertyDef = 100,
 			TypedValue = new TypedValue() {
 				DataType = MFDataType.Lookup,
-				//The lookup of the relevant class, at the latest version
+				//The id 0 is the default Document class lookup ID
 				Lookup = new Lookup() {
-					Item = 12,
+					Item = 0,
 					Version = -1
 				}
 			}
 		},
 		new PropertyValue() {
-			//Property value 2190 (a title) with Text value "My New Title"
-			PropertyDef = 2190,
+			//Property value 22 (Mono-File) is required when creating a Document Object
+			PropertyDef = 22,
+			TypedValue = new TypedValue() {
+				DataType = MFDataType.Boolean,
+				Value = true
+			}
+		},
+		new PropertyValue() {
+			//Property value 0 (Name or Title) is the default title property
+			PropertyDef = 0,
 			TypedValue = new TypedValue() {
 				DataType = MFDataType.Text,
-				DisplayValue = "My New Title"
+				Value = "Sample Title"
 			}
 		}
 	}
 };
-//Push the object to M-Files by providing the object type (130) as well and receive an ObjectVersion as a result
-ObjectVersion mNewObjectVersion = client.ObjectOperations.CreateNewObject(130, PurchaseOrderCollection);
+//Push the object to M-Files by providing the object type 0 (Document) as well and receive an ObjectVersion as a result
+ObjectVersion mNewObjectVersion = client.ObjectOperations.CreateNewObject(0, PurchaseOrderCollection);
 ```
 
 ## Checking an object in and out.
