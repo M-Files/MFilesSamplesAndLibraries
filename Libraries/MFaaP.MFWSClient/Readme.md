@@ -262,6 +262,47 @@ var output = client.ExtensionMethodOperations.ExecuteVaultExtensionMethod("MyExt
 
 ## Creating objects
 
+## Creating a new object
+
+```csharp
+// Instantiate a new MFWS client.
+var client = new MFWSClient("http://m-files.mycompany.com");
+
+// Authentiate to a vault with GUID {C840BE1A-5B47-4AC0-8EF7-835C166C8E24} (clear credentials).
+client.AuthenticateUsingCredentials(Guid.Parse("{C840BE1A-5B47-4AC0-8EF7-835C166C8E24}"), "MyUsername", "MyPassword")
+
+
+//Create an ObjectCreationInfo containing the properties of the new object
+ObjectCreationInfo PurchaseOrderCollection = new ObjectCreationInfo() {
+	
+	PropertyValues = new[] {
+		//Create each property value
+		new PropertyValue() {
+			//Property value 100 (class) with Lookup value 12
+			PropertyDef = 100,
+			TypedValue = new TypedValue() {
+				DataType = MFDataType.Lookup,
+				//The lookup of the relevant class, at the latest version
+				Lookup = new Lookup() {
+					Item = 12,
+					Version = -1
+				}
+			}
+		},
+		new PropertyValue() {
+			//Property value 2190 (a title) with Text value "My New Title"
+			PropertyDef = 2190,
+			TypedValue = new TypedValue() {
+				DataType = MFDataType.Text,
+				DisplayValue = "My New Title"
+			}
+		}
+	}
+};
+//Push the object to M-Files by providing the object type (130) as well and receive an ObjectVersion as a result
+ObjectVersion mNewObjectVersion = client.ObjectOperations.CreateNewObject(130, PurchaseOrderCollection);
+```
+
 ## Checking an object in and out.
 
 ```csharp
