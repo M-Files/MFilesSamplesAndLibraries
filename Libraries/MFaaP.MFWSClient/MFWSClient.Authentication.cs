@@ -10,6 +10,9 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// M-Files REST API operations.
+	/// </summary>
 	public partial class MFWSClient
 	{
 		private string authenticationToken;
@@ -295,12 +298,18 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Gets the configured authentication plugins.
 		/// </summary>
+		/// <param name="vaultGuid">Vault GUID, Guid.Empty to get just server configuration.</param>
 		/// <param name="token">A cancellation token for the task.</param>
 		/// <returns>The authentication plugin configuration.</returns>
-		public async Task<List<MFaaP.MFWSClient.PluginInfoConfiguration>> GetAuthenticationPluginsAsync(CancellationToken token = default(CancellationToken))
+		public async Task<List<MFaaP.MFWSClient.PluginInfoConfiguration>> GetAuthenticationPluginsAsync(
+			Guid vaultGuid = default(Guid),
+			CancellationToken token = default(CancellationToken))
 		{
-			// Create the request.
-			var request = new RestRequest("/REST/server/authenticationprotocols", Method.GET);
+			// Create the request, include vault if GUID was defined.
+			string requestUrl = "/REST/server/authenticationprotocols";
+			if( vaultGuid != default(Guid) )
+				requestUrl += "?vault=" + vaultGuid.ToString( "B" );
+			var request = new RestRequest( requestUrl, Method.GET);
 
 			// Return the plugins specified.
 			return (await base.Get<List<MFaaP.MFWSClient.PluginInfoConfiguration>>(request, token)).Data
@@ -310,12 +319,15 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Gets the configured authentication plugins.
 		/// </summary>
+		/// <param name="vaultGuid">Vault GUID.</param>
 		/// <param name="token">A cancellation token for the task.</param>
 		/// <returns>The authentication plugin configuration.</returns>
-		public List<MFaaP.MFWSClient.PluginInfoConfiguration> GetAuthenticationPlugins(CancellationToken token = default(CancellationToken))
+		public List<MFaaP.MFWSClient.PluginInfoConfiguration> GetAuthenticationPlugins( 
+			Guid vaultGuid = default(Guid),
+			CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
-			return this.GetAuthenticationPluginsAsync(token)
+			return this.GetAuthenticationPluginsAsync( vaultGuid, token )
 				.ConfigureAwait(false)
 				.GetAwaiter()
 				.GetResult();

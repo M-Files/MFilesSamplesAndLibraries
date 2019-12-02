@@ -7,6 +7,9 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// View operations.
+	/// </summary>
 	public class MFWSVaultViewOperations
 		: MFWSVaultOperationsBase
 	{
@@ -22,7 +25,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <returns>The contents of the view.</returns>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <remarks>Identical to calling <see cref="GetRootFolderContentsAsync(MFaaP.MFWSClient.FolderContentItem[])"/> with no parameters.</remarks>
+		/// <remarks>Identical to calling <see cref="GetFolderContentsAsync(MFaaP.MFWSClient.FolderContentItem[])"/> with no parameters.</remarks>
 		public Task<FolderContentItems> GetRootFolderContentsAsync(CancellationToken token = default(CancellationToken))
 		{
 			// Get the root view contents.
@@ -45,7 +48,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="items"/>.
+		/// Gets the contents of the view specified by the <see paramref="items"/>.
 		/// </summary>
 		/// <param name="items">A collection representing the view depth.
 		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
@@ -57,7 +60,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="items"/>.
+		/// Gets the contents of the view specified by the <see paramref="items"/>.
 		/// </summary>
 		/// <param name="items">A collection representing the view depth.
 		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
@@ -73,7 +76,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="path"/>.
+		/// Gets the contents of the view specified by the <see paramref="path"/>.
 		/// </summary>
 		/// <param name="path">A view path, formatted as per http://www.m-files.com/mfws/syntax.html#sect:viewpath. </param>
 		/// <param name="token">A cancellation token for the request.</param>
@@ -104,7 +107,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="path"/>.
+		/// Gets the contents of the view specified by the <see paramref="path"/>.
 		/// </summary>
 		/// <param name="path">A view path, formatted as per http://www.m-files.com/mfws/syntax.html#sect:viewpath. </param>
 		/// <returns>The contents of the view.</returns>
@@ -115,7 +118,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="path"/>.
+		/// Gets the contents of the view specified by the <see paramref="path"/>.
 		/// </summary>
 		/// <param name="path">A view path, formatted as per http://www.m-files.com/mfws/syntax.html#sect:viewpath. </param>
 		/// <param name="token">A cancellation token for the request.</param>
@@ -130,7 +133,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="path"/>.
+		/// Gets the contents of the view specified by the <see paramref="path"/>.
 		/// </summary>
 		/// <param name="path">A view path, formatted as per http://www.m-files.com/mfws/syntax.html#sect:viewpath. </param>
 		/// <returns>The contents of the view.</returns>
@@ -141,7 +144,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="items"/>.
+		/// Gets the contents of the view specified by the <see paramref="items"/>.
 		/// </summary>
 		/// <param name="items">A collection representing the view depth.
 		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,
@@ -154,7 +157,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Gets the contents of the view specified by the <see cref="items"/>.
+		/// Gets the contents of the view specified by the <see paramref="items"/>.
 		/// </summary>
 		/// <param name="items">A collection representing the view depth.
 		/// Should contain zero or more <see cref="FolderContentItem"/>s representing the view being shown,

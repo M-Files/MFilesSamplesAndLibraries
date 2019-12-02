@@ -7,6 +7,9 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// Search operations.
+	/// </summary>
 	public class MFWSVaultObjectSearchOperations
 		: MFWSVaultOperationsBase
 	{

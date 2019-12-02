@@ -1,3 +1,5 @@
+exit
+
 # Application details
 $appFilePath = "bin\Debug\XmlImporter.mfappx"
 $appGuid = "468e859a-704f-470f-aa4f-d57ec81b0112"

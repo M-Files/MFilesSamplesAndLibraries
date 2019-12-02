@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MFaaP.MFWSClient.ExtensionMethods
 {
+	/// <summary>
+	/// Dictionary extension methods.
+	/// </summary>
 	public static class DictionaryExtensionMethods
 	{
 		/// <summary>

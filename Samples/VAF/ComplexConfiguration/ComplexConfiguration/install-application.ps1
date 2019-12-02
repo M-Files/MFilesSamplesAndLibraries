@@ -1,3 +1,5 @@
+exit
+
 # Application details
 $appFilePath = "bin\Debug\ComplexConfiguration.mfappx"
 $appGuid = "d5ff5720-00ac-4a5d-b361-77472bf449a1"

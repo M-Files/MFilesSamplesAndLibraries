@@ -4,10 +4,14 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
-using RestSharp.Extensions.MonoHttp;
+using System.Web;
+//using RestSharp.Extensions.MonoHttp;
 
 namespace MFaaP.MFWSClient.ExtensionMethods
 {
+	/// <summary>
+	/// URI builder extension methods.
+	/// </summary>
 	public static class UriBuilderExtensionMethods
 	{
 		/// <summary>

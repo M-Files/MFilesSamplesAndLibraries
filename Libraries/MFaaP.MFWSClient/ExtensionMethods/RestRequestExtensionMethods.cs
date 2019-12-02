@@ -7,10 +7,13 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient.ExtensionMethods
 {
+	/// <summary>
+	/// REST request extension methods.
+	/// </summary>
 	public static class RestRequestExtensionMethods
 	{
 		/// <summary>
-		/// Calls <see cref="RestRequest.AddParameter(System.string, System.string)"/> if the <see cref="value"/>
+		/// Calls <see cref="RestRequest.AddParameter(string, object)"/> if the <see paramref="value"/>
 		/// is not null or whitespace.
 		/// </summary>
 		/// <param name="request">The request to add the parameter to.</param>

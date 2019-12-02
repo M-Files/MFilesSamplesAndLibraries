@@ -8,6 +8,9 @@ using RestSharp.Extensions;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// Object file operations.
+	/// </summary>
     public class MFWSVaultObjectFileOperations
         : MFWSVaultOperationsBase
     {

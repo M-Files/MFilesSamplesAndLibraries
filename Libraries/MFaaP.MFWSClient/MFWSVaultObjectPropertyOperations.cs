@@ -29,7 +29,7 @@ namespace MFaaP.MFWSClient
 		/// Retrieves the properties of multiple objects.
 		/// </summary>
 		/// <param name="objVers">The objects to retrieve the properties of.</param>
-		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
+		/// <returns>A collection of property values, one for each object version provided in <see paramref="objVers"/>.</returns>
 		public Task<PropertyValue[][]> GetPropertiesOfMultipleObjectsAsync(params ObjVer[] objVers)
 		{
 			return this.GetPropertiesOfMultipleObjectsAsync(CancellationToken.None, objVers);
@@ -39,7 +39,7 @@ namespace MFaaP.MFWSClient
 		/// Retrieves the properties of multiple objects.
 		/// </summary>
 		/// <param name="objVers">The objects to retrieve the properties of.</param>
-		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
+		/// <returns>A collection of property values, one for each object version provided in <see paramref="objVers"/>.</returns>
 		public PropertyValue[][] GetPropertiesOfMultipleObjects(params ObjVer[] objVers)
 		{
 			// Execute the async method.
@@ -54,7 +54,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="objVers">The objects to retrieve the properties of.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
+		/// <returns>A collection of property values, one for each object version provided in <see paramref="objVers"/>.</returns>
 		public async Task<PropertyValue[][]> GetPropertiesOfMultipleObjectsAsync(CancellationToken token, params ObjVer[] objVers)
 		{
 			// Sanity.
@@ -86,7 +86,7 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="objVers">The objects to retrieve the properties of.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>A collection of property values, one for each object version provided in <see cref="objVers"/>.</returns>
+		/// <returns>A collection of property values, one for each object version provided in <see paramref="objVers"/>.</returns>
 		public PropertyValue[][] GetPropertiesOfMultipleObjects(CancellationToken token, params ObjVer[] objVers)
 		{
 			// Execute the async method.
@@ -341,11 +341,11 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectTypeId">The Id of the object type.</param>
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="propertyValues">The property values for the object.</param>
-		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="replaceAllProperties">If true, <see paramref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
 		/// <param name="version">The version (or null for latest).</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
-		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		/// <remarks>If <see paramref="replaceAllProperties"/> is true then <see paramref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
 		public async Task<ExtendedObjectVersion> SetPropertiesAsync(int objectTypeId, int objectId, PropertyValue[] propertyValues, bool replaceAllProperties, int? version = null, CancellationToken token = default(CancellationToken))
 		{
 			// Sanity.
@@ -379,10 +379,10 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="objVer">The object to set the property on.</param>
 		/// <param name="propertyValues">The property values for the object.</param>
-		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="replaceAllProperties">If true, <see paramref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
-		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		/// <remarks>If <see paramref="replaceAllProperties"/> is true then <see paramref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
 		public Task<ExtendedObjectVersion> SetPropertiesAsync(ObjVer objVer, PropertyValue[] propertyValues, bool replaceAllProperties, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
@@ -394,10 +394,10 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="objId">The object to set the property on.</param>
 		/// <param name="propertyValues">The property values for the object.</param>
-		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="replaceAllProperties">If true, <see paramref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
-		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		/// <remarks>If <see paramref="replaceAllProperties"/> is true then <see paramref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
 		public Task<ExtendedObjectVersion> SetPropertiesAsync(ObjID objId, PropertyValue[] propertyValues, bool replaceAllProperties, CancellationToken token = default(CancellationToken))
 		{
 			// Use the other overload.
@@ -411,10 +411,10 @@ namespace MFaaP.MFWSClient
 		/// <param name="objectId">The Id of the object.</param>
 		/// <param name="version">The version (or null for latest).</param>
 		/// <param name="propertyValues">The property values for the object.</param>
-		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="replaceAllProperties">If true, <see paramref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
-		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		/// <remarks>If <see paramref="replaceAllProperties"/> is true then <see paramref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
 		public ExtendedObjectVersion SetProperties(int objectTypeId, int objectId, PropertyValue[] propertyValues, bool replaceAllProperties, int? version = null, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
@@ -429,10 +429,10 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="objVer">The object to retrieve the properties of.</param>
 		/// <param name="propertyValues">The property values for the object.</param>
-		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="replaceAllProperties">If true, <see paramref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
-		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		/// <remarks>If <see paramref="replaceAllProperties"/> is true then <see paramref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
 		public ExtendedObjectVersion SetProperties(ObjVer objVer, PropertyValue[] propertyValues, bool replaceAllProperties, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.
@@ -447,10 +447,10 @@ namespace MFaaP.MFWSClient
 		/// </summary>
 		/// <param name="objId">The object to set the property on.</param>
 		/// <param name="propertyValues">The property values for the object.</param>
-		/// <param name="replaceAllProperties">If true, <see cref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
+		/// <param name="replaceAllProperties">If true, <see paramref="propertyValues"/> contains all properties for the object (and others will be removed).</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The new object version.</returns>
-		/// <remarks>If <see cref="replaceAllProperties"/> is true then <see cref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
+		/// <remarks>If <see paramref="replaceAllProperties"/> is true then <see paramref="propertyValues"/> must contain values for property 0 (name or title), property 100 (class), property 22 (is single file), and any other mandatory properties for the given class.</remarks>
 		public ExtendedObjectVersion SetProperties(ObjID objId, PropertyValue[] propertyValues, bool replaceAllProperties, CancellationToken token = default(CancellationToken))
 		{
 			// Execute the async method.

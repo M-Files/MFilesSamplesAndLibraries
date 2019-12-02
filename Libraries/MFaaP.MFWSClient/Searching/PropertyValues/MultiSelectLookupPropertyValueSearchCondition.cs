@@ -4,7 +4,7 @@ namespace MFaaP.MFWSClient
 {
 	/// <summary>
 	/// Represents a search condition that restricts by a multi-select lookup property value.
-	/// </summary
+	/// </summary>
 	[Serializable]
 	public class MultiSelectLookupPropertyValueSearchCondition
 		: PropertyValueSearchConditionBase<string>

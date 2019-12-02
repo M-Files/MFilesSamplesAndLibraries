@@ -37,6 +37,10 @@ namespace MFaaP.MFWSClient.OAuth2
 		[DeserializeAs(Name = "expires_on")]
 		public long ExpiresOn { get; set; }
 
+		/// <summary>
+		/// When token becomes valid.
+		/// </summary>
+
 		[DeserializeAs(Name = "not_before")]
 		public long NotBefore { get; set; }
 

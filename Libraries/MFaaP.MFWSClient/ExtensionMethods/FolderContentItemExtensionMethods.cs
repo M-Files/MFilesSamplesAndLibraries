@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using RestSharp.Extensions.MonoHttp;
+//using RestSharp.Extensions.MonoHttp;
 
 namespace MFaaP.MFWSClient.ExtensionMethods
 {
+	/// <summary>
+	/// Folder item extension methods.
+	/// </summary>
 	public static class FolderContentItemExtensionMethods
 	{
 		/// <summary>

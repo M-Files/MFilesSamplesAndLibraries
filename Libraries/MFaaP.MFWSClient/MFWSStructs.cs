@@ -434,6 +434,9 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class UploadInfo
 	{
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public UploadInfo()
 		{
 		}
@@ -468,6 +471,9 @@ namespace MFaaP.MFWSClient
     public class TypedValue
 	{
 
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public TypedValue()
 		{
 		}
@@ -522,7 +528,10 @@ namespace MFaaP.MFWSClient
     public class ExtendedObjectVersion
 		: ObjectVersion
     {
-	    public ExtendedObjectVersion()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public ExtendedObjectVersion()
 	    {
 	    }
 
@@ -695,10 +704,24 @@ namespace MFaaP.MFWSClient
         public string URL { get; set; }
         
         /// <summary>
-        /// 
+        /// HTTP method, e.g. GET.
         /// </summary>
         public string Method { get; set; }
+
+		/// <summary>
+		/// Authentication token for plugins.
+		/// </summary>
+		public string AuthenticationData { get; set; }
         
+		/// <summary>
+		/// Authentication type, e.g. Plugin.
+		/// </summary>
+		public string AuthenticationType { get; set; }
+
+		/// <summary>
+		/// Authentication plugin name.
+		/// </summary>
+		public string Plugin { get; set; }
     }
 
     
@@ -795,6 +818,9 @@ namespace MFaaP.MFWSClient
     public class ExtendedObjectClass
 		: ObjectClass
 	{
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public ExtendedObjectClass()
 		{
 		}
@@ -843,7 +869,10 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class FolderContentItems
     {
-	    public FolderContentItems()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public FolderContentItems()
 	    {
 	    }
 
@@ -877,6 +906,9 @@ namespace MFaaP.MFWSClient
 	/// </remarks>
 	public class FolderUIState
 	{
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public FolderUIState()
 		{
 		}
@@ -935,6 +967,9 @@ namespace MFaaP.MFWSClient
 	/// </remarks>
 	public class FolderListingUIState
 	{
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public FolderListingUIState()
 		{
 		}
@@ -958,6 +993,9 @@ namespace MFaaP.MFWSClient
 	/// </remarks>
 	public class FolderListingColumn
 	{
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public FolderListingColumn()
 		{
 		}
@@ -1010,6 +1048,9 @@ namespace MFaaP.MFWSClient
 	[Flags]
 	public enum MFFolderListingColumnFlags
 	{
+		/// <summary>
+		/// No options.
+		/// </summary>
 		None = 0,
 
 		/// <summary>
@@ -1031,6 +1072,9 @@ namespace MFaaP.MFWSClient
 	/// </remarks>
 	public class FolderListingColumnSorting
 	{
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public FolderListingColumnSorting()
 		{
 		}
@@ -1185,7 +1229,10 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class WebServiceError
     {
-	    public WebServiceError()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public WebServiceError()
 	    {
 	    }
 
@@ -1244,7 +1291,10 @@ namespace MFaaP.MFWSClient
 	/// </summary>
 	public class ExceptionInfo
     {
-	    public ExceptionInfo()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public ExceptionInfo()
 	    {
 	    }
 
@@ -1308,7 +1358,10 @@ namespace MFaaP.MFWSClient
 	/// </summary>
 	public class StackTraceElement
     {
-	    public StackTraceElement()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public StackTraceElement()
 	    {
 	    }
 
@@ -1346,7 +1399,10 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class Results<T>
     {
-	    public Results()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public Results()
 	    {
 	    }
 
@@ -1369,7 +1425,10 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class PrimitiveType<T>
     {
-	    public PrimitiveType()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public PrimitiveType()
 	    {
 	    }
 
@@ -1388,7 +1447,10 @@ namespace MFaaP.MFWSClient
     public class ObjectVersion
     {
 
-	    public ObjectVersion()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public ObjectVersion()
 	    {
 	    }
 
@@ -1538,6 +1600,9 @@ namespace MFaaP.MFWSClient
 		: FileVer
 	{
 
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public ObjectFile()
 		{
 		}
@@ -1599,6 +1664,9 @@ namespace MFaaP.MFWSClient
 	: ObjID
 	{
 
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public ObjVer()
 		{
 		}
@@ -1690,6 +1758,9 @@ namespace MFaaP.MFWSClient
 	/// </summary>
 	public class PropertyValue
 	{
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public PropertyValue()
 		{
 		}
@@ -1790,7 +1861,10 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class ObjType
     {
-	    public ObjType()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public ObjType()
 	    {
 	    }
 
@@ -2158,6 +2232,9 @@ namespace MFaaP.MFWSClient
     public class Lookup
 	{
 
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public Lookup()
 		{
 		}
@@ -2226,7 +2303,10 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class AssociatedPropertyDef
     {
-	    public AssociatedPropertyDef()
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
+		public AssociatedPropertyDef()
 	    {
 	    }
 
@@ -2250,6 +2330,9 @@ namespace MFaaP.MFWSClient
     public class FolderContentItem
 	{
 
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public FolderContentItem()
 		{
 		}
@@ -2291,7 +2374,9 @@ namespace MFaaP.MFWSClient
 	/// </summary>
 	public class ExternalView
 	{
-
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public ExternalView()
 		{
 		}
@@ -2328,7 +2413,9 @@ namespace MFaaP.MFWSClient
 	/// </summary>
 	public class View
 	{
-
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public View()
 		{
 		}
@@ -2367,7 +2454,9 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class ViewLocation
 	{
-
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 		public ViewLocation()
 		{
 		}
@@ -2391,6 +2480,9 @@ namespace MFaaP.MFWSClient
     /// </summary>
     public class ObjectClass
     {
+		/// <summary>
+		/// Default constructor, empty.
+		/// </summary>
 	    public ObjectClass()
 	    {
 	    }
@@ -2970,11 +3062,20 @@ namespace MFaaP.MFWSClient
 	/// </summary>
 	public class ObjectsUpdateInfo
 	{
+		/// <summary>
+		/// Object update info.
+		/// </summary>
 		public ObjectsUpdateInfo()
 		{
 			this.MultipleObjectInfo = new List<ObjectVersionUpdateInformation>();
 		}
 
+		/// <summary>
+		/// Object update info constructor with parameters.
+		/// </summary>
+		/// <param name="objVer">Object version.</param>
+		/// <param name="properties">Object properties.</param>
+		/// <param name="allowNameChange">Allow name change.</param>
 		public ObjectsUpdateInfo(ObjVer objVer, List<PropertyValue> properties, bool allowNameChange)
 		: this()
 		{
@@ -2986,6 +3087,9 @@ namespace MFaaP.MFWSClient
 			});
 		}
 
+		/// <summary>
+		/// Info for multiple objects.
+		/// </summary>
 		public List<ObjectVersionUpdateInformation> MultipleObjectInfo;
 	}
 

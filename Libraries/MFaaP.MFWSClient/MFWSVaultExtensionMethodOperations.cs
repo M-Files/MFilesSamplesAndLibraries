@@ -5,6 +5,9 @@ using RestSharp;
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// Vault extension operations.
+	/// </summary>
 	public class MFWSVaultExtensionMethodOperations
 		: MFWSVaultOperationsBase
 	{
@@ -28,7 +31,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="extensionMethodName">The name of the extension method.</param>
 		/// <param name="input">The input (cannot be null) parameter.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>The response of the extension method, deserialised to an instance of <see cref="TA"/>.</returns>
+		/// <returns>The response of the extension method, deserialised to an instance of <see paramref="TA"/>.</returns>
 		public async Task<TA> ExecuteVaultExtensionMethodAsync<TA, TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
 			where TA : new()
 			where TB : class
@@ -58,7 +61,7 @@ namespace MFaaP.MFWSClient
 		/// <param name="extensionMethodName">The name of the extension method.</param>
 		/// <param name="input">The input (cannot be null) parameter.</param>
 		/// <param name="token">A cancellation token for the request.</param>
-		/// <returns>The response of the extension method, deserialised to an instance of <see cref="TA"/>.</returns>
+		/// <returns>The response of the extension method, deserialised to an instance of <see paramref="TA"/>.</returns>
 		public TA ExecuteVaultExtensionMethod<TA, TB>(string extensionMethodName, TB input = null, CancellationToken token = default(CancellationToken))
 			where TA : new()
 			where TB : class

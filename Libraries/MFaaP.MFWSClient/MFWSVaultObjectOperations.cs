@@ -193,7 +193,8 @@ namespace MFaaP.MFWSClient
 		/// <summary>
 		/// Retrieves the latest version of the specified object version.
 		/// </summary>
-		/// <param name="objId">The Id of the object.</param>
+		/// <param name="objectTypeId">Object type ID.</param>
+		/// <param name="objectId">The ID of the object.</param>
 		/// <param name="token">A cancellation token for the request.</param>
 		/// <returns>The ObjectVersion, if it is visible to the user.</returns>
 		public ExtendedObjectVersion GetLatestObjectVersionAndProperties(int objectTypeId, int objectId, CancellationToken token = default(CancellationToken))

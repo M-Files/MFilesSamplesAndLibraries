@@ -2,6 +2,9 @@
 
 namespace MFaaP.MFWSClient
 {
+	/// <summary>
+	/// Vault operations base class.
+	/// </summary>
 	public abstract class MFWSVaultOperationsBase
 	{
 		/// <summary>

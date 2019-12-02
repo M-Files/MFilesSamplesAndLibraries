@@ -41,9 +41,10 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Using the <see cref="code"/> from the OAuth authorisation endpoint, 
+		/// Using the <see paramref="code"/> from the OAuth authorisation endpoint, 
 		/// requests tokens from the token endpoint and sets up the client to use them.
-		/// The token data is returned in case it is needed in the future (e.g. <see cref="Refresh2OAuthTokenAsync"/>).
+		/// The token data is returned in case it is needed in the future (e.g.
+		/// <see cref="RefreshOAuth2TokenAsync(OAuth2Configuration, OAuth2TokenResponse, bool, CancellationToken)"/>).
 		/// </summary>
 		/// <param name="pluginConfiguration">The configuration of the OAuth plugin.</param>
 		/// <param name="code">The code returned from the OAuth authorisation endpoint.</param>
@@ -68,7 +69,7 @@ namespace MFaaP.MFWSClient
 		}
 
 		/// <summary>
-		/// Using the <see cref="code"/> from the OAuth authorisation endpoint, 
+		/// Using the <see paramref="code"/> from the OAuth authorisation endpoint, 
 		/// requests tokens from the token endpoint and sets up the client to use them.
 		/// The token data is returned in case it is needed in the future (e.g. <see cref="RefreshOAuth2TokenAsync(MFaaP.MFWSClient.OAuth2.OAuth2Configuration,MFaaP.MFWSClient.OAuth2.OAuth2TokenResponse,bool,System.Threading.CancellationToken)"/>).
 		/// </summary>
@@ -77,47 +78,46 @@ namespace MFaaP.MFWSClient
 		/// <param name="cancellationToken">A cancellation token for the task.</param>
 		/// <returns>The data returned from the token endpoint.</returns>
 		protected async Task<OAuth2TokenResponse> ConvertOAuth2AuthorizationCodeToTokensAsync(
-			OAuth2Configuration pluginConfiguration, 
+			OAuth2Configuration pluginConfiguration,
 			string code,
-			CancellationToken cancellationToken = default(CancellationToken))
+			CancellationToken cancellationToken = default( CancellationToken ) )
 		{
 			// Sanity.
-			if (null == pluginConfiguration)
-				throw new ArgumentNullException(nameof(pluginConfiguration));
-			if (null == code)
-				throw new ArgumentNullException(nameof(code));
+			if( null == pluginConfiguration )
+				throw new ArgumentNullException( nameof( pluginConfiguration ) );
+			if( null == code )
+				throw new ArgumentNullException( nameof( code ) );
 
 			// Create the request, adding the mandatory items.
-			var tokenEndpoint = new Uri(pluginConfiguration.TokenEndpoint, uriKind: UriKind.Absolute);
-			var request = new RestSharp.RestRequest(tokenEndpoint.PathAndQuery, RestSharp.Method.POST);
-			request.AddParameter("code", code);
-			request.AddParameter("grant_type", pluginConfiguration.GrantType);
-			request.AddParameter("redirect_uri", pluginConfiguration.GetAppropriateRedirectUri());
+			var tokenEndpoint = new Uri( pluginConfiguration.TokenEndpoint, uriKind: UriKind.Absolute );
+			var request = new RestSharp.RestRequest( tokenEndpoint.PathAndQuery, RestSharp.Method.POST );
+			request.AddParameter( "code", code );
+			request.AddParameter( "grant_type", pluginConfiguration.GrantType );
+			request.AddParameter( "redirect_uri", pluginConfiguration.GetAppropriateRedirectUri() );
 
 			// Add the client id.  If there's a realm then use that here too.
 			request.AddParameter(
 				"client_id",
-				string.IsNullOrWhiteSpace(pluginConfiguration.SiteRealm)
+				string.IsNullOrWhiteSpace( pluginConfiguration.SiteRealm )
 					? pluginConfiguration.ClientID // If no site realm is supplied, just pass the client ID.
 					: $"{pluginConfiguration.ClientID}@{pluginConfiguration.SiteRealm}" // Otherwise pass client ID @ site realm.
 			);
 
 			// Add the optional bits.
-			request.AddParameterIfNotNullOrWhitespace("resource", pluginConfiguration.Resource);
-			request.AddParameterIfNotNullOrWhitespace("scope", pluginConfiguration.Scope);
-			request.AddParameterIfNotNullOrWhitespace("client_secret", pluginConfiguration.ClientSecret);
+			request.AddParameterIfNotNullOrWhitespace( "resource", pluginConfiguration.Resource );
+			request.AddParameterIfNotNullOrWhitespace( "scope", pluginConfiguration.Scope );
+			request.AddParameterIfNotNullOrWhitespace( "client_secret", pluginConfiguration.ClientSecret );
 
 			// Make a post to the token endpoint.
 			// NOTE: We must use a new RestClient here otherwise it'll try and add the token endpoint to the MFWA base url.
-			var restClient = new RestSharp.RestClient(tokenEndpoint.GetLeftPart(UriPartial.Authority));
-			var response = await restClient.ExecutePostTaskAsync<OAuth2TokenResponse>(request, cancellationToken);
+			var restClient = new RestSharp.RestClient( tokenEndpoint.GetLeftPart( UriPartial.Authority ) );
+			var response = await restClient.ExecutePostTaskAsync<OAuth2TokenResponse>( request, cancellationToken );
 
 			// Validate response.
-			if (null == response.Data
-				|| response.Data.TokenType != "Bearer")
-			{
-				throw new InvalidOperationException("OAuth token not received from endpoint, or token type was not bearer.");
-			}
+			if( null == response.Data )
+				throw new InvalidOperationException( "OAuth token not received from endpoint. Response: " + response.Content );
+			else if( response.Data.TokenType != "Bearer")
+				throw new InvalidOperationException( "Token type was not bearer. Response: " + response.Content );
 
 			// Return the access token data.
 			return response.Data;
