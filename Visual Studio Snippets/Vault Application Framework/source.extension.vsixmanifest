@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="VAFSnippets.MFiles.ac0b5b41-86d9-4471-af68-aab0d3041d78" Version="1.2.6" Language="en-US" Publisher="M-Files" />
+    <Identity Id="VAFSnippets.MFiles.ac0b5b41-86d9-4471-af68-aab0d3041d78" Version="1.2.9" Language="en-US" Publisher="M-Files" />
     <DisplayName>M-Files Code Snippets - VAF</DisplayName>
     <Description xml:space="preserve">Creates Visual Studio code snippets to create M-Files Vault Application Framework applications.</Description>
     <MoreInfo>http://developer.m-files.com/Frameworks/Vault-Application-Framework/Visual-Studio-Template/Code-Snippets/</MoreInfo>
     <License>Licence.txt</License>
   </Metadata>
   <Installation>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0,16.0]" />
-    <InstallationTarget Version="[14.0,16.0]" Id="Microsoft.VisualStudio.Pro" />
-    <InstallationTarget Version="[14.0,16.0]" Id="Microsoft.VisualStudio.Enterprise" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0,17.0)" />
+    <InstallationTarget Version="[14.0,17.0)" Id="Microsoft.VisualStudio.Pro" />
+    <InstallationTarget Version="[14.0,17.0)" Id="Microsoft.VisualStudio.Enterprise" />
   </Installation>
   <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.25904.2,16.0)" DisplayName="Visual Studio core editor" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.25904.2,17.0)" DisplayName="Visual Studio core editor" />
   </Prerequisites>
   <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="File" Path="VAFSnippets.pkgdef" />
