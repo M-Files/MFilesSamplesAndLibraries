@@ -49,6 +49,7 @@ namespace XmlImporter
 				})
 				.ContinueWith((t) =>
 				{
+					// Did the task complete successfully?
 					if(t.IsCanceled || t.IsFaulted)
 					{
 						SysUtils.ReportErrorMessageToEventLog
@@ -56,7 +57,10 @@ namespace XmlImporter
 							"Could not start Xml importer background operation",
 							t.Exception
 							);
+						return;
 					}
+
+					// If successful, store the background operation reference.
 					this.ImportBackgroundOperation = t.Result;
 				});
 		}
