@@ -32,21 +32,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MFiles.Crypto">
-      <HintPath>..\packages\MFiles.VAF.2.0.0.0\lib\net45\MFiles.Crypto.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Interop.MFilesAPI, Version=7.0.0.0, Culture=neutral, PublicKeyToken=f1b4733f444f7ad0, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MFiles.VAF.2.1.0.5\lib\net45\Interop.MFilesAPI.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="MFiles.VAF">
-      <HintPath>..\packages\MFiles.VAF.2.0.0.0\lib\net45\MFiles.VAF.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MFiles.Crypto, Version=2.1.0.5, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MFiles.VAF.2.1.0.5\lib\net45\MFiles.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="MFiles.VAF.Configuration">
-      <HintPath>..\packages\MFiles.VAF.2.0.0.0\lib\net45\MFiles.VAF.Configuration.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MFiles.VAF, Version=2.1.0.5, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MFiles.VAF.2.1.0.5\lib\net45\MFiles.VAF.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MFiles.VAF.Configuration, Version=2.1.0.5, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MFiles.VAF.2.1.0.5\lib\net45\MFiles.VAF.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\MFiles.VAF.2.1.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,17 +66,6 @@
     <Content Include="appdef.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="MFilesAPI">
-      <Guid>{B9C079AA-92DD-4FB4-A0E0-AA3198955B45}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="install-application.ps1" />

@@ -16,7 +16,7 @@ namespace XmlImporter
 
 		private void StartRecurringBackgroundOperation(string name = VaultApplication.BackgroundOperationName)
 		{
-			this.ImportBackgroundOperation = this.BackgroundOperations.StartRecurringBackgroundOperation(
+			this.BackgroundOperations.StartRecurringBackgroundOperation(
 				"XmlImporter",
 #if DEBUG
 				TimeSpan.FromSeconds(10),
@@ -46,6 +46,18 @@ namespace XmlImporter
 							SysUtils.ReportErrorMessageToEventLog("Exception importing file", e);
 						}
 					}
+				})
+				.ContinueWith((t) =>
+				{
+					if(t.IsCanceled || t.IsFaulted)
+					{
+						SysUtils.ReportErrorMessageToEventLog
+							(
+							"Could not start Xml importer background operation",
+							t.Exception
+							);
+					}
+					this.ImportBackgroundOperation = t.Result;
 				});
 		}
 
