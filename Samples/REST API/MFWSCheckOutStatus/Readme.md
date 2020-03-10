@@ -29,7 +29,7 @@ var checkoutStatus = JsonConvert.DeserializeObject<PrimitiveType<MFCheckOutStatu
 
 ## Using the REST API wrapper
 
-The REST API wrapper exposes a method (GetCheckoutStatus) on the MFWSVaultObjectOperations class.  This can be executed as below:
+[The REST API wrapper](https://github.com/M-Files/Libraries.MFWSClient) exposes a method (GetCheckoutStatus) on the MFWSVaultObjectOperations class.  This can be executed as below:
 
 ```csharp
 // Create an MFWSClient for the knowledgebase.

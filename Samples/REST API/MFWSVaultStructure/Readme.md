@@ -4,7 +4,7 @@ This sample shows how to retrieve various elements of the vault structure using 
 
 ## Using the REST API wrapper
 
-The REST API wrapper exposes various methods which mimic the [M-Files API](https://www.m-files.com/api/documentation/latest/index.html) to retrieve the vault structure.
+[The REST API](https://github.com/M-Files/Libraries.MFWSClient) wrapper exposes various methods which mimic the [M-Files API](https://www.m-files.com/api/documentation/latest/index.html) to retrieve the vault structure.
 
 ```csharp
 // Connect to the online knowledgebase.

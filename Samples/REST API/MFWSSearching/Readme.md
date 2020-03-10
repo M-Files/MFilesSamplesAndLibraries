@@ -10,7 +10,7 @@ The code below uses JSON.NET to handle the serialization and deserialization of 
 
 ## Using the REST API wrapper
 
-The REST API wrapper provides a number of helper methods to create and execute searches, removing the requirement to manually construct search condition querystring elements, or encode content.
+[The REST API wrapper](https://github.com/M-Files/Libraries.MFWSClient) provides a number of helper methods to create and execute searches, removing the requirement to manually construct search condition querystring elements, or encode content.
 
 ## Example search conditions
 
