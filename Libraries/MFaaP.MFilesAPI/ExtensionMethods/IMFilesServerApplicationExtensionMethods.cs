@@ -5,6 +5,9 @@ using MFilesAPI;
 namespace MFaaP.MFilesAPI.ExtensionMethods
 {
 	// ReSharper disable once InconsistentNaming
+	/// <summary>
+	/// Extension methods for objects implementing <see cref="IMFilesServerApplication"/>.
+	/// </summary>
 	public static class IMFilesServerApplicationExtensionMethods
 	{
 		/// <summary>

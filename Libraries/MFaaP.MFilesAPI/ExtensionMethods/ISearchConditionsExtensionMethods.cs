@@ -88,8 +88,8 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 		/// <param name="itemsPerSegment">The number of items to include in each segment.</param>
 		/// <param name="index">The index at which to add the search condition to the collection.</param>
 		/// <remarks>
-		/// A <see cref="segment"/> of 0 and an <see cref="itemsPerSegment"/> of 1000 returns items with Ids between 0 and 999 (inclusive).
-		/// A <see cref="segment"/> of 1 and an <see cref="itemsPerSegment"/> of 1000 returns items with Ids between 1000 and 1999 (inclusive).
+		/// A <paramref name="segment"/> of 0 and an <paramref name="itemsPerSegment"/> of 1000 returns items with Ids between 0 and 999 (inclusive).
+		/// A <paramref name="segment"/> of 1 and an <paramref name="itemsPerSegment"/> of 1000 returns items with Ids between 1000 and 1999 (inclusive).
 		/// </remarks>
 		public static void AddObjectIdSegmentSearchCondition(this ISearchConditions searchConditions, int segment, int itemsPerSegment, int index = -1)
 		{

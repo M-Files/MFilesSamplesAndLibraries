@@ -6,6 +6,9 @@ using MFilesAPI;
 namespace MFaaP.MFilesAPI.ExtensionMethods
 {
 	// ReSharper disable once InconsistentNaming
+	/// <summary>
+	/// Extension methods for objects implementing <see cref="IVaultObjectSearchOperations"/>.
+	/// </summary>
 	public static class IVaultObjectSearchOperationsExtensionMethods
 	{
 		/// <summary>
@@ -96,7 +99,7 @@ namespace MFaaP.MFilesAPI.ExtensionMethods
 
 			// No point having relevancy ranking as we're throwing it away.
 			// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
-			searchFlags = searchFlags | MFSearchFlags.MFSearchFlagDisableRelevancyRanking;
+			searchFlags |= MFSearchFlags.MFSearchFlagDisableRelevancyRanking;
 
 			// A segment has a start index and a number of items in it.
 			// Segment 0 = object Ids 0 through 999.

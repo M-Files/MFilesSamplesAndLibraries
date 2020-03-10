@@ -21,12 +21,8 @@ namespace GenerateApplicationPreApprovalKey.App.Helpers
 		/// <param name="action">The action to execute.</param>
 		public ActionCommand(Action<object> action)
 		{
-			// Sanity.
-			if(null == action)
-				throw new ArgumentNullException(nameof(action));
-
 			// Assign.
-			this.Action = action;
+			this.Action = action ?? throw new ArgumentNullException(nameof(action));
 		}
 
 		/// <inheritdoc />

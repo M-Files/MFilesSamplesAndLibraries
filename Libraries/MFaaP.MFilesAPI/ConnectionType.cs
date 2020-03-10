@@ -1,5 +1,8 @@
 ﻿namespace MFaaP.MFilesAPI
 {
+	/// <summary>
+	/// The type of connection to make to the server.
+	/// </summary>
 	public enum ConnectionType
 	{
 		/// <summary>

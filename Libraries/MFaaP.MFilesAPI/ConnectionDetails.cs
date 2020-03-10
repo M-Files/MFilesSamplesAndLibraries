@@ -7,6 +7,9 @@ using MFaaP.MFilesAPI.ExtensionMethods;
 
 namespace MFaaP.MFilesAPI
 {
+	/// <summary>
+	/// Details about how to connect to the server.
+	/// </summary>
 	public class ConnectionDetails
 	{
 		/// <summary>

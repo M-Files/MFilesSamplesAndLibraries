@@ -21,15 +21,4 @@ Further details are available within the [project folder](MFaaP.MFilesAPI).
 
 ## MFaaP.MFWSClient (C# M-Files Web Service Wrapper)
 
-This library aims to provide an easy-to-use C# wrapper for the [M-Files Web Service](http://www.m-files.com/MFWS/), which is part of the M-Files Web Access.  The user guide contains more information on [setting up M-Files Web Access](http://www.m-files.com/user-guide/latest/eng/#Configure_M-Files_Web_Access.html).
-
-It currently provides the following functionality:
-
-* Authentication, both using credentials and using Windows Single Sign On
-* Object creation
-* File upload
-* Vault extension method execution
-* Searching
-* Retrieving view contents
-
-Further details are available within the [project folder](MFaaP.MFWSClient).
+This library has been moved to [https://github.com/M-Files/Libraries.MFWSClient](https://github.com/M-Files/Libraries.MFWSClient).
