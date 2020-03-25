@@ -6,22 +6,29 @@ This solution contains a series of libraries and samples to help developers buil
 
 Whilst the code aims to be as compatible as possible, please note that this is currently tested using the following configuration:
 
-* The latest public M-Files build (currently M-Files 2018)
-* Visual Studio 2015 Update 3
+* The latest public M-Files build
+* Visual Studio 2019
 
 **We expect people interacting with this repository to follow our [code of conduct](CODE_OF_CONDUCT.md), and have published [contribution guidelines](CONTRIBUTING.md).**
 
-## Visual Studio solutions
+##Please also note that there are additional public repositories available under the [M-Files Organisation](https://github.com/M-Files/):
+
+* [Sample Custom External Object Type Data Sources](https://github.com/M-Files/Samples.CustomExternalObjectTypeDataSources)
+* [M-Files COM API Extension Methods (Community)](https://github.com/M-Files/COMAPI.Extensions.Community)
+* [Vault Application Framework Extension Methods (Community)](https://github.com/M-Files/VAF.Extensions.Community)
+* [M-Files Web Service .NET Wrapper Library](https://github.com/M-Files/Libraries.MFWSClient)
+
+# Visual Studio solutions
 
 Two Visual Studio solution files (`.sln`) are available within this repository: `MFSamplesAndLibraries` and `MFWSSamplesAndLibraries`.
 
 * `MFSamplesAndLibraries` is a solution containing all samples and libraries, and can be used to easily open and investigate the entire codebase.  This requires that you have the latest M-Files build installed on your development machine.
 * `MFWSSamplesAndLibraries` contains only the libraries and samples used to access the M-Files Web Service.  This solution does not require the M-Files client to be installed.
 
-## Libraries
+# Libraries
 
 More information is available within the Readme file in the Libraries folder.
 
-## Samples
+# Samples
 
 More information is available within the Readme file in the Samples folder.
