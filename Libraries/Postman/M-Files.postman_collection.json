@@ -1244,6 +1244,93 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "9. Shared Links",
+			"item": [
+				{
+					"name": "Get all shared links",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Authentication",
+								"value": "{{MFAuthenticationToken}}"
+							}
+						],
+						"url": "{{MFWSUrl}}/sharedlinks",
+						"description": "Retrieves all shared links that this user can access."
+					},
+					"response": []
+				},
+				{
+					"name": "Create shared link",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Authentication",
+								"value": "{{MFAuthenticationToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ObjVer\" : {\n\t\t\"ID\" : 540,\n\t\t\"Version\" : 19,\n\t\t\"Type\" : 0\n\t},\n\t\"FileVer\" : {\n\t\t\"ID\" : 568,\n\t\t\"Version\" : -1,\n\t\t\"FileVersionType\" : 0\n\t\t\n\t},\n\t\"Description\" : \"This is my test shared link\",\n\t\"ExpirationTime\" : \"2020-06-01T00:00:00Z\"\n}"
+						},
+						"url": "{{MFWSUrl}}/sharedlinks",
+						"description": "Creates a shared link."
+					},
+					"response": []
+				},
+				{
+					"name": "Download shared file",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": "{{MFWSUrl}}/sharedlinks/2722F9AB-B96B-4DB5-B1A1-8E0618D289B7/60ea07af78055c7c4009487035dd856dd6c521d708b7e362bae192d9f8a89450/content",
+						"description": "Downloads the content of a shared link (note: does not require authentication)."
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes a shared link",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Authentication",
+								"value": "{{MFAuthenticationToken}}"
+							}
+						],
+						"url": "{{MFWSUrl}}/sharedlinks/9691d5c15340ca537ad7a601dc79d4b607c44d680a26051a6011f6e42fc8e142",
+						"description": "Deletes a shared link"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	]
 }
