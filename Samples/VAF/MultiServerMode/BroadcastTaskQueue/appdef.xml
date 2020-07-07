@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application
+			type="server-application"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v3.xsd">
+  <guid>1d8ff5df-c511-45c6-a5ac-1ef973349ab4</guid>
+  <name>BroadcastTaskQueue</name>
+  <description></description>
+  <publisher></publisher>
+  <version>0.1</version>
+  <copyright></copyright>
+  <required-mfiles-version>20.4.8954.0</required-mfiles-version>
+  <multi-server-compatible>true</multi-server-compatible>
+  <extension-objects>
+    <extension-object>
+      <name>BroadcastTaskQueue</name>
+      <assembly>BroadcastTaskQueue.dll</assembly>
+      <class>BroadcastTaskQueue.VaultApplication</class>
+      <installation-method>Install</installation-method>
+      <uninstallation-method>Uninstall</uninstallation-method>
+      <initialization-method>Initialize</initialization-method>
+      <uninitialization-method>Uninitialize</uninitialization-method>
+      <start-operations-method>StartOperations</start-operations-method>
+    </extension-object>
+  </extension-objects>
+</application>
