@@ -70,7 +70,6 @@
     <Compile Include="PropertySelector.cs" />
     <Compile Include="StaticPropertyValue.cs" />
     <Compile Include="VaultApplication.BackgroundOperations.cs" />
-    <Compile Include="VaultApplication.Configuration.cs" />
     <Compile Include="VaultApplication.cs" />
     <Compile Include="VaultApplication.Dashboard.cs" />
     <Compile Include="VaultApplication.ExceptionHandling.cs" />

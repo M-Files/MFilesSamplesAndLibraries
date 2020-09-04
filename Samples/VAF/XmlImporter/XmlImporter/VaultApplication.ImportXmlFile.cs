@@ -72,7 +72,6 @@ namespace XmlImporter
 
 			// Check that the input path is valid.
 			foreach (var importInstruction in this.Configuration
-				.CurrentConfiguration
 				.ImportInstructions
 				.Where(i => i.Enabled))
 			{

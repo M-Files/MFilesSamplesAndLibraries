@@ -19,7 +19,7 @@ namespace XmlImporter
 				new DashboardCustomContent($"<p>The current licence status is: <strong>{this.License.LicenseStatus}</strong>.</p>"),
 
 				// Display some configuration information.
-				new DashboardCustomContent($"<p>There are <strong>{this.Configuration.CurrentConfiguration.ImportInstructions.Count}</strong> import instructions configured.</p>")
+				new DashboardCustomContent($"<p>There are <strong>{this.Configuration.ImportInstructions.Count}</strong> import instructions configured.</p>")
 			};
 
 			// The status dashboard is our root object, and will handle generating the required HTML.

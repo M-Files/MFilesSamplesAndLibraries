@@ -15,8 +15,7 @@ namespace ComplexConfiguration
 
 			// Retrieve something from the configuration.
 			var propertyDefId = this
-									.ConfigurationNode?
-									.CurrentConfiguration?
+									.Configuration?
 									.ConfigurationEditors?
 									.IdentifierConfigurationEditors?
 									.PropertyDefValue?

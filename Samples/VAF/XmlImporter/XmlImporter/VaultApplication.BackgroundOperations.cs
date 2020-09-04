@@ -26,11 +26,11 @@ namespace XmlImporter
 				() =>
 				{
 					// Sanity.
-					if (null == this.Configuration?.CurrentConfiguration?.ImportInstructions)
+					if (null == this.Configuration?.ImportInstructions)
 						return;
 
 					// Iterate over the import instructions and import each one in turn.
-					foreach (var importInstruction in this.Configuration.CurrentConfiguration.ImportInstructions)
+					foreach (var importInstruction in this.Configuration.ImportInstructions)
 					{
 						// Is it enabled?
 						if (false == importInstruction.Enabled)

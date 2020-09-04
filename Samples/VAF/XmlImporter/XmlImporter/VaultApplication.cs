@@ -8,6 +8,7 @@ using MFiles.VAF;
 using MFiles.VAF.AdminConfigurations;
 using MFiles.VAF.Common;
 using MFiles.VAF.Configuration;
+using MFiles.VAF.Core;
 using MFilesAPI;
 
 namespace XmlImporter
@@ -17,7 +18,7 @@ namespace XmlImporter
 	/// </summary>
 	/// <remarks>Examples and further information available on the developer portal: http://developer.m-files.com/. </remarks>
 	public partial class VaultApplication
-		: VaultApplicationBase
+		: ConfigurableVaultApplicationBase<Configuration>
 	{
 	}
 }
