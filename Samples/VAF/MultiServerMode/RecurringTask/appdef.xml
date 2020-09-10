@@ -2,14 +2,15 @@
 <application
 			type="server-application"
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v1.xsd">
+      xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v3.xsd">
   <guid>a4c1d909-03f8-4c6d-8d7d-17c38d50f927</guid>
   <name>RecurringTask</name>
   <description></description>
   <publisher></publisher>
   <version>0.1</version>
   <copyright></copyright>
-  <required-mfiles-version>19.9.8227.13</required-mfiles-version>
+  <required-mfiles-version>20.4.8954.0</required-mfiles-version>
+  <multi-server-compatible>true</multi-server-compatible>
   <extension-objects>
     <extension-object>
       <name>RecurringTask</name>
