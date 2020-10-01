@@ -7,9 +7,9 @@
   <name>RecurringTask</name>
   <description></description>
   <publisher></publisher>
-  <version>0.1</version>
+  <version>0.2</version>
   <copyright></copyright>
-  <required-mfiles-version>20.4.8954.0</required-mfiles-version>
+  <required-mfiles-version>20.5.0.0</required-mfiles-version>
   <multi-server-compatible>true</multi-server-compatible>
   <extension-objects>
     <extension-object>
