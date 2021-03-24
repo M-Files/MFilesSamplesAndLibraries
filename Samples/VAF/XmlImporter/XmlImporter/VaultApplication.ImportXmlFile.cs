@@ -13,6 +13,112 @@ namespace XmlImporter
 {
 	public partial class VaultApplication
 	{
+		private Boolean CastToBool(string value)
+		{
+			var lbReturn = false;
+			if (value.ToLower() == "true")
+				lbReturn = true;
+			else if (value.ToLower() == "j")
+				lbReturn = true;
+			else if (value.ToLower() == "y")
+				lbReturn = true;
+			else if (value.ToLower() == "ja")
+				lbReturn = true;
+			else if (value.ToLower() == "yes")
+				lbReturn = true;
+			else if (value.ToLower() == "wahr")
+				lbReturn = true;
+			return lbReturn;
+		}
+		private int LookupRef(Vault vault, int ObjectID, MFDataType DataType, bool SearchLookupID, object value, LookupOrValuelistStrategy searchType = LookupOrValuelistStrategy.SearchLookup)
+		{
+			// Create list of search conditions.
+			var oSCs = new MFilesAPI.SearchConditions();
+
+			// Create single search condition.
+			var oSC = new MFilesAPI.SearchCondition();
+
+			// =================================================================================
+			// Filter not deleted
+			if (searchType == LookupOrValuelistStrategy.SearchLookup)
+			{
+				oSC.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeDeleted);
+			}
+			else
+			{
+				oSC.Expression.SetValueListItemExpression(MFValueListItemPropertyDef.MFValueListItemPropertyDefDeleted,
+						MFParentChildBehavior.MFParentChildBehaviorNone);
+			}
+			oSC.ConditionType = MFConditionType.MFConditionTypeEqual;
+			oSC.TypedValue.SetValue(MFDataType.MFDatatypeBoolean, false);
+			oSCs.Add(-1, oSC);
+
+			// =================================================================================
+			// Filter if it's object only objects
+			if (searchType == LookupOrValuelistStrategy.SearchLookup)
+			{
+				oSC.Expression.SetStatusValueExpression(MFStatusType.MFStatusTypeObjectTypeID);
+				oSC.ConditionType = MFConditionType.MFConditionTypeEqual;
+				oSC.TypedValue.SetValue(DataType, ObjectID);
+				oSCs.Add(-1, oSC);
+			}
+
+			// =================================================================================
+			// Filter Search by ID or name Value
+			if (SearchLookupID)
+			{
+				oSC.Expression.DataStatusValueType = MFStatusType.MFStatusTypeExtID;
+				oSC.ConditionType = MFConditionType.MFConditionTypeEqual;
+				oSC.TypedValue.SetValue(MFDataType.MFDatatypeText, value);
+				oSCs.Add(-1, oSC);
+			}
+			else
+			{
+				if (searchType == LookupOrValuelistStrategy.SearchLookup)
+				{
+					// object value search syntax
+					oSC.Expression.SetPropertyValueExpression((int)MFBuiltInPropertyDef.MFBuiltInPropertyDefNameOrTitle, MFParentChildBehavior.MFParentChildBehaviorNone);
+					oSC.ConditionType = MFConditionType.MFConditionTypeEqual;
+					oSC.TypedValue.SetValue(MFDataType.MFDatatypeText, value);
+					oSCs.Add(-1, oSC);
+				}
+				else
+				{
+					// valuelist value search syntax
+					oSC.Expression.SetValueListItemExpression(MFValueListItemPropertyDef.MFValueListItemPropertyDefName, MFParentChildBehavior.MFParentChildBehaviorNone);
+					oSC.ConditionType = MFConditionType.MFConditionTypeEqual;
+					oSC.TypedValue.SetValue(MFDataType.MFDatatypeText, value);
+					oSCs.Add(-1, oSC);
+				}
+			}
+
+			// execute the final search
+			if (searchType == LookupOrValuelistStrategy.SearchLookup)
+			{
+				var oResult = vault.ObjectSearchOperations.SearchForObjectsByConditionsEx(oSCs, MFSearchFlags.MFSearchFlagNone, false);
+				if (oResult.Count == 0)
+				{
+					return -1;
+				}
+				else
+				{
+					return oResult[1].ObjVer.ObjID.ID;
+				}
+			}
+			else
+			{
+				var vlResult = vault.ValueListItemOperations.SearchForValueListItemsEx(ObjectID, oSCs, false);
+				if (vlResult.Count == 0)
+				{
+					return -1;
+				}
+				else
+				{
+					return vlResult[1].ObjID.ID;
+				}
+			}
+
+		}
 		/// <summary>
 		/// Executes an <see cref="ImportInstruction"/>, importing files to the vault as required.
 		/// </summary>
@@ -261,10 +367,10 @@ namespace XmlImporter
 						throw new InvalidOperationException("The property value selector property definition is not resolved");
 
 					// Retrieve the element for the property value.
-					var matchingPropertyElement = matchingElement
-						.XPathSelectElement(propertySelector.XPathQuery, xmlNamespaceManager);
-					if (null == matchingPropertyElement)
-						continue;
+					// var matchingPropertyElement = matchingElement
+					//	.XPathSelectElement(propertySelector.XPathQuery, xmlNamespaceManager);
+					//if (null == matchingPropertyElement)
+					//	continue;
 
 					// Find the property definition type.
 					var propertyDefType = vault
@@ -272,11 +378,150 @@ namespace XmlImporter
 						.GetPropertyDef(propertySelector.PropertyDef.ID)
 						.DataType;
 
+					// Check if it's lookup or multilookup
+					var isLookup = ((propertyDefType == MFDataType.MFDatatypeMultiSelectLookup) || (propertyDefType == MFDataType.MFDatatypeLookup));
+
+					#region itterate XAttributes from XPath
+					if (propertySelector.XPathQuery.Contains("@"))
+					{
+						List<int> listLookup = new List<int>();
+						IEnumerable matchingPropertyAttributes =
+							(IEnumerable)matchingElement.XPathEvaluate(propertySelector.XPathQuery);
+						foreach (System.Xml.Linq.XAttribute matchingPropertyAttribute in matchingPropertyAttributes)
+						{
+							string szValue = matchingPropertyAttribute.Value;
+
+							if (propertyDefType == MFDataType.MFDatatypeBoolean)
+							{
+								propertyValuesBuilder.Add(
+									propertySelector.PropertyDef.ID,
+									propertyDefType,
+									CastToBool(szValue));
+							}
+							else if (propertyDefType == MFDataType.MFDatatypeDate)
+							{
+								szValue = $"{szValue} 00:00:00";
+								propertyValuesBuilder.Add(
+									propertySelector.PropertyDef.ID,
+									propertyDefType,
+									szValue);
+							}
+							else if (isLookup)
+							{
+								var iLookupDef = (propertySelector.LookupOrValuelistStrategy == LookupOrValuelistStrategy.SearchLookup ?
+									propertySelector.LookupObjectDef.ID :
+									propertySelector.LookupValueListDef.ID);
+
+								var iLookupItem = LookupRef(vault,
+									iLookupDef,
+									propertyDefType,
+									propertySelector.SearchByLookupID,
+									szValue,
+									propertySelector.LookupOrValuelistStrategy);
+
+								if (iLookupItem != -1)
+								{
+									listLookup.Add(iLookupItem);
+								}
+							}
+							else
+							{
+								propertyValuesBuilder.Add(
+									propertySelector.PropertyDef.ID,
+									propertyDefType,
+									szValue);
+							}
+						}
+
+						// Lookup or MultiSelectLookup and found something
+						if ((isLookup) && (listLookup.Count != 0))
+						{
+							int[] arrLookupIDs = listLookup.ToArray();
+							propertyValuesBuilder.Add(
+									propertySelector.PropertyDef.ID,
+									propertyDefType,
+									arrLookupIDs);
+						}
+					}
+					#endregion
+					else
+					#region itterate XElements from XPath
+					{
+						List<int> listLookup = new List<int>();
+						var matchingPropertyElements =
+							matchingElement.XPathSelectElements(propertySelector.XPathQuery);
+						if (null == matchingPropertyElements)
+							continue;
+
+						// iterate found XElements
+						foreach (var matchingPropertyElement in matchingPropertyElements)
+						{
+							if (null == matchingPropertyElement)
+								continue;
+
+							string szValue = matchingPropertyElement.Value;
+
+							if (propertyDefType == MFDataType.MFDatatypeBoolean)
+							{
+								propertyValuesBuilder.Add(
+									propertySelector.PropertyDef.ID,
+									propertyDefType,
+									CastToBool(szValue));
+							}
+							else if (propertyDefType == MFDataType.MFDatatypeDate)
+							{
+								szValue = $"{szValue} 00:00:00";
+								propertyValuesBuilder.Add(
+									propertySelector.PropertyDef.ID,
+									propertyDefType,
+									szValue);
+							}
+							else if (isLookup)
+							{
+								var iLookupDef = (propertySelector.LookupOrValuelistStrategy == LookupOrValuelistStrategy.SearchLookup ?
+									propertySelector.LookupObjectDef.ID :
+									propertySelector.LookupValueListDef.ID);
+
+								var iLookupItem = LookupRef(vault,
+									iLookupDef,
+									propertyDefType,
+									propertySelector.SearchByLookupID,
+									szValue,
+									propertySelector.LookupOrValuelistStrategy);
+
+								if (iLookupItem != -1)
+								{
+									listLookup.Add(iLookupItem);
+								}
+								propertyValuesBuilder.AddLookup(
+									propertySelector.PropertyDef.ID,
+									szValue);
+							}
+							else
+							{
+								propertyValuesBuilder.Add(
+									propertySelector.PropertyDef.ID,
+									propertyDefType,
+									szValue);
+							}
+						}
+						// Lookup or MultiSelectLookup and found something
+						if ((isLookup) && (listLookup.Count != 0))
+						{
+							int[] arrLookupIDs = listLookup.ToArray();
+							propertyValuesBuilder.Add(
+									propertySelector.PropertyDef.ID,
+									propertyDefType,
+									arrLookupIDs);
+						}
+					}
+					#endregion
+
 					// Add the property to the builder.
-					propertyValuesBuilder.Add(
-						propertySelector.PropertyDef.ID,
-						propertyDefType,
-						matchingPropertyElement.Value);
+					//propertyValuesBuilder.Add(
+					//propertySelector.PropertyDef.ID,
+					//propertyDefType,
+					//matchingPropertyElement.Value);
 
 				}
 
@@ -434,7 +679,7 @@ namespace XmlImporter
 
 				// Handle creating a new object for the file.
 				if (
-					objectSelector.AttachFileToThisObject && 
+					objectSelector.AttachFileToThisObject &&
 					objectSelector.AttachedFileConfiguration?.AttachedFileHandlingStrategy
 					== AttachedFileHandlingStrategy.CreateNewObject)
 				{
@@ -607,5 +852,5 @@ namespace XmlImporter
 		}
 
 	}
-	
+
 }
