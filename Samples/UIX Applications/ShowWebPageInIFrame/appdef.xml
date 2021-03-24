@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef.xsd">
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-client-v4.xsd">
 	<guid>1B9762B3-C2D5-44b9-905F-D4ABAC5E8AE2</guid>	
 	<name>Show web page in iframe</name>
-	<version>0.1</version>
+	<version>0.2</version>
 	<description></description>
 	<publisher>M-Files Corporation</publisher>
-	<copyright>(c) M-Files Corporation 2017</copyright>
-	<required-mfiles-version>11.3.4330.0</required-mfiles-version>
+	<copyright>(c) M-Files Corporation 2021</copyright>
+	<!-- This application has been upgraded to support fast-browsing: https://developer.m-files.com/Frameworks/User-Interface-Extensibility-Framework/Fast-Browsing/ -->
+	<required-mfiles-version>20.12.0.0</required-mfiles-version>
+	<platforms>
+		<platform>Desktop</platform>
+	</platforms>
 	<modules>
-		<module environment="shellui">
+		<module environment="shellui" fast-browsing-compatible="true">
 			<file>main.js</file>
 		</module>
 	</modules>

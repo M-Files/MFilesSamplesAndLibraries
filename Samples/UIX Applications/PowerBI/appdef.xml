@@ -1,15 +1,20 @@
 <?xml version="1.0"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef.xsd">
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-client-v4.xsd">
 	<guid>5C76769E-D507-481c-9BE4-39319BCB5F57</guid>
 	<name>M-Files Power BI Reports</name>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<description>M-Files Power BI Report UI Extension</description>
 	<publisher>M-Files Corporation</publisher>
-	<copyright>(c) M-Files Corporation 2017</copyright>
+	<copyright>(c) M-Files Corporation 2021</copyright>
+	<!-- This application has been upgraded to support fast-browsing: https://developer.m-files.com/Frameworks/User-Interface-Extensibility-Framework/Fast-Browsing/ -->
+	<required-mfiles-version>20.12.0.0</required-mfiles-version>
 	<optional>true</optional>
 	<enabled-by-default>true</enabled-by-default>
+	<platforms>
+		<platform>Desktop</platform>
+	</platforms>
 	<modules>
-		<module environment="shellui">
+		<module environment="shellui" fast-browsing-compatible="true">
 			<file>mfshell.js</file>
 		</module>
 	</modules>

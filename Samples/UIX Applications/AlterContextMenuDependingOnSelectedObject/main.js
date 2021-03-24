@@ -81,7 +81,6 @@ function getNewShellListingHandler(shellFrame, commandId) {
 				var isOneObjectSelected = selectedItems.Count == 1 && selectedItems.ObjectVersions.Count == 1;
 
 				// Show the context menu item only if there is 1 object selected.
-				// Additionally, this could check the type of the object (e.g. so the context menu is only shown on specific object types).
 				shellFrame.Commands.SetCommandState(
 					commandId,
 					CommandLocation_All,
