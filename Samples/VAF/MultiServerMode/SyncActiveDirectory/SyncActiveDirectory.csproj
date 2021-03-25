@@ -1,0 +1,124 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{15C41E9D-35E8-4904-A1E0-74D5A27829A7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SyncActiveDirectory</RootNamespace>
+    <AssemblyName>SyncActiveDirectory</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;DONOTDEPLOY</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugWithoutDeployment|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DONOTDEPLOY</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Interop.MFilesAPI, Version=7.0.0.0, Culture=neutral, PublicKeyToken=f1b4733f444f7ad0, processorArchitecture=MSIL">
+      <HintPath>..\packages\MFiles.VAF.2.2.0.10\lib\net45\Interop.MFilesAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MFiles.Crypto, Version=2.2.0.10, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
+      <HintPath>..\packages\MFiles.VAF.2.2.0.10\lib\net45\MFiles.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MFiles.VAF, Version=2.2.0.10, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
+      <HintPath>..\packages\MFiles.VAF.2.2.0.10\lib\net45\MFiles.VAF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MFiles.VAF.Configuration, Version=2.2.0.10, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
+      <HintPath>..\packages\MFiles.VAF.2.2.0.10\lib\net45\MFiles.VAF.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MFiles.VAF.Configuration.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fa007b370d17fe5e, processorArchitecture=MSIL">
+      <HintPath>..\packages\MFiles.VAF.2.2.0.10\lib\net45\MFiles.VAF.Configuration.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Server\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\VaultApplication.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appdef.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Client\TODO.md" />
+    <None Include="install-application.ps1" />
+    <None Include="LICENSE.md" />
+    <None Include="packages.config" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="RunWhenBuildChanges" AfterTargets="CoreBuild">
+    <Message Importance="High" Text="Cleaning old .mfappx file (if available)..." />
+    <Delete Files="bin\$(Configuration)\$(ProjectName).mfappx" />
+    <Message Importance="High" Text="Creating new .mfappx file..." />
+    <CreateItem Include="bin\$(Configuration)\**\*.*">
+      <Output ItemName="ZipFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Zip ZipFileName="bin\$(Configuration)\$(ProjectName).mfappx" WorkingDirectory="$(TargetDir)" Files="@(ZipFiles)" />
+  </Target>
+  <Target Name="NoteDeploymentSkipped" AfterTargets="CoreBuild" Condition="$(DefineConstants.Contains('DONOTDEPLOY'))">
+    <Message Importance="High" Text="Skipping deployment script (configuration states not to deploy)" />
+  </Target>
+  <Target Name="DeployIfNeeded" AfterTargets="CoreBuild" Condition="false == $(DefineConstants.Contains('DONOTDEPLOY'))">
+    <Message Importance="High" Text="Executing deployment script..." />
+    <Exec Command="PowerShell -ExecutionPolicy Bypass -File install-application.ps1" />
+  </Target>
+  <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

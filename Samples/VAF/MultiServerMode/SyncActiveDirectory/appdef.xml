@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application
+      type="server-application"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-server-v3.xsd">
+  <guid>11d6179b-ce0d-49a8-8638-dccbe2406ccf</guid>
+  <name>SyncActiveDirectory</name>
+  <description>Recurring task for syncing user details from Active Directory as small background jobs</description>
+  <publisher>Falk Huth (https://linkedin.com/in/falk.huth - f.huth@ewerk.com)</publisher>
+  <version>21.3.25.1</version>
+  <copyright></copyright>
+  <required-mfiles-version>20.5.0.0</required-mfiles-version>
+  <multi-server-compatible>true</multi-server-compatible>
+  <extension-objects>
+    <extension-object>
+      <name>SyncActiveDirectory</name>
+      <assembly>SyncActiveDirectory.dll</assembly>
+      <class>EWERK.MFVAF.SyncActiveDirectory.VaultApplication</class>
+      <installation-method>Install</installation-method>
+      <uninstallation-method>Uninstall</uninstallation-method>
+      <initialization-method>Initialize</initialization-method>
+      <uninitialization-method>Uninitialize</uninitialization-method>
+      <start-operations-method>StartOperations</start-operations-method>
+    </extension-object>
+  </extension-objects>
+</application>

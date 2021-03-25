@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroadcastTaskQueue", "Broad
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecurringTask", "RecurringTask\RecurringTask.csproj", "{A47DD899-1B51-42B0-A91C-36B5426EFF81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncActiveDirectory", "SyncActiveDirectory\SyncActiveDirectory.csproj", "{15C41E9D-35E8-4904-A1E0-74D5A27829A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug (no deploy)|Any CPU = Debug (no deploy)|Any CPU
@@ -61,6 +63,14 @@ Global
 		{A47DD899-1B51-42B0-A91C-36B5426EFF81}.DebugWithoutDeployment|Any CPU.Build.0 = DebugWithoutDeployment|Any CPU
 		{A47DD899-1B51-42B0-A91C-36B5426EFF81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A47DD899-1B51-42B0-A91C-36B5426EFF81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15C41E9D-35E8-4904-A1E0-74D5A27829A7}.Debug (no deploy)|Any CPU.ActiveCfg = Debug|Any CPU
+		{15C41E9D-35E8-4904-A1E0-74D5A27829A7}.Debug (no deploy)|Any CPU.Build.0 = Debug|Any CPU
+		{15C41E9D-35E8-4904-A1E0-74D5A27829A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15C41E9D-35E8-4904-A1E0-74D5A27829A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15C41E9D-35E8-4904-A1E0-74D5A27829A7}.DebugWithoutDeployment|Any CPU.ActiveCfg = DebugWithoutDeployment|Any CPU
+		{15C41E9D-35E8-4904-A1E0-74D5A27829A7}.DebugWithoutDeployment|Any CPU.Build.0 = DebugWithoutDeployment|Any CPU
+		{15C41E9D-35E8-4904-A1E0-74D5A27829A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15C41E9D-35E8-4904-A1E0-74D5A27829A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
