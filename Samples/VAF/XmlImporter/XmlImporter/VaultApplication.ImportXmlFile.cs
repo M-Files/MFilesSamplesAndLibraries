@@ -386,7 +386,7 @@ namespace XmlImporter
 					{
 						List<int> listLookup = new List<int>();
 						IEnumerable matchingPropertyAttributes =
-							(IEnumerable)matchingElement.XPathEvaluate(propertySelector.XPathQuery);
+							(IEnumerable)matchingElement.XPathEvaluate(propertySelector.XPathQuery, xmlNamespaceManager);
 						foreach (System.Xml.Linq.XAttribute matchingPropertyAttribute in matchingPropertyAttributes)
 						{
 							string szValue = matchingPropertyAttribute.Value;
@@ -449,7 +449,7 @@ namespace XmlImporter
 					{
 						List<int> listLookup = new List<int>();
 						var matchingPropertyElements =
-							matchingElement.XPathSelectElements(propertySelector.XPathQuery);
+							matchingElement.XPathSelectElements(propertySelector.XPathQuery, xmlNamespaceManager);
 						if (null == matchingPropertyElements)
 							continue;
 
