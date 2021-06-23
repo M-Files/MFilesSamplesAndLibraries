@@ -26,6 +26,7 @@ namespace COMAPI
 		private MFilesServerApplication serverApplication { get; }
 			= new MFilesServerApplication();
 		private PluginInfo oAuthPluginInfo { get; set; }
+		private Vault vault { get; set; }
 
 		public MainWindow()
 		{
@@ -97,7 +98,7 @@ namespace COMAPI
 			if (null == this.oAuthPluginInfo)
 				return;
 
-			// If it's going somewhere else then fine.
+			// We only want to react if it is being redirected to thte redirect Uri.
 			if (!e.Uri.ToString().StartsWith(this.oAuthPluginInfo.GetAppropriateRedirectUri()))
 				return;
 
@@ -129,23 +130,90 @@ namespace COMAPI
 			var vaults = this.serverApplication.GetOnlineVaults();
 			if (0 == vaults.Count)
 				throw new InvalidOperationException("User cannot access any vaults");
-			var vault = this.serverApplication.LogInToVault(vaults.Cast<VaultOnServer>().First().GUID);
+			this.vault = this.serverApplication.LogInToVault(vaults.Cast<VaultOnServer>().First().GUID);
 
-			// Get everything in the root view.
-			foreach (var item in vault.ViewOperations.GetFolderContents(new FolderDefs()).Cast<FolderContentItem>())
-			{
-				var treeViewItem = new TreeViewItem();
-				switch (item.FolderContentItemType)
-				{
-					case MFFolderContentItemType.MFFolderContentItemTypeViewFolder:
-						treeViewItem.Header = item.View.Name;
-						break;
-					default:
-						continue; // This should also handle other types of content.
-				}
-				this.vaultContents.Items.Add(treeViewItem);
-			}
+			// Show and populate the (root) tree view.
 			this.vaultContents.Visibility = Visibility.Visible;
+			var items = this.vaultContents.Items;
+			var rootItem = new TreeViewItem() { Header = "Vault contents" };
+			items.Add(rootItem);
+			this.ExpandTreeViewItem(rootItem);
+		}
+
+		private void ExpandTreeViewItem(TreeViewItem parent, FolderDefs folderDefs = null)
+		{
+			// Sanity.
+			if (null == parent)
+				return;
+			folderDefs = folderDefs ?? new FolderDefs();
+
+			// Remove anything including the "loading" item.
+			parent.Items.Clear();
+
+			this.Dispatcher.BeginInvoke(new Action(() =>
+			{
+
+				// Get everything in the passed location.
+				foreach (var item in vault.ViewOperations.GetFolderContents(folderDefs).Cast<FolderContentItem>())
+				{
+					// Get the folder defs to use for this node.
+					var tag = folderDefs.Clone();
+					var folderDef = new FolderDef();
+
+					// Create the tree view item depending on the type of item we've got.
+					var treeViewItem = new TreeViewItem();
+					switch (item.FolderContentItemType)
+					{
+						// Render views.
+						case MFFolderContentItemType.MFFolderContentItemTypeViewFolder:
+							{
+								// Set up the folder def to go "into" this view.
+								folderDef.SetView(item.View.ID);
+
+								// Set the header to the view name.
+								treeViewItem.Header = item.View.Name;
+							}
+							break;
+						// Render property groups.
+						case MFFolderContentItemType.MFFolderContentItemTypePropertyFolder:
+							{
+								// Set up the folder def to go "into" this grouping.
+								folderDef.SetPropertyFolder(item.PropertyFolder);
+
+								// Set the header to the grouping name.
+								treeViewItem.Header = item.PropertyFolder.DisplayValue;
+							}
+							break;
+						default:
+							// We should also handle other types of content, but this will do for now.
+							continue;
+					}
+					if (null == treeViewItem.Header)
+						continue;
+
+					// Set up the tag.
+					tag.Add(tag.Count + 1, folderDef);
+					treeViewItem.Tag = tag;
+
+					// Add the item to the list.
+					treeViewItem.Items.Add(new TreeViewItem() { Header = "Loading...", IsEnabled = false });
+					treeViewItem.Expanded += TreeViewItem_Expanded;
+					parent.Items.Add(treeViewItem);
+				}
+			}));
+		}
+
+		private void ExpandTreeViewItem(TreeViewItem treeViewItem)
+		{
+			if (null == treeViewItem)
+				return;
+			this.ExpandTreeViewItem(treeViewItem, treeViewItem.Tag as FolderDefs); 
+		}
+
+		private void TreeViewItem_Expanded(object sender, RoutedEventArgs e)
+		{
+			this.ExpandTreeViewItem(sender as TreeViewItem);
+			e.Handled = true;
 		}
 
 		private async Task<OAuth2TokenResponse> ProcessRedirectUri(Uri redirectUri)
