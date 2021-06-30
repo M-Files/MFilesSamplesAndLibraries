@@ -27,13 +27,29 @@ namespace RESTAPI
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		/// <summary>
+		/// The RestSharp client to use to make HTTP requests.
+		/// </summary>
 		private RestClient client { get; set; }
+
+		/// <summary>
+		/// Details about the authentication plugin used.
+		/// Note: this structure comes from the MFWSStructs.cs file and broadly mimics the COM API structures.
+		/// See: https://github.com/M-Files/Libraries.MFWSClient/blob/da22e931a34f13fe3cb35c692ea9fe7645fc0c20/MFaaP.MFWSClient/MFWSStructs.cs
+		/// </summary>
 		private PluginInfoConfiguration oAuthPluginInfo { get; set; }
+
+
 		public MainWindow()
 		{
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Connects to the vault.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void Connect_Click(object sender, RoutedEventArgs e)
 		{
 			// Hide stuff from the UI that we don't need.
@@ -41,6 +57,7 @@ namespace RESTAPI
 			this.vaultContents.Visibility = Visibility.Hidden;
 			this.vaultContents.Items.Clear();
 
+			// Attempt to parse the network address.
 			if (false == Uri.TryCreate(this.connectionDetails.NetworkAddress, UriKind.Absolute, out Uri baseUri))
 			{
 				MessageBox.Show($"Cannot parse {this.connectionDetails.NetworkAddress} as a valid network address.");
@@ -49,11 +66,14 @@ namespace RESTAPI
 
 			try
 			{
+				// Set up the RestSharp client.
+				// Note: the base url should be of the form "https://m-files.mycompany.com".
 				this.client = new RestClient(baseUri);
 
 				// Attempt to get the OAuth details.
 				List<PluginInfoConfiguration> pluginInfoCollection = null;
 				{
+					// Get all the plugin details (there may be multiple).
 					var response = this.client.Execute<List<PluginInfoConfiguration>>(new RestRequest("/REST/server/authenticationprotocols.aspx", Method.GET));
 					pluginInfoCollection = response.Data;
 
@@ -68,16 +88,17 @@ namespace RESTAPI
 					MessageBox.Show("No authentication plugins configured");
 					return;
 				}
+
+				// Try and get the OAuth-specific plugin.
 				this.oAuthPluginInfo = pluginInfoCollection
 					.FirstOrDefault(info => info.IsOAuthPlugin());
-
 				if (null == this.oAuthPluginInfo)
 				{
 					MessageBox.Show("OAuth is not configured on the vault/server.");
 					return;
 				}
 
-				// Navigate to the OAuth screen.
+				// Navigate to the authorisation screen.
 				var state = Guid.NewGuid().ToString("B");
 				this.oAuthPluginInfo.Configuration["state"] = state;
 				this.webBrowser.Navigate($"{this.oAuthPluginInfo.GenerateAuthorizationUri(state)}");
@@ -92,6 +113,12 @@ namespace RESTAPI
 			}
 		}
 
+		/// <summary>
+		/// Reacts when the web browser navigates due to interaction with the
+		/// provider.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private async void webBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
 		{
 			// Sanity.
@@ -110,6 +137,7 @@ namespace RESTAPI
 			var tokens = await this.ProcessRedirectUri(e.Uri);
 
 			// Add the auth token to the default headers.
+			// Note: we need to add both the Authorization and X-Vault headers or it won't work.
 			this.client.AddDefaultHeader("Authorization", "Bearer " + tokens.AccessToken);
 			this.client.AddDefaultHeader("X-Vault", this.oAuthPluginInfo.VaultGuid);
 
@@ -137,6 +165,7 @@ namespace RESTAPI
 				if (false == folder.EndsWith("/"))
 					folder = folder + "/";
 
+				// Get the items within the selected view.
 				var response = this.client.Get<FolderContentItems>(new RestRequest($"/REST/views{folder}items"));
 
 				// Get everything in the passed location.
@@ -146,6 +175,7 @@ namespace RESTAPI
 					var tag = folder;
 
 					// Create the tree view item depending on the type of item we've got.
+					// Note: a lot of this is taken from https://github.com/M-Files/Libraries.MFWSClient/blob/da22e931a34f13fe3cb35c692ea9fe7645fc0c20/MFaaP.MFWSClient/ExtensionMethods/FolderContentItemExtensionMethods.cs#L73.
 					var treeViewItem = new TreeViewItem();
 					switch (item.FolderContentItemType)
 					{
@@ -248,6 +278,12 @@ namespace RESTAPI
 			e.Handled = true;
 		}
 
+		/// <summary>
+		/// Extracts data from the <paramref name="redirectUri"/> and uses it to retrieve access
+		/// and refresh tokens from the provider.
+		/// </summary>
+		/// <param name="redirectUri">The Uri redirected to by the provider.</param>
+		/// <returns>The token response, if available.</returns>
 		private async Task<OAuth2TokenResponse> ProcessRedirectUri(Uri redirectUri)
 		{
 			// Does this represent an error?

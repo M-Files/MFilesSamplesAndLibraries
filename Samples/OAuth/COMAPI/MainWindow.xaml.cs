@@ -25,9 +25,22 @@ namespace COMAPI
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		/// <summary>
+		/// The server application to connect to the server.
+		/// </summary>
 		private MFilesServerApplication serverApplication { get; }
 			= new MFilesServerApplication();
+
+		/// <summary>
+		/// Details about the authentication plugin used.
+		/// Note: this structure comes from the MFWSStructs.cs file and broadly mimics the COM API structures.
+		/// See: https://github.com/M-Files/Libraries.MFWSClient/blob/da22e931a34f13fe3cb35c692ea9fe7645fc0c20/MFaaP.MFWSClient/MFWSStructs.cs
+		/// </summary>
 		private PluginInfo oAuthPluginInfo { get; set; }
+
+		/// <summary>
+		/// The (authenticated) vault connection.
+		/// </summary>
 		private Vault vault { get; set; }
 
 		public MainWindow()
@@ -35,6 +48,11 @@ namespace COMAPI
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Connects to the vault.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void Connect_Click(object sender, RoutedEventArgs e)
 		{
 			// Hide stuff from the UI that we don't need.
@@ -70,6 +88,8 @@ namespace COMAPI
 					MessageBox.Show("No authentication plugins configured");
 					return;
 				}
+
+				// Try and get the OAuth-specific plugin.
 				this.oAuthPluginInfo = pluginInfoCollection
 					.Cast<PluginInfo>()
 					.FirstOrDefault(info => info.IsOAuthPlugin());
@@ -94,6 +114,12 @@ namespace COMAPI
 			}
 		}
 
+		/// <summary>
+		/// Reacts when the web browser navigates due to interaction with the
+		/// provider.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private async void webBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
 		{
 			// Sanity.
@@ -112,6 +138,7 @@ namespace COMAPI
 			var tokens = await this.ProcessRedirectUri(e.Uri);
 
 			// Connect to the vault.
+			// The access token goes in the "Token" entry in the named values collection.
 			var authenticationData = new NamedValues();
 			authenticationData["Token"] = tokens.AccessToken;
 			this.serverApplication.ConnectWithAuthenticationDataEx6
@@ -218,6 +245,12 @@ namespace COMAPI
 			e.Handled = true;
 		}
 
+		/// <summary>
+		/// Extracts data from the <paramref name="redirectUri"/> and uses it to retrieve access
+		/// and refresh tokens from the provider.
+		/// </summary>
+		/// <param name="redirectUri">The Uri redirected to by the provider.</param>
+		/// <returns>The token response, if /*available*/.</returns>
 		private async Task<OAuth2TokenResponse> ProcessRedirectUri(Uri redirectUri)
 		{
 			// Does this represent an error?
