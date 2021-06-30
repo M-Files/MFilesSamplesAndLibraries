@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
 
-namespace COMAPI.ExtensionMethods
+namespace Common.ExtensionMethods
 {
 	/// <summary>
 	/// URI builder extension methods.

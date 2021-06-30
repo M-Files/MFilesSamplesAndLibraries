@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace COMAPI.ExtensionMethods
+namespace Common.ExtensionMethods
 {
 	/// <summary>
 	/// Extension methods for IEnumerable{T}.

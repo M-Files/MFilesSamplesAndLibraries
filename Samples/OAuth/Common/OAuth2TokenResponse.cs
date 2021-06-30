@@ -1,6 +1,6 @@
 ﻿using RestSharp.Deserializers;
 
-namespace COMAPI
+namespace Common
 {
 	/// <summary>
 	/// Represents a set of tokens returned from an OAuth 2.0 token endpoint.

@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace COMAPI.ExtensionMethods
+namespace Common.ExtensionMethods
 {
 	/// <summary>
 	/// REST request extension methods.

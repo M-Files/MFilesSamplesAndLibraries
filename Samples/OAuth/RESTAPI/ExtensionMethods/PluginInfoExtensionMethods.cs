@@ -1,16 +1,19 @@
-﻿using MFilesAPI;
+﻿using MFaaP.MFWSClient;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Common.ExtensionMethods;
 
-namespace COMAPI.ExtensionMethods
+namespace RESTAPI.ExtensionMethods
 {
 	public static class PluginInfoExtensionMethods
 	{
-		private static string GetValueOrNull(this NamedValues namedValues, string name)
+		private static string GetValueOrNull(this Dictionary<string, string> namedValues, string name)
 		{
 			try
 			{
+				if (false == namedValues.ContainsKey(name))
+					return null;
 				var value = namedValues[name]?.ToString();
 				if (null == value || value.Length == 0)
 					return null;
@@ -26,7 +29,7 @@ namespace COMAPI.ExtensionMethods
 		/// <returns>The redirect URI.</returns>
 		public static string GetTokenEndpoint
 		(
-			this PluginInfo plugin
+			this PluginInfoConfiguration plugin
 		) => plugin?.Configuration.GetValueOrNull("TokenEndpoint");
 
 		/// <summary>
@@ -36,7 +39,7 @@ namespace COMAPI.ExtensionMethods
 		/// <returns>The redirect URI.</returns>
 		public static string GetSiteRealm
 		(
-			this PluginInfo plugin
+			this PluginInfoConfiguration plugin
 		) => plugin?.Configuration.GetValueOrNull("SiteRealm");
 
 		/// <summary>
@@ -46,7 +49,7 @@ namespace COMAPI.ExtensionMethods
 		/// <returns>The redirect URI.</returns>
 		public static string GetClientID
 		(
-			this PluginInfo plugin
+			this PluginInfoConfiguration plugin
 		) => plugin?.Configuration.GetValueOrNull("ClientID");
 
 		/// <summary>
@@ -56,7 +59,7 @@ namespace COMAPI.ExtensionMethods
 		/// <returns>The redirect URI.</returns>
 		public static string GetResource
 		(
-			this PluginInfo plugin
+			this PluginInfoConfiguration plugin
 		) => plugin?.Configuration.GetValueOrNull("Resource");
 
 		/// <summary>
@@ -66,7 +69,7 @@ namespace COMAPI.ExtensionMethods
 		/// <returns>The redirect URI.</returns>
 		public static string GetScope
 		(
-			this PluginInfo plugin
+			this PluginInfoConfiguration plugin
 		) => plugin?.Configuration.GetValueOrNull("Scope");
 
 		/// <summary>
@@ -76,7 +79,7 @@ namespace COMAPI.ExtensionMethods
 		/// <returns>The redirect URI.</returns>
 		public static string GetClientSecret
 		(
-			this PluginInfo plugin
+			this PluginInfoConfiguration plugin
 		) => plugin?.Configuration.GetValueOrNull("ClientSecret");
 
 		/// <summary>
@@ -86,7 +89,7 @@ namespace COMAPI.ExtensionMethods
 		/// <returns>The redirect URI.</returns>
 		public static string GetAppropriateRedirectUri
 		(
-			this PluginInfo plugin
+			this PluginInfoConfiguration plugin
 		)
 		{
 			// Sanity.
@@ -105,7 +108,7 @@ namespace COMAPI.ExtensionMethods
 		/// </summary>
 		/// <param name="plugin">The plugin details.</param>
 		/// <returns>true if the plugin represents an OAuth configuration.</returns>
-		public static bool IsOAuthPlugin(this PluginInfo plugin)
+		public static bool IsOAuthPlugin(this PluginInfoConfiguration plugin)
 		{
 			return plugin?.AssemblyName == "MFiles.AuthenticationProviders.OAuth";
 		}
@@ -119,7 +122,7 @@ namespace COMAPI.ExtensionMethods
 		/// <returns>The URI that can be shown in a browser to undertake the OAuth flow.</returns>
 		public static Uri GenerateAuthorizationUri
 		(
-			this PluginInfo plugin,
+			this PluginInfoConfiguration plugin,
 			string state,
 			bool forceLogin = false
 		)
@@ -135,16 +138,16 @@ namespace COMAPI.ExtensionMethods
 			var redirectUri = plugin.GetAppropriateRedirectUri();
 
 			// Build up the URI with mandatory data.
-			var uriBuilder = new UriBuilder(plugin.Configuration["AuthorizationEndpoint"]?.ToString());
-			uriBuilder.SetQueryParam("client_id", plugin.Configuration["ClientID"]?.ToString());
+			var uriBuilder = new UriBuilder(plugin.Configuration.GetValueOrNull("AuthorizationEndpoint")?.ToString());
+			uriBuilder.SetQueryParam("client_id", plugin.Configuration.GetValueOrNull("ClientID")?.ToString());
 			uriBuilder.SetQueryParam("redirect_uri", redirectUri);
 			uriBuilder.SetQueryParam("response_type", "code");
 
 			// Add the optional items, if set.
-			uriBuilder.SetQueryParamIfNotNullOrWhitespace("scope", plugin.Configuration["Scope"]?.ToString());
+			uriBuilder.SetQueryParamIfNotNullOrWhitespace("scope", plugin.Configuration.GetValueOrNull("Scope")?.ToString());
 			uriBuilder.SetQueryParamIfNotNullOrWhitespace("state", state);
 			uriBuilder.SetQueryParamIfNotNullOrWhitespace("prompt", promptType);
-			uriBuilder.SetQueryParamIfNotNullOrWhitespace("resource", plugin.Configuration["Resource"]?.ToString());
+			uriBuilder.SetQueryParamIfNotNullOrWhitespace("resource", plugin.Configuration.GetValueOrNull("Resource")?.ToString());
 
 			// Return the generated URI.
 			return uriBuilder.Uri;
