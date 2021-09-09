@@ -1,31 +1,36 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "325eeaa2-0e47-4ed4-96a2-ab4a44f1231d",
 		"name": "M-Files",
-		"_postman_id": "4a7b1f9d-1af3-853d-f3d5-eabb62558fe7",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "1.  Connection",
-			"description": "",
 			"item": [
 				{
 					"name": "Login to Vault",
 					"request": {
-						"url": "{{MFWSUrl}}/server/authenticationtokens",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"Username\": \"test\",\n    \"Password\": \"t\",\n    \"VaultGuid\": \"CB768165-581A-4978-BCD8-B0FA5D21F304\"\n}"
+							"raw": "{\n    \"Username\": \"AlexK\",\n    \"Password\": \"Pa55word10\",\n    \"VaultGuid\": \"2722F9AB-B96B-4DB5-B1A1-8E0618D289B7\"\n}"
+						},
+						"url": {
+							"raw": "{{MFWSUrl}}/server/authenticationtokens",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"server",
+								"authenticationtokens"
+							]
 						},
 						"description": "Fetch vault level authentication token."
 					},
@@ -34,43 +39,52 @@
 				{
 					"name": "Get Logged in User Information",
 					"request": {
-						"url": "{{MFWSUrl}}/session",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/session",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"session"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Login to Server",
 					"request": {
-						"url": "{{MFWSUrl}}/server/authenticationtokens",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"Username\": \"test\",\n    \"Password\": \"t\"\n}"
+						},
+						"url": {
+							"raw": "{{MFWSUrl}}/server/authenticationtokens",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"server",
+								"authenticationtokens"
+							]
 						},
 						"description": "Fetch server level authentication token. \n\nWith the server level authentication token you can make a request to list the vaults and get the vault level authentication token of the correct vault."
 					},
@@ -79,23 +93,55 @@
 				{
 					"name": "Get Vaults",
 					"request": {
-						"url": "{{MFWSUrl}}/session/vaults",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
+							},
+							{
+								"key": "X-Authentication",
+								"value": "{{MFAuthenticationToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{MFWSUrl}}/session/vaults",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"session",
+								"vaults"
+							]
+						},
+						"description": "Fetch vaults visible for the user."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Authentication Plugins",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
 								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"disabled": true
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/server/authenticationprotocols",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"server",
+								"authenticationprotocols"
+							]
 						},
 						"description": "Fetch vaults visible for the user."
 					},
@@ -105,28 +151,32 @@
 		},
 		{
 			"name": "2. Read Object Data",
-			"description": "",
 			"item": [
 				{
 					"name": "Get Object Information",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}"
+							]
 						},
 						"description": "Fetches all information of an object except properties."
 					},
@@ -135,23 +185,34 @@
 				{
 					"name": "Get Object Information with Properties",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}?include=properties",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}?include=properties",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "properties"
+								}
+							]
 						},
 						"description": "Fetches all information of an object."
 					},
@@ -160,23 +221,33 @@
 				{
 					"name": "Get Properties",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties",
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "[\r\n    {\r\n        \"PropertyDef\" : 28,\r\n        \"TypedValue\" : {\r\n            \"DataType\" : 9,\r\n            \"Lookups\": [\r\n                {\r\n                    \"Item\" : 32\r\n                }\r\n            ]\r\n        }\r\n    }\r\n\r\n]"
+						},
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/10/27/latest/properties",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"10",
+								"27",
+								"latest",
+								"properties"
+							]
 						},
 						"description": "Fetches properties of an object."
 					},
@@ -185,23 +256,29 @@
 				{
 					"name": "Get Files",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"files"
+							]
 						},
 						"description": "Fetches all information of an object except properties."
 					},
@@ -210,48 +287,71 @@
 				{
 					"name": "Download File",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files/{{FileID}}/content",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files/{{FileID}}/content",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"files",
+								"{{FileID}}",
+								"content"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Relationships",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/relationships?direction=both&type=objectversion",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/relationships?direction=both&type=objectversion",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"relationships"
+							],
+							"query": [
+								{
+									"key": "direction",
+									"value": "both"
+								},
+								{
+									"key": "type",
+									"value": "objectversion"
+								}
+							]
 						},
 						"description": "Fetches the objects that are related to the given object.\n\nThe direction can be changed from \"both\" to \"to\" or \"from\" to filter by relationship direction.\n\nThe type can be changed to \"lookup\" to get the result in the lookup format that is more useful in some situations."
 					},
@@ -260,23 +360,28 @@
 				{
 					"name": "Get History",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/history",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/history",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"history"
+							]
 						},
 						"description": "Fetches all versions of an object."
 					},
@@ -286,53 +391,70 @@
 		},
 		{
 			"name": "3. Write Object Data",
-			"description": "",
 			"item": [
 				{
 					"name": "Create Empty Multi-file Document",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/0?checkIn=true",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": false\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": []\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/0?checkIn=true",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"0"
+							],
+							"query": [
+								{
+									"key": "checkIn",
+									"value": "true"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Upload File",
 					"request": {
-						"url": "{{MFWSUrl}}/files",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
+						},
+						"url": {
+							"raw": "{{MFWSUrl}}/files",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"files"
+							]
 						},
 						"description": "Uploads file to M-Files as a temporary file upload. This needs to be done before creating or updating a file in M-Files."
 					},
@@ -341,98 +463,141 @@
 				{
 					"name": "Create Single File Document",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/0?checkIn=true",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": true\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": [\n        {\n            \"UploadID\": {{UploadIDFromUpload}},\n            \"Size\": {{FileSizeFromUpload}},\n            \"Title\": \"{{FileName}}\",\n            \"Extension\": \"{{FileExtension}}\"\n        }\n    ]\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/0?checkIn=true",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"0"
+							],
+							"query": [
+								{
+									"key": "checkIn",
+									"value": "true"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Create Multi-file Document",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/0?checkIn=true",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": false\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": [\n        {\n            \"UploadID\": {{UploadIDFromUpload}},\n            \"Size\": {{FileSizeFromUpload}},\n            \"Title\": \"{{FileName}}\",\n            \"Extension\": \"{{FileExtension}}\"\n        }\n    ]\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/0?checkIn=true",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"0"
+							],
+							"query": [
+								{
+									"key": "checkIn",
+									"value": "true"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Add New File to a Document",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"files"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Set Properties",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "[\n\t{\n\t    \"PropertyDef\": {{PropertyDefID}},\n\t    \"TypedValue\": {\n\t        \"DataType\": {{DataType}},\n\t        \"Value\": \"KeywordTest\"\n\t    }\n\t}\n]"
+						},
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"properties"
+							]
 						},
 						"description": "Sets the given properties creating new properties and overwriting existing values. The object does not have to be checked out.\n\nCheck the datatype number from the MFWS documentation (Enumerations).\n\n0\tUninitialized\t\n1\tText\t\n2\tInteger\t\n3\tFloating\t\n5\tDate\t\n6\tTime\t\n7\tTimestamp\t\n8\tBoolean\t\n9\tLookup\t\n10\tMultiSelectLookup\t\n11\tInteger64\t\n12\tFILETIME\t\n13\tMultiLineText\t\n14\tACL"
 					},
@@ -441,23 +606,40 @@
 				{
 					"name": "Set All Properties",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties/{{PropertyDefID}}?_method=PUT",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "[\n  {\n  \t\"PropertyDef\": 0,\n    \"TypedValue\": {\n      \"Value\": \"Rapid Development of Vault Applications\",\n      \"DataType\": 1\n    }\n  },\n  {\n    \"PropertyDef\": 22,\n    \"TypedValue\": {\n      \"Value\": false,\n      \"DataType\": 8\n    }\n  },\n  {\n    \"PropertyDef\": 100,\n    \"TypedValue\": {\n      \"Lookup\": {\n        \"Item\": 0\n      },\n      \"DataType\": 9\n    }\n  }\n]"
+						},
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties/{{PropertyDefID}}?_method=PUT",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"properties",
+								"{{PropertyDefID}}"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
 						},
 						"description": "Sets all properties of the object. The missing properties will be removed. The object does not have to be checked out.\n\nAlso the Object Class can be changed with this method."
 					},
@@ -466,150 +648,244 @@
 				{
 					"name": "Check Out Object",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/checkedout?_method=PUT",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Value\": \"1\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/checkedout?_method=PUT",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"checkedout"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Update File",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files/{{FileID}}/content?_method=PUT",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files/{{FileID}}/content?_method=PUT",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"files",
+								"{{FileID}}",
+								"content"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Update File Name",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files/{{FileID}}/title?_method=PUT",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "\"Rapid Development of Vault Applications.pdf\""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/files/{{FileID}}/title?_method=PUT",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"files",
+								"{{FileID}}",
+								"title"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Remove Property",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties/{{PropertyDefID}}?_method=DELETE",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties/{{PropertyDefID}}?_method=DELETE",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"properties",
+								"{{PropertyDefID}}"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "DELETE"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Check In Object",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/checkedout?_method=PUT",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Value\": \"0\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/checkedout?_method=PUT",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}",
+								"checkedout"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Undo Checkout",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}?_method=DELETE",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"Value\": \"1\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}?_method=DELETE",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"{{ObjectType}}",
+								"{{ObjectID}}",
+								"{{ObjectVersion}}"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "DELETE"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -617,78 +893,90 @@
 		},
 		{
 			"name": "4. Search for Objects",
-			"description": "",
 			"item": [
 				{
 					"name": "Get All Documents",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/0",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/0",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"0"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get All Projects",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/101",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/101",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"101"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Sales Invoices",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/0?p100=89",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/0?p100=89",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"0"
+							],
+							"query": [
+								{
+									"key": "p100",
+									"value": "89"
+								}
+							]
 						},
 						"description": "Searches for documents that have the Sales Invoice class."
 					},
@@ -697,48 +985,65 @@
 				{
 					"name": "Get IT Training Project Documents",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/0?p1078=30",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/0?p1078=30",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"0"
+							],
+							"query": [
+								{
+									"key": "p1078",
+									"value": "30"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Reseller Agreements",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/0?p1143=4",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/0?p1143=4",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"0"
+							],
+							"query": [
+								{
+									"key": "p1143",
+									"value": "4"
+								}
+							]
 						},
 						"description": "Reseller Agreements are documents that refer to the Reseller Agreement value list item."
 					},
@@ -747,25 +1052,33 @@
 				{
 					"name": "Search Documents by \"test\"",
 					"request": {
-						"url": "{{MFWSUrl}}/objects/0?q=test",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/objects/0?q=test",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"objects",
+								"0"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "test"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -773,28 +1086,30 @@
 		},
 		{
 			"name": "5. Views",
-			"description": "",
 			"item": [
 				{
 					"name": "Get Items in Root View",
 					"request": {
-						"url": "{{MFWSUrl}}/views/items",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/views/items",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"views",
+								"items"
+							]
 						},
 						"description": "Fetches the contents of the root view."
 					},
@@ -803,73 +1118,86 @@
 				{
 					"name": "Get Items in a View",
 					"request": {
-						"url": "{{MFWSUrl}}/views/v{{ViewID}}/items",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/views/v{{ViewID}}/items",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"views",
+								"v{{ViewID}}",
+								"items"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Items in a Subview",
 					"request": {
-						"url": "{{MFWSUrl}}/views/v{{ViewID}}/v{{SubViewID}}/items",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/views/v{{ViewID}}/v{{SubViewID}}/items",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"views",
+								"v{{ViewID}}",
+								"v{{SubViewID}}",
+								"items"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Items under a Grouping Level",
 					"request": {
-						"url": "{{MFWSUrl}}/views/v{{ViewID}}/v{{SubViewID}}/L{{ClassID}}/items",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/views/v{{ViewID}}/v{{SubViewID}}/L{{ClassID}}/items",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"views",
+								"v{{ViewID}}",
+								"v{{SubViewID}}",
+								"L{{ClassID}}",
+								"items"
+							]
 						},
 						"description": "In this example the lookup property reference to the Class ID forms the grouping level."
 					},
@@ -878,23 +1206,29 @@
 				{
 					"name": "Get Objects in a View",
 					"request": {
-						"url": "{{MFWSUrl}}/views/v{{ViewID}}/v{{SubViewID}}/L{{ClassID}}/objects",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/views/v{{ViewID}}/v{{SubViewID}}/L{{ClassID}}/objects",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"views",
+								"v{{ViewID}}",
+								"v{{SubViewID}}",
+								"L{{ClassID}}",
+								"objects"
+							]
 						},
 						"description": "In this example the lookup property reference to the Class ID forms the grouping level."
 					},
@@ -904,28 +1238,31 @@
 		},
 		{
 			"name": "6. Value List Items",
-			"description": "",
 			"item": [
 				{
 					"name": "Get Items of a Value List",
 					"request": {
-						"url": "{{MFWSUrl}}/valuelists/{{ValueListID}}/items",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/valuelists/{{ValueListID}}/items",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"valuelists",
+								"{{ValueListID}}",
+								"items"
+							]
 						},
 						"description": "Fetches all Value List Items in a Value List."
 					},
@@ -934,75 +1271,111 @@
 				{
 					"name": "Create Value List Item",
 					"request": {
-						"url": "{{MFWSUrl}}/valuelists/{{ValueListID}}/items",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"Name\": \"New Agreement Type\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/valuelists/{{ValueListID}}/items",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"valuelists",
+								"{{ValueListID}}",
+								"items"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Mark Value List Item as Deleted",
 					"request": {
-						"url": "{{MFWSUrl}}/valuelists/{{ValueListID}}/items/{{ValueListItemID}}?_method=delete",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/valuelists/{{ValueListID}}/items/{{ValueListItemID}}?_method=delete",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"valuelists",
+								"{{ValueListID}}",
+								"items",
+								"{{ValueListItemID}}"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "delete"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Update Name of a Value List Item",
 					"request": {
-						"url": "{{MFWSUrl}}/valuelists/{{ValueListID}}/items/{{ValueListItemID}}/title?_method=put",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "\"Modified Agreement Type\""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/valuelists/{{ValueListID}}/items/{{ValueListItemID}}/title?_method=put",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"valuelists",
+								"{{ValueListID}}",
+								"items",
+								"{{ValueListItemID}}",
+								"title"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "put"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -1010,205 +1383,244 @@
 		},
 		{
 			"name": "7. Metadata Structure",
-			"description": "",
 			"item": [
 				{
 					"name": "Get Object Types",
 					"request": {
-						"url": "{{MFWSUrl}}/structure/objecttypes",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/structure/objecttypes",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"structure",
+								"objecttypes"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Document Classes",
 					"request": {
-						"url": "{{MFWSUrl}}/structure/classes?objtype=0",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/structure/classes?objtype=0",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"structure",
+								"classes"
+							],
+							"query": [
+								{
+									"key": "objtype",
+									"value": "0"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get All Classes",
 					"request": {
-						"url": "{{MFWSUrl}}/structure/classes",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/structure/classes",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"structure",
+								"classes"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Property Definitions",
 					"request": {
-						"url": "{{MFWSUrl}}/structure/properties",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/structure/properties",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"structure",
+								"properties"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Workflows",
 					"request": {
-						"url": "{{MFWSUrl}}/structure/workflows",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/structure/workflows",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"structure",
+								"workflows"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get States of a Workflow",
 					"request": {
-						"url": "{{MFWSUrl}}/structure/workflows/{{WorkflowID}}/states",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/structure/workflows/{{WorkflowID}}/states",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"structure",
+								"workflows",
+								"{{WorkflowID}}",
+								"states"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Possible First States in a Workflow",
 					"request": {
-						"url": "{{MFWSUrl}}/structure/workflows/{{WorkflowID}}/states?currentstate=null",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/structure/workflows/{{WorkflowID}}/states?currentstate=null",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"structure",
+								"workflows",
+								"{{WorkflowID}}",
+								"states"
+							],
+							"query": [
+								{
+									"key": "currentstate",
+									"value": "null"
+								}
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get Possible Next States in a Workflow",
 					"request": {
-						"url": "{{MFWSUrl}}/structure/workflows/{{WorkflowID}}/states?currentstate=108",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "{{MFWSUrl}}/structure/workflows/{{WorkflowID}}/states?currentstate=108",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"structure",
+								"workflows",
+								"{{WorkflowID}}",
+								"states"
+							],
+							"query": [
+								{
+									"key": "currentstate",
+									"value": "108"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -1216,28 +1628,35 @@
 		},
 		{
 			"name": "8. Vault Extension Method",
-			"description": "",
 			"item": [
 				{
 					"name": "Execute Vault Extension Method",
 					"request": {
-						"url": "{{MFWSUrl}}/vault/extensionmethod/{{VaultExtensionMethodName}}",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							},
 							{
 								"key": "X-Authentication",
-								"value": "{{MFAuthenticationToken}}",
-								"description": ""
+								"value": "{{MFAuthenticationToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "<The data that is passed to the extension method>"
+						},
+						"url": {
+							"raw": "{{MFWSUrl}}/vault/extensionmethod/{{VaultExtensionMethodName}}",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"vault",
+								"extensionmethod",
+								"{{VaultExtensionMethodName}}"
+							]
 						},
 						"description": "Executes the Vault Extension Method. The method has to be added to the Vault before executing it."
 					},
@@ -1262,7 +1681,15 @@
 								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"url": "{{MFWSUrl}}/sharedlinks",
+						"url": {
+							"raw": "{{MFWSUrl}}/sharedlinks",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"sharedlinks"
+							]
+						},
 						"description": "Retrieves all shared links that this user can access."
 					},
 					"response": []
@@ -1285,7 +1712,15 @@
 							"mode": "raw",
 							"raw": "{\n\t\"ObjVer\" : {\n\t\t\"ID\" : 540,\n\t\t\"Version\" : 19,\n\t\t\"Type\" : 0\n\t},\n\t\"FileVer\" : {\n\t\t\"ID\" : 568,\n\t\t\"Version\" : -1,\n\t\t\"FileVersionType\" : 0\n\t\t\n\t},\n\t\"Description\" : \"This is my test shared link\",\n\t\"ExpirationTime\" : \"2020-06-01T00:00:00Z\"\n}"
 						},
-						"url": "{{MFWSUrl}}/sharedlinks",
+						"url": {
+							"raw": "{{MFWSUrl}}/sharedlinks",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"sharedlinks"
+							]
+						},
 						"description": "Creates a shared link."
 					},
 					"response": []
@@ -1305,7 +1740,18 @@
 								"disabled": true
 							}
 						],
-						"url": "{{MFWSUrl}}/sharedlinks/2722F9AB-B96B-4DB5-B1A1-8E0618D289B7/60ea07af78055c7c4009487035dd856dd6c521d708b7e362bae192d9f8a89450/content",
+						"url": {
+							"raw": "{{MFWSUrl}}/sharedlinks/2722F9AB-B96B-4DB5-B1A1-8E0618D289B7/60ea07af78055c7c4009487035dd856dd6c521d708b7e362bae192d9f8a89450/content",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"sharedlinks",
+								"2722F9AB-B96B-4DB5-B1A1-8E0618D289B7",
+								"60ea07af78055c7c4009487035dd856dd6c521d708b7e362bae192d9f8a89450",
+								"content"
+							]
+						},
 						"description": "Downloads the content of a shared link (note: does not require authentication)."
 					},
 					"response": []
@@ -1324,13 +1770,21 @@
 								"value": "{{MFAuthenticationToken}}"
 							}
 						],
-						"url": "{{MFWSUrl}}/sharedlinks/9691d5c15340ca537ad7a601dc79d4b607c44d680a26051a6011f6e42fc8e142",
+						"url": {
+							"raw": "{{MFWSUrl}}/sharedlinks/9691d5c15340ca537ad7a601dc79d4b607c44d680a26051a6011f6e42fc8e142",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"sharedlinks",
+								"9691d5c15340ca537ad7a601dc79d4b607c44d680a26051a6011f6e42fc8e142"
+							]
+						},
 						"description": "Deletes a shared link"
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	]
 }
