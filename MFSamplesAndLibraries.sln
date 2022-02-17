@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M-Files API", "M-Files API", "{BFC9716E-3A29-4482-9385-7301436D8010}"
 EndProject
@@ -211,7 +211,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "COMAPI", "Samples\OAuth\COM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTAPI", "Samples\OAuth\RESTAPI\RESTAPI.csproj", "{B349EDDE-A581-470A-BFB1-E40D5ED566C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Samples\OAuth\Common\Common.csproj", "{5DC9C4F2-FAE0-4761-A149-A7EC065FEEFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Samples\OAuth\Common\Common.csproj", "{5DC9C4F2-FAE0-4761-A149-A7EC065FEEFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{2F011880-7264-428F-912C-F81E49E296A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithVAFExtensionsLibrary", "Samples\VAF\Logging\WithVAFExtensionsLibrary\WithVAFExtensionsLibrary.csproj", "{A28658F4-3DBF-43CC-8FCF-6ED1D296EE5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WithoutVAFExtensionsLibrary", "Samples\VAF\Logging\WithoutVAFExtensionsLibrary\WithoutVAFExtensionsLibrary.csproj", "{9FF77938-2F14-4713-83CB-F367F60CB037}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -376,6 +382,18 @@ Global
 		{5DC9C4F2-FAE0-4761-A149-A7EC065FEEFE}.DebugWithoutDeployment|Any CPU.Build.0 = Debug|Any CPU
 		{5DC9C4F2-FAE0-4761-A149-A7EC065FEEFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DC9C4F2-FAE0-4761-A149-A7EC065FEEFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A28658F4-3DBF-43CC-8FCF-6ED1D296EE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28658F4-3DBF-43CC-8FCF-6ED1D296EE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28658F4-3DBF-43CC-8FCF-6ED1D296EE5B}.DebugWithoutDeployment|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28658F4-3DBF-43CC-8FCF-6ED1D296EE5B}.DebugWithoutDeployment|Any CPU.Build.0 = Debug|Any CPU
+		{A28658F4-3DBF-43CC-8FCF-6ED1D296EE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28658F4-3DBF-43CC-8FCF-6ED1D296EE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FF77938-2F14-4713-83CB-F367F60CB037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FF77938-2F14-4713-83CB-F367F60CB037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FF77938-2F14-4713-83CB-F367F60CB037}.DebugWithoutDeployment|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FF77938-2F14-4713-83CB-F367F60CB037}.DebugWithoutDeployment|Any CPU.Build.0 = Debug|Any CPU
+		{9FF77938-2F14-4713-83CB-F367F60CB037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FF77938-2F14-4713-83CB-F367F60CB037}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -436,6 +454,9 @@ Global
 		{457F6827-29D0-4770-AE56-C90E41A078C0} = {E4F1D76B-0CF7-4A64-9B84-627C3BB26C69}
 		{B349EDDE-A581-470A-BFB1-E40D5ED566C3} = {E4F1D76B-0CF7-4A64-9B84-627C3BB26C69}
 		{5DC9C4F2-FAE0-4761-A149-A7EC065FEEFE} = {E4F1D76B-0CF7-4A64-9B84-627C3BB26C69}
+		{2F011880-7264-428F-912C-F81E49E296A8} = {64819656-F9ED-411C-827B-9EB4EBECF6E6}
+		{A28658F4-3DBF-43CC-8FCF-6ED1D296EE5B} = {2F011880-7264-428F-912C-F81E49E296A8}
+		{9FF77938-2F14-4713-83CB-F367F60CB037} = {2F011880-7264-428F-912C-F81E49E296A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F7B9423-0E07-4E5F-A84E-DBFCC4B91994}

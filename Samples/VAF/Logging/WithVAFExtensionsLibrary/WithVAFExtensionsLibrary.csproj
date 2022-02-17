@@ -1,0 +1,85 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <RootNamespace>WithVAFExtensionsLibrary</RootNamespace>
+    <AssemblyName>WithVAFExtensionsLibrary</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;DONOTDEPLOY</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugWithoutDeployment|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DONOTDEPLOY</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appdef.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="install-application.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MFiles.VAF" Version="2.3.623.6" />
+    <PackageReference Include="MFiles.VAF.Extensions" Version="22.2.11-preview" />
+  </ItemGroup>
+  <Target Name="RunWhenBuildChanges" AfterTargets="Build">
+    <!-- Load the current version from the appdef file. -->
+    <XmlPeek XmlInputPath="appdef.xml" Query="//version/text()">
+      <Output TaskParameter="Result" PropertyName="AppDefVersion" />
+    </XmlPeek>
+    <!-- remove any old .mfappx files we may have. -->
+    <Message Importance="High" Text="Cleaning old .mfappx file (if available)..." />
+    <Delete Files="$(BaseIntermediateOutputPath)\$(ProjectName)-$(AppDefVersion).mfappx" />
+    <Delete Files="bin\$(Configuration)\$(ProjectName)-$(AppDefVersion).mfappx" />
+    <!-- Create the new .mfappx file in the out folder by zipping the output. -->
+    <Message Importance="High" Text="Creating new .mfappx file..." />
+    <ZipDirectory SourceDirectory="bin\$(Configuration)" DestinationFile="$(BaseIntermediateOutputPath)\$(ProjectName)-$(AppDefVersion).mfappx" />
+    <!-- Deploy the .mfappx file to the output folder. -->
+    <Message Importance="High" Text="Copying .mfappx to output" />
+    <Copy SourceFiles="$(BaseIntermediateOutputPath)\$(ProjectName)-$(AppDefVersion).mfappx" DestinationFolder="bin\$(Configuration)" />
+  </Target>
+  <Target Name="NoteDeploymentSkipped" AfterTargets="Build" Condition="$(DefineConstants.Contains('DONOTDEPLOY'))">
+    <Message Importance="High" Text="Skipping deployment script (configuration states not to deploy)" />
+  </Target>
+  <Target Name="DeployIfNeeded" AfterTargets="RunWhenBuildChanges" Condition="false == $(DefineConstants.Contains('DONOTDEPLOY'))">
+    <Message Importance="High" Text="Executing deployment script..." />
+    <Exec Command="PowerShell -ExecutionPolicy Bypass -File install-application.ps1" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
