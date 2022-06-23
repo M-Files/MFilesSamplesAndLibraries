@@ -33,8 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MFaaP.MFWSClient, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\MFaaP.MFWSClient.1.2.2-alpha\lib\net46\MFaaP.MFWSClient.dll</HintPath>
+    <Reference Include="MFaaP.MFWSClient, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MFaaP.MFWSClient.1.3.0-alpha\lib\net46\MFaaP.MFWSClient.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=106.12.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\RestSharp.106.12.0\lib\net452\RestSharp.dll</HintPath>
