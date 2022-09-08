@@ -2,26 +2,10 @@
 function OnNewShellUI( shellUI )
 {	
 	// New commands in task pane. 
-	var showCommand1 = null;
-	var hideCommand = null;
-	
-	// Persistent browser sessions.
-	var session1 = null;
+	var showCommand = null;
 	var group = null;
-	var initialized = false;
-	var tab = null;
-	var vault = null;
-	var metadataTab = null;
 
 	return {
-
-		// ShellUI.OnStop
-		OnStop: function() {
-			
-			// Destroy persistent browser contents when shellUI is shutting down.
-			//
-			shellUI.DestroyPersistentContent( session1 );
-		},
 	
 		// Called when a new shell frame object is created.
         OnNewShellFrame: function( shellFrame )
@@ -39,42 +23,19 @@ function OnNewShellUI( shellUI )
 						// and add the commands to task pane.
 						group = shellFrame.Taskpane.CreateGroup( "Report", 0 );
 
-						showCommand1 = shellFrame.Commands.CreateCustomCommand( "View Report" );
-						shellFrame.Commands.SetIconFromPath( showCommand1, "png/Report2.ico" );
-						hideCommand = shellFrame.Commands.CreateCustomCommand( "Hide Report" );
-						shellFrame.Commands.SetIconFromPath( hideCommand, "png/disabled.ico" );
-						shellFrame.Taskpane.AddCustomCommandToGroup( showCommand1, group, 11 );
-						shellFrame.Taskpane.AddCustomCommandToGroup( hideCommand, group, 12 );
-						shellFrame.Commands.AddCustomCommandToMenu( showCommand1, MenuLocation_ContextMenu_Top, 11 );
-						shellFrame.Commands.AddCustomCommandToMenu( hideCommand, MenuLocation_ContextMenu_Top, 12 );
-						shellFrame.Commands.SetCommandState( showCommand1, CommandLocation_All, CommandState_Hidden );
-						shellFrame.Commands.SetCommandState( hideCommand, CommandLocation_All, CommandState_Hidden );
+						showCommand = shellFrame.Commands.CreateCustomCommand( "View Report" );
+						shellFrame.Commands.SetIconFromPath( showCommand, "png/Report2.ico" );
+						shellFrame.Taskpane.AddCustomCommandToGroup( showCommand, group, 11 );
+						shellFrame.Commands.AddCustomCommandToMenu( showCommand, MenuLocation_ContextMenu_Top, 11 );
+						shellFrame.Commands.SetCommandState( showCommand, CommandLocation_All, CommandState_Hidden );
 					}
 				},
 				
 				OnNewShellListing: function( shellListing )
 				{
 					return {          					
-						OnSelectionChanged: function( selectedItems )
+						OnShowContextMenu: function(selectedItems)
 						{	
-							//shellFrame.RightPane.ShowDefaultContent();
-							if ( tab == null)
-							{
-								
-							}
-							else
-							{
-								try
-								{
-									tab.Remove();
-									tab = null;
-								}
-								catch(err)
-								{
-									
-								}
-							}
-									
 							// Get selected items.
 							if (selectedItems.count > 0)
 							{
@@ -87,34 +48,14 @@ function OnNewShellUI( shellUI )
 									{								
 										if( shellFrame.TaskPane.Available )
 										{
-											shellFrame.Commands.SetCommandState( showCommand1, CommandLocation_All, CommandState_Active );
-											shellFrame.Commands.SetCommandState( hideCommand, CommandLocation_All, CommandState_Active );
+											shellFrame.Commands.SetCommandState( showCommand, CommandLocation_All, CommandState_Active );
 										}
 									}
 									else
-									{
-										//shellFrame.RightPane.ShowDefaultContent();
-										if ( tab == null)
-										{
-											
-										}
-										else
-										{
-											try
-											{
-												tab.Remove();
-												tab = null;
-											}
-											catch(err)
-											{
-											
-											}
-										}
-										
+									{	
 										if( shellFrame.TaskPane.Available )
 										{
-											shellFrame.Commands.SetCommandState( showCommand1, CommandLocation_All, CommandState_Hidden );
-											shellFrame.Commands.SetCommandState( hideCommand, CommandLocation_All, CommandState_Hidden );
+											shellFrame.Commands.SetCommandState( showCommand, CommandLocation_All, CommandState_Hidden );
 										}
 										
 									}
@@ -123,8 +64,7 @@ function OnNewShellUI( shellUI )
 								{
 									if( shellFrame.TaskPane.Available )
 									{
-										shellFrame.Commands.SetCommandState( showCommand1, CommandLocation_All, CommandState_Hidden );
-										shellFrame.Commands.SetCommandState( hideCommand, CommandLocation_All, CommandState_Hidden );
+										shellFrame.Commands.SetCommandState( showCommand, CommandLocation_All, CommandState_Hidden );
 									}
 									
 								}
@@ -133,8 +73,7 @@ function OnNewShellUI( shellUI )
 							{
 								if( shellFrame.TaskPane.Available )
 								{
-									shellFrame.Commands.SetCommandState( showCommand1, CommandLocation_All, CommandState_Hidden );
-									shellFrame.Commands.SetCommandState( hideCommand, CommandLocation_All, CommandState_Hidden );
+									shellFrame.Commands.SetCommandState( showCommand, CommandLocation_All, CommandState_Hidden );
 								}
 								
 							}
@@ -149,7 +88,7 @@ function OnNewShellUI( shellUI )
 						// Handle custom commands.
 						OnCustomCommand: function( commandId ) {					
 							// User has clicked command to show browser content.
-							if ( commandId == showCommand1 ) {	
+							if ( commandId == showCommand ) {	
 								tab = null;								
 									
 								// Attach browser content to right pane.
@@ -157,44 +96,9 @@ function OnNewShellUI( shellUI )
 								var objver = selectedObjectVersion.ObjVer;
 								//vault = shellFrame.ShellUI.Vault;
 								var urlid = shellFrame.ShellUI.Vault.PropertyDefOperations.GetPropertyDefIDByAlias( "M-Files.PowerBI.URL" );
-								var tsid = shellFrame.ShellUI.Vault.ObjectPropertyOperations.GetProperty(objver, urlid).Value.Value + "?chromeless=1";
-								
-								if ( session1 == null) {
-									session1 = shellFrame.shellUI.CreatePersistentBrowserContent( tsid, {
-									defaultvisibility: true,
-									persistentid: 10
-									} );
-								}
-								else {
-									shellFrame.shellUI.SetPersistentBrowserContent( tsid, session1 );
-								}
-								
-								if ( tab == null)
-								{
-									tab = shellFrame.RightPane.AddTab( "mfiles.powerbi.tab", "Reports", "_last" );
-								}
-								// Make the tab visible.
-								tab.ShowPersistentContent( session1 );
-								tab.Visible = true;	
-								tab.select();
-
-								// Resize to adjust it to frame
-								var paneSize = shellFrame.RightPane.Size;
-								shellFrame.RightPane.Size = paneSize+1;
-							} 							
-							else if ( commandId == hideCommand ) {
-								// Detach browser content from right pane.	
-								if ( tab == null)
-								{
-									
-								}
-								else
-								{
-									tab.Remove();
-									tab = null;
-									//tab.Visible = false;
-								}
-							}
+								var tsid = shellFrame.ShellUI.Vault.ObjectPropertyOperations.GetProperty(objver, urlid).Value.Value;
+								MFiles.ExecuteURL(tsid);
+							} 
 						}						 
 					};
 					
