@@ -136,9 +136,19 @@ namespace RESTAPI
 			// Parse the tokens.
 			var tokens = await this.ProcessRedirectUri(e.Uri);
 
+			// Should we use the access token or ID token?
+			var token = tokens.AccessToken;
+			{
+				if (this.oAuthPluginInfo.Configuration.TryGetValue("UseIdTokenAsAccessToken", out string s))
+				{
+					if (bool.TryParse(s, out bool v) && v)
+						token = tokens.IdToken;
+				}
+			}
+
 			// Add the auth token to the default headers.
 			// Note: we need to add both the Authorization and X-Vault headers or it won't work.
-			this.client.AddDefaultHeader("Authorization", "Bearer " + tokens.AccessToken);
+			this.client.AddDefaultHeader("Authorization", "Bearer " + token);
 			this.client.AddDefaultHeader("X-Vault", this.oAuthPluginInfo.VaultGuid);
 
 			// Show and populate the (root) tree view.
