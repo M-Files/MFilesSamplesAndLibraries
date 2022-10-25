@@ -137,10 +137,20 @@ namespace COMAPI
 			// Parse the tokens.
 			var tokens = await this.ProcessRedirectUri(e.Uri);
 
-			// Connect to the vault.
-			// The access token goes in the "Token" entry in the named values collection.
-			var authenticationData = new NamedValues();
-			authenticationData["Token"] = tokens.AccessToken;
+            // Should we use the access token or ID token?
+            var token = tokens.AccessToken;
+            {
+                if (this.oAuthPluginInfo.Configuration.TryGetValue("UseIdTokenAsAccessToken", out string s))
+                {
+                    if (bool.TryParse(s, out bool v) && v)
+                        token = tokens.IdToken;
+                }
+            }
+
+            // Connect to the vault.
+            // The access token goes in the "Token" entry in the named values collection.
+            var authenticationData = new NamedValues();
+			authenticationData["Token"] = token;
 			this.serverApplication.ConnectWithAuthenticationDataEx6
 			(
 				new ConnectionData()

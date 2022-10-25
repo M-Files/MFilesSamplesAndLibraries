@@ -7,16 +7,24 @@ namespace COMAPI.ExtensionMethods
 {
 	public static class PluginInfoExtensionMethods
 	{
-		private static string GetValueOrNull(this NamedValues namedValues, string name)
+		public static bool TryGetValue(this NamedValues namedValues, string name, out string value)
+        {
+			value = null;
+            try
+            {
+                var v = namedValues[name]?.ToString();
+                if (null == v || v.Length == 0)
+                    return false;
+				value = v;
+                return true;
+            }
+            catch { return false; }
+        }
+
+        private static string GetValueOrNull(this NamedValues namedValues, string name)
 		{
-			try
-			{
-				var value = namedValues[name]?.ToString();
-				if (null == value || value.Length == 0)
-					return null;
-				return value;
-			}
-			catch { return null; }
+			namedValues.TryGetValue(name, out var v);
+			return v;
 		}
 
 		/// <summary>
