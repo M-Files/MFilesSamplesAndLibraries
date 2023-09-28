@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "325eeaa2-0e47-4ed4-96a2-ab4a44f1231d",
 		"name": "M-Files",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12180371"
 	},
 	"item": [
 		{
@@ -53,6 +54,32 @@
 					"name": "Get Logged in User Information",
 					"request": {
 						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Authentication",
+								"value": "{{MFAuthenticationToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{MFWSUrl}}/session",
+							"host": [
+								"{{MFWSUrl}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log out from vault",
+					"request": {
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -635,7 +662,7 @@
 							"raw": "[\n  {\n  \t\"PropertyDef\": 0,\n    \"TypedValue\": {\n      \"Value\": \"Rapid Development of Vault Applications\",\n      \"DataType\": 1\n    }\n  },\n  {\n    \"PropertyDef\": 22,\n    \"TypedValue\": {\n      \"Value\": false,\n      \"DataType\": 8\n    }\n  },\n  {\n    \"PropertyDef\": 100,\n    \"TypedValue\": {\n      \"Lookup\": {\n        \"Item\": 0\n      },\n      \"DataType\": 9\n    }\n  }\n]"
 						},
 						"url": {
-							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties/{{PropertyDefID}}?_method=PUT",
+							"raw": "{{MFWSUrl}}/objects/{{ObjectType}}/{{ObjectID}}/{{ObjectVersion}}/properties?_method=PUT",
 							"host": [
 								"{{MFWSUrl}}"
 							],
@@ -644,8 +671,7 @@
 								"{{ObjectType}}",
 								"{{ObjectID}}",
 								"{{ObjectVersion}}",
-								"properties",
-								"{{PropertyDefID}}"
+								"properties"
 							],
 							"query": [
 								{
