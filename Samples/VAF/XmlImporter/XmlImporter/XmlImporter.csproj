@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="AttachedFileConfiguration.cs" />
     <Compile Include="AttachedFileHandlingStrategy.cs" />
+    <Compile Include="LookupOrValuelistStrategy.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="FileLocationStrategy.cs" />
     <Compile Include="FileNotFoundHandlingStrategy.cs" />
