@@ -2,16 +2,10 @@
 
 Information on the available UIX applications is available [on the M-Files Developer Portal](http://developer.m-files.com/Samples-And-Libraries/Samples/User-Interface-Extensibility-Framework/).
 
-## Testing and deploying
+## Versions
 
-### Testing
+This repository contains examples for Version 2 - the latest version of the UIX Framework - and for Version 1.
 
-The simplest method to test an application is to copy the files into a [local development folder](http://developer.m-files.com/Frameworks/User-Interface-Extensibility-Framework/Development-Practices/Local-Development-Folder/).  This allows you to alter the files and simply log out and into the vault to see the changes.
+New development should target Version 2.  Version 2 of the UIX is supported in M-Files Web and the new M-Files Desktop client.  These newer clients do not support Version 1 applications.
 
-### Deploying
-
-To deploy the application, you must zip the application files and deploy them using the M-Files Admin tool.  This process is detailed [on the M-Files Developer Portal](http://developer.m-files.com/Frameworks/User-Interface-Extensibility-Framework/Development-Practices/Deployment/).
-
-#### Pre-approval
-
-When a client connects a vault, new User Interface Extensibility Framework applications will be downloaded and the user will be prompted to install them.  [This can be avoided by pre-approving it using registry keys](http://developer.m-files.com/Frameworks/User-Interface-Extensibility-Framework/Pre-Approval/).
+Version 1 of the UIX is considered legacy and should only be used when explicitly targeting the M-Files Classic Web or M-Files Classic Desktop clients.  These classic clients do not support Version 2 applications.

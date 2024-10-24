@@ -1,0 +1,44 @@
+html, body {
+	font-family: Lato, "Segoe UI", Sans-Serif;
+	margin: 0;
+	background: #FFF;
+	height: 100%;
+	color: #363A40;
+	font-size: 14px;
+    padding: 0 10px;
+}
+
+div {
+    padding: 4px 0;
+}
+
+span {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #318ccc;
+    margin-top: 13px;
+}
+
+.history-item {
+    width: calc(100% - 30px);
+    height: 25px;
+    margin: 2px 0;
+    padding: 2px 15px;
+    background: #e7e6e6;
+    border-radius: 15px;
+}
+
+.viewid {
+    display: inline-block;
+    width: 30%;
+}
+
+.viewpath {
+    display: inline-block;
+    width: 69%;
+}
