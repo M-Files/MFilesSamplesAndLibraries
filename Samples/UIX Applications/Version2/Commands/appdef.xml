@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-client-v5.xsd">
+    <guid>A50FF521-9167-4366-9CDE-6CB5C3BDDAFF</guid>
+    <name>Commands</name>
+    <version>0.1</version>
+    <description>A basic application showing how to work with commands.</description>
+    <publisher>M-Files Corporation</publisher>
+    <enabled-by-default>true</enabled-by-default>
+    <modules>
+        <module environment="shellui">
+        <file>main.js</file>
+        </module>
+    </modules>
+</application>

@@ -1,0 +1,22 @@
+﻿html, body {
+    font-family: Lato, "Segoe UI", Sans-Serif;
+    margin: 0;
+    background: #FFF;
+    height: 100%;
+    font-size: 14px;
+    padding: 0 10px;
+}
+
+div {
+    padding: 2px 0;
+}
+
+button {
+    width: 150px;
+    height: 20px;
+}
+
+.label {
+    font-weight: 500;
+    color:mediumblue;
+}

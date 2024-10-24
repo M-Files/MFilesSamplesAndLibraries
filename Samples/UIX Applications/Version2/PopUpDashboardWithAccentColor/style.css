@@ -1,0 +1,29 @@
+html,
+body {
+  font-family: Lato, 'Segoe UI', Sans-Serif;
+  margin: 0;
+  background: #fff;
+  height: 100%;
+  font-size: 14px;
+  padding: 0 10px;
+}
+
+:root {
+  --scrollbar-thumb-color: black;
+}
+
+div {
+  padding: 4px 0;
+}
+
+span {
+  font-weight: 500;
+}
+
+#scrollableDIV {
+  height: 200px;
+  overflow-y: scroll;
+  scrollbar-color: var(--scrollbar-thumb-color) lightgray;
+}
+
+

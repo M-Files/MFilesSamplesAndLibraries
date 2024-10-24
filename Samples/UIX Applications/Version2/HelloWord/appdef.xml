@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.m-files.com/schemas/appdef-client-v5.xsd">
+    <guid>5EA29AF2-1EC9-4AB7-A0D1-FE1D586310D4</guid>
+    <name>Hello, World</name>
+    <version>0.1</version>
+    <description>A basic application showing how to react to the shell frame being available.</description>
+    <publisher>M-Files Corporation</publisher>
+    <enabled-by-default>true</enabled-by-default>
+    <modules>
+        <module environment="shellui">
+        <file>main.js</file>
+        </module>
+    </modules>
+</application>
