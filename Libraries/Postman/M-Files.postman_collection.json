@@ -471,6 +471,20 @@
 				},
 				{
 					"name": "Upload File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set(\"FileRefFromUpload\", jsonData.FileRef);",
+									"pm.environment.set(\"FileSizeFromUpload\", jsonData.Size);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -488,15 +502,21 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{MFWSUrl}}/files",
+							"raw": "{{MFWSUrl}}/files?statelessUpload=true",
 							"host": [
 								"{{MFWSUrl}}"
 							],
 							"path": [
 								"files"
+							],
+							"query": [
+								{
+									"key": "statelessUpload",
+									"value": "true"
+								}
 							]
 						},
-						"description": "Uploads file to M-Files as a temporary file upload. This needs to be done before creating or updating a file in M-Files."
+						"description": "Uploads file to M-Files. This needs to be done before creating or updating a file in M-Files. With statelessUpload=true the upload is identified by a file reference (FileRef), which can be used on any server instance, so no sticky session is needed. The test script saves them and the file size to the environment. Upload IDs are obsolete: if the server does not support the stateless upload (ServerVaultCapabilities.FileUploadStatelessSupported), the response contains an UploadID instead of FileRef; then use UploadID in the Files of the create requests."
 					},
 					"response": []
 				},
@@ -516,7 +536,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": true\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": [\n        {\n            \"UploadID\": {{UploadIDFromUpload}},\n            \"Size\": {{FileSizeFromUpload}},\n            \"Title\": \"{{FileName}}\",\n            \"Extension\": \"{{FileExtension}}\"\n        }\n    ]\n}"
+							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": true\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": [\n        {\n            \"FileRef\": \"{{FileRefFromUpload}}\",\n            \"Size\": {{FileSizeFromUpload}},\n            \"Title\": \"{{FileName}}\",\n            \"Extension\": \"{{FileExtension}}\"\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{MFWSUrl}}/objects/0?checkIn=true",
@@ -553,7 +573,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": false\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": [\n        {\n            \"UploadID\": {{UploadIDFromUpload}},\n            \"Size\": {{FileSizeFromUpload}},\n            \"Title\": \"{{FileName}}\",\n            \"Extension\": \"{{FileExtension}}\"\n        }\n    ]\n}"
+							"raw": "{\n    \"PropertyValues\": [\n        {\n            \"PropertyDef\": 0,\n            \"TypedValue\": {\n                \"DataType\": 1,\n                \"Value\": \"{{DocumentName}}\"\n            }\n        },\n        {\n            \"PropertyDef\": 22,\n            \"TypedValue\": {\n                \"DataType\": 8,\n                \"Value\": false\n            }\n        },\n        {\n            \"PropertyDef\": 100,\n            \"TypedValue\": {\n                \"DataType\": 9,\n                \"Lookup\": {\n                    \"Item\": {{ClassID}},\n                    \"Version\": -1\n                }\n            }\n        }\n    ],\n    \"Files\": [\n        {\n            \"FileRef\": \"{{FileRefFromUpload}}\",\n            \"Size\": {{FileSizeFromUpload}},\n            \"Title\": \"{{FileName}}\",\n            \"Extension\": \"{{FileExtension}}\"\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{MFWSUrl}}/objects/0?checkIn=true",
