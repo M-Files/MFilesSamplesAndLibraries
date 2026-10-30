@@ -454,16 +454,6 @@ namespace MFaaP.MFWSClient
 		public string FileRef { get; set; }
 
 		/// <summary>
-		/// The MD5 checksum of the whole content of a stateless upload as 32 hexadecimal characters.
-		/// Committing a <see cref="FileRef"/> requires it.
-		/// </summary>
-		/// <remarks>
-		/// Returned by the server when it receives the whole content in one request.
-		/// For content uploaded in blocks the client calculates it.
-		/// </remarks>
-		public string Checksum { get; set; }
-
-		/// <summary>
 		/// The maximum size of a block in bytes when a stateless upload is uploaded in blocks.
 		/// Returned when a stateless upload is started.
 		/// </summary>
